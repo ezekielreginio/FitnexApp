@@ -30,19 +30,33 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/textViewTagline"
                     style="@style/viewParent.headerText.NoMode"
-                    android:layout_width="158dp"
-                    android:layout_height="125dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="114dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="67dp"
                     android:text="Get Fit \nwith  \nFitNex" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="186dp"
+                    android:layout_height="162dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
+
                     android:src="@drawable/ic_login_hero" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="83dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="-65dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toStartOf="@+id/textViewTagline"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewTagline"
+                    app:srcCompat="@drawable/ic_fitnex_logo_outline" />
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
