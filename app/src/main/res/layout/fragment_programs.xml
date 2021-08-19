@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.trainer.fragment.CalendarFragment">
+    tools:context=".main.trainer.fragment.ProgramsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Calendar Fragment"
-        android:gravity="center"/>
-
+        android:text="Button"
+        android:layout_gravity="center"/>
 </FrameLayout>
