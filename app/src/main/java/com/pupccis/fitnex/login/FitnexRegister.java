@@ -22,8 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
+import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.User;
+import com.pupccis.fitnex.utilities.Constants;
 
 public class FitnexRegister extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private EditText editName, editAge, editEmail, editPassword;
@@ -134,6 +136,9 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             User user = new User(name, age, email);
+                            FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS)
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user);
 
                             Toast.makeText(FitnexRegister.this, "Registration Successful!", Toast.LENGTH_LONG).show();
 

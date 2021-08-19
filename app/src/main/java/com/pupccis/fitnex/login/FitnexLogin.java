@@ -2,12 +2,12 @@ package com.pupccis.fitnex.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,19 +18,32 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.User;
+import com.pupccis.fitnex.utilities.Constants;
+import com.pupccis.fitnex.utilities.PreferenceManager;
 import com.pupccis.fitnex.video_conferencing.VideoActivityDemo;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
     private EditText editEmail, editPassword;
     private Button loginUser;
     private FirebaseAuth mAuth;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -87,9 +100,30 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful() && task.getResult() != null){
-                            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User: "+id, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(FitnexLogin.this, VideoActivityDemo.class));
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
+                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            Query data = mDatabase.child(userId);
+
+                            data.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.d("snapshot:", snapshot.child("name").toString());
+                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_ID, true);
+                                    preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString());
+                                    preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).toString());
+                                    preferenceManager.putString(Constants.KEY_AGE, snapshot.child(Constants.KEY_AGE).toString());
+                                    preferenceManager.putString(Constants.KEY_USER_ID, snapshot.child(Constants.KEY_USER_ID).toString());
+                                    Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
 
                         }
                         else{
