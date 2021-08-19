@@ -1,8 +1,10 @@
 package com.pupccis.fitnex;
 
-public class User {
+import java.io.Serializable;
 
-    public String name, age, email;
+public class User implements Serializable {
+
+    public String name, age, email, token;
 
     public User(){
 

@@ -105,16 +105,16 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                             Query data = mDatabase.child(userId);
 
                             data.addValueEventListener(new ValueEventListener() {
+
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     Log.d("snapshot:", snapshot.child("name").toString());
                                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_ID, true);
                                     preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString());
-                                    preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).toString());
-                                    preferenceManager.putString(Constants.KEY_AGE, snapshot.child(Constants.KEY_AGE).toString());
-                                    preferenceManager.putString(Constants.KEY_USER_ID, snapshot.child(Constants.KEY_USER_ID).toString());
-                                    Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
+                                    preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).getValue().toString());
+                                    preferenceManager.putString(Constants.KEY_AGE, snapshot.child(Constants.KEY_AGE).getValue().toString());
+                                    preferenceManager.putString(Constants.KEY_USER_ID, userId);
+
                                 }
 
                                 @Override
@@ -123,6 +123,8 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 }
                             });
 
+                            Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
 
 
                         }
