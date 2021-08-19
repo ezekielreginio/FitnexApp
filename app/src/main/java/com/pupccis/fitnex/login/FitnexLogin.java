@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.video_conferencing.VideoActivityDemo;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
@@ -89,7 +90,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                         if(task.isSuccessful() && task.getResult() != null){
                             String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User: "+id, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(FitnexLogin.this, VideoActivityDemo.class));
+                            startActivity(new Intent(FitnexLogin.this, TrainerDashboard.class));
 
                         }
                         else{
