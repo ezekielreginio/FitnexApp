@@ -29,7 +29,7 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Here’s\nyour first\nstep to \nFitness "
+                    android:text="Start\nyour FitNex\ncareer \nwith us "
                     android:textColor="@color/whiteTextColor" />
 
                 <ImageView
@@ -54,25 +54,21 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputName"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-                        <EditText
-                            android:id="@+id/editTextRegisterName"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Name"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputAge"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
-                        <EditText
-                            android:id="@+id/editTextRegisterAge"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Age"/>
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Provide your email address and our team will send the requirements to you."
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -89,54 +85,18 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-                        <EditText
-                            android:id="@+id/editTextRegisterPassword"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Password"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/buttonApplyButton"
                         style="@style/loginButton"
-                        app:spinning_bar_width="4dp"
-                        app:spinning_bar_color="#FFF"
-                        android:text="Register"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="Apply"
                         app:initialCornerAngle="27dp"
-                        app:spinning_bar_padding="6dp"/>
-
-                    <TextView
-                        style="@style/parent"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:text="Already have an account?"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:onClick="onLoginClick"/>
-
-                    <TextView
-                        style="@style/parent"
-                        android:onClick="onLoginClick"
-                        android:text="OR"
-                        android:textAlignment="center"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textViewRegisterTrainerApplication"
-                        style="@style/parent"
-                        android:onClick="onLoginClick"
-                        android:text="Want to be a trainer?"
-                        android:textAlignment="center"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        app:spinning_bar_color="#FFF"
+                        app:spinning_bar_padding="6dp"
+                        app:spinning_bar_width="4dp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -155,34 +115,6 @@
                     android:background="@color/whiteTextColor"
                     android:layout_weight="3"/>
 
-                <TextView
-                    style="@style/viewParent.headerText.NoMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/whiteTextColor"
-                    android:text="Use other Methods"
-                    android:layout_weight="6"
-                    android:textSize="12sp"
-                    android:textAlignment="center"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/whiteTextColor"
-                    android:layout_weight="3"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_facebook"/>
             </LinearLayout>
 
 

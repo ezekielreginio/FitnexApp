@@ -27,7 +27,7 @@ import com.pupccis.fitnex.User;
 
 public class FitnexRegister extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private EditText editName, editAge, editEmail, editPassword;
-    private TextView registerUser;
+    private TextView registerUser, registerTrainer;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +43,13 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
         //Register Activity Object Casting
         editName = (EditText) findViewById(R.id.editTextRegisterName);
         editAge = (EditText) findViewById(R.id.editTextRegisterAge);
-        editEmail = (EditText) findViewById(R.id.editTextRegisterEmail);
+        editEmail = (EditText) findViewById(R.id.editTextApplicationEmail);
         editPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
 
-        registerUser = (Button) findViewById(R.id.buttonRegisterButton);
+        registerUser = (Button) findViewById(R.id.buttonApplyButton);
         registerUser.setOnClickListener(this);
+        registerTrainer = (TextView) findViewById(R.id.textViewRegisterTrainerApplication);
+        registerTrainer.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
     }
     public void changeStatusBarColor(){
@@ -81,8 +83,11 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case(R.id.buttonRegisterButton):
+            case(R.id.buttonApplyButton):
                 registerUser();
+                break;
+            case(R.id.textViewRegisterTrainerApplication):
+                startActivity(new Intent(this, FitnexTrainerApplication.class));
         }
     }
 

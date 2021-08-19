@@ -18,9 +18,16 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".main.trainer.TrainerDashboard"
+            android:exported="true" />
+        <activity
+            android:name=".login.FitnexTrainerApplication"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".video_conferencing.VideoActivityDemo"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".login.FitnexRegister"
             android:exported="true"
