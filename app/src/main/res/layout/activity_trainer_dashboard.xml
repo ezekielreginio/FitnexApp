@@ -179,7 +179,8 @@
         android:translationZ="1dp"
         android:orientation="vertical"
         android:background="@drawable/ic_circle_add_button"
-        android:transitionName="addProgramTransition"
+
+
         >
 
         <ImageView
@@ -198,7 +199,8 @@
         android:background="@drawable/ic_trainer_menubar"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/activityTrainerDashboard"
-        tools:layout_editor_absoluteY="671dp">
+        tools:layout_editor_absoluteY="671dp"
+        android:transitionName="addProgramTransition">
 
 
     </LinearLayout>

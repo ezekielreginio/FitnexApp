@@ -19,7 +19,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".main.trainer.AddProgram"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Transparent"
+            android:background="#00000000"/>
         <activity
             android:name=".main.trainer.TrainerDashboard"
             android:exported="true"
