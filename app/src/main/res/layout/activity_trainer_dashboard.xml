@@ -36,9 +36,11 @@
         android:layout_width="80dp"
         android:layout_height="51dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/cardViewCalendar"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
@@ -99,11 +101,13 @@
         android:id="@+id/cardView"
         android:layout_width="80dp"
         android:layout_height="51dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="30dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/cardViewCalendar"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <ImageView
@@ -164,7 +168,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/trainerDashboardAddProgramButton"
+        android:id="@+id/linearLayoutAddProgramButton"
         android:layout_gravity="center"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -174,10 +178,12 @@
         app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"
         android:translationZ="1dp"
         android:orientation="vertical"
-        android:background="@drawable/ic_circle_add_button">
+        android:background="@drawable/ic_circle_add_button"
+        android:transitionName="addProgramTransition"
+        >
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/AddProgramButton"
             android:layout_gravity="center"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -187,7 +193,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutTrainerDashboardNavbar"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/ic_trainer_menubar"
         android:orientation="vertical"

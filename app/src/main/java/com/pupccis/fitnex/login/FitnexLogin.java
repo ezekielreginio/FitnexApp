@@ -49,7 +49,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
     public void onLoginClick(View View){
         startActivity(new Intent(this, FitnexRegister.class));
         overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
-        overridePendingTransition(R.anim.);
+
 
     }
 
