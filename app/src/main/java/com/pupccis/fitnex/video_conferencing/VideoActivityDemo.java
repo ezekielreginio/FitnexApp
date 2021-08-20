@@ -160,7 +160,10 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
             Toast.makeText(VideoActivityDemo.this, user.getName()+" is not available for meeting", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(VideoActivityDemo.this, "Starting a Video Meeting with "+user.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+            intent.putExtra("user", user);
+            intent.putExtra("type", "video");
+            startActivity(intent);
         }
     }
 

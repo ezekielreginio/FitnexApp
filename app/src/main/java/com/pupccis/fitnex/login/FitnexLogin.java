@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +38,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
     private Button loginUser;
     private FirebaseAuth mAuth;
     private PreferenceManager preferenceManager;
+    private TextView name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +114,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     Log.d("snapshot:", snapshot.child("name").toString());
                                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_ID, true);
-                                    preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString());
+                                    preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
                                     preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).getValue().toString());
                                     preferenceManager.putString(Constants.KEY_AGE, snapshot.child(Constants.KEY_AGE).getValue().toString());
                                     preferenceManager.putString(Constants.KEY_USER_ID, userId);

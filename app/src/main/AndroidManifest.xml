@@ -18,9 +18,19 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".video_conferencing.OutgoingInvitationActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".video_conferencing.IncomingInvitationActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".main.trainer.TrainerDashboard"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".login.FitnexTrainerApplication"
             android:exported="true"
