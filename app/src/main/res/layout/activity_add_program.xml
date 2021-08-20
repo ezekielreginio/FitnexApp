@@ -14,35 +14,35 @@
         android:background="@drawable/ic_trainer_menubar"
         android:orientation="vertical"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toTopOf="@+id/activityAddProgram"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="671dp">
 
 
-        <LinearLayout
-            android:id="@+id/linearLayoutAddProgramButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_circle_add_button"
-            android:orientation="vertical"
-            android:transitionName="addProgramTransition"
-            android:translationZ="1dp"
-            android:layout_marginBottom="100dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayoutTrainerDashboardNavbar">
-
-            <!--        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
-            <!--        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
-            <!--        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"-->
-            <!--        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"-->
-
-
-            <ImageView
-                android:id="@+id/AddProgramButton"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic__add_icon" />
-
-        </LinearLayout>
     </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayoutAddProgramButton"-->
+<!--        app:layout_constraintRight_toRightOf=""-->
+<!--        android:layout_width="75dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:background="@drawable/ic_circle_add_button"-->
+<!--        android:orientation="vertical"-->
+<!--        android:transitionName="addProgramTransition"-->
+<!--        android:translationZ="1dp"-->
+<!--        >-->
+<!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@+id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+<!--        &lt;!&ndash;        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+<!--        &lt;!&ndash;        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+<!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+<!--        &lt;!&ndash;        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+
+
+<!--        <ImageView-->
+<!--            android:id="@+id/AddProgramButton"-->
+<!--            android:layout_width="75dp"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:srcCompat="@drawable/ic__add_icon" />-->
+
+<!--    </LinearLayout>-->
 </RelativeLayout>
