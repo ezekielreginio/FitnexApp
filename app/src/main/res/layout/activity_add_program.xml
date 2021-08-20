@@ -10,10 +10,10 @@
     <LinearLayout
         android:id="@+id/linearLayoutTrainerDashboardNavbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/ic_trainer_menubar"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_marginTop="30dp"
+        android:background="@drawable/ic_slideup_bg"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="671dp">
 
