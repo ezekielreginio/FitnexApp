@@ -86,14 +86,20 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
+                    String token = null;
+                    try {
+                        token = dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString();
+                    }
+                    catch (Exception e){
 
+                    }
                     if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getValue())){
                         continue;
                     }
                     User user = new User();
                     user.setName(dataSnapshot.child(Constants.KEY_FULLNAME).getValue().toString());
                     user.setEmail(dataSnapshot.child(Constants.KEY_EMAIL).getValue().toString());
-                    user.setToken(dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString());
+         //           user.setToken(dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString());
                     users.add(user);
                 }
                 if(users.size() > 0){
