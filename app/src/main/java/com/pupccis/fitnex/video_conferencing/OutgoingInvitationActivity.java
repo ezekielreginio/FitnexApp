@@ -40,11 +40,15 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        Task<String> token = FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 inviterToken = task.getResult();
             }
+//            @Override
+//            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
+//                sendFCMTokenToDatabase(task.getResult().getToken());
+//            }
         });
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
