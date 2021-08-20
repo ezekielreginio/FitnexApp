@@ -40,7 +40,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
+        Task<String> token = FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 inviterToken = task.getResult();
