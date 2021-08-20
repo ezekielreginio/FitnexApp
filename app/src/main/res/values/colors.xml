@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#26355E</color>
     <color name="themeColor">#26355E</color>
-
+    <color name="RedColor">#BD1919</color>
     <color name="darkTextColor">#020000</color>
     <color name="contentTextColor">#020000</color>
     <color name="register_bk_color">#26355E</color>

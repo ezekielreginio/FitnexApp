@@ -67,6 +67,9 @@ dependencies {
     //Cardview Material
     implementation "androidx.cardview:cardview:1.0.0"
 
+    //Lottie
+    implementation 'com.airbnb.android:lottie:3.4.0'
+
     //Firestore
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-firestore:23.0.3'
