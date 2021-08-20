@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.main.trainer.TrainerDashboard;
+import com.pupccis.fitnex.utilities.Constants;
+import com.pupccis.fitnex.utilities.PreferenceManager;
 import com.pupccis.fitnex.video_conferencing.VideoActivityDemo;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
