@@ -28,6 +28,7 @@ public class AddProgram extends AppCompatActivity {
 
     private void rotateAnimation() {
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        imageView.setImageResource(R.drawable.ic_close_button);
         imageView.startAnimation(rotateAnimation);
     }
 

@@ -3,8 +3,8 @@
 <rotate
     android:pivotY="50%"
     android:pivotX="50%"
-    android:toDegrees="395"
+    android:toDegrees="360"
     android:fromDegrees="0"
-    android:duration="1000"
+    android:duration="1500"
     ></rotate>
 </set>

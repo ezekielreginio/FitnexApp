@@ -59,15 +59,16 @@
             android:layout_gravity="center"
             android:layout_marginBottom="656dp"
             android:background="@drawable/ic_circle_add_button"
-            android:visibility="gone"
+
             app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
             <ImageView
                 android:id="@+id/closeAddProgramButton"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic__add_icon" />
+                android:layout_marginTop="7.5dp"
+                android:layout_marginLeft="7.5dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center" />
 
         </RelativeLayout>
     </LinearLayout>
