@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activityAddProgram"
     tools:context=".main.trainer.AddProgram">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutTrainerDashboardNavbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_trainer_menubar"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="@+id/activityAddProgram"
+        tools:layout_editor_absoluteY="671dp">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAddProgramButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_circle_add_button"
+            android:orientation="vertical"
+            android:transitionName="addProgramTransition"
+            android:translationZ="1dp"
+            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayoutTrainerDashboardNavbar">
+
+            <!--        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
+            <!--        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
+            <!--        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"-->
+            <!--        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"-->
+
+
+            <ImageView
+                android:id="@+id/AddProgramButton"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic__add_icon" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
