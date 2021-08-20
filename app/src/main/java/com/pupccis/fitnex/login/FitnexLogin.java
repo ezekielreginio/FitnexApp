@@ -68,7 +68,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch(view.getId()){
             case(R.id.buttonLoginButton):
-                Toast.makeText(FitnexLogin.this, "nagclick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FitnexLogin.this, "clcik", Toast.LENGTH_SHORT).show();
                 userLogin();
                 break;
         }
