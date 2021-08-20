@@ -143,7 +143,8 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
         Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
-        mDatabase.child(preferenceManager.getString(Constants.KEY_USER_ID)).child(Constants.KEY_FCM_TOKEN).setValue(token);
+        Log.d("USer ID:", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constants.KEY_FCM_TOKEN).setValue(token);
         //DocumentReference documentReference = mDatabase.collection
         //mDatabase.update
     }
