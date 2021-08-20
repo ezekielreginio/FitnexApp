@@ -99,7 +99,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                     User user = new User();
                     user.setName(dataSnapshot.child(Constants.KEY_FULLNAME).getValue().toString());
                     user.setEmail(dataSnapshot.child(Constants.KEY_EMAIL).getValue().toString());
-         //           user.setToken(dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString());
+                    user.setToken(token);
                     users.add(user);
                 }
                 if(users.size() > 0){
