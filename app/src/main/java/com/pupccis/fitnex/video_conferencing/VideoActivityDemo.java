@@ -3,13 +3,13 @@ package com.pupccis.fitnex.video_conferencing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +44,8 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     private List<User> users;
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
-    private ProgressBar usersProgressBar;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +68,28 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
         RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);
         textErrorMessage = findViewById(R.id.textErrorMessage);
-        usersProgressBar = findViewById(R.id.usersProgressBar);
 
         users = new ArrayList<>();
         usersAdapter = new UsersAdapter(users, this);
         usersRecyclerView.setAdapter(usersAdapter);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this::getUsers);
 
         getUsers();
 
     }
 
     private void getUsers(){
-        usersProgressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
 
         mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                swipeRefreshLayout.setRefreshing(false);
+                users.clear();
                 for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
                     String token = null;
                     try {
@@ -110,7 +115,6 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                     textErrorMessage.setVisibility(View.VISIBLE);
                 }
 
-                usersProgressBar.setVisibility(View.GONE);
             }
         });
     }
