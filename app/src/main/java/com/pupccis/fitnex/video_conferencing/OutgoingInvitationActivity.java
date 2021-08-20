@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.installations.InstallationTokenResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.User;
 import com.pupccis.fitnex.utilities.Constants;
@@ -39,10 +40,10 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        Task<InstallationTokenResult> token = FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(new OnCompleteListener<InstallationTokenResult>() {
+        Task<String> token = FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
-            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
-                inviterToken = task.getResult().getToken();
+            public void onComplete(@NonNull Task<String> task) {
+                inviterToken = task.getResult();
             }
         });
 

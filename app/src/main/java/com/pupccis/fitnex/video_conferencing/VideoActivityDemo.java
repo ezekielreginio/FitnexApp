@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.installations.InstallationTokenResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.API.adapter.UsersAdapter;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.User;
@@ -59,11 +60,15 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
 
 
-        Task<InstallationTokenResult> token = FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(new OnCompleteListener<InstallationTokenResult>() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
-            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
-                sendFCMTokenToDatabase(task.getResult().getToken());
+            public void onComplete(@NonNull Task<String> task) {
+                sendFCMTokenToDatabase(task.getResult());
             }
+//            @Override
+//            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
+//                sendFCMTokenToDatabase(task.getResult().getToken());
+//            }
         });
 
         RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);
