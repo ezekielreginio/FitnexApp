@@ -6,9 +6,9 @@
     tools:context=".main.trainer.fragment.ProgramsFragment">
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/buttonTrainerDashboardAddSchedule"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:text="Button"
         android:layout_gravity="center"/>
 </FrameLayout>
