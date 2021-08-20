@@ -34,7 +34,7 @@ public class MessagingService extends FirebaseMessagingService {
                 );
 
                 intent.putExtra(
-                        "first_name",
+                        "fullname",
                         remoteMessage.getData().get("first_name")
                 );
 

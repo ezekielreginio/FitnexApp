@@ -45,10 +45,6 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<String> task) {
                 inviterToken = task.getResult();
             }
-//            @Override
-//            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
-//                sendFCMTokenToDatabase(task.getResult().getToken());
-//            }
         });
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);

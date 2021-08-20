@@ -46,6 +46,8 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
 
+    private String token;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -63,7 +65,10 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
+                token = task.getResult();
+
                 sendFCMTokenToDatabase(task.getResult());
+                getUsers();
             }
 //            @Override
 //            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
@@ -81,7 +86,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this::getUsers);
 
-        getUsers();
+
 
     }
 
@@ -135,6 +140,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     }
 
     private void sendFCMTokenToDatabase(String token){
+        Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
         mDatabase.child(preferenceManager.getString(Constants.KEY_USER_ID)).child(Constants.KEY_FCM_TOKEN).setValue(token);
