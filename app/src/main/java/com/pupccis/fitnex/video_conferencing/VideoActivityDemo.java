@@ -3,13 +3,13 @@ package com.pupccis.fitnex.video_conferencing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.installations.InstallationTokenResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.API.adapter.UsersAdapter;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.User;
@@ -44,7 +45,10 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     private List<User> users;
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
-    private ProgressBar usersProgressBar;
+
+    private String token;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,42 +62,60 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
 
 
-        Task<InstallationTokenResult> token = FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener(new OnCompleteListener<InstallationTokenResult>() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener <String>() {
             @Override
-            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
-                sendFCMTokenToDatabase(task.getResult().getToken());
+            public void onComplete(@NonNull Task<String> task) {
+                token = task.getResult();
+
+                sendFCMTokenToDatabase(task.getResult());
+                getUsers();
             }
+//            @Override
+//            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
+//                sendFCMTokenToDatabase(task.getResult().getToken());
+//            }
         });
 
         RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);
         textErrorMessage = findViewById(R.id.textErrorMessage);
-        usersProgressBar = findViewById(R.id.usersProgressBar);
 
         users = new ArrayList<>();
         usersAdapter = new UsersAdapter(users, this);
         usersRecyclerView.setAdapter(usersAdapter);
 
-        getUsers();
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this::getUsers);
+
+
 
     }
 
     private void getUsers(){
-        usersProgressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
 
         mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                swipeRefreshLayout.setRefreshing(false);
+                users.clear();
                 for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
+                    String token = null;
+                    try {
+                        token = dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString();
+                    }
+                    catch (Exception e){
 
-                    if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getValue())){
+                    }
+                    if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getKey())){
                         continue;
                     }
+
                     User user = new User();
                     user.setName(dataSnapshot.child(Constants.KEY_FULLNAME).getValue().toString());
                     user.setEmail(dataSnapshot.child(Constants.KEY_EMAIL).getValue().toString());
-                    user.setToken(dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString());
+                    user.setToken(token);
                     users.add(user);
                 }
                 if(users.size() > 0){
@@ -104,7 +126,6 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                     textErrorMessage.setVisibility(View.VISIBLE);
                 }
 
-                usersProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -120,9 +141,11 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     }
 
     private void sendFCMTokenToDatabase(String token){
+        Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
-        mDatabase.child(preferenceManager.getString(Constants.KEY_USER_ID)).child(Constants.KEY_FCM_TOKEN).setValue(token);
+        Log.d("USer ID:", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constants.KEY_FCM_TOKEN).setValue(token);
         //DocumentReference documentReference = mDatabase.collection
         //mDatabase.update
     }
@@ -150,7 +173,10 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
             Toast.makeText(VideoActivityDemo.this, user.getName()+" is not available for meeting", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(VideoActivityDemo.this, "Starting a Video Meeting with "+user.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+            intent.putExtra("user", user);
+            intent.putExtra("type", "video");
+            startActivity(intent);
         }
     }
 

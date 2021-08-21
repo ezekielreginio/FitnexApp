@@ -23,6 +23,15 @@
             android:exported="true"
             android:theme="@style/Theme.Transparent"
             android:background="#00000000"/>
+            android:name=".video_conferencing.OutgoingInvitationActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".video_conferencing.IncomingInvitationActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".main.trainer.TrainerDashboard"
             android:exported="true"
@@ -51,7 +60,7 @@
         </activity>
 
         <service
-            android:name=".firebase.MessagingService"
+            android:name=".API.firebase.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
