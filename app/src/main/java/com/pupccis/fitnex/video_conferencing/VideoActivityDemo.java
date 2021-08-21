@@ -108,9 +108,10 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                     catch (Exception e){
 
                     }
-                    if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getValue())){
+                    if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getKey())){
                         continue;
                     }
+
                     User user = new User();
                     user.setName(dataSnapshot.child(Constants.KEY_FULLNAME).getValue().toString());
                     user.setEmail(dataSnapshot.child(Constants.KEY_EMAIL).getValue().toString());

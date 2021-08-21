@@ -70,6 +70,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         imageStopInvitation.setOnClickListener(view -> {
             if(user != null){
                 cancelInvitation(user.getToken());
+                finish();
             }
         });
 

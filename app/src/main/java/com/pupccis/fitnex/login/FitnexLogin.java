@@ -112,7 +112,6 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Log.d("snapshot:", snapshot.child("name").toString());
                                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_ID, true);
                                     preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
                                     preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).getValue().toString());
