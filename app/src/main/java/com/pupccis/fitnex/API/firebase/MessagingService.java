@@ -24,6 +24,7 @@ public class MessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         String type = remoteMessage.getData().get(Constants.REMOTE_MSG_TYPE);
+
         Log.d("Nag accept", remoteMessage.getData().toString());
         Log.d("Type", type);
 
@@ -55,7 +56,10 @@ public class MessagingService extends FirebaseMessagingService {
                         Constants.REMOTE_MSG_INVITER_TOKEN,
                         remoteMessage.getData().get(Constants.REMOTE_MSG_INVITER_TOKEN)
                 );
-
+                intent.putExtra(
+                        Constants.REMOTE_MSG_MEETING_ROOM,
+                        remoteMessage.getData().get(Constants.REMOTE_MSG_MEETING_ROOM)
+                );
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
