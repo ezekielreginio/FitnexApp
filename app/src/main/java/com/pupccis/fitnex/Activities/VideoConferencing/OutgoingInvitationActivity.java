@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.video_conferencing;
+package com.pupccis.fitnex.Activities.VideoConferencing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,22 +10,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.installations.FirebaseInstallations;
-import com.google.firebase.installations.InstallationTokenResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.User;
-import com.pupccis.fitnex.utilities.Constants;
-import com.pupccis.fitnex.utilities.PreferenceManager;
-import com.pupccis.fitnex.video_conferencing.network.ApiClient;
-import com.pupccis.fitnex.video_conferencing.network.ApiService;
+import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;
+import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiService;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;

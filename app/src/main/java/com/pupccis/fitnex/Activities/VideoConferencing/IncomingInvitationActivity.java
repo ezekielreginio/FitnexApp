@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.video_conferencing;
+package com.pupccis.fitnex.Activities.VideoConferencing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.utilities.Constants;
-import com.pupccis.fitnex.video_conferencing.network.ApiClient;
-import com.pupccis.fitnex.video_conferencing.network.ApiService;
+import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;
+import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiService;
 
-import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
 import org.json.JSONArray;

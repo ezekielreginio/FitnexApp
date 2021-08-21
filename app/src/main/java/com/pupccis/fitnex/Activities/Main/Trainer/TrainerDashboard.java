@@ -1,29 +1,21 @@
-package com.pupccis.fitnex.main.trainer;
+package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.FragmentAdapter;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.login.FitnexLogin;
-import com.pupccis.fitnex.login.FitnexRegister;
-import com.pupccis.fitnex.video_conferencing.VideoActivityDemo;
+import com.pupccis.fitnex.Activities.Login.FitnexRegister;
+import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
@@ -102,6 +94,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.cardViewCalls:
                 startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
                 break;

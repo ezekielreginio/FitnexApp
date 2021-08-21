@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.login;
+package com.pupccis.fitnex.Activities.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.User;
-import com.pupccis.fitnex.utilities.Constants;
+import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Utilities.Constants;
 
 public class FitnexRegister extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private EditText editName, editAge, editEmail, editPassword;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_trainer_bg"
-    tools:context=".main.trainer.fragment.ProgramsFragment">
+    tools:context=".Activities.Main.Trainer.fragment.ProgramsFragment">
 
     <Button
         android:id="@+id/buttonTrainerDashboardAddProgram"

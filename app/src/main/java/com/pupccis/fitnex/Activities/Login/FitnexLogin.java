@@ -1,13 +1,11 @@
-package com.pupccis.fitnex.login;
+package com.pupccis.fitnex.Activities.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +17,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.main.trainer.TrainerDashboard;
-import com.pupccis.fitnex.utilities.Constants;
-import com.pupccis.fitnex.utilities.PreferenceManager;
-import com.pupccis.fitnex.video_conferencing.VideoActivityDemo;
+import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
+import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
     private EditText editEmail, editPassword;

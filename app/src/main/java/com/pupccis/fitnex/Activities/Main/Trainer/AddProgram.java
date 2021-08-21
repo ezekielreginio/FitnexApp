@@ -1,17 +1,14 @@
-package com.pupccis.fitnex.main.trainer;
+package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Transition;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 
 import com.pupccis.fitnex.R;
 

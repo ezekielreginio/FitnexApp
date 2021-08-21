@@ -1,4 +1,4 @@
-package com.pupccis.fitnex;
+package com.pupccis.fitnex.Models;
 
 import java.io.Serializable;
 

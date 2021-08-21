@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.login;
+package com.pupccis.fitnex.Activities.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.pupccis.fitnex.API.JavaMailAPI;
 import com.pupccis.fitnex.API.MailBody;
+import com.pupccis.fitnex.Activities.Login.FitnexLogin;
 import com.pupccis.fitnex.R;
 
 public class FitnexTrainerApplication extends AppCompatActivity {

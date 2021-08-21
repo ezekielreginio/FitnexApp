@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.utilities;
+package com.pupccis.fitnex.Utilities;
 
 import java.util.HashMap;
 

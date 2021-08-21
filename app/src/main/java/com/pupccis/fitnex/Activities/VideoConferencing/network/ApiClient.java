@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.video_conferencing.network;
+package com.pupccis.fitnex.Activities.VideoConferencing.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;

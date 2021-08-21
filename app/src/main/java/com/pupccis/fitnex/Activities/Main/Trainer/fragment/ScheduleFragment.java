@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.main.trainer.fragment;
+package com.pupccis.fitnex.Activities.Main.Trainer.fragment;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.pupccis.fitnex.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProgramsFragment#newInstance} factory method to
+ * Use the {@link ScheduleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProgramsFragment extends Fragment {
+public class ScheduleFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class ProgramsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProgramsFragment() {
+    public ScheduleFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class ProgramsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProgramsFragment.
+     * @return A new instance of fragment ScheduleFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProgramsFragment newInstance(String param1, String param2) {
-        ProgramsFragment fragment = new ProgramsFragment();
+    public static ScheduleFragment newInstance(String param1, String param2) {
+        ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class ProgramsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_programs, container, false);
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 }

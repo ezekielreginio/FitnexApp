@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.video_conferencing;
+package com.pupccis.fitnex.Activities.VideoConferencing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,22 +20,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.installations.FirebaseInstallations;
-import com.google.firebase.installations.InstallationTokenResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.API.adapter.UsersAdapter;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.User;
-import com.pupccis.fitnex.login.FitnexLogin;
-import com.pupccis.fitnex.utilities.Constants;
-import com.pupccis.fitnex.utilities.PreferenceManager;
-import com.pupccis.fitnex.video_conferencing.listeners.UsersListener;
+import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Activities.Login.FitnexLogin;
+import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class VideoActivityDemo extends AppCompatActivity implements View.OnClickListener, UsersListener {
     Button btnTest;

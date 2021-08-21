@@ -8,8 +8,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.pupccis.fitnex.utilities.Constants;
-import com.pupccis.fitnex.video_conferencing.IncomingInvitationActivity;
+import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Activities.VideoConferencing.IncomingInvitationActivity;
 
 public class MessagingService extends FirebaseMessagingService {
 
