@@ -64,9 +64,6 @@ dependencies {
     //Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    //Cardview Material
-    implementation "androidx.cardview:cardview:1.0.0"
-
     //Lottie
     implementation 'com.airbnb.android:lottie:3.4.0'
 

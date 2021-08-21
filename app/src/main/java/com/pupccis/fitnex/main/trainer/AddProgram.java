@@ -8,8 +8,10 @@ import android.transition.Transition;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import com.pupccis.fitnex.R;
 
@@ -17,6 +19,7 @@ public class AddProgram extends AppCompatActivity {
     Animation rotateAnimation;
     ImageView imageView;
     RelativeLayout closeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class AddProgram extends AppCompatActivity {
                 startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
             }
         });
+
         rotateAnimation();
         closeButton.setVisibility(View.VISIBLE);
     }

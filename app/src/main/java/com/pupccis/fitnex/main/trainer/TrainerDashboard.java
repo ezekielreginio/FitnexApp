@@ -29,6 +29,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     ViewPager2 viewPager2;
     FragmentAdapter fragmentAdapter;
     LinearLayout programPanel, addButton;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         FragmentManager fm = getSupportFragmentManager();
         fragmentAdapter = new FragmentAdapter(fm, getLifecycle());
         viewPager2.setAdapter(fragmentAdapter);
-
+        intent = new Intent(TrainerDashboard.this, AddProgram.class);
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Trainees"));
@@ -52,6 +53,16 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
+                int pos = tab.getPosition();
+                if(pos==0){
+                      intent = new Intent(TrainerDashboard.this, AddProgram.class);
+                }
+                else if(pos==1){
+                      intent = new Intent(TrainerDashboard.this, FitnexRegister.class);
+                }
+                else{
+                    intent = new Intent(TrainerDashboard.this, AddProgram.class);
+                }
             }
 
             @Override
@@ -82,7 +93,8 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 //                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(TrainerDashboard.this, programPanel, ViewCompat.getTransitionName(programPanel));
 //                startActivity(intent, optionsCompat.toBundle());
 //                addButton.setVisibility(View.GONE);
-                startActivity(new Intent(this, AddProgram.class));
+
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
 

@@ -11,6 +11,7 @@ import com.pupccis.fitnex.main.trainer.fragment.ScheduleFragment;
 import com.pupccis.fitnex.main.trainer.fragment.TraineesFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {
+
     public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
@@ -31,4 +32,8 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
+
+
 }
+
+
