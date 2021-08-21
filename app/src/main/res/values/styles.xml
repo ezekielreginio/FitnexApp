@@ -1,5 +1,15 @@
 <resources>
 
+    <string-array name="spinnerDescription">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
         <style name="Theme.Transparent" parent="Theme.AppCompat">
             <item name="android:windowIsTranslucent">true</item>
             <item name="android:windowBackground">@android:color/transparent</item>

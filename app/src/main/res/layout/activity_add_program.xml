@@ -37,7 +37,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_gravity="top|center"
                 app:cardBackgroundColor="@color/whiteTextColor"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="50dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,11 +45,11 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputName"
+
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
-                            android:id="@+id/editTextRegisterName"
+                            android:id="@+id/editTextRegisterProgramName"
                             style="@style/modifiedEditText"
                             android:inputType="textPersonName"
                             android:maxLines="1"
@@ -57,19 +57,19 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputAge"
+
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
-                        <EditText
-                            android:id="@+id/editTextRegisterAge"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Age"/>
+
+                        <Spinner
+                            android:id="@+id/spinnerDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputEmail"
+
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
@@ -80,7 +80,7 @@
                             android:hint="Email"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputPassword"
+
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
@@ -92,7 +92,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                        android:id="@+id/buttonApplyButton"
+
                         style="@style/loginButton"
                         app:spinning_bar_width="4dp"
                         app:spinning_bar_color="#FFF"
