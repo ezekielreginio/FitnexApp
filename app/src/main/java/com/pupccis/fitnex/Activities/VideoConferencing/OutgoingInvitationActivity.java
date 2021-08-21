@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Utilities.PreferenceManager;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiService;
@@ -99,22 +99,22 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             JSONObject body = new JSONObject();
             JSONObject data = new JSONObject();
 
-            data.put(Constants.REMOTE_MSG_TYPE, Constants.REMOTE_MSG_INVITATION);
-            data.put(Constants.REMOTE_MSG_MEETING_TYPE, meetingType);
-            data.put("first_name", preferenceManager.getString(Constants.KEY_FULLNAME));
+            data.put(VideoConferencingConstants.REMOTE_MSG_TYPE, VideoConferencingConstants.REMOTE_MSG_INVITATION);
+            data.put(VideoConferencingConstants.REMOTE_MSG_MEETING_TYPE, meetingType);
+            data.put("first_name", preferenceManager.getString(VideoConferencingConstants.KEY_FULLNAME));
             data.put("last_name", null);
-            data.put(Constants.KEY_EMAIL, preferenceManager.getString(Constants.KEY_EMAIL));
-            data.put(Constants.REMOTE_MSG_INVITER_TOKEN, inviterToken);
+            data.put(VideoConferencingConstants.KEY_EMAIL, preferenceManager.getString(VideoConferencingConstants.KEY_EMAIL));
+            data.put(VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN, inviterToken);
 
             meetingRoom =
-                    preferenceManager.getString(Constants.KEY_USER_ID) + "_"+
+                    preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID) + "_"+
                             UUID.randomUUID().toString().substring(0,5);
-            data.put(Constants.REMOTE_MSG_MEETING_ROOM, meetingRoom);
+            data.put(VideoConferencingConstants.REMOTE_MSG_MEETING_ROOM, meetingRoom);
 
-            body.put(Constants.REMOTE_MSG_DATA, data);
-            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+            body.put(VideoConferencingConstants.REMOTE_MSG_DATA, data);
+            body.put(VideoConferencingConstants.REMOTE_MSG_REGISTRATION_IDS, tokens);
 
-            sendRemoteMessage(body.toString(), Constants.REMOTE_MSG_INVITATION);
+            sendRemoteMessage(body.toString(), VideoConferencingConstants.REMOTE_MSG_INVITATION);
         }
         catch (Exception exception){
             Toast.makeText(OutgoingInvitationActivity.this, exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -123,15 +123,15 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
     private void sendRemoteMessage(String remoteMessageBody, String type){
         ApiClient.getClient().create(ApiService.class).sendRemoteMessage(
-                Constants.getRemoteMessageHeaders(), remoteMessageBody
+                VideoConferencingConstants.getRemoteMessageHeaders(), remoteMessageBody
         ).enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    if(type.equals(Constants.REMOTE_MSG_INVITATION)){
+                    if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION)){
                         Toast.makeText(OutgoingInvitationActivity.this, "Invitation Sent successfully",Toast.LENGTH_SHORT).show();
                     }
-                    else if (type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)){
+                    else if (type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE)){
                         Toast.makeText(OutgoingInvitationActivity.this, "Invitation Cancelled",Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -157,13 +157,13 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             JSONObject body = new JSONObject();
             JSONObject data = new JSONObject();
 
-            data.put(Constants.REMOTE_MSG_TYPE, Constants.REMOTE_MSG_INVITATION_RESPONSE);
-            data.put(Constants.REMOTE_MSG_INVITATION_RESPONSE, Constants.REMOTE_MSG_INVITATION_CANCELLED);
+            data.put(VideoConferencingConstants.REMOTE_MSG_TYPE, VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE);
+            data.put(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE, VideoConferencingConstants.REMOTE_MSG_INVITATION_CANCELLED);
 
-            body.put(Constants.REMOTE_MSG_DATA, data);
-            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+            body.put(VideoConferencingConstants.REMOTE_MSG_DATA, data);
+            body.put(VideoConferencingConstants.REMOTE_MSG_REGISTRATION_IDS, tokens);
 
-            sendRemoteMessage(body.toString(), Constants.REMOTE_MSG_INVITATION_CANCELLED);
+            sendRemoteMessage(body.toString(), VideoConferencingConstants.REMOTE_MSG_INVITATION_CANCELLED);
         }
         catch (Exception exception){
             Toast.makeText(this, exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -176,9 +176,9 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("Broadcast Received", "Nareceive ang broadcast");
-            String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
+            String type = intent.getStringExtra(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE);
             if(type != null){
-                if(type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)){
+                if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_ACCEPTED)){
                     try {
                         URL serverURL = new URL("https://meet.jit.si");
                         JitsiMeetConferenceOptions conferenceOptions =
@@ -195,7 +195,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                     }
 
                 }
-                else if(type.equals(Constants.REMOTE_MSG_INVITATION_REJECTED)){
+                else if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_REJECTED)){
                     Toast.makeText(context, "Invitation Rejected",Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -208,7 +208,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         super.onStart();
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                 invitationResponseReceiver,
-                new IntentFilter(Constants.REMOTE_MSG_INVITATION_RESPONSE)
+                new IntentFilter(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE)
         );
     }
 

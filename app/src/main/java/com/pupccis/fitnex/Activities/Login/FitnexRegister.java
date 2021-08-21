@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class FitnexRegister extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private EditText editName, editAge, editEmail, editPassword;
@@ -139,9 +139,41 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        /*
+                        Program program = new Program(name, category);
+                        ProgramDao programDao = new programDao();
+
+                        programDao.createProgram(program)
+
+                        programDao class:
+                        public void createProgram(Program program){
+
+                            FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS) -> SELECT * FROM programs
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())                  -> WHERE
+                                    .push()
+                                    .setValue(program);
+                        }
+
+                        Task<Program> programsList = new Task<Program>()
+
+                        Program program1 = new Program("yoga", "cardio")
+                        Program prog2 = new Program("soccer", "sports")
+
+                        programsList.add(program1);
+                        programsList.add(prog2);
+
+                        Programs
+                        jkdhsajkdhasjkdh
+                            -fjsdhfkhdshkf
+                                -Prgram1
+                            -Program2
+                            -Program3
+
+                        * */
+
                         if(task.isSuccessful()){
                             User user = new User(name, age, email);
-                            FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS)
+                            FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user);
 

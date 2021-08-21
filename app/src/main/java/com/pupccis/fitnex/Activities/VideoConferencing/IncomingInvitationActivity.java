@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiService;
 
@@ -38,7 +38,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_incoming_invitation);
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
-        String meetingType = getIntent().getStringExtra(Constants.REMOTE_MSG_MEETING_TYPE);
+        String meetingType = getIntent().getStringExtra(VideoConferencingConstants.REMOTE_MSG_MEETING_TYPE);
 
         if(meetingType != null){
             if(meetingType.equals("video")){
@@ -50,19 +50,19 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         TextView textUsername = findViewById(R.id.textUsername);
         TextView textEmail = findViewById(R.id.textEmail);
 
-        textUsername.setText(getIntent().getStringExtra(Constants.KEY_FULLNAME));
-        textEmail.setText(getIntent().getStringExtra(Constants.KEY_EMAIL));
+        textUsername.setText(getIntent().getStringExtra(VideoConferencingConstants.KEY_FULLNAME));
+        textEmail.setText(getIntent().getStringExtra(VideoConferencingConstants.KEY_EMAIL));
 
         ImageView imageAcceptInvitation = findViewById(R.id.imageAcceptInvitation);
         imageAcceptInvitation.setOnClickListener(view -> sendInvitationResponse(
-                Constants.REMOTE_MSG_INVITATION_ACCEPTED,
-                getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
+                VideoConferencingConstants.REMOTE_MSG_INVITATION_ACCEPTED,
+                getIntent().getStringExtra(VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN)
         ));
 
         ImageView imageRejectInvitation = findViewById(R.id.imageRejectInvitation);
         imageRejectInvitation.setOnClickListener(view -> sendInvitationResponse(
-                Constants.REMOTE_MSG_INVITATION_REJECTED,
-                getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
+                VideoConferencingConstants.REMOTE_MSG_INVITATION_REJECTED,
+                getIntent().getStringExtra(VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN)
         ));
     }
 
@@ -74,11 +74,11 @@ public class IncomingInvitationActivity extends AppCompatActivity {
             JSONObject body = new JSONObject();
             JSONObject data = new JSONObject();
 
-            data.put(Constants.REMOTE_MSG_TYPE, Constants.REMOTE_MSG_INVITATION_RESPONSE);
-            data.put(Constants.REMOTE_MSG_INVITATION_RESPONSE, type);
+            data.put(VideoConferencingConstants.REMOTE_MSG_TYPE, VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE);
+            data.put(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE, type);
 
-            body.put(Constants.REMOTE_MSG_DATA, data);
-            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+            body.put(VideoConferencingConstants.REMOTE_MSG_DATA, data);
+            body.put(VideoConferencingConstants.REMOTE_MSG_REGISTRATION_IDS, tokens);
 
             sendRemoteMessage(body.toString(), type);
         }
@@ -92,12 +92,12 @@ public class IncomingInvitationActivity extends AppCompatActivity {
     private void sendRemoteMessage(String remoteMessageBody, String type){
         Log.d("Message Body", remoteMessageBody);
         ApiClient.getClient().create(ApiService.class).sendRemoteMessage(
-                Constants.getRemoteMessageHeaders(), remoteMessageBody
+                VideoConferencingConstants.getRemoteMessageHeaders(), remoteMessageBody
         ).enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    if(type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)){
+                    if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_ACCEPTED)){
                         //Toast.makeText(IncomingInvitationActivity.this, "Invitation Accepted",Toast.LENGTH_SHORT).show();
                         try {
                             URL serverURL = new URL("https://meet.jit.si");
@@ -105,7 +105,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
                                     new JitsiMeetConferenceOptions.Builder()
                                     .setServerURL(serverURL)
                                     .setWelcomePageEnabled(false)
-                                    .setRoom(getIntent().getStringExtra(Constants.REMOTE_MSG_MEETING_ROOM))
+                                    .setRoom(getIntent().getStringExtra(VideoConferencingConstants.REMOTE_MSG_MEETING_ROOM))
                                     .build();
                             JitsiMeetActivity.launch(IncomingInvitationActivity.this, conferenceOptions);
                             finish();
@@ -136,9 +136,9 @@ public class IncomingInvitationActivity extends AppCompatActivity {
     private BroadcastReceiver invitationResponseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
+            String type = intent.getStringExtra(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE);
             if(type != null){
-                if(type.equals(Constants.REMOTE_MSG_INVITATION_CANCELLED)){
+                if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_CANCELLED)){
                     Toast.makeText(context, "Invitation Cancelled",Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -151,7 +151,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         super.onStart();
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                 invitationResponseReceiver,
-                new IntentFilter(Constants.REMOTE_MSG_INVITATION_RESPONSE)
+                new IntentFilter(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE)
         );
     }
 

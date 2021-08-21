@@ -25,7 +25,7 @@ import com.pupccis.fitnex.API.adapter.UsersAdapter;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Activities.Login.FitnexLogin;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Utilities.PreferenceManager;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 
@@ -87,8 +87,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
     private void getUsers(){
         swipeRefreshLayout.setRefreshing(true);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
+        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
 
         mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -98,18 +97,18 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                 for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
                     String token = null;
                     try {
-                        token = dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString();
+                        token = dataSnapshot.child(VideoConferencingConstants.KEY_FCM_TOKEN).getValue().toString();
                     }
                     catch (Exception e){
 
                     }
-                    if(preferenceManager.getString(Constants.KEY_USER_ID).equals(dataSnapshot.getKey())){
+                    if(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID).equals(dataSnapshot.getKey())){
                         continue;
                     }
 
                     User user = new User();
-                    user.setName(dataSnapshot.child(Constants.KEY_FULLNAME).getValue().toString());
-                    user.setEmail(dataSnapshot.child(Constants.KEY_EMAIL).getValue().toString());
+                    user.setName(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString());
+                    user.setEmail(dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
                     user.setToken(token);
                     users.add(user);
                 }
@@ -138,16 +137,16 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     private void sendFCMTokenToDatabase(String token){
         Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
+        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
         Log.d("USer ID:", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constants.KEY_FCM_TOKEN).setValue(token);
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(VideoConferencingConstants.KEY_FCM_TOKEN).setValue(token);
         //DocumentReference documentReference = mDatabase.collection
         //mDatabase.update
     }
 
     private void signOut(){
         Toast.makeText(VideoActivityDemo.this, "Signing Out", Toast.LENGTH_SHORT).show();
-        mDatabase.child(preferenceManager.getString(Constants.KEY_USER_ID)).child(Constants.KEY_FCM_TOKEN).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).child(VideoConferencingConstants.KEY_FCM_TOKEN).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(VideoActivityDemo.this, "Signing Out...", Toast.LENGTH_SHORT).show();

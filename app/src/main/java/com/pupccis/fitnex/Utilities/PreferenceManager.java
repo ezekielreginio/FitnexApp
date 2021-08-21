@@ -7,7 +7,7 @@ public class PreferenceManager {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     public PreferenceManager(Context context){
-        sharedPreferences = context.getSharedPreferences(Constants.KEY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(VideoConferencingConstants.KEY_PREFERENCE_NAME, Context.MODE_PRIVATE);
          editor= sharedPreferences.edit();
     }
 

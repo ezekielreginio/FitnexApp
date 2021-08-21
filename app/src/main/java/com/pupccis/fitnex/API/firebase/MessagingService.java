@@ -8,7 +8,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Activities.VideoConferencing.IncomingInvitationActivity;
 
 public class MessagingService extends FirebaseMessagingService {
@@ -23,18 +23,18 @@ public class MessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        String type = remoteMessage.getData().get(Constants.REMOTE_MSG_TYPE);
+        String type = remoteMessage.getData().get(VideoConferencingConstants.REMOTE_MSG_TYPE);
 
         Log.d("Nag accept", remoteMessage.getData().toString());
         Log.d("Type", type);
 
         if(type != null){
-            if(type.equals(Constants.REMOTE_MSG_INVITATION)) {
+            if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION)) {
                 Intent intent = new Intent(getApplicationContext(), IncomingInvitationActivity.class);
 
                 intent.putExtra(
-                        Constants.REMOTE_MSG_MEETING_TYPE,
-                        remoteMessage.getData().get(Constants.REMOTE_MSG_MEETING_TYPE)
+                        VideoConferencingConstants.REMOTE_MSG_MEETING_TYPE,
+                        remoteMessage.getData().get(VideoConferencingConstants.REMOTE_MSG_MEETING_TYPE)
                 );
 
                 intent.putExtra(
@@ -48,29 +48,29 @@ public class MessagingService extends FirebaseMessagingService {
                 );
 
                 intent.putExtra(
-                        Constants.KEY_EMAIL,
-                        remoteMessage.getData().get(Constants.KEY_EMAIL)
+                        VideoConferencingConstants.KEY_EMAIL,
+                        remoteMessage.getData().get(VideoConferencingConstants.KEY_EMAIL)
                 );
 
                 intent.putExtra(
-                        Constants.REMOTE_MSG_INVITER_TOKEN,
-                        remoteMessage.getData().get(Constants.REMOTE_MSG_INVITER_TOKEN)
+                        VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN,
+                        remoteMessage.getData().get(VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN)
                 );
                 intent.putExtra(
-                        Constants.REMOTE_MSG_MEETING_ROOM,
-                        remoteMessage.getData().get(Constants.REMOTE_MSG_MEETING_ROOM)
+                        VideoConferencingConstants.REMOTE_MSG_MEETING_ROOM,
+                        remoteMessage.getData().get(VideoConferencingConstants.REMOTE_MSG_MEETING_ROOM)
                 );
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
             }
-            else if(type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)){
+            else if(type.equals(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE)){
 
-                Intent intent = new Intent(Constants.REMOTE_MSG_INVITATION_RESPONSE);
+                Intent intent = new Intent(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE);
 
                 intent.putExtra(
-                        Constants.REMOTE_MSG_INVITATION_RESPONSE,
-                        remoteMessage.getData().get(Constants.REMOTE_MSG_INVITATION_RESPONSE)
+                        VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE,
+                        remoteMessage.getData().get(VideoConferencingConstants.REMOTE_MSG_INVITATION_RESPONSE)
                 );
 
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);

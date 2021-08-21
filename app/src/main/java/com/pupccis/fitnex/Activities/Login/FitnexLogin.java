@@ -25,7 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
-import com.pupccis.fitnex.Utilities.Constants;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Utilities.PreferenceManager;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
@@ -100,7 +100,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful() && task.getResult() != null){
-                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_COLLECTION_USERS);
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             Query data = mDatabase.child(userId);
 
@@ -108,11 +108,11 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_ID, true);
-                                    preferenceManager.putString(Constants.KEY_FULLNAME, snapshot.child(Constants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
-                                    preferenceManager.putString(Constants.KEY_EMAIL, snapshot.child(Constants.KEY_EMAIL).getValue().toString());
-                                    preferenceManager.putString(Constants.KEY_AGE, snapshot.child(Constants.KEY_AGE).getValue().toString());
-                                    preferenceManager.putString(Constants.KEY_USER_ID, userId);
+                                    preferenceManager.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+                                    preferenceManager.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
+                                    preferenceManager.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+                                    preferenceManager.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
+                                    preferenceManager.putString(VideoConferencingConstants.KEY_USER_ID, userId);
 
                                 }
 

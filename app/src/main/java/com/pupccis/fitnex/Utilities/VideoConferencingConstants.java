@@ -2,7 +2,7 @@ package com.pupccis.fitnex.Utilities;
 
 import java.util.HashMap;
 
-public class Constants {
+public class VideoConferencingConstants {
     public static final String KEY_COLLECTION_USERS = "users";
     public static final String KEY_FULLNAME = "name";
     public static final String KEY_EMAIL = "email";
@@ -32,14 +32,17 @@ public class Constants {
 
     public static final String REMOTE_MSG_MEETING_ROOM = "meetingRoom";
 
+    //Program Class Constants
+
+
     public static HashMap<String, String> getRemoteMessageHeaders()
     {
         HashMap<String, String> headers = new HashMap<>();
         headers.put(
-                Constants.REMOTE_MSG_AUTHORIZATION,
+                VideoConferencingConstants.REMOTE_MSG_AUTHORIZATION,
                 "key=AAAA-2JlCUc:APA91bHt3idPUgJk7Oz5Ogme0k9PhulXcbP_0pi4c9Iu2_W3YHUhCeofepZJ46wZ0UeQyU91iaxLCkAIpKcGdcKGefMjpbsrd522hXKA6cBcCDi1pFZ4nzLZLu64y0fxqr7r_N-1v5hS"
         );
-        headers.put(Constants.REMOTE_MSG_CONTENT_TYPE, "application/json");
+        headers.put(VideoConferencingConstants.REMOTE_MSG_CONTENT_TYPE, "application/json");
         return headers;
     }
 }
