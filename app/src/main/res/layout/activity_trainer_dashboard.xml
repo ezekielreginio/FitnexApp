@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activityTrainerDashboard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +9,11 @@
     tools:context=".main.trainer.TrainerDashboard">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewTrainerProfileDisplay"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/ic_circle_imageview"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +29,18 @@
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTrainerProfileDisplay" />
 
     <androidx.cardview.widget.CardView
 
         android:layout_width="80dp"
         android:layout_height="51dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/cardViewCalendar"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Chat"
             android:textColor="#000000"
             android:textSize="8sp" />
     </androidx.cardview.widget.CardView>
@@ -67,7 +69,7 @@
         android:id="@+id/cardViewCalendar"
         android:layout_width="80dp"
         android:layout_height="51dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Calendar"
             android:textColor="#000000"
             android:textSize="8sp" />
     </androidx.cardview.widget.CardView>
@@ -99,11 +101,13 @@
         android:id="@+id/cardView"
         android:layout_width="80dp"
         android:layout_height="51dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/cardViewCalendar"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <ImageView
@@ -121,41 +125,116 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Calls"
             android:textColor="#000000"
             android:textSize="8sp" />
+
     </androidx.cardview.widget.CardView>
 
-    <RelativeLayout
-        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"
-        android:id="@+id/relativeLayoutTabLayout"
-        android:layout_width="407dp"
-        android:layout_height="363dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="268dp">
-
-
-    </RelativeLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutTrainerDashboard"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTabLayout"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="436dp">
-
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager2TrainerDashboard"
+    <LinearLayout
+        android:id="@+id/linearLayoutForTabLayoutTrainerDashboard"
         android:layout_width="match_parent"
-        android:layout_height="398dp"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="332dp" />
+        android:layout_height="690dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewCalendar"
+        tools:layout_editor_absoluteX="2dp">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutTrainerDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            app:tabMode="fixed"
+            app:tabGravity="center"
+            app:tabPaddingStart="30dp"
+            app:tabPaddingEnd="30dp"
+            app:tabIndicatorGravity="stretch"
+            app:tabSelectedTextColor="@color/whiteTextColor"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicator="@drawable/tab_indicator">
+
+
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2TrainerDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="398dp"
+            app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="332dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddProgramButton"
+        android:layout_gravity="center"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"
+        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"
+        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"
+        android:translationZ="1dp"
+        android:orientation="vertical"
+        android:background="@drawable/ic_circle_add_button"
+
+
+        >
+
+        <ImageView
+            android:id="@+id/AddProgramButton"
+            android:layout_gravity="center"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/ic__add_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutTrainerDashboardNavbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_trainer_menubar"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/activityTrainerDashboard"
+        tools:layout_editor_absoluteY="671dp"
+        android:transitionName="addProgramTransition">
+
+
+    </LinearLayout>
+
+    <!--    <RelativeLayout-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->
+<!--        android:id="@+id/relativeLayoutTabLayout"-->
+<!--        android:layout_width="407dp"-->
+<!--        android:layout_height="363dp"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="268dp">-->
+
+
+<!--    </RelativeLayout>-->
+
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tabLayoutTrainerDashboard"-->
+<!--        android:layout_width="409dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTabLayout"-->
+<!--        tools:layout_editor_absoluteX="1dp"-->
+<!--        tools:layout_editor_absoluteY="436dp">-->
+
+
+<!--    </com.google.android.material.tabs.TabLayout>-->
+
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/viewPager2TrainerDashboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="398dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"-->
+<!--        tools:layout_editor_absoluteX="1dp"-->
+<!--        tools:layout_editor_absoluteY="332dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

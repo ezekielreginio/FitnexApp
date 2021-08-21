@@ -10,7 +10,8 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Button"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:background="@drawable/ic_trainer_bg"
+        android:text="Button" />
 
 </FrameLayout>
