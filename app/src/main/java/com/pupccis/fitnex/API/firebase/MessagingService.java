@@ -22,8 +22,10 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d("Nag accept", remoteMessage.getData().toString());
+
         String type = remoteMessage.getData().get(Constants.REMOTE_MSG_TYPE);
+        Log.d("Nag accept", remoteMessage.getData().toString());
+        Log.d("Type", type);
 
         if(type != null){
             if(type.equals(Constants.REMOTE_MSG_INVITATION)) {
@@ -58,16 +60,18 @@ public class MessagingService extends FirebaseMessagingService {
                 startActivity(intent);
 
             }
-        }
-        else if(type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)){
-            Intent intent = new Intent(Constants.REMOTE_MSG_INVITATION_RESPONSE);
+            else if(type.equals(Constants.REMOTE_MSG_INVITATION_RESPONSE)){
 
-            intent.putExtra(
-                    Constants.REMOTE_MSG_INVITATION_RESPONSE,
-                    remoteMessage.getData().get(Constants.REMOTE_MSG_INVITATION_RESPONSE)
-            );
+                Intent intent = new Intent(Constants.REMOTE_MSG_INVITATION_RESPONSE);
 
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                intent.putExtra(
+                        Constants.REMOTE_MSG_INVITATION_RESPONSE,
+                        remoteMessage.getData().get(Constants.REMOTE_MSG_INVITATION_RESPONSE)
+                );
+
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
         }
+
     }
 }

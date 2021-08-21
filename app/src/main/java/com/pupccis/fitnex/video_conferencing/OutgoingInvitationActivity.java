@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -164,6 +165,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
     private BroadcastReceiver invitationResponseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d("Broadcast Received", "Nareceive ang broadcast");
             String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
             if(type != null){
                 if(type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)){
@@ -193,4 +195,6 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                 invitationResponseReceiver
         );
     }
+
+
 }
