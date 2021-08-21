@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
     }
 
     private void sendRemoteMessage(String remoteMessageBody, String type){
+        Log.d("Message Body", remoteMessageBody);
         ApiClient.getClient().create(ApiService.class).sendRemoteMessage(
                 Constants.getRemoteMessageHeaders(), remoteMessageBody
         ).enqueue(new Callback<String>() {

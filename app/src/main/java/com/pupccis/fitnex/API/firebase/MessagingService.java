@@ -22,7 +22,7 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-
+        Log.d("Nag accept", remoteMessage.getData().toString());
         String type = remoteMessage.getData().get(Constants.REMOTE_MSG_TYPE);
 
         if(type != null){
