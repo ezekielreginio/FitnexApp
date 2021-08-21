@@ -125,7 +125,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                             });
 
                             Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
+                            startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
 
 
                         }
