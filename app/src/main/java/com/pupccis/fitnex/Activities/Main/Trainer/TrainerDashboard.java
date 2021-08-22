@@ -13,9 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.FragmentAdapter;
+import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Login.FitnexRegister;
 import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
@@ -25,11 +28,14 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     private LinearLayout programPanel, addButton;
     private Intent intent;
     private CardView cardViewCalls;
+    private PreferenceManager preferenceManager;
+    private ProgramDAO programDAO = new ProgramDAO();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_dashboard);
 
+        preferenceManager = new PreferenceManager(getApplicationContext());
         tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
         viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
         addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
@@ -42,7 +48,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Trainees"));
-
+        programDAO.readPrograms(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
         /*
 
         private DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_PROGRAMS)

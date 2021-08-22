@@ -56,7 +56,8 @@
                             android:inputType="textPersonName"
                             android:maxLines="1"
                             android:textColor="@color/black"
-                            android:hint="Name"/>
+                            android:hint="Name"
+                            android:textColorHint="@color/black"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -127,35 +128,6 @@
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"
                         app:spinning_bar_width="4dp" />
-
-                    <TextView
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:onClick="onLoginClick"
-                        android:text="Already have an account?"
-                        android:textAlignment="center"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        style="@style/parent"
-                        android:onClick="onLoginClick"
-                        android:text="OR"
-                        android:textAlignment="center"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textViewRegisterTrainerApplication"
-                        style="@style/parent"
-                        android:onClick="onLoginClick"
-                        android:text="Want to be a trainer?"
-                        android:textAlignment="center"
-                        android:textColor="@color/themeColor"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
