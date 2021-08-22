@@ -43,6 +43,45 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Trainees"));
 
+        /*
+
+        private DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_PROGRAMS)
+        private Program program = new Program();
+        private Task<Program> programsList = new Task<Program>;
+        Program prog1;
+        Program prog2;
+
+
+
+        programsList.add(prog1);
+
+        public Task<Program> readAllPrograms(String userID){
+            Task<Program> programsList = new Task<Program>;
+
+            mDatabase.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>(){
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    programs.clear();
+                    for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
+                        programs.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+                        //
+                        //
+                        //
+                        //
+                        programsList.add(programs);
+
+                    }
+                }
+
+                return programsList;
+            });
+        }
+
+
+
+         */
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
