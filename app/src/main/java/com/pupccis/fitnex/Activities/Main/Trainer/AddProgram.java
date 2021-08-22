@@ -24,7 +24,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
     private ImageView imageView;
     private RelativeLayout closeButton;
     private EditText editName, editDescription, editCategory, editSessionNumber, editDuration;
-    private ProgramDAO programDAO;
+    private ProgramDAO programDAO = new ProgramDAO();
     private Button addProgram;
 
     @Override
@@ -56,6 +56,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()){
             case(R.id.relativeLayoutAddProgramCloseButton):
                 startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
@@ -68,10 +69,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 String sessionNumber = editSessionNumber.getText().toString();
                 String duration = editDuration.getText().toString();
                 Program program = new Program(name, description, category, sessionNumber, duration);
-                FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .setValue(program);
-                //programDAO.createProgram(program);
+                programDAO.createProgram(program);
                 break;
         }
     }
