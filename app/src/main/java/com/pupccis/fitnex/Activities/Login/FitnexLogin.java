@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -30,7 +31,7 @@ import com.pupccis.fitnex.Utilities.PreferenceManager;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
     private EditText editEmail, editPassword;
-    private Button loginUser;
+    private Button loginUser, quickLogin;
     private FirebaseAuth mAuth;
     private PreferenceManager preferenceManager;
     private TextView name;
@@ -39,6 +40,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
@@ -50,6 +52,8 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
         editEmail = (EditText) findViewById(R.id.editTextLoginEmail);
         editPassword = (EditText) findViewById(R.id.editTextLoginPassword);
+        quickLogin = (Button) findViewById(R.id.buttonQuickLogin);
+        quickLogin.setOnClickListener(this);
         loginUser = (Button) findViewById(R.id.buttonLoginButton);
         loginUser.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
@@ -69,6 +73,8 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(FitnexLogin.this, "clcik", Toast.LENGTH_SHORT).show();
                 userLogin();
                 break;
+            case(R.id.buttonQuickLogin):
+                startActivity(new Intent(this, TraineeDashboard.class));
         }
     }
 
