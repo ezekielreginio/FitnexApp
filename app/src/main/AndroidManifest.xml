@@ -18,6 +18,9 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Main.Trainer.AddClass"
+            android:exported="true" />
+        <activity
             android:name=".Activities.Main.Trainee.TraineeWorkoutFavorites"
             android:exported="true" />
         <activity
