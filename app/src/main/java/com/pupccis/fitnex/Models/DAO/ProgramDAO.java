@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramDAO {
+
     private DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
-    private Program program = new Program();
     public void createProgram(Program program){
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -33,19 +33,19 @@ public class ProgramDAO {
 
     public List<Program> readPrograms(String userID){
         List<Program> programsList = new ArrayList<>();
-        Log.d("Program query failuer", userID);
         mDatabase.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                programsList.clear();
                 for (DataSnapshot dataSnapshot : task.getResult().getChildren()){
+                    Program program = new Program();
                     program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
                     program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
                     program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
                     program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
                     program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
                     programsList.add(program);
-                    Log.d("Meaningful crap dfghkrgkusergus",""+dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+                    Log.d("Name: ",program.getName());
+                    Log.d("List: ",programsList.toString());
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

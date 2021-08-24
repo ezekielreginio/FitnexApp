@@ -2,13 +2,33 @@ package com.pupccis.fitnex.Activities.Main.Trainer.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.API.adapter.ProgramAdapter;
+import com.pupccis.fitnex.Models.DAO.ProgramDAO;
+import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +45,15 @@ public class ProgramsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ProgramAdapter programAdapter;
+    private PreferenceManager preferenceManager;
+    private ProgramDAO programDAO = new ProgramDAO();
+
+    private RecyclerView programsRecyclerView;
+
+    private List<Program> programs = new ArrayList<>();
+    private DatabaseReference mDatabase;
 
     public ProgramsFragment() {
         // Required empty public constructor
@@ -55,6 +84,72 @@ public class ProgramsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+
+        Log.d("create", "onCreateExecuted");
+        mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+
+        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Program program = new Program();
+                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+                    programs.add(program);
+                    Log.d("Name: ",program.getName());
+                    Log.d("List: ",programs.toString());
+                }
+                programAdapter = new ProgramAdapter(programs);
+                programsRecyclerView.setAdapter(programAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                programs.clear();
+//                for (DataSnapshot dataSnapshot : task.getResult().getChildren()){
+//                    Program program = new Program();
+//                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+//                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+//                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+//                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+//                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+//                    programs.add(program);
+//                    Log.d("Name: ",program.getName());
+//                    Log.d("List: ",programs.toString());
+//                }
+//                programAdapter = new ProgramAdapter(programs);
+//                programsRecyclerView.setAdapter(programAdapter);
+//            }
+//        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        Log.d("ViewCreate", "onViewCreateExecuted");
+        super.onViewCreated(view, savedInstanceState);
+        programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
+
+
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Started", "onStartExecuted");
     }
 
     @Override
