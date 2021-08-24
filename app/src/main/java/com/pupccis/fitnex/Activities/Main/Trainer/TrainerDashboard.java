@@ -3,6 +3,7 @@ package com.pupccis.fitnex.Activities.Main.Trainer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -13,12 +14,17 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.FragmentAdapter;
+import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
+import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Login.FitnexRegister;
 import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
 import com.pupccis.fitnex.Utilities.PreferenceManager;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
@@ -30,6 +36,10 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     private CardView cardViewCalls;
     private PreferenceManager preferenceManager;
     private ProgramDAO programDAO = new ProgramDAO();
+
+    private List<Program> programs;
+    private ProgramAdapter programAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,44 +58,6 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
         tabLayout.addTab(tabLayout.newTab().setText("Trainees"));
-        programDAO.readPrograms(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
-        /*
-
-        private DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_PROGRAMS)
-        private Program program = new Program();
-        private Task<Program> programsList = new Task<Program>;
-        Program prog1;
-        Program prog2;
-
-
-
-        programsList.add(prog1);
-
-        public Task<Program> readAllPrograms(String userID){
-            Task<Program> programsList = new Task<Program>;
-
-            mDatabase.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>(){
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    programs.clear();
-                    for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
-                        programs.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-                        //
-                        //
-                        //
-                        //
-                        programsList.add(programs);
-
-                    }
-                }
-
-                return programsList;
-            });
-        }
-
-
-
-         */
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -124,6 +96,16 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
         cardViewCalls = (CardView) findViewById(R.id.cardViewCalls);
         cardViewCalls.setOnClickListener(this);
+
+//        RecyclerView programsRecyclerView =(RecyclerView) findViewById(R.id.programsRecyclerView);
+//        programs = new ArrayList<>();
+//        Program program = new Program("samp", "samp","samp","samp","samp" );
+//        programs.add(program);
+//        programAdapter = new ProgramAdapter(programs);
+//        programsRecyclerView.setAdapter(programAdapter);
+
+
+
     }
 
 

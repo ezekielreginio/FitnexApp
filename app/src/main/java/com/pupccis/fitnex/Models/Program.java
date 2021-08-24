@@ -8,16 +8,28 @@ public class Program implements Serializable {
     private String category;
     private String sessionNumber;
     private String duration;
+    private String trainees;
 
     public Program() {
     }
 
+    //Constructor for Creating a program
     public Program(String name, String description, String category, String sessionNumber, String duration) {
+        program_init(name, description, category, sessionNumber, duration, "0");
+    }
+
+    //Constructor w/ trainee count
+    public Program(String name, String description, String category, String sessionNumber, String duration, String trainees) {
+        program_init(name, description, category, sessionNumber, duration, trainees);
+    }
+
+    private void program_init(String name, String description, String category, String sessionNumber, String duration, String trainees){
         this.name = name;
         this.description = description;
         this.category = category;
-        this.sessionNumber = sessionNumber;
+        this.setSessionNumber(sessionNumber);
         this.duration = duration;
+        this.setTrainees(trainees);
     }
 
     public String getName() {
@@ -57,5 +69,13 @@ public class Program implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(String trainees) {
+        this.trainees = trainees;
     }
 }
