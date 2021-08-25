@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,9 +29,15 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
     private ProgramDAO programDAO = new ProgramDAO();
     private Button addProgram;
 
+    private Program program_intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Extra Intents:
+        program_intent = (Program) getIntent().getSerializableExtra("program");
+
         setContentView(R.layout.activity_add_program);
         imageView = (ImageView) findViewById(R.id.closeAddProgramButton);
         closeButton = (RelativeLayout) findViewById(R.id.relativeLayoutAddProgramCloseButton);
@@ -44,6 +52,15 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         addProgram.setOnClickListener(this);
         closeButton.setOnClickListener(this);
 
+        if(program_intent != null){
+            editName.setText(program_intent.getName());
+            editDescription.setText(program_intent.getDescription());
+            editCategory.setText(program_intent.getCategory());
+            editSessionNumber.setText(program_intent.getSessionNumber());
+            editDuration.setText(program_intent.getDuration());
+            addProgram.setText("Update Program");
+        }
+
         rotateAnimation();
         closeButton.setVisibility(View.VISIBLE);
     }
@@ -56,11 +73,9 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()){
             case(R.id.relativeLayoutAddProgramCloseButton):
-                startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
-                overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+                closeForm();
                 break;
             case(R.id.buttonAddProgramButton):
                 String name = editName.getText().toString();
@@ -69,8 +84,26 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 String sessionNumber = editSessionNumber.getText().toString();
                 String duration = editDuration.getText().toString();
                 Program program = new Program(name, description, category, sessionNumber, duration);
-                programDAO.createProgram(program);
+                if(program_intent != null){
+                    program.setProgramTrainerID(program_intent.getProgramTrainerID());
+                    program.setProgramID(program_intent.getProgramID());
+                    programDAO.updateProgram(program);
+                    Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
+                    closeForm();
+                }
+
+                else{
+                    programDAO.createProgram(program);
+                    Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
+                    closeForm();
+                }
+
                 break;
         }
+    }
+
+    private void closeForm(){
+        startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
+        overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
     }
 }
