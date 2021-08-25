@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/layout_bg_program_container"
-    android:padding="5dp"
+    android:background="@drawable/layout_bg_program_strength"
+    android:padding="10dp"
     android:layout_marginBottom="10dp">
 
 
@@ -57,11 +57,13 @@
         />
 
     <LinearLayout
+        android:id="@+id/layoutProgramInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/textProgramName"
         android:orientation="vertical"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +72,7 @@
             android:layout_marginBottom="3dp">
             <TextView
                 android:id="@+id/textCategoryTitle"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="Category: "
@@ -78,6 +80,17 @@
                 android:textSize="15dp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/textProgramCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Sample Category"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textCategoryTitle"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +100,7 @@
             android:layout_marginBottom="3dp">
             <TextView
                 android:id="@+id/textDescriptionTitle"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="Description: "
@@ -95,6 +108,18 @@
                 android:textSize="15dp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textProgramDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Sample Description"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textDescriptionTitle"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,7 +129,7 @@
             android:layout_marginBottom="3dp">
             <TextView
                 android:id="@+id/textSessionTitle"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="No. of Sessions: "
@@ -113,15 +138,28 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textProgramSessionCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="0"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textSessionTitle"
+                tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp">
+
             <TextView
                 android:id="@+id/textDurationTitle"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="Duration: "
@@ -130,7 +168,48 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/textProgramDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="0 minutes"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textDurationTitle"
+                tools:ignore="MissingConstraints" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutProgramUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp">
+            <Button
+                android:id="@+id/buttonProgramUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="70px"
+                android:text="Update"
+                android:textColor="@color/whiteTextColor"
+                android:background="@drawable/button_update"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="30dp"
+                />
+            <Button
+                android:id="@+id/buttonProgramDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="70px"
+                android:text="Delete"
+                android:textColor="@color/whiteTextColor"
+                android:background="@drawable/button_delete"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

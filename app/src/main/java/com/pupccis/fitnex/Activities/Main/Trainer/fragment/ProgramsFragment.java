@@ -92,6 +92,8 @@ public class ProgramsFragment extends Fragment {
         mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                programs.clear();
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Program program = new Program();
                     program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
@@ -99,11 +101,12 @@ public class ProgramsFragment extends Fragment {
                     program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
                     program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
                     program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+                    program.setProgramID(dataSnapshot.getKey());
+                    program.setProgramTrainerID(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
                     programs.add(program);
-                    Log.d("Name: ",program.getName());
-                    Log.d("List: ",programs.toString());
                 }
-                programAdapter = new ProgramAdapter(programs);
+                programAdapter = new ProgramAdapter(programs, getContext());
+                programAdapter.notifyDataSetChanged();
                 programsRecyclerView.setAdapter(programAdapter);
             }
 
