@@ -5,7 +5,7 @@
     <color name="colorAccent">#26355E</color>
     <color name="themeColor">#26355E</color>
     <color name="RedColor">#BD1919</color>
-    <color name="darkTextColor">#020000</color>
+    <color name="darkTextColor">#26355E</color>
     <color name="contentTextColor">#020000</color>
     <color name="register_bk_color">#26355E</color>
     <color name="login_bk_color">#fff</color>
@@ -14,5 +14,8 @@
 
     <color name="colorMeetingInvitationStart">#4004BB</color>
     <color name="colorMeetingInvitationEnd">#8A1AAA</color>
+
+    <color name="addProgramText">#26355E</color>
+    <color name="addProgramCard">#8ABADD</color>
 
 </resources>
