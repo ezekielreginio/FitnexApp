@@ -106,7 +106,7 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
-                            android:id="@+id/editTextAddProgramDuration"
+                            android:id="@+id/editTextAddClassDescription"
                             style="@style/modifiedEditText"
                             android:hint="Duration"
                             android:textColor="@color/black"
@@ -142,7 +142,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/relativeLayoutAddProgramCloseButton"
+            android:id="@+id/relativeLayoutAddClassCloseButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
@@ -152,12 +152,12 @@
             app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
             <ImageView
-                android:id="@+id/closeAddProgramButton"
-                android:layout_marginTop="7.5dp"
-                android:layout_marginLeft="7.5dp"
+                android:id="@+id/closeAddClassButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginTop="7.5dp" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -57,7 +57,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         intent = new Intent(TrainerDashboard.this, AddProgram.class);
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
-        tabLayout.addTab(tabLayout.newTab().setText("Class"));
+        tabLayout.addTab(tabLayout.newTab().setText("Classes"));
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

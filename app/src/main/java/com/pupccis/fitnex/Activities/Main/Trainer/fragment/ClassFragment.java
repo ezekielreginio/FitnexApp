@@ -2,13 +2,31 @@ package com.pupccis.fitnex.Activities.Main.Trainer.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
+import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +44,14 @@ public class ClassFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private FitnessClassAdapter fitnessClassAdapter;
+    private PreferenceManager preferenceManager;
+    private FitnessClassDAO fitnessClassDAO = new FitnessClassDAO();
+
+    private RecyclerView fitnessClassRecyclerView;
+
+    private List<FitnessClass> fitnessClasses = new ArrayList<>();
+    private DatabaseReference mDatabase;
     public ClassFragment() {
         // Required empty public constructor
     }
@@ -51,16 +77,53 @@ public class ClassFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+
+        mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
+
+        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            fitnessClasses.clear();
+            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                FitnessClass fitnessClass = new FitnessClass();
+                fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
+                fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
+                fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
+                fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
+                fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
+                fitnessClass.setClassID(dataSnapshot.getKey());
+                fitnessClass.setClassTrainerID(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
+                fitnessClasses.add(fitnessClass);
+            }
+            fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext());
+            fitnessClassAdapter.notifyDataSetChanged();
+            fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        fitnessClassRecyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trainees, container, false);
+        return inflater.inflate(R.layout.fragment_fitness_classes, container, false);
     }
 }
