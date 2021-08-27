@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class ProgramDAO {
 
-    private DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
     public void createProgram(Program program){
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -60,16 +60,15 @@ public class ProgramDAO {
     }
 
     public void updateProgram(Program program){
-        mDatabase = mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID());
-        Log.d("New Name: ", program.getName());
-        String key = mDatabase.push().getKey();
+//        mDatabase = ;
+//        Log.d("New Name: ", program.getName());
+//        String key = mDatabase.push().getKey();
         Map postValues = program.toMap();
 
-        mDatabase.updateChildren(postValues);
+        mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).updateChildren(postValues);
     }
 
     public void deleteProgram(Program program){
-        Log.d("Delete", "deleted");
         mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
     }
 
