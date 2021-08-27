@@ -63,4 +63,9 @@ public class FitnessClassDAO {
         Log.d("Post Values", postValues.toString());
         mDatabase.updateChildren(postValues);
     }
+
+    public static void deleteClass(FitnessClass fitnessClass){
+        Log.d("Delete!!!!!", fitnessClass.getClassName());
+        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(fitnessClass.getClassTrainerID()).child(fitnessClass.getClassID()).removeValue();
+    }
 }

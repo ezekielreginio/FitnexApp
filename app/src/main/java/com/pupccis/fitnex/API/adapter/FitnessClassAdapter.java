@@ -21,12 +21,13 @@ import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
 
 import java.util.List;
+import java.util.Map;
 
 public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapter.FitnessClassViewHolder>{
 
     private List<FitnessClass> fitnessClasses;
     private Context context;
-
+    private FitnessClassDAO fitnessClassDAO;
 
     public FitnessClassAdapter(List<FitnessClass> fitnessClasses, Context context){
         this.fitnessClasses = fitnessClasses;
@@ -61,7 +62,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
         LinearLayout layoutClassInfo;
         ConstraintLayout classContainer;
         TextView className, classTimeStart, classTimeEnd, classSessionNo, classTrainer, classDescription;
-        Button fitnessClassUpdate;
+        Button fitnessClassUpdate, fitnessClassDelete;
         public FitnessClassViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.textClassCategory);
@@ -72,6 +73,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             classContainer = itemView.findViewById(R.id.layoutClassContainer);
             layoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
             fitnessClassUpdate = (Button) itemView.findViewById(R.id.buttonClassUpdate);
+            fitnessClassDelete = (Button) itemView.findViewById(R.id.buttonClassDelete);
         }
         void setFitnessClassData(FitnessClass fitnessClass){
             boolean clicked = false;
@@ -94,6 +96,14 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
                     Intent intent= new Intent(context, AddClass.class);
                     intent.putExtra("fitness", fitnessClass);
                     context.startActivity(intent);
+                }
+            });
+
+            fitnessClassDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                   fitnessClassDAO.deleteClass(fitnessClass);
                 }
             });
         }

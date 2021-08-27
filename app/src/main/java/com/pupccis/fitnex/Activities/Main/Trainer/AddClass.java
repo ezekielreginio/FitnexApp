@@ -75,6 +75,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             editTimeStart.setText(fitness_intent.getTimeStart());
             editTimeEnd.setText(fitness_intent.getTimeEnd());
             editDescription.setText(fitness_intent.getDescription());
+            addClass.setText("Update Class");
         }
     }
 
@@ -107,6 +108,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
                 FitnessClass fitnessClass = new FitnessClass(name, timeStart, timeEnd, sessionNo, currentTime.toString(), description);
 
                 if(fitness_intent != null){
+
                     fitnessClass.setClassID(fitness_intent.getClassID());
                     fitnessClass.setClassTrainerID(fitness_intent.getClassTrainerID());
                     fitnessClassDAO.updateClass(fitnessClass);
@@ -114,6 +116,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
                 }
                 else{
                     fitnessClassDAO.createClass(fitnessClass);
+                    closeForm();
                 }
                 break;
             case(R.id.relativeLayoutAddClassCloseButton):
