@@ -166,6 +166,8 @@
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="332dp" >
 
+
+
         </androidx.viewpager2.widget.ViewPager2>
 
     </LinearLayout>
@@ -177,11 +179,13 @@
         android:layout_height="75dp"
         app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"
         app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"
-        app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
-        app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"
+        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"
         android:translationZ="1dp"
         android:orientation="vertical"
         android:background="@drawable/ic_circle_add_button"
+
+
         >
 
         <ImageView
@@ -193,8 +197,8 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutTrainerDashboardNavbar"
+    <LinearLayout
+        android:id="@+id/linearLayoutTrainerDashboardNavbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/ic_trainer_menubar"
@@ -203,36 +207,8 @@
         tools:layout_editor_absoluteY="671dp"
         android:transitionName="addProgramTransition">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="8dp">
-            <ImageView
-                android:id="@+id/buttonTrainerHome"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_baseline_home_24"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutTrainerStudioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:id="@+id/buttonTrainerStudio"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_trainer_studio"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <!--    <RelativeLayout-->
 <!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->

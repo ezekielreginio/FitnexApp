@@ -13,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.Spinner;
@@ -22,13 +21,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.API.globals.Global;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-
-import java.util.HashMap;
 
 public class AddProgram extends AppCompatActivity implements View.OnClickListener{
     private Animation rotateAnimation;
@@ -40,11 +36,14 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     private Program program_intent;
 
+<<<<<<< HEAD
 public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Animation rotateAnimation;
     ImageView imageView;
     RelativeLayout closeButton;
 
+=======
+>>>>>>> parent of e532394 (trainer studio)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -83,7 +82,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
         rotateAnimation();
         closeButton.setVisibility(View.VISIBLE);
-
     }
 
 

@@ -2,7 +2,6 @@ package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,12 +28,10 @@ import java.util.List;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
-    private LinearLayout addButton;
-    private ConstraintLayout trainerStudioButton, programPanel;
-
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private FragmentAdapter fragmentAdapter;
+    private LinearLayout programPanel, addButton;
     private Intent intent;
     private CardView cardViewCalls;
     private PreferenceManager preferenceManager;
@@ -51,15 +48,9 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         preferenceManager = new PreferenceManager(getApplicationContext());
         tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
         viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
-
         addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
-        trainerStudioButton = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerStudioButton);
-
+        programPanel = (LinearLayout) findViewById(R.id.linearLayoutTrainerDashboardNavbar);
         addButton.setOnClickListener(this);
-        trainerStudioButton.setOnClickListener(this);
-
-        programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
-
         FragmentManager fm = getSupportFragmentManager();
         fragmentAdapter = new FragmentAdapter(fm, getLifecycle());
         viewPager2.setAdapter(fragmentAdapter);
@@ -106,6 +97,15 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         cardViewCalls = (CardView) findViewById(R.id.cardViewCalls);
         cardViewCalls.setOnClickListener(this);
 
+//        RecyclerView programsRecyclerView =(RecyclerView) findViewById(R.id.programsRecyclerView);
+//        programs = new ArrayList<>();
+//        Program program = new Program("samp", "samp","samp","samp","samp" );
+//        programs.add(program);
+//        programAdapter = new ProgramAdapter(programs);
+//        programsRecyclerView.setAdapter(programAdapter);
+
+
+
     }
 
 
@@ -113,15 +113,17 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.linearLayoutAddProgramButton:
+//                Intent intent = new Intent(TrainerDashboard.this, AddProgram.class);
+//                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(TrainerDashboard.this, programPanel, ViewCompat.getTransitionName(programPanel));
+//                startActivity(intent, optionsCompat.toBundle());
+//                addButton.setVisibility(View.GONE);
+
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cardViewCalls:
                 startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
-                break;
-            case R.id.constraintLayoutTrainerStudioButton:
-                startActivity(new Intent(getApplicationContext(), TrainerStudio.class));
-                Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
                 break;
 
         }
