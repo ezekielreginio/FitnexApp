@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.Spinner;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,7 +27,7 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
-public class FitnexRegister extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class FitnexRegister extends AppCompatActivity implements View.OnClickListener {
     private EditText editName, editAge, editEmail, editPassword;
     private TextView registerUser, registerTrainer;
     private FirebaseAuth mAuth;
@@ -35,10 +35,7 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitnex_register);
-        //Spinner Comorbidity = findViewById(R.id.Comorbidity);
-        ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(this, R.array.comorbidities, android. R. layout.simple_spinner_item);
-//        Comorbidity.setAdapter(adapter);
-//        Comorbidity.setOnItemSelectedListener(this);
+
 
         changeStatusBarColor();
 
@@ -69,18 +66,11 @@ public class FitnexRegister extends AppCompatActivity implements AdapterView.OnI
         overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),text, Toast.LENGTH_SHORT).show();
-    }
 
 
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
+
 
     @Override
     public void onClick(View view) {

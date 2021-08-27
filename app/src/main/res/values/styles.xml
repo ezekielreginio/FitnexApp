@@ -59,4 +59,18 @@
         <item name="android:paddingLeft">5dp</item>
     </style>
 
+    <style name="AddProgram">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:backgroundTint">@color/primaryTextColor</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/addProgramText</item>
+    </style>
+
+    <style name="AddProgramText" parent="parent">
+        <item name="android:textSize">@dimen/newsMoreTextSize</item>
+        <item name="android:backgroundTint">@color/primaryTextColor</item>
+        <item name="android:textColor">@color/addProgramText</item>
+    </style>
+
+
 </resources>

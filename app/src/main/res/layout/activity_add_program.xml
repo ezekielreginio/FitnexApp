@@ -6,9 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="100"
-
-
-    android:background="@drawable/clean"
     tools:context=".Activities.Main.Trainer.AddProgram">
 
     <LinearLayout
@@ -32,12 +29,13 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_gravity="top|center"
-                app:cardBackgroundColor="@color/whiteTextColor"
-                app:cardCornerRadius="50dp">
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="30dp"
+
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,11 +161,11 @@
 
             <ImageView
                 android:id="@+id/closeAddProgramButton"
-                android:layout_marginTop="7.5dp"
-                android:layout_marginLeft="7.5dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginTop="7.5dp" />
 
         </RelativeLayout>
     </LinearLayout>

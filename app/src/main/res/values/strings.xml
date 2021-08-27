@@ -4,14 +4,11 @@
     <string name="login_password_hint">Password</string>
     <string name="sign_out">Sign Out</string>
 
-    <string-array name="comorbidities">
-        <item>None</item>
-        <item>Asthma</item>
-        <item>Overweight</item>
-        <item>Heart Disease</item>
-        <item>Hypertension</item>
-        <item>Pulmonary Disease</item>
-
+    <string-array name="category">
+        <item>Cardio</item>
+        <item>Sport</item>
+        <item>Strength</item>
+        <item>Yoga</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

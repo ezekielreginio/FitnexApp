@@ -3,17 +3,22 @@ package com.pupccis.fitnex.Activities.Main.Trainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
+
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,15 +40,25 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     private Program program_intent;
 
+public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    Animation rotateAnimation;
+    ImageView imageView;
+    RelativeLayout closeButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         //Extra Intents:
         program_intent = (Program) getIntent().getSerializableExtra("program");
 
         setContentView(R.layout.activity_add_program);
+
+        Spinner spinner=findViewById(R.id.spinner1);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
         imageView = (ImageView) findViewById(R.id.closeAddProgramButton);
         closeButton = (RelativeLayout) findViewById(R.id.relativeLayoutAddProgramCloseButton);
 
@@ -70,6 +85,8 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         closeButton.setVisibility(View.VISIBLE);
 
     }
+
+
 
     private void rotateAnimation() {
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -113,3 +130,17 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
     }
 }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+}
+
