@@ -43,82 +43,98 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/addprogramName"
+                        android:id="@+id/textInputLayoutAddprogramName"
                         style="@style/AddProgram"
                         android:layout_marginTop="20dp"
                         android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextAddProgramName"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Name"
-                            android:textColorHint="@color/black"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editTextAddProgramDescription"
-                            style="@style/modifiedEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:hint="Description"
-                            android:textColor="@color/black"
+                            style="@style/AddProgramText"
+                            android:hint="Program Name"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddProgramDescription"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
+
                         <EditText
-                            android:id="@+id/editTextAddProgramCategory"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Category"/>
+                            android:id="@+id/editTextAddProgramDescription"
+                            style="@style/AddProgramText"
+                            android:hint="Program Description"
+                            android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-                        <EditText
-                            android:id="@+id/editTextAddProgramSessionNumber"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        >
+
+                        <TextView
                             style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Session Number"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Category"
+                            android:textAlignment="center"
+                            android:textColor="#26355E"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/editTextAddProgramCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:textColorHint="#C5B2B2"
+                            android:background="#FFFFFF"
+                            android:hint="-Select A Category-"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.502"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.498"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddProgramSessionNumber"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
 
-                        style="@style/parent"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        <EditText
+                            android:id="@+id/editTextAddProgramSessionNumber"
+                            style="@style/AddProgramText"
+                            android:hint="Session Number"
+                            android:inputType="time"
+                            android:maxLines="3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddProgramDuration"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextAddProgramDuration"
-                            style="@style/modifiedEditText"
-                            android:hint="Duration"
-                            android:textColor="@color/black"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
+                            style="@style/AddProgramText"
+                            android:hint=" Duration(Minutes) "
+                            android:inputType="time"
+                            android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-
-                        style="@style/loginButton"
                         android:id="@+id/buttonAddProgramButton"
+                        style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:text="Add Program"
@@ -126,6 +142,7 @@
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"
                         app:spinning_bar_width="4dp" />
+
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
