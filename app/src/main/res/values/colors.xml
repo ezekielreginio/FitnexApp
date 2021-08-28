@@ -17,5 +17,7 @@
 
     <color name="addProgramText">#26355E</color>
     <color name="addProgramCard">#8ABADD</color>
+    <color name="colorProgramStrengthWorkout">#35639a</color>
+    <color name="colorProgramCardioWorkout">#a46970</color>
 
 </resources>

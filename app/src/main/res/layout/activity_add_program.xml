@@ -51,71 +51,81 @@
                         android:textColorHint="#C5B2B2">
 
                         <EditText
-                            android:id="@+id/programName"
-                            style="@style/AddProgramText"
+                            android:id="@+id/editTextAddProgramName"
+                            style="@style/modifiedEditText"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
                             android:hint="Name"
-                            android:maxLines="1" />
+                            android:textColorHint="@color/black"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/addprogramName"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="10dp"
-                        android:textColorHint="#C5B2B2">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
-                            android:id="@+id/programName"
-                            style="@style/AddProgramText"
-                            android:hint="Duration"
-                            android:inputType="time"
+                            android:id="@+id/editTextAddProgramDescription"
+                            style="@style/modifiedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Description"
+                            android:textColor="@color/black"
                             android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                        <EditText
+                            android:id="@+id/editTextAddProgramCategory"
+                            style="@style/modifiedEditText"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:hint="Category"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        >
-
-                        <TextView
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        <EditText
+                            android:id="@+id/editTextAddProgramSessionNumber"
                             style="@style/modifiedEditText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:text="Category"
-                            android:textAlignment="center"
-                            android:textColor="#26355E"
-                            android:textSize="12sp" />
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:hint="Session Number"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <Spinner
-                            android:id="@+id/spinner1"
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                    <com.google.android.material.textfield.TextInputLayout
 
-                            android:background="#5BBDAA"
-                            android:hint="Password"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.502"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.498" />
+                        style="@style/parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <EditText
+                            android:id="@+id/editTextAddProgramDuration"
+                            style="@style/modifiedEditText"
+                            android:hint="Duration"
+                            android:textColor="@color/black"
+                            android:inputType="textPersonName"
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
 
                         style="@style/loginButton"
+                        android:id="@+id/buttonAddProgramButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Register"
+                        android:text="Add Program"
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"
                         app:spinning_bar_width="4dp" />
-
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
