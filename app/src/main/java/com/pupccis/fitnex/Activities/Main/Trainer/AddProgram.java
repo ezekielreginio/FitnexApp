@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -36,14 +38,6 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     private Program program_intent;
 
-<<<<<<< HEAD
-public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Animation rotateAnimation;
-    ImageView imageView;
-    RelativeLayout closeButton;
-
-=======
->>>>>>> parent of e532394 (trainer studio)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -53,11 +47,9 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
         setContentView(R.layout.activity_add_program);
 
-        Spinner spinner=findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+
         imageView = (ImageView) findViewById(R.id.closeAddProgramButton);
         closeButton = (RelativeLayout) findViewById(R.id.relativeLayoutAddProgramCloseButton);
 
@@ -129,16 +121,5 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     }
 }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-}
 
