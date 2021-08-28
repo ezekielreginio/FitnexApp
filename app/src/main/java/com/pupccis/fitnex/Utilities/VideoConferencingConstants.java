@@ -32,7 +32,7 @@ public class VideoConferencingConstants {
 
     public static final String REMOTE_MSG_MEETING_ROOM = "meetingRoom";
 
-    //Program Class Constants
+    //Program FitnessClassAdapter Constants
 
 
     public static HashMap<String, String> getRemoteMessageHeaders()

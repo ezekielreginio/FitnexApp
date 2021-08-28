@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityAddProgram"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="100"
+
+
+    android:background="@drawable/clean"
+    tools:context=".Activities.Main.Trainer.AddProgram">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/frameLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ic_slideup_bg"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:transitionName="addProgramTransition"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="671dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="top|center"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:cardCornerRadius="50dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+
+                        style="@style/parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <EditText
+                            android:id="@+id/editText1"
+                            style="@style/modifiedEditText"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:hint="Name"
+                            android:textColorHint="@color/black"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <EditText
+                            android:id="@+id/editText2"
+                            style="@style/modifiedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Description"
+                            android:textColor="@color/black"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <EditText
+                            android:id="@+id/editText3"
+                            style="@style/modifiedEditText"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:hint="Category"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+
+                        style="@style/parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        <EditText
+                            android:id="@+id/editText4"
+                            style="@style/modifiedEditText"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:hint="Session Number"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+
+                        style="@style/parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:background="#ADCEE6">
+
+                        <EditText
+                            android:id="@+id/multilineEditTextDescription"
+                            style="@style/modifiedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|left"
+                            android:hint="Duration"
+                            android:inputType="textMultiLine"
+                            android:lines="8"
+                            android:maxLines="1"
+                            android:minLines="6"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+
+                        style="@style/parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:background="#ADCEE6">
+
+                        <EditText
+                            android:id="@+id/multilineEditTextDescription"
+                            style="@style/modifiedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|left"
+                            android:hint="Duration"
+                            android:inputType="textMultiLine"
+                            android:lines="8"
+                            android:maxLines="1"
+                            android:minLines="6"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+
+                        style="@style/loginButton"
+                        android:id="@+id/buttonAddProgramButton"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="Add Program"
+                        app:initialCornerAngle="27dp"
+                        app:spinning_bar_color="#FFF"
+                        app:spinning_bar_padding="6dp"
+                        app:spinning_bar_width="4dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+
+        android:layout_marginBottom="0dp"
+
+        android:gravity="top|start"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutAddProgramCloseButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="656dp"
+            android:background="@drawable/ic_circle_add_button"
+
+            app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
+
+            <ImageView
+                android:id="@+id/closeAddProgramButton"
+                android:layout_marginTop="7.5dp"
+                android:layout_marginLeft="7.5dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/linearLayoutAddProgramButton"-->
+    <!--        app:layout_constraintRight_toRightOf=""-->
+    <!--        android:layout_width="75dp"-->
+    <!--        android:layout_height="75dp"-->
+    <!--        android:background="@drawable/ic_circle_add_button"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:transitionName="addProgramTransition"-->
+    <!--        android:translationZ="1dp"-->
+    <!--        >-->
+    <!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@+id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+    <!--        &lt;!&ndash;        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+    <!--        &lt;!&ndash;        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+    <!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+    <!--        &lt;!&ndash;        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/AddProgramButton"-->
+    <!--            android:layout_width="75dp"-->
+    <!--            android:layout_height="75dp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            app:srcCompat="@drawable/ic__add_icon" />-->
+
+    <!--    </LinearLayout>-->
+</RelativeLayout>
