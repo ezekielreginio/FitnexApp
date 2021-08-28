@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.fragment.ProgramsFragment;
 import com.pupccis.fitnex.Activities.Main.Trainer.fragment.ScheduleFragment;
-import com.pupccis.fitnex.Activities.Main.Trainer.fragment.TraineesFragment;
+import com.pupccis.fitnex.Activities.Main.Trainer.fragment.ClassFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {
 
@@ -23,7 +23,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
             case 1:
                 return new ScheduleFragment();
             case 2:
-                return new TraineesFragment();
+                return new ClassFragment();
         }
         return new ProgramsFragment();
     }

@@ -23,6 +23,7 @@ import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.PreferenceManager;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -89,7 +90,7 @@ public class ProgramsFragment extends Fragment {
         Log.d("create", "onCreateExecuted");
         mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
 
-        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 programs.clear();
@@ -106,6 +107,7 @@ public class ProgramsFragment extends Fragment {
                     programs.add(program);
                 }
                 programAdapter = new ProgramAdapter(programs, getContext());
+                Log.d("ProgramAdapter", programAdapter.toString());
                 programAdapter.notifyDataSetChanged();
                 programsRecyclerView.setAdapter(programAdapter);
             }

@@ -57,7 +57,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         intent = new Intent(TrainerDashboard.this, AddProgram.class);
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
-        tabLayout.addTab(tabLayout.newTab().setText("Trainees"));
+        tabLayout.addTab(tabLayout.newTab().setText("Classes"));
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -72,7 +72,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                       intent = new Intent(TrainerDashboard.this, FitnexRegister.class);
                 }
                 else{
-                    intent = new Intent(TrainerDashboard.this, AddProgram.class);
+                    intent = new Intent(TrainerDashboard.this, AddClass.class);
                 }
             }
 
