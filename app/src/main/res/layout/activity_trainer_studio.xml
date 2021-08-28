@@ -49,7 +49,6 @@
                     android:textColor="@color/blueTextColor"
                     android:textSize="50dp"
                     android:textStyle="bold"
-
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
