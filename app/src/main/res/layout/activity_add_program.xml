@@ -44,7 +44,6 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
-<<<<<<< HEAD
 
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
@@ -64,27 +63,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
-=======
-
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editTextAddProgramName"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Name"
-                            android:textColorHint="@color/black"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
->>>>>>> parent of e532394 (trainer studio)
                         <EditText
                             android:id="@+id/editTextAddProgramDescription"
                             style="@style/modifiedEditText"
