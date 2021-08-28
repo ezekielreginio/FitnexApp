@@ -13,7 +13,12 @@
     <color name="whiteTextColor">#fff</color>
     <color name="primaryTextColor">#26355E</color>
 
+<<<<<<< HEAD
     <color name="secondaryBackgroundColor">#ADCEE6</color>
+=======
+    <color name="blueTextColor">#092f62</color>
+
+>>>>>>> parent of 34699ad (reroll)
 
     <color name="colorMeetingInvitationStart">#4004BB</color>
     <color name="colorMeetingInvitationEnd">#8A1AAA</color>
