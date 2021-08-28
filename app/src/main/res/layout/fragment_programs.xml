@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/ic_trainer_bg"
-    tools:context=".Activities.Main.Trainer.fragment.ProgramsFragment"
-    android:padding="5dp">
+    tools:context=".Activities.Main.Trainer.fragment.ProgramsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/programsRecyclerView"

@@ -24,8 +24,11 @@
     <color name="colorMeetingInvitationEnd">#8A1AAA</color>
 
     <color name="colorProgramStrengthWorkout">#35639a</color>
+<<<<<<< HEAD
     <color name="colorProgramCardioWorkout">#a46970</color>
     <color name="addProgramText">#26355E</color>
     <color name="addProgramCard">#8ABADD</color>
+=======
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
 
 </resources>

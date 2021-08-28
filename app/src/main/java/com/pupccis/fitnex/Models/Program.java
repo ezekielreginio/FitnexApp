@@ -1,10 +1,6 @@
 package com.pupccis.fitnex.Models;
 
-import com.google.firebase.database.Exclude;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Program implements Serializable {
     private String name;
@@ -13,8 +9,6 @@ public class Program implements Serializable {
     private String sessionNumber;
     private String duration;
     private String trainees;
-    private String programID;
-    private String programTrainerID;
 
     public Program() {
     }
@@ -36,17 +30,6 @@ public class Program implements Serializable {
         this.setSessionNumber(sessionNumber);
         this.duration = duration;
         this.setTrainees(trainees);
-    }
-
-    @Exclude
-    public Map<String, Object> toMap(){
-        HashMap<String,Object> result = new HashMap<>();
-        result.put("name", name);
-        result.put("description", description);
-        result.put("category", category);
-        result.put("sessionNumber", sessionNumber);
-        result.put("duration", duration);
-        return result;
     }
 
     public String getName() {
@@ -94,21 +77,5 @@ public class Program implements Serializable {
 
     public void setTrainees(String trainees) {
         this.trainees = trainees;
-    }
-
-    public String getProgramID() {
-        return programID;
-    }
-
-    public void setProgramID(String programID) {
-        this.programID = programID;
-    }
-
-    public String getProgramTrainerID() {
-        return programTrainerID;
-    }
-
-    public void setProgramTrainerID(String programTrainerID) {
-        this.programTrainerID = programTrainerID;
     }
 }

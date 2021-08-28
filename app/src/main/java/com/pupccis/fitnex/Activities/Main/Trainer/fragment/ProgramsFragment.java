@@ -93,8 +93,6 @@ public class ProgramsFragment extends Fragment {
         mDatabase.child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                programs.clear();
-
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Program program = new Program();
                     program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
@@ -102,13 +100,17 @@ public class ProgramsFragment extends Fragment {
                     program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
                     program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
                     program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                    program.setProgramID(dataSnapshot.getKey());
-                    program.setProgramTrainerID(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
                     programs.add(program);
+                    Log.d("Name: ",program.getName());
+                    Log.d("List: ",programs.toString());
                 }
+<<<<<<< HEAD
                 programAdapter = new ProgramAdapter(programs, getContext());
                 Log.d("ProgramAdapter", programAdapter.toString());
                 programAdapter.notifyDataSetChanged();
+=======
+                programAdapter = new ProgramAdapter(programs);
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
                 programsRecyclerView.setAdapter(programAdapter);
             }
 

@@ -19,9 +19,7 @@ import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProgramDAO {
 
@@ -53,11 +51,13 @@ public class ProgramDAO {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("Error", e.getMessage());
+                 Log.d("Program query failuer", e.getMessage());
+
             }
         });
         return programsList;
     }
+<<<<<<< HEAD
 
     public void updateProgram(Program program){
 //        mDatabase = ;
@@ -72,5 +72,7 @@ public class ProgramDAO {
         mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
     }
 
+=======
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
 }
 

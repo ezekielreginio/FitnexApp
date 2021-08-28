@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,10 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+<<<<<<< HEAD
 import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+=======
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,6 +42,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
     private ProgramDAO programDAO = new ProgramDAO();
     private Button addProgram;
 
+<<<<<<< HEAD
     private Program program_intent;
 
 <<<<<<< HEAD
@@ -50,13 +53,11 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     RelativeLayout closeButton;
 
 >>>>>>> parent of 34699ad (reroll)
+=======
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        //Extra Intents:
-        program_intent = (Program) getIntent().getSerializableExtra("program");
-
         setContentView(R.layout.activity_add_program);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
@@ -75,15 +76,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         addProgram.setOnClickListener(this);
         closeButton.setOnClickListener(this);
 
-        if(program_intent != null){
-            editName.setText(program_intent.getName());
-            editDescription.setText(program_intent.getDescription());
-            editCategory.setText(program_intent.getCategory());
-            editSessionNumber.setText(program_intent.getSessionNumber());
-            editDuration.setText(program_intent.getDuration());
-            addProgram.setText("Update Program");
-        }
-
         rotateAnimation();
         closeButton.setVisibility(View.VISIBLE);
 
@@ -99,9 +91,11 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()){
             case(R.id.relativeLayoutAddProgramCloseButton):
-                closeForm();
+                startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
+                overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
                 break;
             case(R.id.buttonAddProgramButton):
                 String name = editName.getText().toString();
@@ -110,23 +104,11 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
                 String sessionNumber = editSessionNumber.getText().toString();
                 String duration = editDuration.getText().toString();
                 Program program = new Program(name, description, category, sessionNumber, duration);
-                if(program_intent != null){
-                    program.setProgramTrainerID(program_intent.getProgramTrainerID());
-                    program.setProgramID(program_intent.getProgramID());
-                    programDAO.updateProgram(program);
-                    Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
-                    closeForm();
-                }
-
-                else{
-                    programDAO.createProgram(program);
-                    Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
-                    closeForm();
-                }
-
+                programDAO.createProgram(program);
                 break;
         }
     }
+<<<<<<< HEAD
 
     private void closeForm(){
         startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
@@ -136,3 +118,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
 
 
+=======
+}
+>>>>>>> parent of 1b608b5 (Trainer Program CRUD Completed)
