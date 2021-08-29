@@ -40,31 +40,120 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddprogramName"
+                        android:id="@+id/textInputLayoutVideoTitle"
                         style="@style/AddProgram"
                         android:layout_marginTop="20dp"
                         android:textColorHint="#C5B2B2">
 
                         <EditText
-                            android:id="@+id/editTextAddClassName"
+                            android:id="@+id/editTextVideoTitle"
                             style="@style/AddProgramText"
-                            android:hint="Fitness Class Name"
+                            android:hint="Video Title"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutClassTimeStart"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="20dp"
-                        android:textColorHint="#C5B2B2">
+                        android:id="@+id/textInputPassword"
+                        style="@style/parent"
+                        android:layout_height="wrap_content"
+                        >
 
-                        <EditText
-                            android:id="@+id/editTextTimeStart"
-                            style="@style/AddProgramText"
-                            android:hint="Start Time"
-                            android:maxLines="1" />
+                        <TextView
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Category"
+                            android:textAlignment="center"
+                            android:textColor="#958585"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/editTextAddProgramCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:textColorHint="#C5B2B2"
+                            android:background="#FFFFFF"
+                            android:hint="-Select A Category-"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.502"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.498"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/textInputLayoutDescription"
+                        style="@style/parent"
+                        >
+
+                        <TextView
+                            android:id="@+id/labelDescription"
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Content Description"
+                            android:textAlignment="center"
+                            android:textColor="#958585"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toTopOf="parent"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minLines="3"
+                            android:gravity="top"
+                            android:padding="2dp"
+                            android:background="@drawable/background_textfield"
+                            app:layout_constraintTop_toBottomOf="@id/labelDescription"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/textInputLayoutAddVideo"
+                        style="@style/parent"
+                        app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescription"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/labelAddVideo"
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Add Video"
+                            android:textAlignment="center"
+                            android:textColor="#958585"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/labelAddVideo"
+                            android:background="@drawable/background_textfield"
+                            android:minHeight="70dp">
+
+                            <Button
+                                android:id="@+id/btnAddVideoFile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add File"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="10dp"
+                                android:background="#092f62"
+
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutClassTimeEnd"
