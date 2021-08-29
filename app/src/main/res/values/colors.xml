@@ -14,6 +14,8 @@
     <color name="primaryTextColor">#26355E</color>
 
     <color name="secondaryBackgroundColor">#ADCEE6</color>
+    <color name="blueTextColor">#092f62</color>
+
 
     <color name="colorMeetingInvitationStart">#4004BB</color>
     <color name="colorMeetingInvitationEnd">#8A1AAA</color>

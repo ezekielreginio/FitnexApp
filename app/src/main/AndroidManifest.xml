@@ -24,6 +24,9 @@
             android:name=".Activities.Main.Trainee.TraineeWorkoutFavorites"
             android:exported="true" />
         <activity
+            android:name=".Activities.Main.Trainer.TrainerStudio"
+            android:exported="true" />
+            <activity
             android:name=".Activities.Main.Trainee.TraineeDashboard"
             android:exported="true" />
         <activity

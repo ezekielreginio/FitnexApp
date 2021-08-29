@@ -132,6 +132,8 @@
                             android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    </LinearLayout>
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/buttonAddProgramButton"
                         style="@style/loginButton"
@@ -166,7 +168,6 @@
             android:layout_gravity="center"
             android:layout_marginBottom="656dp"
             android:background="@drawable/ic_circle_add_button"
-
             app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
             <ImageView
