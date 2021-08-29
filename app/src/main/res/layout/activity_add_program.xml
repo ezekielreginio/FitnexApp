@@ -132,8 +132,6 @@
                             android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-
-                    </LinearLayout>
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/buttonAddProgramButton"
                         style="@style/loginButton"
@@ -147,7 +145,10 @@
 
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
+
+
 
         </FrameLayout>
     </LinearLayout>
