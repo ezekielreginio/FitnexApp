@@ -21,9 +21,9 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-                return new ScheduleFragment();
-            case 2:
                 return new ClassFragment();
+            case 2:
+                return new ScheduleFragment();
         }
         return new ProgramsFragment();
     }

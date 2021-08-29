@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -24,16 +25,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
-import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 
 public class FitnexLogin extends AppCompatActivity implements View.OnClickListener {
     private EditText editEmail, editPassword;
     private Button loginUser, quickLogin;
     private FirebaseAuth mAuth;
-    private PreferenceManager preferenceManager;
+    private UserPreferences userPreferences;
     private TextView name;
 
     @Override
@@ -42,7 +44,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
 
 
-        preferenceManager = new PreferenceManager(getApplicationContext());
+        userPreferences = new UserPreferences(getApplicationContext());
 
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -114,11 +116,32 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    preferenceManager.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-                                    preferenceManager.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
-                                    preferenceManager.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-                                    preferenceManager.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
-                                    preferenceManager.putString(VideoConferencingConstants.KEY_USER_ID, userId);
+                                    FirebaseDatabase.getInstance().getReference("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            String userType = task.getResult().child("userType").getValue().toString();
+                                            userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+                                            userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
+                                            userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+                                            userPreferences.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
+                                            userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
+                                            userPreferences.putString("usertype", userType);
+
+                                            Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
+                                            if(userType.equals("trainer")){
+                                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                            }
+                                            else if(userType.equals("trainee")){
+                                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                            }
+                                        }
+                                    });
+
+//                                    userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+//                                    userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
+//                                    userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+//                                    userPreferences.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
+//                                    userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
 
                                 }
 
@@ -128,8 +151,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 }
                             });
 
-                            Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+
 
 
                         }

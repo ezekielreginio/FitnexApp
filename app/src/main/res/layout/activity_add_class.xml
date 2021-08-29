@@ -40,78 +40,71 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
-
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:id="@+id/textInputLayoutAddprogramName"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextAddClassName"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Name"
-                            android:textColorHint="@color/black"/>
+                            style="@style/AddProgramText"
+                            android:hint="Fitness Class Name"
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:id="@+id/textInputLayoutClassTimeStart"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextTimeStart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:textColor="@color/black"
-                            android:inputType="textPersonName"
-                            android:text="Start time" />
+                            style="@style/AddProgramText"
+                            android:hint="Start Time"
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:id="@+id/textInputLayoutClassTimeEnd"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextTimeEnd"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:textColor="@color/black"
-                            android:inputType="textPersonName"
-                            android:text="End time" />
+                            style="@style/AddProgramText"
+                            android:hint="End Time"
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
 
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddClassSessionNumber"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
+
                         <EditText
                             android:id="@+id/editTextAddClassSessionNumber"
-                            style="@style/modifiedEditText"
-                            android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:hint="Session Number"/>
+                            style="@style/AddProgramText"
+                            android:hint="Session Number"
+                            android:inputType="time"
+                            android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-
-                        style="@style/parent"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:id="@+id/textInputLayoutAddClassDescription"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
 
                         <EditText
                             android:id="@+id/editTextAddClassDescription"
-                            style="@style/modifiedEditText"
+                            style="@style/AddProgramText"
                             android:hint="Duration"
-                            android:textColor="@color/black"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
+                            android:inputType="time"
+                            android:maxLines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton

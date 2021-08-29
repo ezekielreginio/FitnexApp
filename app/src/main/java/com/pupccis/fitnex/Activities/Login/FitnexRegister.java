@@ -23,6 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
 import com.google.firebase.database.FirebaseDatabase;
+import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
+import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -132,15 +134,13 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
 
 
                         if(task.isSuccessful()){
-                            User user = new User(name, age, email);
+                            User user = new User(name, age, email, "trainee");
                             FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user);
 
                             Toast.makeText(FitnexRegister.this, "Registration Successful!", Toast.LENGTH_LONG).show();
-
-
-                            startActivity(new Intent(FitnexRegister.this, FitnexLogin.class));
+                            startActivity(new Intent(FitnexRegister.this, TraineeDashboard.class));
 
 
                         }

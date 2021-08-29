@@ -20,7 +20,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
-import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiService;
 
@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class OutgoingInvitationActivity extends AppCompatActivity {
 
-    private PreferenceManager preferenceManager;
+    private UserPreferences userPreferences;
     private String inviterToken = null;
 
     String meetingRoom = null;
@@ -48,7 +48,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outgoing_invitation);
 
-        preferenceManager = new PreferenceManager(getApplicationContext());
+        userPreferences = new UserPreferences(getApplicationContext());
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         String meetingType = getIntent().getStringExtra("type");
@@ -101,13 +101,13 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
             data.put(VideoConferencingConstants.REMOTE_MSG_TYPE, VideoConferencingConstants.REMOTE_MSG_INVITATION);
             data.put(VideoConferencingConstants.REMOTE_MSG_MEETING_TYPE, meetingType);
-            data.put("first_name", preferenceManager.getString(VideoConferencingConstants.KEY_FULLNAME));
+            data.put("first_name", userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME));
             data.put("last_name", null);
-            data.put(VideoConferencingConstants.KEY_EMAIL, preferenceManager.getString(VideoConferencingConstants.KEY_EMAIL));
+            data.put(VideoConferencingConstants.KEY_EMAIL, userPreferences.getString(VideoConferencingConstants.KEY_EMAIL));
             data.put(VideoConferencingConstants.REMOTE_MSG_INVITER_TOKEN, inviterToken);
 
             meetingRoom =
-                    preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID) + "_"+
+                    userPreferences.getString(VideoConferencingConstants.KEY_USER_ID) + "_"+
                             UUID.randomUUID().toString().substring(0,5);
             data.put(VideoConferencingConstants.REMOTE_MSG_MEETING_ROOM, meetingRoom);
 

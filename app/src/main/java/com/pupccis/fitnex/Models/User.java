@@ -7,16 +7,19 @@ public class User implements Serializable {
     private String name;
     private String age;
     private String email;
+    private String userType;
     private String token;
+    private String userID;
 
     public User(){
 
     }
 
-    public User(String name, String age, String email){
+    public User(String name, String age, String email, String userType){
         this.setName(name);
         this.setAge(age);
         this.setEmail(email);
+        this.setUserType(userType);
     }
 
     public String getName(){
@@ -49,5 +52,21 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

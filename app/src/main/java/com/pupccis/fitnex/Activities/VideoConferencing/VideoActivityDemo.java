@@ -26,7 +26,7 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Activities.Login.FitnexLogin;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
-import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     Button btnTest;
     TextView btnSignOut;
     private DatabaseReference mDatabase;
-    private PreferenceManager preferenceManager;
+    private UserPreferences userPreferences;
     private List<User> users;
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
@@ -50,7 +50,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_demo);
 
-        preferenceManager = new PreferenceManager(getApplicationContext());
+        userPreferences = new UserPreferences(getApplicationContext());
 
         btnSignOut =(TextView) findViewById(R.id.textSignOut);
         btnSignOut.setOnClickListener(this);
@@ -102,7 +102,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                     catch (Exception e){
 
                     }
-                    if(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID).equals(dataSnapshot.getKey())){
+                    if(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID).equals(dataSnapshot.getKey())){
                         continue;
                     }
 
@@ -146,7 +146,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
     private void signOut(){
         Toast.makeText(VideoActivityDemo.this, "Signing Out", Toast.LENGTH_SHORT).show();
-        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).child(VideoConferencingConstants.KEY_FCM_TOKEN).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        mDatabase.child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).child(VideoConferencingConstants.KEY_FCM_TOKEN).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(VideoActivityDemo.this, "Signing Out...", Toast.LENGTH_SHORT).show();

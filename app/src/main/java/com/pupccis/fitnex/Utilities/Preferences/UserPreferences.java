@@ -1,12 +1,15 @@
-package com.pupccis.fitnex.Utilities;
+package com.pupccis.fitnex.Utilities.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PreferenceManager {
+import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+
+public class UserPreferences {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    public PreferenceManager(Context context){
+    public UserPreferences(Context context){
         sharedPreferences = context.getSharedPreferences(VideoConferencingConstants.KEY_PREFERENCE_NAME, Context.MODE_PRIVATE);
          editor= sharedPreferences.edit();
     }
@@ -35,5 +38,13 @@ public class PreferenceManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
+    }
+
+    public void set(User user){
+        this.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+        this.putString(VideoConferencingConstants.KEY_FULLNAME, user.getName()); //$_SESSION['fullname']
+        this.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
+        this.putString(VideoConferencingConstants.KEY_AGE, user.getAge());
+        this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
     }
 }

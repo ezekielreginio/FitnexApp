@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
-import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class ClassFragment extends Fragment {
     private String mParam2;
 
     private FitnessClassAdapter fitnessClassAdapter;
-    private PreferenceManager preferenceManager;
+    private UserPreferences userPreferences;
     private FitnessClassDAO fitnessClassDAO = new FitnessClassDAO();
 
     private RecyclerView fitnessClassRecyclerView;
@@ -82,11 +81,11 @@ public class ClassFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
         mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
 
-        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
             fitnessClasses.clear();
@@ -98,7 +97,7 @@ public class ClassFragment extends Fragment {
                 fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
                 fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
                 fitnessClass.setClassID(dataSnapshot.getKey());
-                fitnessClass.setClassTrainerID(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
+                fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
                 fitnessClasses.add(fitnessClass);
             }
             fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext());

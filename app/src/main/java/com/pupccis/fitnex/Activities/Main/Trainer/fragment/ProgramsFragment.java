@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,9 +21,8 @@ import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.Utilities.PreferenceManager;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class ProgramsFragment extends Fragment {
     private String mParam2;
 
     private ProgramAdapter programAdapter;
-    private PreferenceManager preferenceManager;
+    private UserPreferences userPreferences;
     private ProgramDAO programDAO = new ProgramDAO();
 
     private RecyclerView programsRecyclerView;
@@ -85,12 +82,12 @@ public class ProgramsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
         Log.d("create", "onCreateExecuted");
         mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
 
-        mDatabase.child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 programs.clear();
@@ -103,11 +100,10 @@ public class ProgramsFragment extends Fragment {
                     program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
                     program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
                     program.setProgramID(dataSnapshot.getKey());
-                    program.setProgramTrainerID(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID));
+                    program.setProgramTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
                     programs.add(program);
                 }
                 programAdapter = new ProgramAdapter(programs, getContext());
-                Log.d("ProgramAdapter", programAdapter.toString());
                 programAdapter.notifyDataSetChanged();
                 programsRecyclerView.setAdapter(programAdapter);
             }

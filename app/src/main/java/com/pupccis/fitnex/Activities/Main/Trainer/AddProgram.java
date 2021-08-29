@@ -106,17 +106,17 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                     program.setProgramID(program_intent.getProgramID());
                     programDAO.updateProgram(program);
                     Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
-                    closeForm();
                 }
 
                 else{
                     programDAO.createProgram(program);
                     Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
-                    closeForm();
                 }
 
                 break;
+
         }
+        closeForm();
     }
 
     private void closeForm(){

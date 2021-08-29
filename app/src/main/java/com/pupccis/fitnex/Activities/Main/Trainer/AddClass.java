@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class AddClass extends AppCompatActivity implements View.OnClickListener{
+public class AddClass extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
     private Animation rotateAnimation;
     private ImageView imageView;
     private EditText editTimeStart, editTimeEnd, editName, editSessionNumber, editDescription;
@@ -62,10 +62,13 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         editTimeStart.setInputType(InputType.TYPE_NULL);
         editTimeEnd.setInputType(InputType.TYPE_NULL);
         addClass = (Button) findViewById(R.id.buttonAddClassButton);
-        editTimeStart.setOnClickListener(this);
-        editTimeEnd.setOnClickListener(this);
+
+        editTimeStart.setOnFocusChangeListener(this);
+        editTimeEnd.setOnFocusChangeListener(this);
+
         addClass.setOnClickListener(this);
         closeButton.setOnClickListener(this);
+
         rotateAnimation();
         closeButton.setVisibility(View.VISIBLE);
 
@@ -90,14 +93,6 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case(R.id.editTextTimeStart):
-                showTimeDialog(editTimeStart, 0);
-                Toast.makeText(AddClass.this, "time start click", Toast.LENGTH_SHORT).show();
-                break;
-            case(R.id.editTextTimeEnd):
-                Toast.makeText(AddClass.this, "time end click", Toast.LENGTH_SHORT).show();
-                showTimeDialog(editTimeEnd, 1);
-                break;
             case(R.id.buttonAddClassButton):
                 String name = editName.getText().toString();
                 String sessionNo = editSessionNumber.getText().toString();
@@ -108,26 +103,43 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
                 FitnessClass fitnessClass = new FitnessClass(name, timeStart, timeEnd, sessionNo, currentTime.toString(), description);
 
                 if(fitness_intent != null){
-
                     fitnessClass.setClassID(fitness_intent.getClassID());
                     fitnessClass.setClassTrainerID(fitness_intent.getClassTrainerID());
                     fitnessClassDAO.updateClass(fitnessClass);
-                    closeForm();
+                    Toast.makeText(this, "Fitness Class Successfully Updated", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     fitnessClassDAO.createClass(fitnessClass);
-                    closeForm();
+                    Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
+
                 }
                 break;
             case(R.id.relativeLayoutAddClassCloseButton):
 
                 break;
         }
+        closeForm();
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        switch(view.getId()) {
+            case (R.id.editTextTimeStart):
+                showTimeDialog(editTimeStart, 0);
+                Toast.makeText(AddClass.this, "time start click", Toast.LENGTH_SHORT).show();
+                break;
+            case(R.id.editTextTimeEnd):
+                Toast.makeText(AddClass.this, "time end click", Toast.LENGTH_SHORT).show();
+                showTimeDialog(editTimeEnd, 1);
+                break;
+        }
     }
 
     private void closeForm() {
-        startActivity(new Intent(AddClass.this, TrainerDashboard.class));
+        Intent intent = new Intent(AddClass.this, TrainerDashboard.class);
+        intent.putExtra("page", 1);
         overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+        startActivity(intent);
     }
 
     private String showTimeDialog(EditText time, int setter) {
@@ -156,5 +168,6 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         timePickerDialog.show();
         return time.toString();
     }
+
 
 }
