@@ -70,7 +70,7 @@
                             android:textSize="12sp" />
 
                         <Spinner
-                            android:id="@+id/editTextAddProgramCategory"
+                            android:id="@+id/editTextPostVideoCategory"
                             android:layout_width="match_parent"
                             android:layout_height="42dp"
                             android:textColorHint="#C5B2B2"
@@ -104,6 +104,7 @@
                             app:layout_constraintTop_toTopOf="parent"/>
 
                         <EditText
+                            android:id="@+id/editTextVideoDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:minLines="3"
@@ -217,10 +218,10 @@
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
 
                         style="@style/loginButton"
-                        android:id="@+id/buttonAddClassButton"
+                        android:id="@+id/buttonUploadVideo"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Add Class"
+                        android:text="Upload Video"
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"

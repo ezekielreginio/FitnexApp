@@ -11,9 +11,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -23,17 +27,23 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
+import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.R;
 
 import java.util.Date;
 
-public class AddVideo extends AppCompatActivity implements View.OnClickListener {
+public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //Private Layout Attributes
+    private EditText editTextVideoTitle, editTextVideoDescription;
     private ImageView btnClose;
-    private Button btnUploadVideo;
+    private Button btnUploadVideo, btnAddVideo;
     private ConstraintLayout videoUploadContainer;
     private VideoView videoVIewUploadedVideo;
+
+    //Spinner Attribute
+    private Spinner spinnerVideoCategory;
 
     //Video Attributes
     private VideoView videoView;
@@ -45,10 +55,20 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_add_video);
 
         //Layout Binding
+        editTextVideoTitle = findViewById(R.id.editTextVideoTitle);
+        editTextVideoDescription = (EditText) findViewById(R.id.editTextVideoDescription);
+        spinnerVideoCategory = (Spinner) findViewById(R.id.editTextPostVideoCategory);
         btnClose = findViewById(R.id.closeAddClassButton);
-        btnUploadVideo = (Button) findViewById(R.id.btnAddVideoFile);
+        btnAddVideo = (Button) findViewById(R.id.btnAddVideoFile);
+        btnUploadVideo = (Button) findViewById(R.id.buttonUploadVideo);
         videoUploadContainer = (ConstraintLayout) findViewById(R.id.constraintLayoutAddVideo);
         videoVIewUploadedVideo = (VideoView) findViewById(R.id.videoViewUploadedVideo);
+
+        //Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerVideoCategory.setAdapter(adapter);
+
 
         //MediaController
         mediaController = new MediaController(this);
@@ -58,7 +78,9 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener 
         rotateAnimation(this, btnClose);
 
         //Event Bindings
+        btnAddVideo.setOnClickListener(this);
         btnUploadVideo.setOnClickListener(this);
+        spinnerVideoCategory.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -87,6 +109,16 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener 
                             }
                         }).check();
                 break;
+            case(R.id.buttonUploadVideo):
+                String videoTitle = editTextVideoTitle.getText().toString();
+                String videoDescription = editTextVideoDescription.getText().toString();
+                String videoCategory= spinnerVideoCategory.getSelectedItemPosition() + "";
+                String filetype = getContentResolver().getType(videoUri);
+                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri).build();
+                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle, videoDescription, videoCategory).build();
+                postVideoDAO.postVideo(postVideo);
+                //PostVideo postVideo = PostVideo.PostVideoBuilder(videoTitle, videoCategory, videoDescription,);
+                break;
         }
     }
 
@@ -101,5 +133,16 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener 
             videoUri = data.getData();
             videoVIewUploadedVideo.setVideoURI(videoUri);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        spinnerVideoCategory.setSelection(i);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
