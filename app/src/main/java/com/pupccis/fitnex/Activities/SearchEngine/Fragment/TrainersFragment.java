@@ -2,13 +2,27 @@ package com.pupccis.fitnex.Activities.SearchEngine.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.TrainerSEAdapter;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +39,12 @@ public class TrainersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private UserPreferences userPreferences;
+    private TrainerSEAdapter trainerSEAdapter;
+    private RecyclerView TrainerSERecyclerView;
+    private DatabaseReference mDatabase;
+    private List<User> userList = new ArrayList<>();
 
     public TrainersFragment() {
         // Required empty public constructor
@@ -55,12 +75,41 @@ public class TrainersFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        userPreferences = new UserPreferences(getActivity().getApplicationContext());
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userList.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    User userListContainer = new User();
+                    userListContainer.setName(dataSnapshot.child("name").getValue().toString());
+                    userListContainer.setEmail(dataSnapshot.child("email").getValue().toString());
+                    userList.add(userListContainer);
+                }
+                trainerSEAdapter = new TrainerSEAdapter(userList, getContext());
+                trainerSEAdapter.notifyDataSetChanged();
+                TrainerSERecyclerView.setAdapter(trainerSEAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        TrainerSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEngineTrainers);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trainers, container, false);
+        return inflater.inflate(R.layout.fragment_trainers_se, container, false);
     }
 }
