@@ -111,6 +111,7 @@ public class ClassFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
     }
     @Override

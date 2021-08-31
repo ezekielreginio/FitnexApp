@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
+import com.pupccis.fitnex.Activities.SearchEngine.SearchEngine;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
@@ -76,7 +77,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                 userLogin();
                 break;
             case(R.id.buttonQuickLogin):
-                startActivity(new Intent(this, TraineeDashboard.class));
+                startActivity(new Intent(this, SearchEngine.class));
         }
     }
 
