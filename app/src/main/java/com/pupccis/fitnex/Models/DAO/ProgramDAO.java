@@ -27,10 +27,18 @@ public class ProgramDAO {
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
     public void createProgram(Program program){
+        String program_key = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .push().getKey();
+
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .push()
+                .child(program_key)
                 .setValue(program);
+
+        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS_LIST)
+                .child(program_key)
+                .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     public List<Program> readPrograms(String userID){
@@ -70,6 +78,8 @@ public class ProgramDAO {
 
     public void deleteProgram(Program program){
         mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
+        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS_LIST)
+                .child(program.getProgramID()).removeValue();
     }
 
 }

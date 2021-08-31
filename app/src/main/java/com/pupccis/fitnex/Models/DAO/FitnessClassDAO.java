@@ -25,10 +25,18 @@ public class FitnessClassDAO {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
 
     public void createClass(FitnessClass fitnessClass){
+        String fitnessClassKey = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .push().getKey();
+
         FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .push()
+                .child(fitnessClassKey)
                 .setValue(fitnessClass);
+
+        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES_LIST)
+                .child(fitnessClassKey)
+                .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
     public List<FitnessClass> readClasses(String userID){
         List<FitnessClass> fitnessClassList = new ArrayList<>();
@@ -65,7 +73,11 @@ public class FitnessClassDAO {
     }
 
     public static void deleteClass(FitnessClass fitnessClass){
-        Log.d("Delete!!!!!", fitnessClass.getClassName());
         FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(fitnessClass.getClassTrainerID()).child(fitnessClass.getClassID()).removeValue();
+
+        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES_LIST)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(fitnessClass.getClassID())
+                .removeValue();
     }
 }
