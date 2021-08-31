@@ -115,7 +115,7 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
                 String videoCategory= spinnerVideoCategory.getSelectedItemPosition() + "";
                 String filetype = getContentResolver().getType(videoUri);
                 PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri).build();
-                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle, videoDescription, videoCategory).build();
+                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription).build();
                 postVideoDAO.postVideo(postVideo);
                 //PostVideo postVideo = PostVideo.PostVideoBuilder(videoTitle, videoCategory, videoDescription,);
                 break;
