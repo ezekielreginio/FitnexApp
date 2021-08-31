@@ -3,11 +3,14 @@ package com.pupccis.fitnex.Activities.Main.Trainer.Studio;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
@@ -17,6 +20,7 @@ import com.pupccis.fitnex.R;
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -5,13 +5,17 @@ public class MailBody {
     private static String email = "fitnex.application@gmail.com";
     private static String password = "fitnexpassword";
     private static String subject = "Welcome to Fitnex";
-    private static String body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-            "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad\n"+
-            "minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo " +
-            "consequat. Duis aute irure dolor in reprehenderit\n"+
-            "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat " +
-            "cupidatat non proident, sunt in culpa qui officia\n"+
-            "deserunt mollit anim id est laborum.";
+    private static String body = "Welcome to Fitnex!" +
+            "I'm Redd, one of the Developers of Fitnex Online Platfore and I'd Like to personally thank you for signing up to our service\n"+
+            "We have established Fitnex to promote the health, wellness, and fitness of each individual in our platform " +
+            "I'd like to hear everything about you for us to assess your portfolio whether you are qualified to be a Fitnex Trainer\n"+
+            "Kindly Send the Following Information as a response to this email:" +
+            "Name:\n"+
+            "Age:\n"+
+            "Occupation:\n"+
+            "Supporting Documents and Certifications\n"+
+            "We are excited for you to become one of our finest Fitnex trainers!\n"+
+            "Sincerely, Redd";
 
     public MailBody(){
 
