@@ -19,8 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
 import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
+import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
@@ -83,26 +86,39 @@ public class ClassFragment extends Fragment {
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
+        mDatabase = FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS).child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 
-        mDatabase.child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
             fitnessClasses.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                FitnessClass fitnessClass = new FitnessClass();
-                fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
-                fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
-                fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
-                fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
-                fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
-                fitnessClass.setClassID(dataSnapshot.getKey());
-                fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-                fitnessClasses.add(fitnessClass);
+                FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(dataSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        FitnessClass fitnessClass = new FitnessClass();
+                        fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
+                        fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
+                        fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
+                        fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
+                        fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
+                        fitnessClass.setClassID(dataSnapshot.getKey());
+                        fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+                        fitnessClasses.add(fitnessClass);
+                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext());
+                        fitnessClassAdapter.notifyDataSetChanged();
+                        fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
-            fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext());
-            fitnessClassAdapter.notifyDataSetChanged();
-            fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
+
             }
 
 

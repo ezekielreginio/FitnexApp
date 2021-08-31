@@ -113,12 +113,13 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
                     Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
 
                 }
+                closeForm();
                 break;
             case(R.id.relativeLayoutAddClassCloseButton):
 
                 break;
         }
-        closeForm();
+
     }
 
     @Override

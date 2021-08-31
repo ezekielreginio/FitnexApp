@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
@@ -31,14 +32,15 @@ public class ProgramDAO {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .push().getKey();
 
-        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+        FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                .child(program_key).setValue(true);
+
+        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(program_key)
                 .setValue(program);
 
-        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS_LIST)
-                .child(program_key)
-                .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     public List<Program> readPrograms(String userID){
@@ -73,13 +75,11 @@ public class ProgramDAO {
 //        String key = mDatabase.push().getKey();
         Map postValues = program.toMap();
 
-        mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).updateChildren(postValues);
+        mDatabase.child(program.getProgramID()).updateChildren(postValues);
     }
 
     public void deleteProgram(Program program){
         mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
-        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS_LIST)
-                .child(program.getProgramID()).removeValue();
     }
 
 }

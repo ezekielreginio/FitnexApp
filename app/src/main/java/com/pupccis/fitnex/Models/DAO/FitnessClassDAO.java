@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
@@ -26,17 +27,17 @@ public class FitnessClassDAO {
 
     public void createClass(FitnessClass fitnessClass){
         String fitnessClassKey = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .push().getKey();
 
         FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(fitnessClassKey)
                 .setValue(fitnessClass);
 
-        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES_LIST)
+        FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
                 .child(fitnessClassKey)
-                .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .setValue(fitnessClass);
     }
     public List<FitnessClass> readClasses(String userID){
         List<FitnessClass> fitnessClassList = new ArrayList<>();
@@ -65,7 +66,7 @@ public class FitnessClassDAO {
 
     public void updateClass(FitnessClass fitnessClass){
         //mDatabase = mDatabase.child(fitnessClass.getClassTrainerID().child(program.getProgramID());
-        mDatabase = mDatabase.child(fitnessClass.getClassTrainerID()).child(fitnessClass.getClassID());
+        mDatabase = mDatabase.child(fitnessClass.getClassID());
         String key = mDatabase.push().getKey();
         Map postValues = fitnessClass.toMap();
         Log.d("Post Values", postValues.toString());
@@ -74,10 +75,5 @@ public class FitnessClassDAO {
 
     public static void deleteClass(FitnessClass fitnessClass){
         FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(fitnessClass.getClassTrainerID()).child(fitnessClass.getClassID()).removeValue();
-
-        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES_LIST)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(fitnessClass.getClassID())
-                .removeValue();
     }
 }

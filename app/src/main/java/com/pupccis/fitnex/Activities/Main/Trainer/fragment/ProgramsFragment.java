@@ -21,6 +21,7 @@ import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -84,33 +85,52 @@ public class ProgramsFragment extends Fragment {
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
-        Log.d("create", "onCreateExecuted");
-        mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+        mDatabase = FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS).child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 
-        mDatabase.child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(ProgramConstants.KEY_COLLECTION_PROGRAMS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 programs.clear();
+                //DataSnapshot dataSnapshot : snapshot.getChildren()
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Program program = new Program();
-                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                    program.setProgramID(dataSnapshot.getKey());
-                    program.setProgramTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-                    programs.add(program);
+
+                    FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).child(dataSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Program program = new Program();
+                            program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+                            program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+                            program.setCategory(GlobalConstants.KEY_CATEGORY_ARRAY[Integer.parseInt(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString())]);
+                            program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+                            program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+                            program.setProgramID(dataSnapshot.getKey());
+                            program.setProgramTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+                            programs.add(program);
+                            setAdapter();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
-                programAdapter = new ProgramAdapter(programs, getContext());
-                programAdapter.notifyDataSetChanged();
-                programsRecyclerView.setAdapter(programAdapter);
+
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+
+            void setAdapter(){
+                programAdapter = new ProgramAdapter(programs, getContext());
+                programAdapter.notifyDataSetChanged();
+                programsRecyclerView.setAdapter(programAdapter);
             }
         });
 

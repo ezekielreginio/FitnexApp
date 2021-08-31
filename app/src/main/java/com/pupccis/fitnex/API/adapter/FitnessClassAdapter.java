@@ -65,7 +65,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
         Button fitnessClassUpdate, fitnessClassDelete;
         public FitnessClassViewHolder(@NonNull View itemView) {
             super(itemView);
-            className = itemView.findViewById(R.id.textClassCategory);
+            className = itemView.findViewById(R.id.textFitnessClassName);
             classTimeStart = itemView.findViewById(R.id.textTimeStart);
             classTimeEnd = itemView.findViewById(R.id.textTimeEnd);
             classSessionNo = itemView.findViewById(R.id.textClassSessionCount);
