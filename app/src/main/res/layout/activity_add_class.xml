@@ -52,6 +52,55 @@
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddFitnessClassDescription"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="#C5B2B2">
+
+                        <EditText
+                            android:id="@+id/editTextAddFitnessClassDescription"
+                            style="@style/AddProgramText"
+                            android:hint="Fitness Class Description"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputPassword"
+                        style="@style/parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        >
+
+                        <TextView
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Category"
+                            android:textAlignment="center"
+                            android:textColor="#26355E"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/editTextAddFitnessClassCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:textColorHint="#C5B2B2"
+                            android:background="#FFFFFF"
+                            android:hint="-Select A Category-"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.502"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.498"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutClassTimeStart"
@@ -94,13 +143,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddClassDescription"
+                        android:id="@+id/textInputLayoutAddClassDuration"
                         style="@style/AddProgram"
                         android:layout_marginTop="10dp"
                         android:textColorHint="#C5B2B2">
 
                         <EditText
-                            android:id="@+id/editTextAddClassDescription"
+                            android:id="@+id/editTextAddClassDuration"
                             style="@style/AddProgramText"
                             android:hint="Duration"
                             android:inputType="time"

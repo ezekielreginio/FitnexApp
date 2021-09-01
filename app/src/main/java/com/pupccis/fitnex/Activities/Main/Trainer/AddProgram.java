@@ -81,6 +81,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 //            editCategory.setText(program_intent.getCategory());
             editSessionNumber.setText(program_intent.getSessionNumber());
             editDuration.setText(program_intent.getDuration());
+            editCategory.setSelection(Integer.parseInt(program_intent.getCategory()));
             addProgram.setText("Update Program");
         }
 
@@ -105,9 +106,9 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 //String category = editCategory.getText().toString();
                 String sessionNumber = editSessionNumber.getText().toString();
                 String duration = editDuration.getText().toString();
-                Program program = new Program(name, description, category, sessionNumber, duration);
+                Program program = new Program(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid());
                 if(program_intent != null){
-                    program.setProgramTrainerID(program_intent.getProgramTrainerID());
+                    program.setTrainerID(program_intent.getTrainerID());
                     program.setProgramID(program_intent.getProgramID());
                     programDAO.updateProgram(program);
                     Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();

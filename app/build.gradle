@@ -76,6 +76,9 @@ dependencies {
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
 
+    //FirebaseUI
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+
     //Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:3.+') { transitive = true }
 
