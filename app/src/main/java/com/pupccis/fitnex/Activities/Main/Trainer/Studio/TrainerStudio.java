@@ -19,16 +19,21 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
     private RecyclerView trainerStudioVideos;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,8 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
         //RecyclerView
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO);
 
     }
 
