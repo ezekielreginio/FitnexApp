@@ -19,7 +19,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Activities.SearchEngine.SearchEngine"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Activities.Main.Trainer.Studio.AddVideo"
             android:exported="true"

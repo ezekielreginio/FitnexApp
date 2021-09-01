@@ -5,15 +5,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.SearchEngineFragmentAdapter;
+import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.R;
 
 public class SearchEngine extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private SearchEngineFragmentAdapter fragmentAdapter;
+    private EditText searchBox;
+    private TrainerSEAdapter trainerSEAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +30,7 @@ public class SearchEngine extends AppCompatActivity {
         viewPager2 = (ViewPager2) findViewById(R.id.viewPager2SearchEngine);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentAdapter = new SearchEngineFragmentAdapter(fragmentManager, getLifecycle());
+        fragmentAdapter = new SearchEngineFragmentAdapter(fragmentManager, getLifecycle(), this.findViewById(android.R.id.content).getRootView());
         viewPager2.setAdapter(fragmentAdapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("Trainers"));
@@ -53,5 +59,8 @@ public class SearchEngine extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+
+
+
     }
 }

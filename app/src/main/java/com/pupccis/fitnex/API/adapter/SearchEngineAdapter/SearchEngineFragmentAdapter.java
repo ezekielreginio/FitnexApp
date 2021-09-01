@@ -1,5 +1,8 @@
 package com.pupccis.fitnex.API.adapter.SearchEngineAdapter;
 
+import android.content.Context;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,8 +14,10 @@ import com.pupccis.fitnex.Activities.SearchEngine.Fragment.TrainersFragment;
 import com.pupccis.fitnex.Activities.SearchEngine.Fragment.VideosFragment;
 
 public class SearchEngineFragmentAdapter extends FragmentStateAdapter {
-    public SearchEngineFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    private View view;
+    public SearchEngineFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, View view) {
         super(fragmentManager, lifecycle);
+        this.view = view;
     }
 
     @NonNull
@@ -23,9 +28,9 @@ public class SearchEngineFragmentAdapter extends FragmentStateAdapter {
             case 1:
                 return new VideosFragment();
             case 2:
-                return new ProgramsFragment();
+                return new ProgramsFragment(view);
         }
-        return new TrainersFragment();
+        return new TrainersFragment(view);
     }
 
     @Override

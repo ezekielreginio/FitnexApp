@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainerSEAdapter extends RecyclerView.Adapter<TrainerSEAdapter.TrainerSEViewHolder>{

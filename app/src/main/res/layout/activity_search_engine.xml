@@ -29,26 +29,27 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/searchEngineSearchBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/whiteTextColor"
                     android:ems="10"
+
                     android:inputType="textPersonName"
-                    android:text="Name"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="13dp"
-                    android:background="@color/whiteTextColor"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="654dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
-                    >
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayoutSearchEngine"

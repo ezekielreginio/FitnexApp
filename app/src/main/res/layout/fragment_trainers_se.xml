@@ -9,6 +9,7 @@
     android:paddingTop="50dp"
     android:paddingRight="30dp"
     android:paddingBottom="50dp"
+
     tools:context=".Activities.SearchEngine.Fragment.TrainersFragment">
 
     <androidx.cardview.widget.CardView
@@ -17,7 +18,8 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
-        app:cardCornerRadius="30dp">
+        app:cardCornerRadius="30dp"
+        android:padding="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSearchEngineTrainers"

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.SearchEngine.Fragment.ProgramsFragment">
+    android:background="@color/themeColor"
+    android:paddingLeft="30dp"
+    android:paddingTop="50dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="50dp"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".Activities.SearchEngine.Fragment.TrainersFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSearchEngineTrainers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F60000"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        app:cardCornerRadius="30dp"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fgjk,dfgj"
-        android:textSize="100dp"
-        android:textColor="@color/whiteTextColor"
-        android:layout_gravity="center"/>
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSearchEnginePrograms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"/>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>
