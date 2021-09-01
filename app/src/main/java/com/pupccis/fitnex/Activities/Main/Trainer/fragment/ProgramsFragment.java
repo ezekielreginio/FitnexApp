@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,8 +54,6 @@ public class ProgramsFragment extends Fragment {
 
     private RecyclerView programsRecyclerView;
 
-    private FirebaseRecyclerOptions<Program> options;
-    private FirebaseRecyclerAdapter<Program, ProgramViewHolder> adapter;
 
     private List<Program> programs = new ArrayList<>();
     private DatabaseReference mDatabase;
