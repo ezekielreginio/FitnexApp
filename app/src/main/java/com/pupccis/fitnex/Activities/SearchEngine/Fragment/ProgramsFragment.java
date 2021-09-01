@@ -120,10 +120,6 @@ public class ProgramsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ProgramSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEnginePrograms);
         ProgramSERecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
-
     }
 
     @Override
