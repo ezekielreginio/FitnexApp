@@ -10,6 +10,9 @@ public class FitnessClassConstants {
     public static final String KEY_FITNESS_CLASSES_TIME_END = "timeEnd";
     public static final String KEY_FITNESS_CLASSES_SESSION_NUMBER = "sessionNo";
     public static final String KEY_FITNESS_CLASSES_DATE_CREATED = "dateCreated";
+    public static final String KEY_FITNESS_CLASSES_DURATION = "duration";
+    public static final String KEY_FITNESS_CLASSES_CATEGORY = "category";
     public static final String KEY_FITNESS_CLASSES_DESCRIPTION = "description";
+    public static final String KEY_FITNESS_CLASSES_TRAINER_ID = "classTrainerID";
 
 }

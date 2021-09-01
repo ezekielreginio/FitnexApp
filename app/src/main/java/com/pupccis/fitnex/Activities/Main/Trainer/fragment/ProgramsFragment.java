@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -12,12 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.ProgramAdapter;
+import com.pupccis.fitnex.API.adapter.VIewHolders.ProgramViewHolder;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
@@ -50,6 +55,9 @@ public class ProgramsFragment extends Fragment {
     private ProgramDAO programDAO = new ProgramDAO();
 
     private RecyclerView programsRecyclerView;
+
+    private FirebaseRecyclerOptions<Program> options;
+    private FirebaseRecyclerAdapter<Program, ProgramViewHolder> adapter;
 
     private List<Program> programs = new ArrayList<>();
     private DatabaseReference mDatabase;
@@ -85,9 +93,9 @@ public class ProgramsFragment extends Fragment {
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS).child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 
-        mDatabase.child(ProgramConstants.KEY_COLLECTION_PROGRAMS).addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 programs.clear();
@@ -95,29 +103,19 @@ public class ProgramsFragment extends Fragment {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).child(dataSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Program program = new Program();
-                            program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-                            program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-                            program.setCategory(GlobalConstants.KEY_CATEGORY_ARRAY[Integer.parseInt(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString())]);
-                            program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-                            program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                            program.setProgramID(dataSnapshot.getKey());
-                            program.setProgramTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-                            programs.add(program);
-                            setAdapter();
-                        }
+                    Program program = new Program();
+                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+                    program.setProgramID(dataSnapshot.getKey());
+                    program.setTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+                    programs.add(program);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
 
                 }
-
+                setAdapter();
 
 
             }
@@ -161,10 +159,8 @@ public class ProgramsFragment extends Fragment {
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
         programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
-
-
-
-
+        programsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        //options = new FirebaseRecyclerOptions.Builder<Program>().setQuery(ref, Program.class)
     }
 
     @Override

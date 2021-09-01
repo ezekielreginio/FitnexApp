@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,11 +34,9 @@ public class FitnessClassDAO {
                 .child(fitnessClassKey)
                 .setValue(fitnessClass);
 
-        FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES)
-                .child(fitnessClassKey)
-                .setValue(fitnessClass);
+
+
+        Log.d("Finished", "Created");
     }
     public List<FitnessClass> readClasses(String userID){
         List<FitnessClass> fitnessClassList = new ArrayList<>();
@@ -74,6 +73,6 @@ public class FitnessClassDAO {
     }
 
     public static void deleteClass(FitnessClass fitnessClass){
-        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(fitnessClass.getClassTrainerID()).child(fitnessClass.getClassID()).removeValue();
+        FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).child(fitnessClass.getClassID()).removeValue();
     }
 }

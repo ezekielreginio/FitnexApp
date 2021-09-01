@@ -24,6 +24,7 @@ import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.util.List;
@@ -88,11 +89,10 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
             programName.setText(program.getName());
             programTrainees.setText(program.getTrainees());
-            programCategory.setText(program.getCategory());
+            programCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[Integer.parseInt(program.getCategory())]);
             programDescription.setText(program.getDescription());
             programSessionCount.setText(program.getSessionNumber());
             programDuration.setText(program.getDuration());
-            Log.d("Category", program.getCategory());
             if(program.getCategory().equals(ProgramConstants.KEY_PROGRAM_CATEGORY_CARDIO)){
                 programContainer.setBackgroundResource(R.drawable.layout_bg_program_cardio);
             }

@@ -32,11 +32,6 @@ public class ProgramDAO {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .push().getKey();
 
-        FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(ProgramConstants.KEY_COLLECTION_PROGRAMS)
-                .child(program_key).setValue(true);
-
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(program_key)
                 .setValue(program);
@@ -70,16 +65,12 @@ public class ProgramDAO {
     }
 
     public void updateProgram(Program program){
-//        mDatabase = ;
-//        Log.d("New Name: ", program.getName());
-//        String key = mDatabase.push().getKey();
         Map postValues = program.toMap();
-
         mDatabase.child(program.getProgramID()).updateChildren(postValues);
     }
 
     public void deleteProgram(Program program){
-        mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
+        mDatabase.child(program.getProgramID()).removeValue();
     }
 
 }

@@ -1,6 +1,8 @@
 package com.pupccis.fitnex.API.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -61,15 +64,17 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
     class FitnessClassViewHolder extends RecyclerView.ViewHolder{
         LinearLayout layoutClassInfo;
         ConstraintLayout classContainer;
-        TextView className, classTimeStart, classTimeEnd, classSessionNo, classTrainer, classDescription;
+        TextView className, classTimeStart, classTimeEnd, classSessionNo, classTrainer, classDescription, category, classDuration;
         Button fitnessClassUpdate, fitnessClassDelete;
         public FitnessClassViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.textFitnessClassName);
+            category = itemView.findViewById(R.id.textFitnessClassCategory);
             classTimeStart = itemView.findViewById(R.id.textTimeStart);
             classTimeEnd = itemView.findViewById(R.id.textTimeEnd);
             classSessionNo = itemView.findViewById(R.id.textClassSessionCount);
             classDescription = itemView.findViewById(R.id.textClassDescription);
+            classDuration = itemView.findViewById(R.id.textClassDuration);
             classContainer = itemView.findViewById(R.id.layoutClassContainer);
             layoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
             fitnessClassUpdate = (Button) itemView.findViewById(R.id.buttonClassUpdate);
@@ -79,10 +84,12 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             boolean clicked = false;
 
             className.setText(fitnessClass.getClassName());
+            category.setText(GlobalConstants.KEY_CATEGORY_ARRAY[fitnessClass.getCategory()]);
             classTimeStart.setText(fitnessClass.getTimeStart());
             classTimeEnd.setText(fitnessClass.getTimeEnd());
             classSessionNo.setText(fitnessClass.getSessionNo());
             classDescription.setText(fitnessClass.getDescription());
+            classDuration.setText(fitnessClass.getDuration());
             classContainer.setOnClickListener(view -> {
                 if(layoutClassInfo.getVisibility()==View.GONE)
                     layoutClassInfo.setVisibility(View.VISIBLE);
@@ -102,8 +109,23 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             fitnessClassDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    fitnessClassDAO.deleteClass(fitnessClass);
+                                    break;
 
-                   fitnessClassDAO.deleteClass(fitnessClass);
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Are you sure you wish to delete this fitness class?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
                 }
             });
         }
