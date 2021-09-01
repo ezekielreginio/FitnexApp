@@ -94,6 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideosUploaded"
                 tools:ignore="MissingConstraints">
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTrainerStudioVideo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

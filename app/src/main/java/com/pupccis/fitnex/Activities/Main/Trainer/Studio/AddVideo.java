@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,12 +22,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
+import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.Models.PostVideo;
@@ -38,9 +42,11 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
     //Private Layout Attributes
     private EditText editTextVideoTitle, editTextVideoDescription;
     private ImageView btnClose;
-    private Button btnUploadVideo, btnAddVideo;
-    private ConstraintLayout videoUploadContainer;
+    private Button btnUploadVideo, btnAddVideo,btnAddThumbnail;
+    private ConstraintLayout videoUploadContainer,videoThumbnailContainer;
     private VideoView videoVIewUploadedVideo;
+    private ImageView videoThumbnail;
+    private Uri imageUri;
 
     //Spinner Attribute
     private Spinner spinnerVideoCategory;
@@ -61,8 +67,11 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
         btnClose = findViewById(R.id.closeAddClassButton);
         btnAddVideo = (Button) findViewById(R.id.btnAddVideoFile);
         btnUploadVideo = (Button) findViewById(R.id.buttonUploadVideo);
+        btnAddThumbnail = (Button) findViewById(R.id.btnAddVideoThumbnail);
         videoUploadContainer = (ConstraintLayout) findViewById(R.id.constraintLayoutAddVideo);
+        videoThumbnailContainer = (ConstraintLayout) findViewById(R.id.constraintLayoutAddVideoThumbnail);
         videoVIewUploadedVideo = (VideoView) findViewById(R.id.videoViewUploadedVideo);
+        videoThumbnail = (ImageView) findViewById(R.id.imageViewVideoThumbnail);
 
         //Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, R.layout.spinner_item);
@@ -81,6 +90,7 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
         btnAddVideo.setOnClickListener(this);
         btnUploadVideo.setOnClickListener(this);
         spinnerVideoCategory.setOnItemSelectedListener(this);
+        btnAddThumbnail.setOnClickListener(this);
     }
 
     @Override
@@ -109,14 +119,45 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
                             }
                         }).check();
                 break;
+
+            case (R.id.btnAddVideoThumbnail):
+                Dexter.withContext(getApplicationContext())
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                                Intent intent = new Intent();
+                                intent.setType("image/*");
+                                intent.setAction(Intent.ACTION_GET_CONTENT);
+                                startActivityForResult(intent, 102);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                            }
+
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                                permissionToken.continuePermissionRequest();
+                            }
+                        }).check();
+                break;
+
             case(R.id.buttonUploadVideo):
                 String videoTitle = editTextVideoTitle.getText().toString();
                 String videoDescription = editTextVideoDescription.getText().toString();
                 String videoCategory= spinnerVideoCategory.getSelectedItemPosition() + "";
                 String filetype = getContentResolver().getType(videoUri);
-                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri).build();
-                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription).build();
+                String thumbnailFiletype = getContentResolver().getType(imageUri);
+                Intent intent = new Intent(AddVideo.this, TrainerStudio.class);
+                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri, thumbnailFiletype, imageUri, getApplicationContext()).build();
+                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
+                Toast.makeText(this, "Uploading the Video, Please Wait...", Toast.LENGTH_SHORT).show();
                 postVideoDAO.postVideo(postVideo);
+
+                overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+                startActivity(intent);
                 //PostVideo postVideo = PostVideo.PostVideoBuilder(videoTitle, videoCategory, videoDescription,);
                 break;
         }
@@ -132,6 +173,12 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
             videoVIewUploadedVideo.start();
             videoUri = data.getData();
             videoVIewUploadedVideo.setVideoURI(videoUri);
+        }
+        else if(requestCode == 102 && resultCode==RESULT_OK){
+            videoThumbnailContainer.setVisibility(View.GONE);
+            videoThumbnail.setVisibility(View.VISIBLE);
+            imageUri = data.getData();
+            videoThumbnail.setImageURI(imageUri);
         }
     }
 

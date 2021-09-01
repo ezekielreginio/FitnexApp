@@ -141,10 +141,7 @@ public class ProgramsFragment extends Fragment {
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
         programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
-
-
-
-
+        
     }
 
     @Override

@@ -1,26 +1,34 @@
 package com.pupccis.fitnex.Activities.Main.Trainer.Studio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
-
+    private RecyclerView trainerStudioVideos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,18 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
         //EventBinding:
         btnAddVideo.setOnClickListener(this);
+
+        //RecyclerView
+        trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //LocalBroadcast Receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(videoUploadMessageReceiver,
+                new IntentFilter("video-upload-response"));
     }
 
     @Override
@@ -43,4 +63,15 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+    private BroadcastReceiver videoUploadMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String uploadResponse = intent.getStringExtra("videoUploadedSuccessfully");
+            if(uploadResponse != null){
+                Log.d("Broadcast Received", "received");
+                Toast.makeText(getApplicationContext(), uploadResponse,Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

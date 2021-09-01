@@ -80,6 +80,6 @@ dependencies {
     implementation ('org.jitsi.react:jitsi-meet-sdk:3.+') { transitive = true }
 
     //Karumi Dexter
-    implementation 'com.karumi:dexter:6.2.1'
+    implementation 'com.karumi:dexter:6.2.3'
 
 }
