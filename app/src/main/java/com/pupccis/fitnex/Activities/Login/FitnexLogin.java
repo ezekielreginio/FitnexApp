@@ -55,8 +55,6 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
         editEmail = (EditText) findViewById(R.id.editTextLoginEmail);
         editPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-        quickLogin = (Button) findViewById(R.id.buttonQuickLogin);
-        quickLogin.setOnClickListener(this);
         loginUser = (Button) findViewById(R.id.buttonLoginButton);
         loginUser.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
@@ -76,8 +74,6 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(FitnexLogin.this, "clcik", Toast.LENGTH_SHORT).show();
                 userLogin();
                 break;
-            case(R.id.buttonQuickLogin):
-                startActivity(new Intent(this, SearchEngine.class));
         }
     }
 
