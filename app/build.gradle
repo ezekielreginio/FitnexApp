@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.pupccis.fitnex"
         minSdk 23
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -81,7 +81,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
 
     //Jitsi Meet
-    implementation ('org.jitsi.react:jitsi-meet-sdk:3.+') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
 
     //Karumi Dexter
     implementation 'com.karumi:dexter:6.2.3'
