@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/textFitnessClassName"
         android:orientation="vertical"
         android:layout_marginStart="10dp"
-        android:visibility="gone"
+        android:visibility=""
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
