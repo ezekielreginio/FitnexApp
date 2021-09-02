@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.SearchEngineFragmentAdapter;
 import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Globals.HideStatusBar;
 
 public class SearchEngine extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -20,14 +21,17 @@ public class SearchEngine extends AppCompatActivity {
     private SearchEngineFragmentAdapter fragmentAdapter;
     private EditText searchBox;
     private TrainerSEAdapter trainerSEAdapter;
+    private HideStatusBar hideStatusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_search_engine);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayoutSearchEngine);
         viewPager2 = (ViewPager2) findViewById(R.id.viewPager2SearchEngine);
+        hideStatusBar = new HideStatusBar(getWindow());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentAdapter = new SearchEngineFragmentAdapter(fragmentManager, getLifecycle(), this.findViewById(android.R.id.content).getRootView());

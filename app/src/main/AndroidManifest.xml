@@ -21,7 +21,8 @@
             android:name=".Activities.SearchEngine.SearchEngine"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
             android:name=".Activities.Main.Trainer.Studio.AddVideo"
             android:exported="true"
@@ -40,7 +41,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Main.Trainee.TraineeDashboard"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Activities.Main.Trainer.AddProgram"
             android:background="#00000000"

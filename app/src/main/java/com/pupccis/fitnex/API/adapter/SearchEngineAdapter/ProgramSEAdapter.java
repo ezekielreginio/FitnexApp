@@ -52,7 +52,7 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
         TextView textName, textCategory, textDescription, textSessionCount, textDuration;
         LinearLayout linearLayoutProgramInfo;
         ConstraintLayout constraintLayoutProgramContainer;
-        Button updateButton, deleteButton, joinButton;
+        Button buttonUpdate, buttonDelete, buttonJoin, buttonView;
         public ProgramSEViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -63,9 +63,10 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
             textDuration = itemView.findViewById(R.id.textProgramDuration);
             linearLayoutProgramInfo = itemView.findViewById(R.id.layoutProgramInfo);
             constraintLayoutProgramContainer = itemView.findViewById(R.id.layoutProgramContainer);
-            updateButton = itemView.findViewById(R.id.buttonProgramUpdate);
-            deleteButton = itemView.findViewById(R.id.buttonProgramDelete);
-            joinButton = itemView.findViewById(R.id.buttonProgramJoin);
+            buttonUpdate = itemView.findViewById(R.id.buttonProgramUpdate);
+            buttonDelete = itemView.findViewById(R.id.buttonProgramDelete);
+            buttonJoin = itemView.findViewById(R.id.buttonProgramJoin);
+            buttonView = itemView.findViewById(R.id.buttonProgramView);
             constraintLayoutProgramContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,9 +76,10 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
                     else {
                         linearLayoutProgramInfo.setVisibility(View.GONE);
                     }
-                    updateButton.setVisibility(View.GONE);
-                    deleteButton.setVisibility(View.GONE);
-                    joinButton.setVisibility(View.VISIBLE);
+                    buttonUpdate.setVisibility(View.GONE);
+                    buttonDelete.setVisibility(View.GONE);
+                    buttonJoin.setVisibility(View.VISIBLE);
+                    buttonView.setVisibility(View.VISIBLE);
                 }
             });
         }

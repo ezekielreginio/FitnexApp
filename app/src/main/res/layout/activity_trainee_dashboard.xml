@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="JESEE\nCUASAY"
         android:textColor="@color/themeColor"
         android:textSize="40dp"
@@ -75,7 +75,6 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutTodaysActivity"
         tools:layout_editor_absoluteX="1dp">
@@ -248,6 +247,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
@@ -287,9 +287,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:tint="@color/themetintColor"
                 android:tintMode="src_over"
-                app:srcCompat="@drawable/ic_workout_favorites_template_img" />
+                app:srcCompat="@drawable/ic_workout_favorites_template_img"
+                app:tint="@color/themetintColor" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -301,4 +301,66 @@
         tools:layout_editor_absoluteX="253dp"
         tools:layout_editor_absoluteY="25dp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutTraineeDashboardNavbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_trainer_menubar"
+        android:orientation="vertical"
+        android:transitionName="addProgramTransition"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="60dp"
+            android:paddingTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="8dp">
+
+            <ImageView
+                android:id="@+id/buttonTraineeHome"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/ic_baseline_home_24"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTraineeSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTraineeStudioButton"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+            tools:layout_editor_absoluteY="8dp">
+
+            <ImageView
+                android:id="@+id/buttonTraineeSearch"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/ic_search_icon"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutTraineeStudioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/buttonTraineeStudio"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_trainer_studio"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

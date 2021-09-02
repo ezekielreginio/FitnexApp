@@ -54,8 +54,8 @@ public class fitnessClassSEAdapter extends RecyclerView.Adapter<fitnessClassSEAd
     class fitnessClassSEViewHolder extends RecyclerView.ViewHolder{
         private TextView textName, textCategory, textDescription, textTimeStart, textTimeEnd, textSessionNumber, textDuration;
         private Button buttonUpdate, buttonDelete, buttonJoin, buttonView;
-        private LinearLayout classInfo;
-        private ConstraintLayout classContainer;
+        private LinearLayout linearLayoutClassInfo;
+        private ConstraintLayout constraintLayoutClassContainer;
         public fitnessClassSEViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textFitnessClassName);
@@ -65,6 +65,27 @@ public class fitnessClassSEAdapter extends RecyclerView.Adapter<fitnessClassSEAd
             textTimeEnd = itemView.findViewById(R.id.textTimeEnd);
             textSessionNumber = itemView.findViewById(R.id.textClassSessionCount);
             textDuration = itemView.findViewById(R.id.textClassDuration);
+            buttonUpdate = itemView.findViewById(R.id.buttonClassUpdate);
+            buttonDelete = itemView.findViewById(R.id.buttonClassDelete);
+            buttonJoin = itemView.findViewById(R.id.buttonClassJoin);
+            buttonView = itemView.findViewById(R.id.buttonClassView);
+            linearLayoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
+            constraintLayoutClassContainer = itemView.findViewById(R.id.layoutClassContainer);
+            constraintLayoutClassContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(linearLayoutClassInfo.getVisibility()==View.GONE){
+                        linearLayoutClassInfo.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        linearLayoutClassInfo.setVisibility(View.GONE);
+                    }
+                    buttonUpdate.setVisibility(View.GONE);
+                    buttonDelete.setVisibility(View.GONE);
+                    buttonJoin.setVisibility(View.VISIBLE);
+                    buttonView.setVisibility(View.VISIBLE);
+                }
+            });
         }
 
         void setClassSEData(FitnessClass fitnessClass){
