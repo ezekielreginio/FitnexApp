@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.1'
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -75,7 +77,15 @@ dependencies {
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
 
+    //FirebaseUI
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+
     //Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:3.+') { transitive = true }
+
+    //Karumi Dexter
+    implementation 'com.karumi:dexter:6.2.3'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
 }

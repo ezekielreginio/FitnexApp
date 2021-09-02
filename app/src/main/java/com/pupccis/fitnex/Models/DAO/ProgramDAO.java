@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
@@ -27,10 +28,14 @@ public class ProgramDAO {
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
     public void createProgram(Program program){
-        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+        String program_key = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .push()
+                .push().getKey();
+
+        FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                .child(program_key)
                 .setValue(program);
+
     }
 
     public List<Program> readPrograms(String userID){
@@ -60,16 +65,12 @@ public class ProgramDAO {
     }
 
     public void updateProgram(Program program){
-//        mDatabase = ;
-//        Log.d("New Name: ", program.getName());
-//        String key = mDatabase.push().getKey();
         Map postValues = program.toMap();
-
-        mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).updateChildren(postValues);
+        mDatabase.child(program.getProgramID()).updateChildren(postValues);
     }
 
     public void deleteProgram(Program program){
-        mDatabase.child(program.getProgramTrainerID()).child(program.getProgramID()).removeValue();
+        mDatabase.child(program.getProgramID()).removeValue();
     }
 
 }

@@ -14,27 +14,28 @@ public class Program implements Serializable {
     private String duration;
     private String trainees;
     private String programID;
-    private String programTrainerID;
+    private String trainerID;
 
     public Program() {
     }
 
     //Constructor for Creating a program
-    public Program(String name, String description, String category, String sessionNumber, String duration) {
-        program_init(name, description, category, sessionNumber, duration, "0");
+    public Program(String name, String description, String category, String sessionNumber, String duration, String trainerID) {
+        program_init(name, description, category, sessionNumber, duration,trainerID, "0");
     }
 
     //Constructor w/ trainee count
-    public Program(String name, String description, String category, String sessionNumber, String duration, String trainees) {
-        program_init(name, description, category, sessionNumber, duration, trainees);
+    public Program(String name, String description, String category, String sessionNumber, String duration, String trainerID, String trainees) {
+        program_init(name, description, category, sessionNumber, duration,trainerID, trainees);
     }
 
-    private void program_init(String name, String description, String category, String sessionNumber, String duration, String trainees){
+    private void program_init(String name, String description, String category, String sessionNumber, String duration,String trainerID, String trainees){
         this.name = name;
         this.description = description;
         this.category = category;
         this.setSessionNumber(sessionNumber);
         this.duration = duration;
+        this.trainerID = trainerID;
         this.setTrainees(trainees);
     }
 
@@ -104,11 +105,11 @@ public class Program implements Serializable {
         this.programID = programID;
     }
 
-    public String getProgramTrainerID() {
-        return programTrainerID;
+    public String getTrainerID() {
+        return this.trainerID;
     }
 
-    public void setProgramTrainerID(String programTrainerID) {
-        this.programTrainerID = programTrainerID;
+    public void setTrainerID(String programTrainerID) {
+        this.trainerID = programTrainerID;
     }
 }
