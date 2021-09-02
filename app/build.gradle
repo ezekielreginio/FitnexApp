@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.pupccis.fitnex"
         minSdk 23
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -76,6 +76,6 @@ dependencies {
     implementation files('libs/mail.jar')
 
     //Jitsi Meet
-    implementation ('org.jitsi.react:jitsi-meet-sdk:3.9.0') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
 
 }
