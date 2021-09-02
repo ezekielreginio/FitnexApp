@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="40dp">
+            android:paddingTop="40dp"
+            android:paddingBottom="100dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutTrainerProfileDisplay"
@@ -92,7 +93,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideosUploaded"
-                tools:ignore="MissingConstraints">
+                tools:ignore="MissingConstraints"
+                app:layout_constraintStart_toStartOf="parent"
+                >
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewTrainerStudioVideo"
                     android:layout_width="wrap_content"

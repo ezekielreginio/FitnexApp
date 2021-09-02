@@ -16,6 +16,8 @@ public class PostVideo {
         this.category = builder.category;
         this.description = builder.description;
         this.trainerID = builder.trainerID;
+
+        this.thumbnailURL = builder.thumbnailURL;
     }
     public String getVideoTitle() {
         return videoTitle;
@@ -45,6 +47,9 @@ public class PostVideo {
         this.thumbnailURL = thumbnailURL;
     }
 
+    public String getTrainerID() {
+        return trainerID;
+    }
 
     public static class PostVideoBuilder{
 
@@ -65,6 +70,11 @@ public class PostVideo {
 
         public PostVideoBuilder videoUri(String videoURL){
             this.videoURL = videoURL;
+            return this;
+        }
+
+        public PostVideoBuilder thumbnailURL(String thumbnailURL){
+            this.thumbnailURL = thumbnailURL;
             return this;
         }
 

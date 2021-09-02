@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayoutStudioVideoContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,15 +9,16 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewVideoThumbnail"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="40dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -23,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/imageViewVideoThumbnail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:foreground="@drawable/foreground_thumbnail_tint"
                 android:scaleType="centerCrop"
                 android:tintMode="src_over"
