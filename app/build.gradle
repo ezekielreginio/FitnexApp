@@ -76,6 +76,6 @@ dependencies {
     implementation files('libs/mail.jar')
 
     //Jitsi Meet
-    implementation ('org.jitsi.react:jitsi-meet-sdk:3.+') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:3.9.0') { transitive = true }
 
 }
