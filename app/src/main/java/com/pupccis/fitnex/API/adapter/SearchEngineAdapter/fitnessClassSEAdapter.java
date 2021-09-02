@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class fitnessClassSEAdapter extends RecyclerView.Adapter<fitnessClassSEAd
 
         void setClassSEData(FitnessClass fitnessClass){
             textName.setText(fitnessClass.getClassName());
-            textCategory.setText(fitnessClass.getCategory());
+            textCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[fitnessClass.getCategory()]);
             textDescription.setText(fitnessClass.getDescription());
             textTimeStart.setText(fitnessClass.getTimeStart());
             textTimeEnd.setText(fitnessClass.getTimeEnd());

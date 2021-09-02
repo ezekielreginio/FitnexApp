@@ -36,6 +36,8 @@ public class SearchEngine extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Trainers"));
         tabLayout.addTab(tabLayout.newTab().setText("Videos"));
         tabLayout.addTab(tabLayout.newTab().setText("Programs"));
+        tabLayout.addTab(tabLayout.newTab().setText("Classes"));
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
