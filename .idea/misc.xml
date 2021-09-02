@@ -26,6 +26,7 @@
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_video_demo.xml" value="0.33" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_delete.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_join.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/edittext_rounded_corner.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_cardview_rounded_corner.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_circle_imageview.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_fitnex_logo.xml" value="0.1" />
@@ -33,6 +34,8 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_message_icon.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_side_bg.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/search_box_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/search_engine_tab_selected_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/tab_indicator.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_class.xml" value="0.22509057971014493" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_program.xml" value="0.1" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_fitnex_register.xml" value="0.4" />
