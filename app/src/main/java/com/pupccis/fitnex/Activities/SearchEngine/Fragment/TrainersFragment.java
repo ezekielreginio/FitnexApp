@@ -145,20 +145,6 @@ public class TrainersFragment extends Fragment {
 
 
     }
-    private void filter(String searchInput){
-        ArrayList<User> filteredList = new ArrayList<>();
-        for (User item : userList){
-            if (item.getName().toLowerCase().contains(searchInput.toLowerCase())){
-                filteredList.add(item);
-            }
-        }
-
-        userList = filteredList;
-        TrainerSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEngineTrainers);
-        TrainerSERecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        trainerSEAdapter = new TrainerSEAdapter(filteredList,getContext());
-        trainerSEAdapter.notifyDataSetChanged();
-    }
 
 
     @Override

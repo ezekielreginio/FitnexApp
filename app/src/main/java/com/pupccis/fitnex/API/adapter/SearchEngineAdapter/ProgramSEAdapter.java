@@ -80,7 +80,7 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
                     buttonDelete.setVisibility(View.GONE);
                     buttonJoin.setVisibility(View.VISIBLE);
                     buttonView.setVisibility(View.VISIBLE);
-                    
+
                 }
             });
         }
@@ -92,4 +92,5 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
             textDuration.setText(program.getDuration());
         }
     }
+
 }

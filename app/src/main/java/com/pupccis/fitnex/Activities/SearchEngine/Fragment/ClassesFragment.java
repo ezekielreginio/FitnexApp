@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
 import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.fitnessClassSEAdapter;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
@@ -41,7 +42,7 @@ public class ClassesFragment extends Fragment {
     private String mParam2;
 
     private EditText searchBox;
-    private fitnessClassSEAdapter fitnessClassSEAdapter;
+    private FitnessClassAdapter fitnessClassAdapter;
     private RecyclerView fitnessClassSERecyclerView;
     private DatabaseReference mDatabase;
     private View view;
@@ -95,9 +96,9 @@ public class ClassesFragment extends Fragment {
                                 fitnessClassList.add(fitnessClassListContainer);
                             }
                         }
-                        fitnessClassSEAdapter = new fitnessClassSEAdapter(fitnessClassList, getContext());
-                        fitnessClassSEAdapter.notifyDataSetChanged();
-                        fitnessClassSERecyclerView.setAdapter(fitnessClassSEAdapter);
+                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext());
+                        fitnessClassAdapter.notifyDataSetChanged();
+                        fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
                     }
 
                     @Override

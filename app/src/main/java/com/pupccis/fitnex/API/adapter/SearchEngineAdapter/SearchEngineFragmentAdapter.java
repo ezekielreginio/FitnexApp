@@ -27,7 +27,7 @@ public class SearchEngineFragmentAdapter extends FragmentStateAdapter {
 
         switch (position){
             case 1:
-                return new VideosFragment();
+                return new VideosFragment(view);
             case 2:
                 return new ProgramsFragment(view);
             case 3:
