@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activityTrainerDashboard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityTrainerDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -146,14 +146,14 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="8dp"
-            app:tabMode="fixed"
             app:tabGravity="center"
-            app:tabPaddingStart="30dp"
-            app:tabPaddingEnd="30dp"
-            app:tabIndicatorGravity="stretch"
-            app:tabSelectedTextColor="@color/whiteTextColor"
+            app:tabIndicator="@drawable/tab_indicator"
             app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicator="@drawable/tab_indicator">
+            app:tabIndicatorGravity="stretch"
+            app:tabMode="fixed"
+            app:tabPaddingEnd="30dp"
+            app:tabPaddingStart="30dp"
+            app:tabSelectedTextColor="@color/whiteTextColor">
 
 
         </com.google.android.material.tabs.TabLayout>
@@ -164,7 +164,7 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"
             tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="332dp" >
+            tools:layout_editor_absoluteY="332dp">
 
         </androidx.viewpager2.widget.ViewPager2>
 
@@ -172,23 +172,22 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutAddProgramButton"
-        android:layout_gravity="center"
         android:layout_width="75dp"
         android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_circle_add_button"
+        android:orientation="vertical"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
         app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"
         app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"
-        app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
-        app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
-        android:translationZ="1dp"
-        android:orientation="vertical"
-        android:background="@drawable/ic_circle_add_button"
-        >
+        app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar">
 
         <ImageView
             android:id="@+id/AddProgramButton"
-            android:layout_gravity="center"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/ic__add_icon" />
 
     </LinearLayout>
@@ -199,16 +198,17 @@
         android:layout_height="60dp"
         android:background="@drawable/ic_trainer_menubar"
         android:orientation="vertical"
+        android:transitionName="addProgramTransition"
         app:layout_constraintBottom_toBottomOf="@id/activityTrainerDashboard"
-        tools:layout_editor_absoluteY="671dp"
-        android:transitionName="addProgramTransition">
+        tools:layout_editor_absoluteY="671dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent">
+
             <ImageView
                 android:id="@+id/buttonTrainerHome"
                 android:layout_width="50dp"
@@ -221,9 +221,10 @@
             android:id="@+id/constraintLayoutTrainerStudioButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="60dp"
-            android:layout_marginTop="10dp">
+            app:layout_constraintEnd_toEndOf="parent">
+
             <ImageView
                 android:id="@+id/buttonTrainerStudio"
                 android:layout_width="50dp"
@@ -235,35 +236,35 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--    <RelativeLayout-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->
-<!--        android:id="@+id/relativeLayoutTabLayout"-->
-<!--        android:layout_width="407dp"-->
-<!--        android:layout_height="363dp"-->
-<!--        tools:layout_editor_absoluteX="0dp"-->
-<!--        tools:layout_editor_absoluteY="268dp">-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->
+    <!--        android:id="@+id/relativeLayoutTabLayout"-->
+    <!--        android:layout_width="407dp"-->
+    <!--        android:layout_height="363dp"-->
+    <!--        tools:layout_editor_absoluteX="0dp"-->
+    <!--        tools:layout_editor_absoluteY="268dp">-->
 
 
-<!--    </RelativeLayout>-->
+    <!--    </RelativeLayout>-->
 
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--        android:id="@+id/tabLayoutTrainerDashboard"-->
-<!--        android:layout_width="409dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTabLayout"-->
-<!--        tools:layout_editor_absoluteX="1dp"-->
-<!--        tools:layout_editor_absoluteY="436dp">-->
+    <!--    <com.google.android.material.tabs.TabLayout-->
+    <!--        android:id="@+id/tabLayoutTrainerDashboard"-->
+    <!--        android:layout_width="409dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTabLayout"-->
+    <!--        tools:layout_editor_absoluteX="1dp"-->
+    <!--        tools:layout_editor_absoluteY="436dp">-->
 
 
-<!--    </com.google.android.material.tabs.TabLayout>-->
+    <!--    </com.google.android.material.tabs.TabLayout>-->
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/viewPager2TrainerDashboard"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="398dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"-->
-<!--        tools:layout_editor_absoluteX="1dp"-->
-<!--        tools:layout_editor_absoluteY="332dp" />-->
+    <!--    <androidx.viewpager2.widget.ViewPager2-->
+    <!--        android:id="@+id/viewPager2TrainerDashboard"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="398dp"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"-->
+    <!--        tools:layout_editor_absoluteX="1dp"-->
+    <!--        tools:layout_editor_absoluteY="332dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

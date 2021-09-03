@@ -2,6 +2,7 @@ package com.pupccis.fitnex.Activities.Main.Trainer.Studio;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,11 +32,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.API.adapter.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
+import com.pupccis.fitnex.Activities.SearchEngine.SearchEngine;
 import com.pupccis.fitnex.Activities.VideoConferencing.VideoActivityDemo;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
@@ -47,8 +51,10 @@ import java.util.List;
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
+    private ConstraintLayout btnSearch;
     private RecyclerView trainerStudioVideos;
     private DatabaseReference mDatabase;
+    private User trainer_intent;
 
     private List<PostVideo> postVideoList = new ArrayList<>();
 
@@ -59,17 +65,38 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_studio);
 
+        //Extra intent
+        String access_type = getIntent().getSerializableExtra("access_type").toString();
         //Layout Binding:
-        btnAddVideo = findViewById(R.id.linearLayoutAddVideoButton);
+        btnAddVideo = findViewById(R.id.linearLayoutStudioAddVideoButton);
+        btnSearch = findViewById(R.id.layoutTraineeSearch);
 
         //EventBinding:
         btnAddVideo.setOnClickListener(this);
 
         //RecyclerView
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
+        trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        Query query = null;
+        if(access_type.equals("view")){
+            btnAddVideo.setVisibility(View.GONE);
+            btnSearch.setVisibility(View.VISIBLE);
+            btnSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent( TrainerStudio.this, SearchEngine.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
+                }
+            });
 
-
-        Query query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            String trainer_id = getIntent().getSerializableExtra("trainer_id").toString();
+            Log.d("Trainer ID", trainer_id);
+            query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(trainer_id);
+        }
+        else if(access_type.equals("owner")){
+            query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,7 +111,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                             dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_CATEGORY).getValue().toString(),
                             dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_DESCRIPTION).getValue().toString(),
                             dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).getValue().toString()
-                            )
+                    )
                             .thumbnailURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL).getValue().toString())
                             .build();
                     //postVideo.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
@@ -125,8 +152,9 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case (R.id.linearLayoutAddVideoButton):
-                startActivity(new Intent(TrainerStudio.this, AddVideo.class));
+            case (R.id.linearLayoutStudioAddVideoButton):
+                Intent intent = new Intent(TrainerStudio.this, AddVideo.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
                 break;
         }
