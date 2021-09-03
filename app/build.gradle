@@ -86,6 +86,9 @@ dependencies {
     //Karumi Dexter
     implementation 'com.karumi:dexter:6.2.3'
 
+    //Exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.3'
+
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
 }

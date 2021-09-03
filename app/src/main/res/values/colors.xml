@@ -13,6 +13,7 @@
     <color name="whiteTextColor">#fff</color>
     <color name="primaryTextColor">#26355E</color>
 
+    <color name="magenta">#a08bb2</color>
     <color name="secondaryBackgroundColor">#ADCEE6</color>
     <color name="blueTextColor">#092f62</color>
 
