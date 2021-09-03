@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.pupccis.fitnex.R;
+
 public class VideoPlayer extends AppCompatActivity {
 
     @Override
