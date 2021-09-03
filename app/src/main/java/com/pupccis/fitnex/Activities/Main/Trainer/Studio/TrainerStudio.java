@@ -3,6 +3,7 @@ package com.pupccis.fitnex.Activities.Main.Trainer.Studio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,7 +67,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
         //RecyclerView
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
-        trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
         Query query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addValueEventListener(new ValueEventListener() {
@@ -93,9 +94,10 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
                 }
                 trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, getApplicationContext());
-                trainerStudioVideosAdapter.notifyDataSetChanged();
+                trainerStudioVideos.setLayoutManager(new LinearLayoutManager(TrainerStudio.this));
+                trainerStudioVideos.setItemAnimator(new DefaultItemAnimator());
                 trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
-
+                trainerStudioVideosAdapter.notifyDataSetChanged();
 
             }
 

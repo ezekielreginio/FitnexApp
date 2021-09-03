@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.R;
 
@@ -68,7 +69,13 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
             Uri videoThumbnailUri = Uri.parse(postVideo.getThumbnailURL());
             videoTitle.setText(postVideo.getVideoTitle());
             //Glide.with(videoThumbnail.getContext()).load(postVideo.getThumbnailURL()).placeholder(R.drawable.gif_thumbnail_loading).into(videoThumbnail);
-            Glide.with(videoThumbnail.getContext()).load(postVideo.getThumbnailURL()).thumbnail(Glide.with(videoThumbnail.getContext()).load(R.drawable.gif_thumbnail_loading)).into(videoThumbnail);
+            Glide.with(videoThumbnail.getContext())
+                    .load(postVideo.getThumbnailURL())
+                    .thumbnail(Glide.with(videoThumbnail.getContext())
+                            .load(R.drawable.gif_thumbnail_loading))
+                    .placeholder(R.drawable.gif_thumbnail_loading)
+                    .crossFade()
+                    .into(videoThumbnail);
             studioVideoContainer.setVisibility(View.VISIBLE);
         }
     }
