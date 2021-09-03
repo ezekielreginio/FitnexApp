@@ -1,12 +1,15 @@
 package com.pupccis.fitnex.API.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,18 +17,22 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.List;
 
 public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStudioVideosAdapter.TrainerStudioVideosViewHolder>{
     private List<PostVideo> postVideoList;
     private Context context;
+    private String access_type;
 
-    public TrainerStudioVideosAdapter(List<PostVideo> postVideoList, Context context) {
+    public TrainerStudioVideosAdapter(List<PostVideo> postVideoList, Context context, Intent intent) {
         this.postVideoList = postVideoList;
         this.context = context;
+        this.access_type = intent.getSerializableExtra("access_type").toString();
     }
 
     @NonNull
@@ -54,15 +61,25 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
     class TrainerStudioVideosViewHolder extends RecyclerView.ViewHolder{
         TextView videoTitle;
         ImageView videoThumbnail;
-        ConstraintLayout studioVideoContainer;
+        ConstraintLayout studioVideoContainer, constraintLayoutVideoThumbnailEdit, constraintLayoutVideoThumbnailDelete;
+        LinearLayout linearLayoutAddVideoButton;
         public TrainerStudioVideosViewHolder(@NonNull View itemView) {
             super(itemView);
             videoTitle = itemView.findViewById(R.id.textViewStudioVideoTitle);
             videoThumbnail = itemView.findViewById(R.id.imageViewVideoThumbnail);
             studioVideoContainer = itemView.findViewById(R.id.constraintLayoutStudioVideoContainer);
+            constraintLayoutVideoThumbnailEdit = itemView.findViewById(R.id.constraintLayoutVideoThumbnailEdit);
+            constraintLayoutVideoThumbnailDelete = itemView.findViewById(R.id.constraintLayoutVideoThumbnailDelete);
+
         }
 
         void setTrainerStudioVideosData(PostVideo postVideo){
+            if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)){
+                constraintLayoutVideoThumbnailEdit.setVisibility(View.GONE);
+                constraintLayoutVideoThumbnailDelete.setVisibility(View.GONE);
+
+
+            }
             Log.d("URL", postVideo.getThumbnailURL());
             studioVideoContainer.setVisibility(View.GONE);
             Uri videoThumbnailUri = Uri.parse(postVideo.getThumbnailURL());

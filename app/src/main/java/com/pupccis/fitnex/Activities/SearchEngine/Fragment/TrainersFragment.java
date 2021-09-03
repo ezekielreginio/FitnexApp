@@ -101,6 +101,7 @@ public class TrainersFragment extends Fragment {
                             if(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
                                 userListContainer.setName(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString());
                                 userListContainer.setEmail(dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+                                userListContainer.setUserID(dataSnapshot.getKey());
                                 userList.add(userListContainer);
                             }
 

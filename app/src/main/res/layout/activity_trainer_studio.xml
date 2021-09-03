@@ -8,12 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".Activities.Main.Trainer.Studio.TrainerStudio"
     android:background="#FFFFFF"
-    android:padding="5dp"
+
     >
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTrainerStudioStaticContent"
             android:layout_width="match_parent"
@@ -109,7 +110,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayoutAddVideoButton"
+        android:id="@+id/linearLayoutStudioAddVideoButton"
         android:layout_gravity="center"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -142,6 +143,7 @@
         android:transitionName="addProgramTransition">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutTrainerHomeButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,9 +151,26 @@
             android:layout_marginTop="8dp">
             <ImageView
                 android:id="@+id/buttonTrainerHome"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 app:srcCompat="@drawable/ic_baseline_home_24"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTraineeSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTrainerStudioButton"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayoutTrainerHomeButton"
+            tools:layout_editor_absoluteY="8dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/buttonTraineeSearch"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/ic_search_icon"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,8 +183,8 @@
             android:layout_marginTop="10dp">
             <ImageView
                 android:id="@+id/buttonTrainerStudio"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 app:srcCompat="@drawable/ic_trainer_studio"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>

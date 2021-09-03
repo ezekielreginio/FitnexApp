@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.API.adapter.FragmentAdapter;
 import com.pupccis.fitnex.API.adapter.ProgramAdapter;
+import com.pupccis.fitnex.Activities.Main.Trainer.Studio.AddVideo;
 import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
@@ -128,7 +129,9 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
                 break;
             case R.id.constraintLayoutTrainerStudioButton:
-                startActivity(new Intent(getApplicationContext(), TrainerStudio.class));
+                Intent intent = new Intent(getApplicationContext(), TrainerStudio.class);
+                intent.putExtra("access_type", "owner");
+                startActivity(intent);
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
                 break;
 
