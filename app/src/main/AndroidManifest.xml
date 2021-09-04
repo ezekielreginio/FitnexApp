@@ -24,9 +24,10 @@
             android:windowSoftInputMode="adjustPan"
             />
         <activity
-            android:name=".Activities.VideoPlayer.VideoPlayer"
+            android:name=".Activities.VideoPlayer.TrainingVideoPlayer"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|layoutDirection"/>
         <activity
             android:name=".Activities.Main.Trainer.Studio.AddVideo"
             android:exported="true"

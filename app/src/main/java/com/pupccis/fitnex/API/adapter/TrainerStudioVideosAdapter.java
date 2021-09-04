@@ -18,14 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
 import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
+import com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoPlayer;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStudioVideosAdapter.TrainerStudioVideosViewHolder>{
+public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStudioVideosAdapter.TrainerStudioVideosViewHolder> {
     private List<PostVideo> postVideoList;
     private Context context;
     private String access_type;
@@ -89,10 +92,18 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
             Glide.with(videoThumbnail.getContext())
                     .load(postVideo.getThumbnailURL())
                     .placeholder(R.drawable.anim_loading_thumbnail)
-                    .centerCrop()
                     .crossFade()
                     .into(videoThumbnail);
             studioVideoContainer.setVisibility(View.VISIBLE);
+
+            studioVideoContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent= new Intent(context, TrainingVideoPlayer.class);
+                    intent.putExtra("PostVideo", postVideo);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

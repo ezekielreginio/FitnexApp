@@ -2,7 +2,9 @@ package com.pupccis.fitnex.Models;
 
 import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
 
-public class PostVideo {
+import java.io.Serializable;
+
+public class PostVideo implements Serializable {
 
     private final String videoTitle;
     private final String category;
@@ -10,14 +12,16 @@ public class PostVideo {
     private final String trainerID;
     private String videoURL;
     private String thumbnailURL;
+    private String postVideoID;
 
     private PostVideo(PostVideoBuilder builder) {
         this.videoTitle = builder.videoTitle;
         this.category = builder.category;
         this.description = builder.description;
         this.trainerID = builder.trainerID;
-
+        this.videoURL = builder.videoURL;
         this.thumbnailURL = builder.thumbnailURL;
+        this.postVideoID = builder.postVideoID;
     }
     public String getVideoTitle() {
         return videoTitle;
@@ -51,6 +55,10 @@ public class PostVideo {
         return trainerID;
     }
 
+    public String getPostVideoID() {
+        return postVideoID;
+    }
+
     public static class PostVideoBuilder{
 
         private final String videoTitle;
@@ -59,6 +67,7 @@ public class PostVideo {
         private final String trainerID;
         private String videoURL;
         private String thumbnailURL;
+        private String postVideoID;
 
 
         public PostVideoBuilder(String videoTitle, String category, String description, String trainerID){
@@ -78,6 +87,10 @@ public class PostVideo {
             return this;
         }
 
+        public PostVideoBuilder postVideoID(String postVideoID){
+            this.postVideoID = postVideoID;
+            return this;
+        }
 
         public PostVideo build(){
             PostVideo postVideo = new PostVideo(this);

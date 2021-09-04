@@ -112,7 +112,9 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                             dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_DESCRIPTION).getValue().toString(),
                             dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).getValue().toString()
                     )
+                            .videoUri(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_URL).getValue().toString())
                             .thumbnailURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL).getValue().toString())
+                            .postVideoID(dataSnapshot.getKey())
                             .build();
                     //postVideo.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
 
@@ -120,7 +122,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
 
                 }
-                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, getApplicationContext());
+                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, TrainerStudio.this, getIntent());
                 trainerStudioVideos.setLayoutManager(new LinearLayoutManager(TrainerStudio.this));
                 trainerStudioVideos.setItemAnimator(new DefaultItemAnimator());
                 trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
