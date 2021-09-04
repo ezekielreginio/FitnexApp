@@ -99,6 +99,7 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
             studioVideoContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d("Video Url from adapter", postVideo.getVideoURL());
                     Intent intent= new Intent(context, TrainingVideoPlayer.class);
                     intent.putExtra("PostVideo", postVideo);
                     context.startActivity(intent);

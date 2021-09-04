@@ -109,6 +109,7 @@ public class VideosFragment extends Fragment {
                                 )
                                         .videoUri(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_URL).getValue().toString())
                                         .thumbnailURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL).getValue().toString())
+                                        .postVideoID(dataSnapshot.getKey())
                                         .build();
                                 videoList.add(postVideo);
                             }
