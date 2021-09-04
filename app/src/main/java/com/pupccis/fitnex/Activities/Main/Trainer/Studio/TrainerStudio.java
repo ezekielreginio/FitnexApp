@@ -78,13 +78,13 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
         trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         Query query = null;
-        if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)){
+        if (access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)) {
             btnAddVideo.setVisibility(View.GONE);
             btnSearch.setVisibility(View.VISIBLE);
             btnSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent( TrainerStudio.this, SearchEngine.class);
+                    Intent intent = new Intent(TrainerStudio.this, SearchEngine.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
                 }
@@ -93,8 +93,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
             String trainer_id = getIntent().getSerializableExtra("trainer_id").toString();
             Log.d("Trainer ID", trainer_id);
             query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(trainer_id);
-        }
-        else if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_OWNER)){
+        } else if (access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_OWNER)) {
             query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
         query.addValueEventListener(new ValueEventListener() {
@@ -103,7 +102,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                 postVideoList.clear();
                 //DataSnapshot dataSnapshot : snapshot.getChildren()
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     PostVideo postVideo = new PostVideo
                             .PostVideoBuilder(
@@ -132,7 +131,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
             }
 
-            void setAdapter(){
+            void setAdapter() {
 //                programAdapter = new ProgramAdapter(programs, getContext());
 //                programAdapter.notifyDataSetChanged();
 //                programsRecyclerView.setAdapter(programAdapter);
@@ -150,11 +149,11 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case (R.id.linearLayoutStudioAddVideoButton):
                 Intent intent = new Intent(TrainerStudio.this, AddVideo.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
                 break;
         }
     }
@@ -163,9 +162,9 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
             String uploadResponse = intent.getStringExtra("videoUploadedSuccessfully");
-            if(uploadResponse != null){
+            if (uploadResponse != null) {
                 Log.d("Broadcast Received", "received");
-                Toast.makeText(getApplicationContext(), uploadResponse,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), uploadResponse, Toast.LENGTH_SHORT).show();
             }
         }
     };
