@@ -33,10 +33,10 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
     private Context context;
     private String access_type;
 
-    public TrainerStudioVideosAdapter(List<PostVideo> postVideoList, Context context, Intent intent) {
+    public TrainerStudioVideosAdapter(List<PostVideo> postVideoList, Context context, String access_type) {
         this.postVideoList = postVideoList;
         this.context = context;
-        this.access_type = intent.getSerializableExtra("access_type").toString();
+        this.access_type = access_type;
     }
 
     @NonNull

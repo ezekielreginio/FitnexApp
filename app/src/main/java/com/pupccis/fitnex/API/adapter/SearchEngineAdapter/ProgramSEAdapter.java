@@ -70,16 +70,17 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
             constraintLayoutProgramContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (linearLayoutProgramInfo.getVisibility()==View.GONE){
+                    if (linearLayoutProgramInfo.getVisibility()==View.INVISIBLE){
                         linearLayoutProgramInfo.setVisibility(View.VISIBLE);
                     }
                     else {
-                        linearLayoutProgramInfo.setVisibility(View.GONE);
+                        linearLayoutProgramInfo.setVisibility(View.INVISIBLE);
                     }
                     buttonUpdate.setVisibility(View.GONE);
                     buttonDelete.setVisibility(View.GONE);
                     buttonJoin.setVisibility(View.VISIBLE);
                     buttonView.setVisibility(View.VISIBLE);
+
                 }
             });
         }
@@ -91,4 +92,5 @@ public class ProgramSEAdapter extends RecyclerView.Adapter<ProgramSEAdapter.Prog
             textDuration.setText(program.getDuration());
         }
     }
+
 }

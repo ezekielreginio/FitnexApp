@@ -41,6 +41,7 @@ import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -78,7 +79,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
         trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         Query query = null;
-        if(access_type.equals("view")){
+        if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)){
             btnAddVideo.setVisibility(View.GONE);
             btnSearch.setVisibility(View.VISIBLE);
             btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +95,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
             Log.d("Trainer ID", trainer_id);
             query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(trainer_id);
         }
-        else if(access_type.equals("owner")){
+        else if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_OWNER)){
             query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderByChild(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
         query.addValueEventListener(new ValueEventListener() {
@@ -122,9 +123,11 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
 
                 }
-                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, TrainerStudio.this, getIntent());
-                trainerStudioVideos.setLayoutManager(new LinearLayoutManager(TrainerStudio.this));
-                trainerStudioVideos.setItemAnimator(new DefaultItemAnimator());
+                // trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, TrainerStudio.this, getIntent());
+                // trainerStudioVideos.setLayoutManager(new LinearLayoutManager(TrainerStudio.this));
+                // trainerStudioVideos.setItemAnimator(new DefaultItemAnimator());
+                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, getApplicationContext(), getIntent().getSerializableExtra("access_type").toString());
+                //trainerStudioVideosAdapter.notifyDataSetChanged();
                 trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
                 trainerStudioVideosAdapter.notifyDataSetChanged();
 
