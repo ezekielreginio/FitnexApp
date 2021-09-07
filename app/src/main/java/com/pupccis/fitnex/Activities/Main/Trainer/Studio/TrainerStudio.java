@@ -52,7 +52,7 @@ import java.util.List;
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
-    private ConstraintLayout btnSearch;
+    private ConstraintLayout btnSearch, containerEditDelete;
     private RecyclerView trainerStudioVideos;
     private DatabaseReference mDatabase;
     private User trainer_intent;
@@ -71,6 +71,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         //Layout Binding:
         btnAddVideo = findViewById(R.id.linearLayoutStudioAddVideoButton);
         btnSearch = findViewById(R.id.layoutTraineeSearch);
+        containerEditDelete = findViewById(R.id.constraintLayoutEditDelete);
 
         //EventBinding:
         btnAddVideo.setOnClickListener(this);
@@ -80,6 +81,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         Query query = null;
         if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)){
+//            containerEditDelete.setVisibility(View.GONE);
             btnAddVideo.setVisibility(View.GONE);
             btnSearch.setVisibility(View.VISIBLE);
             btnSearch.setOnClickListener(new View.OnClickListener() {

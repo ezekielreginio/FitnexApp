@@ -20,11 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.ProgramSEAdapter;
+import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Models.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ProgramsFragment extends Fragment {
     private String mParam2;
 
     private EditText searchBox;
-    private ProgramSEAdapter programSEAdapter;
+    private ProgramAdapter programAdapter;
     private RecyclerView ProgramSERecyclerView;
     private DatabaseReference mDatabase;
     private View view;
@@ -97,9 +97,9 @@ public class ProgramsFragment extends Fragment {
                                 programList.add(programListContainer);
                             }
                         }
-                        programSEAdapter = new ProgramSEAdapter(programList, getContext());
-                        programSEAdapter.notifyDataSetChanged();
-                        ProgramSERecyclerView.setAdapter(programSEAdapter);
+                        programAdapter = new ProgramAdapter(programList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
+                        programAdapter.notifyDataSetChanged();
+                        ProgramSERecyclerView.setAdapter(programAdapter);
                     }
 
                     @Override

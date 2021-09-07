@@ -110,7 +110,7 @@ public class ClassFragment extends Fragment {
 
                 }
 
-                fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getActivity().getApplicationContext());
+                fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getActivity().getApplicationContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
                 fitnessClassAdapter.notifyDataSetChanged();
                 fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
             }
