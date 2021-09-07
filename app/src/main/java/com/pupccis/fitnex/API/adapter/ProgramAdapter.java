@@ -122,6 +122,9 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                 else
                     layoutProgramInfo.setVisibility(View.GONE);
             });
+            programJoin.setOnClickListener(view -> {
+
+            });
 
             programUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override

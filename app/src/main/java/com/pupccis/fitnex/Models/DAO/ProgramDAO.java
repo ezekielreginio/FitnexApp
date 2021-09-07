@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -71,6 +72,10 @@ public class ProgramDAO {
 
     public void deleteProgram(Program program){
         mDatabase.child(program.getProgramID()).removeValue();
+    }
+
+    public void joinProgram(Program program, User user){
+        mDatabase.child(program.getProgramID());
     }
 
 }
