@@ -17,11 +17,15 @@
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         app:cardCornerRadius="30dp"
-        android:padding="10dp">
+
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSearchEngineVideos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="5dp"
+
+            />
     </androidx.cardview.widget.CardView>
 </FrameLayout>
