@@ -31,10 +31,12 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
     private List<FitnessClass> fitnessClasses;
     private Context context;
     private FitnessClassDAO fitnessClassDAO;
+    private String access_type;
 
-    public FitnessClassAdapter(List<FitnessClass> fitnessClasses, Context context){
+    public FitnessClassAdapter(List<FitnessClass> fitnessClasses, Context context, String access_type){
         this.fitnessClasses = fitnessClasses;
         this.context = context;
+        this.access_type = access_type;
     }
 
     @NonNull
@@ -65,7 +67,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
         LinearLayout layoutClassInfo;
         ConstraintLayout classContainer;
         TextView className, classTimeStart, classTimeEnd, classSessionNo, classTrainer, classDescription, category, classDuration;
-        Button fitnessClassUpdate, fitnessClassDelete;
+        Button fitnessClassUpdate, fitnessClassDelete, fitnessClassJoin, fitnessClassView;
         public FitnessClassViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.textFitnessClassName);
@@ -79,6 +81,8 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             layoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
             fitnessClassUpdate = (Button) itemView.findViewById(R.id.buttonClassUpdate);
             fitnessClassDelete = (Button) itemView.findViewById(R.id.buttonClassDelete);
+            fitnessClassJoin = itemView.findViewById(R.id.buttonClassJoin);
+            fitnessClassView = itemView.findViewById(R.id.buttonClassView);
         }
         void setFitnessClassData(FitnessClass fitnessClass){
             boolean clicked = false;
@@ -96,6 +100,18 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
                 else
                     layoutClassInfo.setVisibility(View.GONE);
             });
+            if(access_type==GlobalConstants.KEY_ACCESS_TYPE_VIEW){
+                fitnessClassJoin.setVisibility(View.VISIBLE);
+                fitnessClassView.setVisibility(View.VISIBLE);
+                fitnessClassDelete.setVisibility(View.GONE);
+                fitnessClassUpdate.setVisibility(View.GONE);
+            }else if(access_type==GlobalConstants.KEY_ACCESS_TYPE_OWNER){
+                fitnessClassJoin.setVisibility(View.GONE);
+                fitnessClassView.setVisibility(View.GONE);
+                fitnessClassDelete.setVisibility(View.VISIBLE);
+                fitnessClassUpdate.setVisibility(View.VISIBLE);
+            }
+
 
             fitnessClassUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override

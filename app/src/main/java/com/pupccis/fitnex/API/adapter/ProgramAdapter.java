@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,10 +36,12 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     private List<Program> programs;
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
+    private String access_type;
 
-    public ProgramAdapter(List<Program> programs, Context context){
+    public ProgramAdapter(List<Program> programs, Context context, String access_type){
         this.programs = programs;
         this.context = context;
+        this.access_type = access_type;
     }
 
     @NonNull
@@ -66,7 +70,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
         ConstraintLayout programContainer;
         LinearLayout layoutProgramInfo;
         TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration;
-        Button programUpdate, programDelete;
+        Button programUpdate, programDelete, programView, programJoin;
 
         public ProgramViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,11 +86,12 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
             programUpdate = itemView.findViewById(R.id.buttonProgramUpdate);
             programDelete = itemView.findViewById(R.id.buttonProgramDelete);
+            programJoin = itemView.findViewById(R.id.buttonProgramJoin);
+            programView = itemView.findViewById(R.id.buttonProgramView);
         }
 
         void setProgramData(Program program){
             boolean clicked = false;
-
             programName.setText(program.getName());
             programTrainees.setText(program.getTrainees());
             programCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[Integer.parseInt(program.getCategory())]);
@@ -98,6 +103,17 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             }
             else if(program.getCategory().equals(ProgramConstants.KEY_PROGRAM_CATEGORY_STRENGTH)){
                 programContainer.setBackgroundResource(R.drawable.layout_bg_program_strength);
+            }
+            if(access_type==GlobalConstants.KEY_ACCESS_TYPE_VIEW){
+                programJoin.setVisibility(View.VISIBLE);
+                programView.setVisibility(View.VISIBLE);
+                programDelete.setVisibility(View.GONE);
+                programUpdate.setVisibility(View.GONE);
+            }else if(access_type==GlobalConstants.KEY_ACCESS_TYPE_OWNER){
+                programJoin.setVisibility(View.GONE);
+                programView.setVisibility(View.GONE);
+                programDelete.setVisibility(View.VISIBLE);
+                programUpdate.setVisibility(View.VISIBLE);
             }
 
             programContainer.setOnClickListener(view -> {

@@ -21,10 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
-import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.fitnessClassSEAdapter;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class ClassesFragment extends Fragment {
                                 fitnessClassList.add(fitnessClassListContainer);
                             }
                         }
-                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext());
+                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
                         fitnessClassAdapter.notifyDataSetChanged();
                         fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
                     }

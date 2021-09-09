@@ -91,7 +91,7 @@ public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStud
             //Glide.with(videoThumbnail.getContext()).load(postVideo.getThumbnailURL()).placeholder(R.drawable.gif_thumbnail_loading).into(videoThumbnail);
             Glide.with(videoThumbnail.getContext())
                     .load(postVideo.getThumbnailURL())
-                    .placeholder(R.drawable.anim_loading_thumbnail)
+                    //.placeholder(R.drawable.anim_loading_thumbnail)
                     .crossFade()
                     .into(videoThumbnail);
             studioVideoContainer.setVisibility(View.VISIBLE);

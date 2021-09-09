@@ -122,7 +122,7 @@ public class ProgramsFragment extends Fragment {
             }
 
             void setAdapter(){
-                programAdapter = new ProgramAdapter(programs, getContext());
+                programAdapter = new ProgramAdapter(programs, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
                 programAdapter.notifyDataSetChanged();
                 programsRecyclerView.setAdapter(programAdapter);
             }
