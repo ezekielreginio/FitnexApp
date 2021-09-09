@@ -126,7 +126,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                 // trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, TrainerStudio.this, getIntent());
                 // trainerStudioVideos.setLayoutManager(new LinearLayoutManager(TrainerStudio.this));
                 // trainerStudioVideos.setItemAnimator(new DefaultItemAnimator());
-                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, getApplicationContext(), getIntent().getSerializableExtra("access_type").toString());
+                trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoList, TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
                 //trainerStudioVideosAdapter.notifyDataSetChanged();
                 trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
                 trainerStudioVideosAdapter.notifyDataSetChanged();
