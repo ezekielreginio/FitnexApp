@@ -20,4 +20,5 @@ public class ProgramConstants {
     public static final String KEY_PROGRAM_CATEGORY_SPORTS = "Sports";
 
     public static final String KEY_PROGRAM_SUBSCRIBERS = "subscribers";
+    public static final String KEY_PROGRAM_USER_SUBSCRIBED = "subscribed_at";
 }

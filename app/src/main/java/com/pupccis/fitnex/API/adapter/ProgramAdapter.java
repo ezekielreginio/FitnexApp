@@ -25,6 +25,7 @@ import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
@@ -37,6 +38,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
     private String access_type;
+    private User user;
 
     public ProgramAdapter(List<Program> programs, Context context, String access_type){
         this.programs = programs;
@@ -123,7 +125,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                     layoutProgramInfo.setVisibility(View.GONE);
             });
             programJoin.setOnClickListener(view -> {
-
+            programDAO.joinProgram(program);
             });
 
             programUpdate.setOnClickListener(new View.OnClickListener() {

@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ProgramDAO {
-
+    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
     public void createProgram(Program program){
         String program_key = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(user_id)
                 .push().getKey();
 
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
@@ -74,8 +74,18 @@ public class ProgramDAO {
         mDatabase.child(program.getProgramID()).removeValue();
     }
 
-    public void joinProgram(Program program, User user){
-        mDatabase.child(program.getProgramID());
+    public void joinProgram(Program program){
+        mDatabase.child(program.getProgramID())
+                .child(ProgramConstants.KEY_PROGRAM_SUBSCRIBERS)
+                .child(user_id)
+                .setValue("subscribed");
+
+
+        FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
+                .child(user_id)
+                .child(ProgramConstants.KEY_PROGRAM_USER_SUBSCRIBED)
+                .child(program.getProgramID())
+                .setValue("subscribed");
     }
 
 }
