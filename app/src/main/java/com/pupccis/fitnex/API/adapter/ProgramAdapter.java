@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
+import com.pupccis.fitnex.Activities.Routine.RoutinePage;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
@@ -71,7 +72,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     class ProgramViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout programContainer;
         LinearLayout layoutProgramInfo;
-        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration;
+        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration, textViewRoutine;
         Button programUpdate, programDelete, programView, programJoin;
 
         public ProgramViewHolder(@NonNull View itemView) {
@@ -82,6 +83,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             programDescription = itemView.findViewById(R.id.textProgramDescription);
             programSessionCount = itemView.findViewById(R.id.textProgramSessionCount);
             programDuration = itemView.findViewById(R.id.textProgramDuration);
+            textViewRoutine = itemView.findViewById(R.id.textViewRoutine);
 
             programContainer = itemView.findViewById(R.id.layoutProgramContainer);
             layoutProgramInfo = itemView.findViewById(R.id.layoutProgramInfo);
@@ -124,8 +126,16 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                 else
                     layoutProgramInfo.setVisibility(View.GONE);
             });
+
             programJoin.setOnClickListener(view -> {
-            programDAO.joinProgram(program);
+                programDAO.joinProgram(program);
+            });
+
+            textViewRoutine.setOnClickListener(view -> {
+                Intent intent = new Intent(context, RoutinePage.class);
+                intent.putExtra("program", program);
+                intent.putExtra("access_type", access_type);
+                context.startActivity(intent);
             });
 
             programUpdate.setOnClickListener(new View.OnClickListener() {
