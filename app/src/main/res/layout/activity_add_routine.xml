@@ -118,7 +118,7 @@
                             android:textColorHint="#C5B2B2">
 
                             <EditText
-                                android:id="@+id/editTextAddPRoutineSets"
+                                android:id="@+id/editTextAddRoutineSets"
                                 style="@style/AddProgramText"
                                 android:hint="Set count"
                                 android:inputType="time"
@@ -132,7 +132,7 @@
                             android:textColorHint="#C5B2B2">
 
                             <EditText
-                                android:id="@+id/editTextAddPRoutineWeights"
+                                android:id="@+id/editTextAddRoutineWeights"
                                 style="@style/AddProgramText"
                                 android:hint="Weight"
                                 android:inputType="time"
@@ -155,7 +155,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                        android:id="@+id/buttonAddProgramButton"
+                        android:id="@+id/buttonAddRoutineButton"
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"

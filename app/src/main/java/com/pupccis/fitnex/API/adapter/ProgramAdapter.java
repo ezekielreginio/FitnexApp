@@ -135,6 +135,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                 Intent intent = new Intent(context, RoutinePage.class);
                 intent.putExtra("program", program);
                 intent.putExtra("access_type", access_type);
+                Log.d("Category from program", program.getCategory().toString());
                 context.startActivity(intent);
             });
 

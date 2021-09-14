@@ -9,6 +9,7 @@ public class Routine {
         this.reps = builder.reps;
         this.sets = builder.sets;
         this.weight = builder.weight;
+        this.duration = builder.duration;
     }
 
     public String getRoutineName() {
