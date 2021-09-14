@@ -1,14 +1,26 @@
 package com.pupccis.fitnex.Activities.VideoPlayer;
 
+import static com.pupccis.fitnex.API.NumberFormatter.dateFormatter;
+import static com.pupccis.fitnex.API.NumberFormatter.numberFormatter;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,6 +31,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -44,7 +57,9 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.pupccis.fitnex.API.adapter.VideoCommentsAdapter;
+import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Models.DAO.VideoCommentDAO;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.Models.VideoComment;
@@ -66,9 +81,10 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     private SimpleExoPlayer simpleExoPlayer;
 
     private ConstraintLayout constraintLayoutVideoCommentBox, constraintLayoutCommentsSection;
-    private ImageView btFullScreen, buttonUploadVideoComment;
+    private ImageView btFullScreen, buttonUploadVideoComment, buttonVideoLike, buttonVideoDislike;
     private EditText editTextWriteComment;
     private RecyclerView videoComments;
+    private TextView textViewVideoPlayerTitle, textViewVideoPlayerLikeCounter, textViewVideoPlayerDislikeCounter, textViewVideoPlayerViewCounter, textViewVideoPlayerTimestamp;
 
     boolean flag = false;
     private Calendar calendar = Calendar.getInstance();
@@ -83,6 +99,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         userPreferences = new UserPreferences(getApplicationContext());
         postVideo = (PostVideo) getIntent().getSerializableExtra("PostVideo");
 
+        //Layout Bindings
         playerView = findViewById(R.id.video_player);
 
         progressBar = findViewById(R.id.progress_bar);
@@ -92,11 +109,28 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         constraintLayoutCommentsSection = findViewById(R.id.constraintLayoutCommentsSection);
         editTextWriteComment = findViewById(R.id.editTextWriteComment);
         buttonUploadVideoComment = findViewById(R.id.buttonUploadVideoComment);
+        buttonVideoLike = findViewById(R.id.buttonVideoLike);
+        buttonVideoDislike = findViewById(R.id.buttonVideoDislike);
+        textViewVideoPlayerTitle = findViewById(R.id.textViewVideoPlayerTitle);
+        textViewVideoPlayerLikeCounter = findViewById(R.id.textViewVideoPlayerLikeCounter);
+        textViewVideoPlayerDislikeCounter = findViewById(R.id.textViewVideoPlayerDislikeCounter);
+        textViewVideoPlayerViewCounter = findViewById(R.id.textViewVideoPlayerViewCounter);
+        textViewVideoPlayerTimestamp = findViewById(R.id.textViewVideoPlayerTimestamp);
+
 
         //Event Bindings
         btFullScreen.setOnClickListener(this);
         constraintLayoutVideoCommentBox.setOnClickListener(this);
         buttonUploadVideoComment.setOnClickListener(this);
+        buttonVideoLike.setOnClickListener(this);
+        buttonVideoDislike.setOnClickListener(this);
+
+        //Load Video Data to Context
+        PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
+
+        //DateUtils.getRelativeTimeSpanString();
+        textViewVideoPlayerTitle.setText(postVideo.getVideoTitle());
+        PostVideoDAO.incrementViews(postVideo.getPostVideoID());
 
         //Video Url
         Uri videoUrl = Uri.parse(postVideo.getVideoURL());
@@ -198,6 +232,49 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(postedVideoBroadcastReceiver,
+                new IntentFilter("posted-video-data"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(postedVideoBroadcastReceiver);
+    }
+
+    private BroadcastReceiver postedVideoBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("Broadcast Received", "received");
+            PostVideo postVideo = (PostVideo) intent.getSerializableExtra("videoData");
+            String postLikes = numberFormatter((long) postVideo.getLikes());
+            textViewVideoPlayerLikeCounter.setText(postLikes);
+            textViewVideoPlayerDislikeCounter.setText(postVideo.getDislikes()+"");
+            textViewVideoPlayerViewCounter.setText(String.format("%,d", postVideo.getViews())+" views");
+            textViewVideoPlayerTimestamp.setText(dateFormatter("MMM dd, y", postVideo.getDate_posted()));
+            //Log.d("Relative Date", DateUtils.getRelativeTimeSpanString(postVideo.getDate_posted())+"");
+
+            boolean liked = intent.getBooleanExtra("liked", false);
+            boolean disliked = intent.getBooleanExtra("disliked", false);
+
+            if(liked){
+                buttonVideoLike.setImageResource(R.drawable.ic_baseline_thumb_up_24);
+            }
+            else{
+                buttonVideoLike.setImageResource(R.drawable.ic_outline_thumb_up_alt_24);
+            }
+            if(disliked){
+                buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
+            }
+            else
+                buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
+
+        }
+    };
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_fullscreen:
@@ -229,6 +306,12 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                             )
                         .build();
                 VideoCommentDAO.postComment(videoComment, postVideoID);
+                break;
+            case R.id.buttonVideoLike:
+                PostVideoDAO.likeEventVideo(postVideo.getPostVideoID() ,FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
+                break;
+            case R.id.buttonVideoDislike:
+                PostVideoDAO.likeEventVideo(postVideo.getPostVideoID() ,FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
                 break;
         }
     }

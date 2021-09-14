@@ -35,6 +35,7 @@ import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Models.FitnessClass;
 import com.pupccis.fitnex.Models.PostVideo;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.Date;
 
@@ -152,11 +153,12 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
                 String thumbnailFiletype = getContentResolver().getType(imageUri);
                 Intent intent = new Intent(AddVideo.this, TrainerStudio.class);
                 PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri, thumbnailFiletype, imageUri, getApplicationContext()).build();
-                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
+                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid(), System.currentTimeMillis()).initializeData().build();
                 Toast.makeText(this, "Uploading the Video, Please Wait...", Toast.LENGTH_SHORT).show();
                 postVideoDAO.postVideo(postVideo);
 
                 overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+                intent.putExtra("access_type", GlobalConstants.KEY_ACCESS_TYPE_OWNER);
                 startActivity(intent);
                 //PostVideo postVideo = PostVideo.PostVideoBuilder(videoTitle, videoCategory, videoDescription,);
                 break;

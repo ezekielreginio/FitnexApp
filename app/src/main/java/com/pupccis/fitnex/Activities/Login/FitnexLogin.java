@@ -107,47 +107,26 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                         if(task.isSuccessful() && task.getResult() != null){
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            Query data = mDatabase.child(userId);
-
-                            data.addValueEventListener(new ValueEventListener() {
-
+                            mDatabase.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    FirebaseDatabase.getInstance().getReference("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                            String userType = task.getResult().child("userType").getValue().toString();
-                                            userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-                                            userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
-                                            userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-                                            userPreferences.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
-                                            userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
-                                            userPreferences.putString("usertype", userType);
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    String userType = task.getResult().child("userType").getValue().toString();
+                                    userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+                                    userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, task.getResult().child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
+                                    userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, task.getResult().child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+                                    userPreferences.putString(VideoConferencingConstants.KEY_AGE, task.getResult().child(VideoConferencingConstants.KEY_AGE).getValue().toString());
+                                    userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
+                                    userPreferences.putString("usertype", userType);
 
-                                            Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
-                                            if(userType.equals("trainer")){
-                                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
-                                            }
-                                            else if(userType.equals("trainee")){
-                                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
-                                            }
-                                        }
-                                    });
-
-//                                    userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, snapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, snapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_AGE, snapshot.child(VideoConferencingConstants.KEY_AGE).getValue().toString());
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
+                                    Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
+                                    if(userType.equals("trainer")){
+                                        startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                    }
+                                    else if(userType.equals("trainee")){
+                                        startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                    }
                                 }
                             });
-
 
 
 

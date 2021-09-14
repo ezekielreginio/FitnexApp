@@ -12,4 +12,8 @@ public class PostVideoConstants {
     public static final String KEY_POST_VIDEO_URL = "videoURL";
     public static final String KEY_POST_VIDEO_THUMBNAIL_URL = "thumbnailURL";
     public static final String KEY_POST_VIDEO_TRAINER_ID = "trainerID";
+    public static final String KEY_POST_VIDEO_DATE_POSTED = "date_posted";
+    public static final String KEY_POST_VIDEO_LIKES = "likes";
+    public static final String KEY_POST_VIDEO_DISLIKES = "dislikes";
+    public static final String KEY_POST_VIDEO_VIEWS = "views";
 }

@@ -13,6 +13,8 @@ public class PostVideo implements Serializable {
     private String videoURL;
     private String thumbnailURL;
     private String postVideoID;
+    private int likes,dislikes;
+    private long views, date_posted;
 
     private PostVideo(PostVideoBuilder builder) {
         this.videoTitle = builder.videoTitle;
@@ -22,6 +24,10 @@ public class PostVideo implements Serializable {
         this.videoURL = builder.videoURL;
         this.thumbnailURL = builder.thumbnailURL;
         this.postVideoID = builder.postVideoID;
+        this.likes = builder.likes;
+        this.dislikes = builder.dislikes;
+        this.views = builder.views;
+        this.date_posted = builder.date_posted;
     }
     public String getVideoTitle() {
         return videoTitle;
@@ -55,26 +61,60 @@ public class PostVideo implements Serializable {
         return trainerID;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+
     public String getPostVideoID() {
         return postVideoID;
     }
 
+    public long getViews() {
+        return views;
+    }
+
+    public void setViews(long views) {
+        this.views = views;
+    }
+
+    public long getDate_posted() {
+        return date_posted;
+    }
+
     public static class PostVideoBuilder{
 
-        private final String videoTitle;
-        private final String category;
-        private final String description;
-        private final String trainerID;
+        private String videoTitle;
+        private String category;
+        private String description;
+        private String trainerID;
         private String videoURL;
         private String thumbnailURL;
         private String postVideoID;
+        private int likes,dislikes;
+        private long views, date_posted;
 
+        public PostVideoBuilder(){
 
-        public PostVideoBuilder(String videoTitle, String category, String description, String trainerID){
+        }
+
+        public PostVideoBuilder(String videoTitle, String category, String description, String trainerID, long date_posted){
             this.videoTitle = videoTitle;
             this.category = category;
             this.description = description;
             this.trainerID = trainerID;
+            this.date_posted = date_posted;
         }
 
         public PostVideoBuilder videoUri(String videoURL){
@@ -92,6 +132,33 @@ public class PostVideo implements Serializable {
             return this;
         }
 
+        public PostVideoBuilder date_posted(long date_posted){
+            this.date_posted = date_posted;
+            return this;
+        }
+
+        public PostVideoBuilder initializeData(){
+            this.likes = 0;
+            this.dislikes = 0;
+            this.views = 0;
+            return this;
+        }
+
+        public PostVideoBuilder likes(int likes){
+            this.likes = likes;
+            return this;
+        }
+
+        public PostVideoBuilder dislikes(int dislikes){
+            this.dislikes = dislikes;
+            return this;
+        }
+
+        public PostVideoBuilder views(long views){
+            this.views = views;
+            return this;
+        }
+
         public PostVideo build(){
             PostVideo postVideo = new PostVideo(this);
             validateObject(postVideo);
@@ -99,7 +166,6 @@ public class PostVideo implements Serializable {
         }
 
         private boolean validateObject(PostVideo postVideo){
-
             return true;
         }
     }

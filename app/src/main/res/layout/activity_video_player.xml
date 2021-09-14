@@ -60,7 +60,6 @@
         android:id="@+id/constraintLayoutVideoDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideoPlayer">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,14 +95,25 @@
                 android:textColor="@color/blueTextColor"
                 android:textSize="15dp"/>
             <TextView
+                android:id="@+id/textViewVideoPlayerViewSeparator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="15dp"
+                android:textColor="@color/blueTextColor"
+                android:text="\u2022"
+                app:layout_constraintStart_toEndOf="@id/textViewVideoPlayerViewCounter"
+                app:layout_constraintEnd_toStartOf="@id/textViewVideoPlayerTimestamp"
+                />
+            <TextView
                 android:id="@+id/textViewVideoPlayerTimestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\u2022 1 minute ago"
+                android:text="1 minute ago"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/blueTextColor"
                 android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textViewVideoPlayerViewCounter"
+                app:layout_constraintStart_toEndOf="@id/textViewVideoPlayerViewSeparator"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -126,7 +136,7 @@
                     android:id="@+id/buttonVideoLike"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_baseline_thumb_up_24"
+                    app:srcCompat="@drawable/ic_outline_thumb_up_alt_24"
                     tools:ignore="MissingConstraints"
                     />
                 <TextView
@@ -151,7 +161,7 @@
                     android:id="@+id/buttonVideoDislike"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_baseline_thumb_down_24"
+                    app:srcCompat="@drawable/ic_outline_thumb_down_alt_24"
                     tools:ignore="MissingConstraints"
                     />
                 <TextView
