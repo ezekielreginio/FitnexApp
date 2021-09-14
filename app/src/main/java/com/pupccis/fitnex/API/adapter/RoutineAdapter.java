@@ -58,12 +58,13 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
             textViewRoutineDescriptionFirst = itemView.findViewById(R.id.textViewRoutineDescriptionFirst);
             textViewRoutineDescriptionSecond = itemView.findViewById(R.id.textViewRoutineDescriptionSecond);
             constraintLayoutEditDelete = itemView.findViewById(R.id.constraintLayoutEditDelete);
+
         }
         void setRoutineData(Routine routine){
             textViewRoutineName.setText(routine.getRoutineName());
             if(category.equals("2")){
-                textViewRoutineDescriptionFirst.setText(routine.getReps());
-                textViewRoutineDescriptionSecond.setText(routine.getSets());
+                textViewRoutineDescriptionFirst.setText(routine.getReps()+" Reps");
+                textViewRoutineDescriptionSecond.setText(routine.getSets()+ "Sets");
             }else{
                 //textViewRoutineDescription1.setText(routine.getDuration());
                 Log.d("Duration", ""+routine.getDuration());
