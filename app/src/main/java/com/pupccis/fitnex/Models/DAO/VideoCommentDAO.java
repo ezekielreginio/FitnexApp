@@ -52,9 +52,11 @@ public class VideoCommentDAO {
                     VideoComment comment = new VideoComment.VideoCommentBuilder(
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_TRAINER_ID).getValue().toString(),
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_TRAINER_NAME).getValue().toString(),
-                            dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED).getValue().toString(),
+                            (long) dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED).getValue(),
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT).getValue().toString()
-                    ).build();
+                    )
+                            .commentId(dataSnapshot.getKey())
+                            .build();
                     commentsList.add(comment);
                 }
                 if(recyclerViewVideoComments != null){

@@ -1,13 +1,10 @@
 package com.pupccis.fitnex.Models;
 
 public class VideoComment {
-    private final String trainerID;
-    private final String trainerName;
-    private final String dateCreated;
-    private final String comment;
-
-    private int likes;
-    private int dislikes;
+    private final String trainerID, comment, trainerName;
+    private final long dateCreated;
+    private String commentId;
+    private int likes, dislikes;
 
     public VideoComment(VideoCommentBuilder builder) {
         this.trainerID = builder.trainerID;
@@ -17,6 +14,7 @@ public class VideoComment {
 
         this.likes = builder.likes;
         this.dislikes = builder.dislikes;
+        this.commentId = builder.commentId;
     }
 
     public String getTrainerID() {
@@ -27,7 +25,7 @@ public class VideoComment {
         return trainerName;
     }
 
-    public String getDateCreated() {
+    public long getDateCreated() {
         return dateCreated;
     }
 
@@ -35,20 +33,33 @@ public class VideoComment {
         return comment;
     }
 
+    public String getCommentId() {
+        return commentId;
+    }
+
     public static class VideoCommentBuilder{
-        private final String trainerID;
-        private final String trainerName;
-        private final String dateCreated;
-        private final String comment;
-        private int likes;
-        private int dislikes;
+        private final String trainerID, comment, trainerName;
+        private final long dateCreated;
+        private String commentId;
+        private int likes, dislikes;
 
 
-        public VideoCommentBuilder(String trainerID, String trainerName, String dateCreated, String comment) {
+        public VideoCommentBuilder(String trainerID, String trainerName, long dateCreated, String comment) {
             this.trainerID = trainerID;
             this.trainerName = trainerName;
             this.dateCreated = dateCreated;
             this.comment = comment;
+        }
+
+        public VideoCommentBuilder initializeData(){
+            this.likes =  0;
+            this.dislikes = 0;
+            return this;
+        }
+
+        public VideoCommentBuilder commentId(String commentId){
+            this.commentId = commentId;
+            return this;
         }
 
         public VideoCommentBuilder likes(int likes){

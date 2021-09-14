@@ -1,13 +1,21 @@
 package com.pupccis.fitnex.API.adapter;
 
+import static com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoCommentReply.initiateReplyView;
+
+import android.app.Activity;
 import android.content.Context;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Models.VideoComment;
@@ -47,8 +55,11 @@ public class VideoCommentsAdapter extends RecyclerView.Adapter<VideoCommentsAdap
     }
 
     class VideoCommentViewHolder extends RecyclerView.ViewHolder{
+        private VideoComment videoComment;
+        private String commentId;
         private ImageView buttonCommentLike, buttonCommentDislike;
         private TextView commentUsername, commentDate, commentContent, commentLikesCounter, commentDislikesCounter;
+        private ConstraintLayout constraintLayoutReplySection, constraintLayoutCommentReplyLink;
 
         public VideoCommentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,11 +70,26 @@ public class VideoCommentsAdapter extends RecyclerView.Adapter<VideoCommentsAdap
             commentContent = itemView.findViewById(R.id.commentContent);
             commentLikesCounter = itemView.findViewById(R.id.commentLikesCounter);
             commentDislikesCounter = itemView.findViewById(R.id.commentDislikesCounter);
+            constraintLayoutCommentReplyLink = itemView.findViewById(R.id.constraintLayoutCommentReplyLink);
+
+
+            constraintLayoutCommentReplyLink.setOnClickListener(view -> {
+                initiateReplyView(context, videoComment);
+            });
         }
 
         void setVideoCommentData(VideoComment videoComment){
+            this.videoComment = videoComment;
             commentUsername.setText(videoComment.getTrainerName());
             commentContent.setText(videoComment.getComment());
+            commentId = videoComment.getCommentId();
+
+            String dateRelative = (String) DateUtils.getRelativeTimeSpanString(videoComment.getDateCreated());
+            if(dateRelative.equals("0 minutes ago"))
+                dateRelative = "A Few Seconds Ago";
+
+            commentDate.setText(dateRelative);
+            //commentId = videoComment.get
         }
     }
 }

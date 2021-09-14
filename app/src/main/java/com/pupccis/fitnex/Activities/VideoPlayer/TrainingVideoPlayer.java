@@ -81,7 +81,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     private SimpleExoPlayer simpleExoPlayer;
 
     private ConstraintLayout constraintLayoutVideoCommentBox, constraintLayoutCommentsSection;
-    private ImageView btFullScreen, buttonUploadVideoComment, buttonVideoLike, buttonVideoDislike;
+    private ImageView btFullScreen, buttonUploadVideoComment, buttonVideoLike, buttonVideoDislike, buttonCloseCommentsSection;
     private EditText editTextWriteComment;
     private RecyclerView videoComments;
     private TextView textViewVideoPlayerTitle, textViewVideoPlayerLikeCounter, textViewVideoPlayerDislikeCounter, textViewVideoPlayerViewCounter, textViewVideoPlayerTimestamp;
@@ -116,7 +116,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         textViewVideoPlayerDislikeCounter = findViewById(R.id.textViewVideoPlayerDislikeCounter);
         textViewVideoPlayerViewCounter = findViewById(R.id.textViewVideoPlayerViewCounter);
         textViewVideoPlayerTimestamp = findViewById(R.id.textViewVideoPlayerTimestamp);
-
+        buttonCloseCommentsSection  = findViewById(R.id.buttonCloseCommentsSection);
 
         //Event Bindings
         btFullScreen.setOnClickListener(this);
@@ -124,6 +124,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         buttonUploadVideoComment.setOnClickListener(this);
         buttonVideoLike.setOnClickListener(this);
         buttonVideoDislike.setOnClickListener(this);
+        buttonCloseCommentsSection.setOnClickListener(this);
 
         //Load Video Data to Context
         PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
@@ -223,7 +224,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         videoComments = (RecyclerView) findViewById(R.id.recyclerViewVideoComments);
         videoComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        //RecyclerView and List Instance Read Query and Binding
+        //Comment RecyclerView and List Instance Read Query and Binding
         VideoCommentDAO videoCommentDAO = new VideoCommentDAO.VideoCommentDAOBuilder()
                 .context(TrainingVideoPlayer.this)
                 .recyclerViewVideoComments(videoComments)
@@ -293,17 +294,22 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                 Animation slideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
                 constraintLayoutCommentsSection.startAnimation(slideUp);
                 break;
+            case R.id.buttonCloseCommentsSection:
+                constraintLayoutCommentsSection.setVisibility(View.GONE);
+                Animation slideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+                constraintLayoutCommentsSection.startAnimation(slideDown);
+                break;
             case R.id.buttonUploadVideoComment:
-                Date currentTime = calendar.getTime();
                 String comment = editTextWriteComment.getText().toString();
                 String postVideoID = postVideo.getPostVideoID();
                 VideoComment videoComment = new VideoComment
                         .VideoCommentBuilder(
                                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME),
-                                currentTime.toString(),
+                                System.currentTimeMillis(),
                                 comment
                             )
+                        .initializeData()
                         .build();
                 VideoCommentDAO.postComment(videoComment, postVideoID);
                 break;
