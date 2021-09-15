@@ -8,8 +8,6 @@ import com.pupccis.fitnex.Models.Routine;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;
 
-import java.util.HashMap;
-
 public class RoutineDAO {
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
@@ -21,5 +19,4 @@ public class RoutineDAO {
                 .push()
                 .setValue(routine);
     }
-
 }
