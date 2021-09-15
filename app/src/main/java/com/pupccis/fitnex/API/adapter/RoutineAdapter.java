@@ -2,8 +2,10 @@ package com.pupccis.fitnex.API.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +19,10 @@ import com.pupccis.fitnex.R;
 
 import java.util.List;
 
-public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineViewHolder> {
+public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineViewHolder>  {
     private List<Routine> routines;
     private String access_type, category;
-
+    private View.OnDragListener dragListener;
     public RoutineAdapter(List<Routine> routines, String access_type, String category) {
         this.routines = routines;
         this.access_type = access_type;
@@ -29,7 +31,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
     @NonNull
     @Override
-    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RoutineAdapter.RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RoutineViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.item_container_routines,
@@ -44,6 +46,11 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         holder.setRoutineData(routines.get(position));
     }
 
+    public void setList(List<Routine> routineList){
+        this.routines = routineList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return routines.size();
@@ -51,6 +58,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
     class RoutineViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewRoutineName, textViewRoutineDescriptionFirst, textViewRoutineDescriptionSecond;
+        private ImageView RoutineDrag;
         private ConstraintLayout constraintLayoutEditDelete;
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
