@@ -48,6 +48,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
     public int getItemCount() {
         return routines.size();
     }
+    public void setList(List<Routine> routineList){
+        this.routines = routineList;
+        notifyDataSetChanged();
+    }
 
     class RoutineViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewRoutineName, textViewRoutineDescriptionFirst, textViewRoutineDescriptionSecond;

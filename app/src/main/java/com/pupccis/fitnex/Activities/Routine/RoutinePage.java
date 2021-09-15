@@ -1,7 +1,10 @@
 package com.pupccis.fitnex.Activities.Routine;
 
+import static com.pupccis.fitnex.Models.DAO.RoutineDAO.updateRoutineOrder;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +33,8 @@ import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class RoutinePage extends AppCompatActivity implements View.OnClickListener{
@@ -61,6 +66,8 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
 
         textViewRoutinePageProgramName.setText(program.getName());
+
+
 
         //Query
         mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).child(program.getProgramID()).child(RoutineConstants.KEY_COLLECTION_ROUTINE);
@@ -94,15 +101,40 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
                 routineAdapter = new RoutineAdapter(routineList, "owner", program.getCategory());
                 routinePage.setAdapter(routineAdapter);
                 routineAdapter.notifyDataSetChanged();
+                routineAdapter.setList(routineList);
 
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(routinePage);
+
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            Collections.swap(routineList, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            //routineAdapter.notifyDataSetChanged();
+            updateRoutineOrder(routineList, program.getProgramID());
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 
     @Override
     public void onClick(View view) {
