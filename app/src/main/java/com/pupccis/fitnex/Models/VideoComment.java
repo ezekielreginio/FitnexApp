@@ -3,7 +3,7 @@ package com.pupccis.fitnex.Models;
 public class VideoComment {
     private final String trainerID, comment, trainerName;
     private final long dateCreated;
-    private String commentId;
+    private String commentId, videoId;
     private int likes, dislikes;
 
     public VideoComment(VideoCommentBuilder builder) {
@@ -15,6 +15,7 @@ public class VideoComment {
         this.likes = builder.likes;
         this.dislikes = builder.dislikes;
         this.commentId = builder.commentId;
+        this.videoId = builder.videoId;
     }
 
     public String getTrainerID() {
@@ -37,10 +38,14 @@ public class VideoComment {
         return commentId;
     }
 
+    public String getVideoId() {
+        return videoId;
+    }
+
     public static class VideoCommentBuilder{
         private final String trainerID, comment, trainerName;
         private final long dateCreated;
-        private String commentId;
+        private String commentId, videoId;
         private int likes, dislikes;
 
 
@@ -59,6 +64,11 @@ public class VideoComment {
 
         public VideoCommentBuilder commentId(String commentId){
             this.commentId = commentId;
+            return this;
+        }
+
+        public VideoCommentBuilder videoId(String videoId){
+            this.videoId = videoId;
             return this;
         }
 

@@ -26,24 +26,40 @@ public class VideoCommentDAO {
     private Context context;
     private RecyclerView recyclerViewVideoComments;
     private VideoCommentsAdapter videoCommentsAdapter;
+    private String commentId;
 
     public VideoCommentDAO(VideoCommentDAOBuilder builder) {
         this.context = builder.context;
         this.recyclerViewVideoComments = builder.recyclerViewVideoComments;
+        this.commentId = builder.commentId;
     }
 
-    public static void postComment(VideoComment videoComment, String postVideoID){
-        FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
-                .child(postVideoID)
-                .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
-                .push()
-                .setValue(videoComment);
+    public static void postComment(VideoComment videoComment, String postVideoID, String type){
+        DatabaseReference commentReference = null;
+        if(type.equals("comment"))
+            commentReference = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .child(postVideoID)
+                    .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS);
+        else if(type.equals("reply"))
+            commentReference = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .child(postVideoID)
+                    .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .child(videoComment.getCommentId())
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES);
+        commentReference.push().setValue(videoComment);
     }
 
-    public List<VideoComment> queryCommentsList(String postVideoID){
+    public List<VideoComment> queryCommentsList(String postVideoID, String type){
         List<VideoComment> commentsList = new ArrayList<>();
-        Query query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).child(postVideoID).child(VideoCommentConstants.KEY_COLLECTION_COMMENTS);
-
+        Query query = null;
+        if(type.equals("comment"))
+            query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).child(postVideoID).child(VideoCommentConstants.KEY_COLLECTION_COMMENTS);
+        else if(type.equals("reply"))
+            query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .child(postVideoID)
+                    .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .child(commentId)
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -56,6 +72,7 @@ public class VideoCommentDAO {
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT).getValue().toString()
                     )
                             .commentId(dataSnapshot.getKey())
+                            .videoId(postVideoID)
                             .build();
                     commentsList.add(comment);
                 }
@@ -78,6 +95,7 @@ public class VideoCommentDAO {
     public static class VideoCommentDAOBuilder{
         private Context context;
         private RecyclerView recyclerViewVideoComments;
+        private String commentId;
 
         public VideoCommentDAOBuilder() {
         }
@@ -89,6 +107,11 @@ public class VideoCommentDAO {
 
         public VideoCommentDAOBuilder recyclerViewVideoComments(RecyclerView recyclerViewVideoComments){
             this.recyclerViewVideoComments = recyclerViewVideoComments;
+            return this;
+        }
+
+        public VideoCommentDAOBuilder commentId(String commentId){
+            this.commentId = commentId;
             return this;
         }
 

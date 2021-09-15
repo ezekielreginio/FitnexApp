@@ -229,7 +229,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                 .context(TrainingVideoPlayer.this)
                 .recyclerViewVideoComments(videoComments)
                 .build();
-        videoCommentDAO.queryCommentsList(postVideo.getPostVideoID());
+        videoCommentDAO.queryCommentsList(postVideo.getPostVideoID(), "comment");
     }
 
     @Override
@@ -311,7 +311,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                             )
                         .initializeData()
                         .build();
-                VideoCommentDAO.postComment(videoComment, postVideoID);
+                VideoCommentDAO.postComment(videoComment, postVideoID, "comment");
                 break;
             case R.id.buttonVideoLike:
                 PostVideoDAO.likeEventVideo(postVideo.getPostVideoID() ,FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
