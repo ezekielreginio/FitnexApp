@@ -28,7 +28,7 @@ public class PostedVideosRepository {
     //Private Attributes
     private ArrayList<PostVideo> postVideoModels = new ArrayList<>();
 
-    //Static Attributes
+    //Static Attributes//
     static PostedVideosRepository instance;
     static Context mContext;
     static DataLoadListener dataLoadListener;
