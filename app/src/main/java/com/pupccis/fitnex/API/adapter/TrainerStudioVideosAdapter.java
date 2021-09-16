@@ -1,6 +1,5 @@
 package com.pupccis.fitnex.API.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,23 +16,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
-import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoPlayer;
-import com.pupccis.fitnex.Models.PostVideo;
+import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStudioVideosAdapter.TrainerStudioVideosViewHolder> {
-    private List<PostVideo> postVideoList;
+    private ArrayList<PostVideo> postVideoList;
     private Context context;
     private String access_type;
 
-    public TrainerStudioVideosAdapter(List<PostVideo> postVideoList, Context context, String access_type) {
+    public TrainerStudioVideosAdapter(ArrayList<PostVideo> postVideoList, Context context, String access_type) {
         this.postVideoList = postVideoList;
         this.context = context;
         this.access_type = access_type;

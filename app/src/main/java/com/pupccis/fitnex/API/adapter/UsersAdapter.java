@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 
 import java.util.List;

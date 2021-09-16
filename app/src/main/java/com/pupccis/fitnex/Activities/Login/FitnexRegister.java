@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class FitnexRegister extends AppCompatActivity implements View.OnClickListener {

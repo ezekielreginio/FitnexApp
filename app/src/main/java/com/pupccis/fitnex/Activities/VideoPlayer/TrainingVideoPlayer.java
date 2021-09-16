@@ -5,39 +5,29 @@ import static com.pupccis.fitnex.API.NumberFormatter.numberFormatter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -50,7 +40,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -58,22 +47,16 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.pupccis.fitnex.API.adapter.VideoCommentsAdapter;
-import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
-import com.pupccis.fitnex.Models.DAO.VideoCommentDAO;
-import com.pupccis.fitnex.Models.PostVideo;
-import com.pupccis.fitnex.Models.VideoComment;
+import com.pupccis.fitnex.Model.DAO.PostVideoDAO;
+import com.pupccis.fitnex.Model.DAO.VideoCommentDAO;
+import com.pupccis.fitnex.Model.PostVideo;
+import com.pupccis.fitnex.Model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
-import org.webrtc.MediaSource;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class TrainingVideoPlayer extends AppCompatActivity implements View.OnClickListener {
     private UserPreferences userPreferences;

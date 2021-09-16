@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Models;
+package com.pupccis.fitnex.Model;
 
 import com.google.firebase.database.Exclude;
 

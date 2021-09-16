@@ -1,6 +1,5 @@
 package com.pupccis.fitnex.Activities.SearchEngine.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,15 +21,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.API.adapter.TrainerStudioVideosAdapter;
-import com.pupccis.fitnex.Models.PostVideo;
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +49,7 @@ public class VideosFragment extends Fragment {
     private RecyclerView VideoSERecyclerView;
     private DatabaseReference mDatabase;
     private View view;
-    private List<PostVideo> videoList = new ArrayList<>();
+    private ArrayList<PostVideo> videoList = new ArrayList<>();
 
     public VideosFragment(View view) {
         // Required empty public constructor

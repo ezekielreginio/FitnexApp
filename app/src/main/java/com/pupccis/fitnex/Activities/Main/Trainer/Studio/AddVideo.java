@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,15 +28,10 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
-import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
-import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
-import com.pupccis.fitnex.Models.FitnessClass;
-import com.pupccis.fitnex.Models.PostVideo;
+import com.pupccis.fitnex.Model.DAO.PostVideoDAO;
+import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-
-import java.util.Date;
 
 public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //Private Layout Attributes

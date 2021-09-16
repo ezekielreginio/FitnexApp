@@ -1,7 +1,6 @@
-package com.pupccis.fitnex.Models.DAO;
+package com.pupccis.fitnex.Model.DAO;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -12,15 +11,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
-import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
-import com.pupccis.fitnex.Models.Program;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

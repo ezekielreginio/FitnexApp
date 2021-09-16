@@ -3,9 +3,7 @@ package com.pupccis.fitnex.Activities.Main.Trainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,24 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.API.globals.Global;
-import com.pupccis.fitnex.Models.DAO.ProgramDAO;
-import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Model.DAO.ProgramDAO;
+import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import java.util.HashMap;
 
 public class AddProgram extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private Animation rotateAnimation;

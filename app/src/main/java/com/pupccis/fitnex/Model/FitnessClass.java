@@ -1,7 +1,6 @@
-package com.pupccis.fitnex.Models;
+package com.pupccis.fitnex.Model;
 
 import com.google.firebase.database.Exclude;
-import com.google.type.DateTime;
 
 import java.io.Serializable;
 import java.util.HashMap;

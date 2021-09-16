@@ -23,14 +23,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Models.FitnessClass;
-import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;

@@ -1,7 +1,5 @@
 package com.pupccis.fitnex.Activities.SearchEngine.Fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,14 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.SearchEngineAdapter.TrainerSEAdapter;
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class TrainersFragment extends Fragment {

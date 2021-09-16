@@ -1,13 +1,10 @@
-package com.pupccis.fitnex.Models.DAO;
+package com.pupccis.fitnex.Model.DAO;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -15,7 +12,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,13 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.pupccis.fitnex.Models.PostVideo;
-import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Constants.UserConstants;
-
-import org.w3c.dom.Text;
 
 public class PostVideoDAO {
     private Uri videoUri;

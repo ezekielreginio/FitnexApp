@@ -1,6 +1,5 @@
-package com.pupccis.fitnex.Models.DAO;
+package com.pupccis.fitnex.Model.DAO;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Parcelable;
 import android.util.Log;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,9 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.VideoCommentsAdapter;
-import com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoPlayer;
-import com.pupccis.fitnex.Models.PostVideo;
-import com.pupccis.fitnex.Models.VideoComment;
+import com.pupccis.fitnex.Model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Constants.VideoCommentConstants;

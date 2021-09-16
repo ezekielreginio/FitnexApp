@@ -1,6 +1,4 @@
-package com.pupccis.fitnex.Models;
-
-import com.pupccis.fitnex.Models.DAO.PostVideoDAO;
+package com.pupccis.fitnex.Model;
 
 import java.io.Serializable;
 

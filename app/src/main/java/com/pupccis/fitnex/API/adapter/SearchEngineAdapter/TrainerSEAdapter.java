@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
-import com.pupccis.fitnex.Activities.SearchEngine.Fragment.TrainersFragment;
-import com.pupccis.fitnex.Activities.SearchEngine.SearchEngine;
-import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Models.FitnessClass;
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrainerSEAdapter extends RecyclerView.Adapter<TrainerSEAdapter.TrainerSEViewHolder>{

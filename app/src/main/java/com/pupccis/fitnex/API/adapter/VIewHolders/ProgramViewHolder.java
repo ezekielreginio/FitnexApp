@@ -1,8 +1,6 @@
 package com.pupccis.fitnex.API.adapter.VIewHolders;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
-import com.pupccis.fitnex.Models.DAO.ProgramDAO;
-import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Model.DAO.ProgramDAO;
+import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 

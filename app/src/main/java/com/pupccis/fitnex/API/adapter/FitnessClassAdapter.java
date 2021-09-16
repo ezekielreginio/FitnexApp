@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
-import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
-import com.pupccis.fitnex.Models.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Models.FitnessClass;
+import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.List;
-import java.util.Map;
 
 public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapter.FitnessClassViewHolder>{
 

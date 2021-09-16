@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.ProgramAdapter;
-import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;

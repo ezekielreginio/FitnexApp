@@ -1,6 +1,6 @@
 package com.pupccis.fitnex.Activities.VideoConferencing.listeners;
 
-import com.pupccis.fitnex.Models.User;
+import com.pupccis.fitnex.Model.User;
 
 public interface UsersListener {
 

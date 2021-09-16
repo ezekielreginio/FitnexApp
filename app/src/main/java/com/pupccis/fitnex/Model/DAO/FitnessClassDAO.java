@@ -1,23 +1,17 @@
-package com.pupccis.fitnex.Models.DAO;
+package com.pupccis.fitnex.Model.DAO;
 
-import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.Models.FitnessClass;
+import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
 import java.util.List;
