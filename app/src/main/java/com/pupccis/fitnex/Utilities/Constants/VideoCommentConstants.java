@@ -8,4 +8,7 @@ public class VideoCommentConstants {
     public static final String KEY_VIDEO_COMMENT_DATE_CREATED = "dateCreated";
     public static final String KEY_VIDEO_COMMENT = "comment";
     public static final String KEY_VIDEO_REPLIES = "reply";
+    public static final String KEY_VIDEO_COMMENT_TYPE = "type";
+    public static final String KEY_VIDEO_COMMENT_LIKES = "likes";
+    public static final String KEY_VIDEO_COMMENT_DISLIKES = "dislikes";
 }

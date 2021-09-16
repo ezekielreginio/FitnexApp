@@ -87,7 +87,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
 
     private void getUsers(){
         swipeRefreshLayout.setRefreshing(true);
-        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
+        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
 
         mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -137,7 +137,7 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
     private void sendFCMTokenToDatabase(String token){
         Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
+        mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
         Log.d("USer ID:", FirebaseAuth.getInstance().getCurrentUser().getUid());
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(VideoConferencingConstants.KEY_FCM_TOKEN).setValue(token);
         //DocumentReference documentReference = mDatabase.collection

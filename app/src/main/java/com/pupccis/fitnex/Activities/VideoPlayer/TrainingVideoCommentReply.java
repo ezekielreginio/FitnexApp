@@ -74,7 +74,8 @@ public class TrainingVideoCommentReply {
                             FirebaseAuth.getInstance().getUid(),
                             userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME),
                             System.currentTimeMillis(),
-                            editTextVideoCommentReply.getText().toString()
+                            editTextVideoCommentReply.getText().toString(),
+                            "reply"
                     )
                     .commentId(videoComment.getCommentId())
                     .initializeData()

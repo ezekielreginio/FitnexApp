@@ -10,13 +10,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Spinner;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
-import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -135,7 +132,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
 
                         if(task.isSuccessful()){
                             User user = new User(name, age, email, "trainee");
-                            FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
+                            FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user);
 

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -19,14 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
-import com.pupccis.fitnex.Activities.SearchEngine.SearchEngine;
-import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -105,7 +99,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful() && task.getResult() != null){
-                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS);
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             mDatabase.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override

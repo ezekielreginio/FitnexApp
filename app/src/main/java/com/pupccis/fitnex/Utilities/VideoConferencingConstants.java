@@ -3,7 +3,10 @@ package com.pupccis.fitnex.Utilities;
 import java.util.HashMap;
 
 public class VideoConferencingConstants {
-    public static final String KEY_COLLECTION_USERS = "users";
+    public static class Collections{
+        public static final String KEY_PARENT = "users";
+    }
+
     public static final String KEY_FULLNAME = "name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";

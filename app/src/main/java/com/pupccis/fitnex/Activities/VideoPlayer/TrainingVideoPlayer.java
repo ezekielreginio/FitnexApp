@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -223,6 +224,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         //RecyclerView Initialization
         videoComments = (RecyclerView) findViewById(R.id.recyclerViewVideoComments);
         videoComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        videoComments.setItemAnimator(null);
 
         //Comment RecyclerView and List Instance Read Query and Binding
         VideoCommentDAO videoCommentDAO = new VideoCommentDAO.VideoCommentDAOBuilder()
@@ -307,7 +309,8 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME),
                                 System.currentTimeMillis(),
-                                comment
+                                comment,
+                                "comment"
                             )
                         .initializeData()
                         .build();
