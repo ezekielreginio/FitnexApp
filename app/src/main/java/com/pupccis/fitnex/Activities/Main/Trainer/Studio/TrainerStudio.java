@@ -90,9 +90,18 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         postVideoViewModel.getLiveDataPostVideoUpdate().observe(this, new Observer<HashMap<String, Object>>() {
             @Override
             public void onChanged(HashMap<String, Object> stringObjectHashMap) {
-
-                trainerStudioVideosAdapter.notifyItemInserted(trainerStudioVideosAdapter.getItemCount());
                 Log.d("Observer Triggered", "triggered");
+
+                if(stringObjectHashMap.get("updateType").equals("insert")){
+                    Log.d("Update Registered", "Data Inserted");
+                    trainerStudioVideosAdapter.notifyItemInserted(trainerStudioVideosAdapter.getItemCount());
+                }
+
+                else if(stringObjectHashMap.get("updateType").equals("update")){
+                    Log.d("Update Registered", "Data Updated");
+                    trainerStudioVideosAdapter.notifyItemChanged((int)stringObjectHashMap.get("index"));
+                }
+
             }
         });
 

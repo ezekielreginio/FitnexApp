@@ -134,6 +134,7 @@ public class PostedVideosRepository {
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                boolean flag = true;
                 for(DocumentChange dc : snapshot.getDocumentChanges()){
                     PostVideo postVideo = new PostVideo
                             .PostVideoBuilder(
@@ -151,24 +152,42 @@ public class PostedVideosRepository {
                         data.put("postVideo", postVideo);
                     switch(dc.getType()){
                         case ADDED:
-
-                            Log.d("Data Added", dc.getDocument().getId());
-                            if(data.get("updateType") == null)
+                            flag = true;
+                            for(PostVideo postVideoItem : postVideoModels){
+                                if(postVideoItem.getPostVideoID().equals(postVideo.getPostVideoID()))
+                                    flag = false;
+                            }
+                            if(flag){
+                                Log.d("Data Added", dc.getDocument().getId());
+                                postVideoModels.add(postVideo);
                                 data.put("updateType", "insert");
-                            Log.d("Model Inserted","triggered");
-                            postVideoModels.add(postVideo);
-
+                                postVideoUpdate.postValue(data);
+                            }
+//
+//                            if(data.get("updateType") == null)
+//
+//                            Log.d("Model Inserted","triggered");
+//                            if(flag){
+//                                flag =false;
+//                                Log.d("Model Inserted","filtered");
+//                                postVideoModels.add(postVideo);
+//                            }
                             break;
                         case MODIFIED:
                             Log.d("Data Modified", dc.getDocument().getId());
+                            postVideoModels.get(dc.getNewIndex());
+                            postVideoModels.set(dc.getNewIndex(), postVideo);
+                            data.put("index", dc.getNewIndex());
                             data.put("updateType", "update");
+                            postVideoUpdate.postValue(data);
                             break;
                         case REMOVED:
                             break;
                     }
 
                 }
-                postVideoUpdate.postValue(data);
+                flag = true;
+
             }
         });
     }
