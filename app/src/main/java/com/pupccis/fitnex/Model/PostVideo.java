@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class PostVideo implements Serializable {
 
-    private final String videoTitle;
-    private final String category;
-    private final String description;
-    private final String trainerID;
+    private String videoTitle;
+    private String category;
+    private String description;
+    private String trainerID;
     private String videoURL;
     private String thumbnailURL;
     private String postVideoID;
@@ -22,6 +22,10 @@ public class PostVideo implements Serializable {
     private Uri videoUri, thumbnailUri;
     private int likes,dislikes;
     private long views, date_posted;
+
+    public PostVideo(){
+
+    }
 
     private PostVideo(PostVideoBuilder builder) {
         this.videoTitle = builder.videoTitle;

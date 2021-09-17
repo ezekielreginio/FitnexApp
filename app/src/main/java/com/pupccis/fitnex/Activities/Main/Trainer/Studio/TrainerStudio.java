@@ -34,13 +34,13 @@ import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
-import com.pupccis.fitnex.ViewModel.DataLoadListener;
 import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class TrainerStudio extends AppCompatActivity implements View.OnClickListener, DataLoadListener {
+public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
     private LinearLayout btnAddVideo;
     private ConstraintLayout btnSearch, containerEditDelete;
@@ -75,10 +75,26 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         //RecyclerViewAdapter
-        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoViewModel.getPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
+        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoViewModel.getLiveDataPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
         trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
 
+        //Observers
+        postVideoViewModel.getLiveDataPostVideos().observe(this, new Observer<ArrayList<PostVideo>>() {
+            @Override
+            public void onChanged(ArrayList<PostVideo> postVideos) {
+                trainerStudioVideosAdapter.notifyDataSetChanged();
+                postVideoViewModel.getLiveDataPostVideos().removeObserver(this::onChanged);
+            }
+        });
 
+        postVideoViewModel.getLiveDataPostVideoUpdate().observe(this, new Observer<HashMap<String, Object>>() {
+            @Override
+            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
+
+                trainerStudioVideosAdapter.notifyItemInserted(trainerStudioVideosAdapter.getItemCount());
+                Log.d("Observer Triggered", "triggered");
+            }
+        });
 
 
 //        Query query = null;
@@ -181,13 +197,4 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         }
     };
 
-    @Override
-    public void onDataLoaded() {
-        postVideoViewModel.getPostVideos().observe(this, new Observer<ArrayList<PostVideo>>() {
-            @Override
-            public void onChanged(ArrayList<PostVideo> postVideos) {
-                trainerStudioVideosAdapter.notifyDataSetChanged();
-            }
-        });
-    }
 }

@@ -32,10 +32,9 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.ViewModel.DataLoadListener;
 import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
 
-public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DataLoadListener {
+public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //Private Layout Attributes
     private EditText editTextVideoTitle, editTextVideoDescription;
     private ImageView btnClose;
@@ -211,8 +210,4 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    @Override
-    public void onDataLoaded() {
-
-    }
 }
