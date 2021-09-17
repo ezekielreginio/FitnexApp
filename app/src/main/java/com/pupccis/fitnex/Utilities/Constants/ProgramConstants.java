@@ -14,6 +14,7 @@ public class ProgramConstants {
     public static final String KEY_PROGRAM_SESSION_NUMBER = "sessionNumber";
     public static final String KEY_PROGRAM_DURATION = "duration";
     public static final String KEY_PROGRAM_TRAINER_ID = "trainerID";
+    public static final String KEY_PROGRAM_TRAINEES = "trainees";
 
     public static final String KEY_PROGRAM_CATEGORY_STRENGTH = "Strength";
     public static final String KEY_PROGRAM_CATEGORY_CARDIO = "Cardio";

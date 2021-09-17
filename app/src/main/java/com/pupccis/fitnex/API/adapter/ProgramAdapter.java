@@ -22,16 +22,17 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder>{
 
-    private List<Program> programs;
+    private ArrayList<Program> programs;
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
     private String access_type;
 
-    public ProgramAdapter(List<Program> programs, Context context, String access_type){
+    public ProgramAdapter(ArrayList<Program> programs, Context context, String access_type){
         this.programs = programs;
         this.context = context;
         this.access_type = access_type;

@@ -38,15 +38,15 @@ public class ProgramDAO {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 for (DataSnapshot dataSnapshot : task.getResult().getChildren()){
-                    Program program = new Program();
-                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                    programsList.add(program);
-                    Log.d("Name: ",program.getName());
-                    Log.d("List: ",programsList.toString());
+//                    Program program = new Program();
+//                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+//                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+//                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+//                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+//                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+//                    programsList.add(program);
+//                    Log.d("Name: ",program.getName());
+//                    Log.d("List: ",programsList.toString());
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+import com.pupccis.fitnex.ViewModel.ProgramViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +59,8 @@ public class ProgramsFragment extends Fragment {
 
     private List<Program> programs = new ArrayList<>();
     private DatabaseReference mDatabase;
+
+    private ProgramViewModel programViewModel;
 
     public ProgramsFragment() {
         // Required empty public constructor
@@ -88,44 +93,44 @@ public class ProgramsFragment extends Fragment {
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
 
-        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                programs.clear();
-                //DataSnapshot dataSnapshot : snapshot.getChildren()
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                    Program program = new Program();
-                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                    program.setProgramID(dataSnapshot.getKey());
-                    program.setTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-                    programs.add(program);
-
-
-                }
-                setAdapter();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-            void setAdapter(){
-                programAdapter = new ProgramAdapter(programs, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
-                programAdapter.notifyDataSetChanged();
-                programsRecyclerView.setAdapter(programAdapter);
-            }
-        });
+//        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                programs.clear();
+//                //DataSnapshot dataSnapshot : snapshot.getChildren()
+//
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//
+//                    Program program = new Program();
+//                    program.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+//                    program.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+//                    program.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+//                    program.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+//                    program.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+//                    program.setProgramID(dataSnapshot.getKey());
+//                    program.setTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+//                    programs.add(program);
+//
+//
+//                }
+//                setAdapter();
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//            void setAdapter(){
+//                programAdapter = new ProgramAdapter(programs, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+//                programAdapter.notifyDataSetChanged();
+//                programsRecyclerView.setAdapter(programAdapter);
+//            }
+//        });
 
 //        mDatabase.child(preferenceManager.getString(VideoConferencingConstants.KEY_USER_ID)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 //            @Override
@@ -153,9 +158,28 @@ public class ProgramsFragment extends Fragment {
 
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
+
+        //RecyclerView Initialization
         programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
         programsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         //options = new FirebaseRecyclerOptions.Builder<Program>().setQuery(ref, Program.class)
+
+        //ViewModel Instantiation
+        programViewModel = new ViewModelProvider(this).get(ProgramViewModel.class);
+        programViewModel.init(getActivity().getApplicationContext());
+
+        //RecyclerView Adapter
+        programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+        programsRecyclerView.setAdapter(programAdapter);
+
+        //Live Data Observers
+        programViewModel.getPrograms().observe(this, new Observer<ArrayList<Program>>() {
+            @Override
+            public void onChanged(ArrayList<Program> programs) {
+                programAdapter.notifyDataSetChanged();
+                programViewModel.getPrograms().removeObserver(this::onChanged);
+            }
+        });
     }
 
     @Override

@@ -86,20 +86,20 @@ public class ProgramsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         programList.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            Program programListContainer = new Program();
+                            //Program programListContainer = new Program();
 
-                            if (dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
-                                programListContainer.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-                                programListContainer.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-                                programListContainer.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-                                programListContainer.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-                                programListContainer.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-                                programList.add(programListContainer);
-                            }
+//                            if (dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
+//                                programListContainer.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
+//                                programListContainer.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
+//                                programListContainer.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
+//                                programListContainer.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
+//                                programListContainer.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+//                                programList.add(programListContainer);
+//                            }
                         }
-                        programAdapter = new ProgramAdapter(programList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
-                        programAdapter.notifyDataSetChanged();
-                        ProgramSERecyclerView.setAdapter(programAdapter);
+//                        programAdapter = new ProgramAdapter(programList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
+//                        programAdapter.notifyDataSetChanged();
+//                        ProgramSERecyclerView.setAdapter(programAdapter);
                     }
 
                     @Override

@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.DAO.ProgramDAO;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.ViewModel.ProgramViewModel;
 
 public class AddProgram extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private Animation rotateAnimation;
@@ -33,7 +35,7 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
     private Button addProgram;
 
     private Program program_intent;
-
+    private ProgramViewModel programViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,6 +64,10 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         addProgram = (Button) findViewById(R.id.buttonAddProgramButton);
         addProgram.setOnClickListener(this);
         closeButton.setOnClickListener(this);
+
+        //ViewModel Instantiation
+        programViewModel = new ViewModelProvider(this).get(ProgramViewModel .class);
+        programViewModel.init(getApplicationContext());
 
         if(program_intent != null){
             editName.setText(program_intent.getName());
@@ -92,19 +98,20 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 String name = editName.getText().toString();
                 String description = editDescription.getText().toString();
                 String category = "" + editCategory.getSelectedItemPosition();
-                //String category = editCategory.getText().toString();
                 String sessionNumber = editSessionNumber.getText().toString();
                 String duration = editDuration.getText().toString();
-                Program program = new Program(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Program program = new Program.Builder(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
+
                 if(program_intent != null){
-                    program.setTrainerID(program_intent.getTrainerID());
-                    program.setProgramID(program_intent.getProgramID());
-                    programDAO.updateProgram(program);
+                    //program.setTrainerID(program_intent.getTrainerID());
+                    //program.setProgramID(program_intent.getProgramID());
+                    //programDAO.updateProgram(program);
                     Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
-                    programDAO.createProgram(program);
+                    programViewModel.insertProgram(program);
+                    //programDAO.createProgram(program);
                     Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
                 }
 

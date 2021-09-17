@@ -7,36 +7,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Program implements Serializable {
-    private String name;
-    private String description;
-    private String category;
-    private String sessionNumber;
-    private String duration;
+    private final String name;
+    private final String description;
+    private final String category;
+    private final String sessionNumber;
+    private final String duration;
+    private final String trainerID;
+
     private String trainees;
     private String programID;
-    private String trainerID;
 
-    public Program() {
-    }
+    public Program(Builder builder) {
+        this.name = builder.name;
+        this.description = builder.description;
+        this.category = builder.category;
+        this.sessionNumber = builder.sessionNumber;
+        this.duration = builder.duration;
+        this.trainerID = builder.trainerID;
 
-    //Constructor for Creating a program
-    public Program(String name, String description, String category, String sessionNumber, String duration, String trainerID) {
-        program_init(name, description, category, sessionNumber, duration,trainerID, "0");
-    }
-
-    //Constructor w/ trainee count
-    public Program(String name, String description, String category, String sessionNumber, String duration, String trainerID, String trainees) {
-        program_init(name, description, category, sessionNumber, duration,trainerID, trainees);
-    }
-
-    private void program_init(String name, String description, String category, String sessionNumber, String duration,String trainerID, String trainees){
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.setSessionNumber(sessionNumber);
-        this.duration = duration;
-        this.trainerID = trainerID;
-        this.setTrainees(trainees);
+        this.trainees = builder.trainees;
+        this.programID = builder.programID;
     }
 
     @Exclude
@@ -48,68 +38,78 @@ public class Program implements Serializable {
         result.put("sessionNumber", sessionNumber);
         result.put("duration", duration);
         return result;
+
     }
+
+    //Getter Methods
+
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getSessionNumber() {
         return sessionNumber;
     }
 
-    public void setSessionNumber(String sessionNumber) {
-        this.sessionNumber = sessionNumber;
-    }
-
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public String getTrainerID() {
+        return trainerID;
     }
 
     public String getTrainees() {
         return trainees;
     }
 
-    public void setTrainees(String trainees) {
-        this.trainees = trainees;
-    }
-
     public String getProgramID() {
         return programID;
     }
 
-    public void setProgramID(String programID) {
-        this.programID = programID;
-    }
+    public static class Builder{
+        private final String name;
+        private final String description;
+        private final String category;
+        private final String sessionNumber;
+        private final String duration;
+        private final String trainerID;
 
-    public String getTrainerID() {
-        return this.trainerID;
-    }
+        private String trainees;
+        private String programID;
 
-    public void setTrainerID(String programTrainerID) {
-        this.trainerID = programTrainerID;
+        public Builder(String name, String description, String category, String sessionNumber, String duration, String trainerID){
+            this.name = name;
+            this.description = description;
+            this.category = category;
+            this.sessionNumber = sessionNumber;
+            this.duration = duration;
+            this.trainerID = trainerID;
+            this.trainees = "0";
+        }
+
+        public Builder setTrainees(String trainees) {
+            this.trainees = trainees;
+            return this;
+        }
+
+        public Builder setProgramID(String programID) {
+            this.programID = programID;
+            return this;
+        }
+
+        public Program build(){
+            Program program = new Program(this);
+            return program;
+        }
     }
 }
