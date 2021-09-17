@@ -74,6 +74,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
         trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+<<<<<<< HEAD
         //RecyclerViewAdapter
         trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoViewModel.getLiveDataPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
         trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
@@ -95,7 +96,11 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
                 Log.d("Observer Triggered", "triggered");
             }
         });
+=======
+        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoViewModel.getPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
+>>>>>>> parent of 330d067 (mvvm 9-16 7:53pm)
 
+        trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
 
 //        Query query = null;
 //        if(access_type.equals(GlobalConstants.KEY_ACCESS_TYPE_VIEW)){
@@ -197,4 +202,16 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         }
     };
 
+<<<<<<< HEAD
+=======
+    @Override
+    public void onNameLoaded() {
+        postVideoViewModel.getPostVideos().observe(this, new Observer<ArrayList<PostVideo>>() {
+            @Override
+            public void onChanged(ArrayList<PostVideo> postVideos) {
+                trainerStudioVideosAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+>>>>>>> parent of 330d067 (mvvm 9-16 7:53pm)
 }

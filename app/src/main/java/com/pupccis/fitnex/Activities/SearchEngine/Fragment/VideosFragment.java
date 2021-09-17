@@ -29,6 +29,7 @@ import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VideosFragment extends Fragment {
@@ -103,7 +104,7 @@ public class VideosFragment extends Fragment {
                                         dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).getValue().toString(),
                                         (long) dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_DATE_POSTED).getValue()
                                 )
-                                        .videoURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_URL).getValue().toString())
+                                        .videoUri(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_URL).getValue().toString())
                                         .thumbnailURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL).getValue().toString())
                                         .postVideoID(dataSnapshot.getKey())
                                         .build();

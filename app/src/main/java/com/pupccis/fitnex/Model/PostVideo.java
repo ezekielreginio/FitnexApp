@@ -1,12 +1,6 @@
 package com.pupccis.fitnex.Model;
 
-import android.net.Uri;
-
-import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostVideo implements Serializable {
 
@@ -17,9 +11,6 @@ public class PostVideo implements Serializable {
     private String videoURL;
     private String thumbnailURL;
     private String postVideoID;
-    private String thumbnailFiletype;
-    private String videoFiletype;
-    private Uri videoUri, thumbnailUri;
     private int likes,dislikes;
     private long views, date_posted;
 
@@ -35,14 +26,10 @@ public class PostVideo implements Serializable {
         this.videoURL = builder.videoURL;
         this.thumbnailURL = builder.thumbnailURL;
         this.postVideoID = builder.postVideoID;
-        this.thumbnailFiletype = builder.thumbnailFiletype;
-        this.videoFiletype = builder.videoFiletype;
         this.likes = builder.likes;
         this.dislikes = builder.dislikes;
         this.views = builder.views;
         this.date_posted = builder.date_posted;
-        this.videoUri = builder.videoUri;
-        this.thumbnailUri = builder.thumbnailUri;
     }
     public String getVideoTitle() {
         return videoTitle;
@@ -108,37 +95,6 @@ public class PostVideo implements Serializable {
         return date_posted;
     }
 
-    public Uri getVideoUri() {
-        return videoUri;
-    }
-
-    public Uri getThumbnailUri() {
-        return thumbnailUri;
-    }
-
-    public String getThumbnailFiletype() {
-        return thumbnailFiletype;
-    }
-
-    public String getVideoFiletype() {
-        return videoFiletype;
-    }
-
-    public Map<String, Object> map(){
-        Map<String, Object> video = new HashMap<>();
-        video.put(PostVideoConstants.KEY_POST_VIDEO_CATEGORY, this.category);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_DATE_POSTED, this.date_posted);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_DESCRIPTION, this.description);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_DISLIKES, this.dislikes);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_LIKES, this.likes);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL, this.thumbnailURL);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID, this.trainerID);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_TITLE, this.videoTitle);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_URL, this.videoURL);
-        video.put(PostVideoConstants.KEY_POST_VIDEO_VIEWS, this.views);
-        return video;
-    }
-
     public static class PostVideoBuilder{
 
         private String videoTitle;
@@ -148,9 +104,6 @@ public class PostVideo implements Serializable {
         private String videoURL;
         private String thumbnailURL;
         private String postVideoID;
-        private String thumbnailFiletype;
-        private String videoFiletype;
-        private Uri videoUri, thumbnailUri;
         private int likes,dislikes;
         private long views, date_posted;
 
@@ -166,33 +119,13 @@ public class PostVideo implements Serializable {
             this.date_posted = date_posted;
         }
 
-        public PostVideoBuilder videoURL(String videoURL){
+        public PostVideoBuilder videoUri(String videoURL){
             this.videoURL = videoURL;
             return this;
         }
 
         public PostVideoBuilder thumbnailURL(String thumbnailURL){
             this.thumbnailURL = thumbnailURL;
-            return this;
-        }
-
-        public PostVideoBuilder thumbnailFiletype(String thumbnailFiletype){
-            this.thumbnailFiletype = thumbnailFiletype;
-            return this;
-        }
-
-        public PostVideoBuilder videoFiletype(String videoFiletype){
-            this.videoFiletype = videoFiletype;
-            return this;
-        }
-
-        public PostVideoBuilder videoUri(Uri videoUri){
-            this.videoUri = videoUri;
-            return this;
-        }
-
-        public PostVideoBuilder thumbnailUri(Uri thumbnailUri){
-            this.thumbnailUri = thumbnailUri;
             return this;
         }
 

@@ -5,7 +5,6 @@ import static com.pupccis.fitnex.Utilities.Globals.RotateAnimation.rotateAnimati
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Intent;
@@ -29,10 +28,14 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.pupccis.fitnex.Model.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
+<<<<<<< HEAD
 import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
+=======
+>>>>>>> parent of 330d067 (mvvm 9-16 7:53pm)
 
 public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //Private Layout Attributes
@@ -42,9 +45,7 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
     private ConstraintLayout videoUploadContainer,videoThumbnailContainer;
     private VideoView videoVIewUploadedVideo;
     private ImageView videoThumbnail;
-    private Uri thumbnailUri;
-
-    private PostVideoViewModel postVideoViewModel;
+    private Uri imageUri;
 
     //Spinner Attribute
     private Spinner spinnerVideoCategory;
@@ -83,10 +84,6 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
 
         //Rotate Animation
         rotateAnimation(this, btnClose);
-
-        //ViewModel Instantiation
-        postVideoViewModel = new ViewModelProvider(AddVideo.this).get(PostVideoViewModel.class);
-        postVideoViewModel.init(AddVideo.this);
 
         //Event Bindings
         btnAddVideo.setOnClickListener(this);
@@ -150,27 +147,13 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
                 String videoTitle = editTextVideoTitle.getText().toString();
                 String videoDescription = editTextVideoDescription.getText().toString();
                 String videoCategory= spinnerVideoCategory.getSelectedItemPosition() + "";
-                String videoFiletype = getContentResolver().getType(videoUri);
-                String thumbnailFiletype = getContentResolver().getType(thumbnailUri);
+                String filetype = getContentResolver().getType(videoUri);
+                String thumbnailFiletype = getContentResolver().getType(imageUri);
                 Intent intent = new Intent(AddVideo.this, TrainerStudio.class);
-
+                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri, thumbnailFiletype, imageUri, getApplicationContext()).build();
+                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid(), System.currentTimeMillis()).initializeData().build();
                 Toast.makeText(this, "Uploading the Video, Please Wait...", Toast.LENGTH_SHORT).show();
-                PostVideo postVideo = new PostVideo.PostVideoBuilder(
-                            videoTitle,
-                            videoCategory,
-                            videoDescription,
-                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                            System.currentTimeMillis())
-                        .videoFiletype(videoFiletype)
-                        .videoUri(videoUri)
-                        .thumbnailUri(thumbnailUri)
-                        .thumbnailFiletype(thumbnailFiletype)
-                        .initializeData()
-                        .build();
-                postVideoViewModel.uploadVideo(postVideo);
-//                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri, thumbnailFiletype, imageUri, getApplicationContext()).build();
-//                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid(), System.currentTimeMillis()).initializeData().build();
-//                postVideoDAO.postVideo(postVideo);
+                postVideoDAO.postVideo(postVideo);
 
                 overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
                 intent.putExtra("access_type", GlobalConstants.KEY_ACCESS_TYPE_OWNER);
@@ -194,8 +177,8 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
         else if(requestCode == 102 && resultCode==RESULT_OK){
             videoThumbnailContainer.setVisibility(View.GONE);
             videoThumbnail.setVisibility(View.VISIBLE);
-            thumbnailUri = data.getData();
-            videoThumbnail.setImageURI(thumbnailUri);
+            imageUri = data.getData();
+            videoThumbnail.setImageURI(imageUri);
         }
     }
 
@@ -209,5 +192,8 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 330d067 (mvvm 9-16 7:53pm)
 }
