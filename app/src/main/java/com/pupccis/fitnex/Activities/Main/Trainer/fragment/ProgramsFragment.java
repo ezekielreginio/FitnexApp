@@ -169,7 +169,7 @@ public class ProgramsFragment extends Fragment {
         programViewModel.init(getActivity().getApplicationContext());
 
         //RecyclerView Adapter
-        programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+        programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), programViewModel, GlobalConstants.KEY_ACCESS_TYPE_OWNER);
         programsRecyclerView.setAdapter(programAdapter);
 
         //Live Data Observers

@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.Repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -55,7 +57,6 @@ public class ProgramsRepository {
                             documentSnapshot.get(ProgramConstants.KEY_PROGRAM_TRAINER_ID).toString()
                         )
                         .setProgramID(documentSnapshot.getId())
-                        .setTrainees(documentSnapshot.get(ProgramConstants.KEY_PROGRAM_TRAINEES).toString())
                         .build();
                 programModels.add(program);
             }
@@ -65,5 +66,14 @@ public class ProgramsRepository {
 
     public void insertProgram(Program program) {
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document().set(program.toMap());
+    }
+
+    public void updateProgram(Program updatedProgram) {
+        Log.d("Program update name", updatedProgram.getName());
+        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(updatedProgram.getProgramID()).update(updatedProgram.toMap());
+    }
+
+    public void deleteProgram(String programID){
+        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).delete();
     }
 }

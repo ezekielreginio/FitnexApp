@@ -1,12 +1,14 @@
 package com.pupccis.fitnex.Model;
 
 import com.google.firebase.database.Exclude;
+import com.pupccis.fitnex.API.globals.Mapper;
+import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Program implements Serializable {
+public class Program implements Serializable, Mapper {
     private final String name;
     private final String description;
     private final String category;
@@ -29,7 +31,7 @@ public class Program implements Serializable {
         this.programID = builder.programID;
     }
 
-    @Exclude
+    @Override
     public Map<String, Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("name", name);
@@ -37,13 +39,13 @@ public class Program implements Serializable {
         result.put("category", category);
         result.put("sessionNumber", sessionNumber);
         result.put("duration", duration);
+
+        result.put(ProgramConstants.KEY_PROGRAM_TRAINER_ID, trainerID);
         return result;
 
     }
 
     //Getter Methods
-
-
     public String getName() {
         return name;
     }
@@ -76,13 +78,15 @@ public class Program implements Serializable {
         return programID;
     }
 
+
+
     public static class Builder{
         private final String name;
         private final String description;
         private final String category;
         private final String sessionNumber;
         private final String duration;
-        private final String trainerID;
+        private String trainerID;
 
         private String trainees;
         private String programID;
@@ -97,6 +101,16 @@ public class Program implements Serializable {
             this.trainees = "0";
         }
 
+        public Builder (Program program){
+            this.name = program.getName();
+            this.description = program.getDescription();
+            this.category = program.getCategory();
+            this.sessionNumber = program.getSessionNumber();
+            this.duration = program.getDuration();
+            this.trainerID = program.getTrainerID();
+            this.trainees = program.getTrainees();
+        }
+
         public Builder setTrainees(String trainees) {
             this.trainees = trainees;
             return this;
@@ -107,9 +121,15 @@ public class Program implements Serializable {
             return this;
         }
 
+        public Builder setTrainerID(String trainerID){
+            this.trainerID = trainerID;
+            return this;
+        }
+
         public Program build(){
             Program program = new Program(this);
             return program;
         }
     }
+
 }

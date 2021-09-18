@@ -34,4 +34,12 @@ public class ProgramViewModel extends ViewModel {
     public void insertProgram(Program program){
         ProgramsRepository.getInstance().insertProgram(program);
     }
+
+    public void updateProgram(Program updatedProgram) {
+        ProgramsRepository.getInstance().updateProgram(updatedProgram);
+    }
+
+    public void deleteProgram(String programID){
+        ProgramsRepository.getInstance().deleteProgram(programID);
+    }
 }
