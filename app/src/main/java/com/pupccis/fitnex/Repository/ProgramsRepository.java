@@ -119,7 +119,7 @@ public class ProgramsRepository {
                                 Log.d("Index in Model", programModels.indexOf(programItem)+"");
                                 data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_DELETE);
                                 data.put("index", programModels.indexOf(programItem));
-                                programModels.remove(programModels.indexOf(programItem));
+                                programModels.remove(dc.getOldIndex());
                                 programUpdate.postValue(data);
                                 break;
                             }
