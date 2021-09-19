@@ -163,15 +163,6 @@ public class PostedVideosRepository {
                                 data.put("updateType", "insert");
                                 postVideoUpdate.postValue(data);
                             }
-//
-//                            if(data.get("updateType") == null)
-//
-//                            Log.d("Model Inserted","triggered");
-//                            if(flag){
-//                                flag =false;
-//                                Log.d("Model Inserted","filtered");
-//                                postVideoModels.add(postVideo);
-//                            }
                             break;
                         case MODIFIED:
                             Log.d("Data Modified", dc.getDocument().getId());

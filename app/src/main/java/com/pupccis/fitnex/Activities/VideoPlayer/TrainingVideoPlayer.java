@@ -111,11 +111,11 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         buttonCloseCommentsSection.setOnClickListener(this);
 
         //Load Video Data to Context
-        PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
+        //PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
 
         //DateUtils.getRelativeTimeSpanString();
         textViewVideoPlayerTitle.setText(postVideo.getVideoTitle());
-        PostVideoDAO.incrementViews(postVideo.getPostVideoID());
+        //PostVideoDAO.incrementViews(postVideo.getPostVideoID());
 
         //Video Url
         Uri videoUrl = Uri.parse(postVideo.getVideoURL());

@@ -30,13 +30,13 @@ import java.util.List;
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder>{
 
-    private ArrayList<Program> programs;
+    private ArrayList<Object> programs;
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
     private String access_type;
     private ProgramViewModel programViewModel;
 
-    public ProgramAdapter(ArrayList<Program> programs, Context context, ProgramViewModel programViewModel, String access_type){
+    public ProgramAdapter(ArrayList<Object> programs, Context context, ProgramViewModel programViewModel, String access_type){
         this.programs = programs;
         this.context = context;
         this.access_type = access_type;
@@ -57,7 +57,8 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     @Override
     public void onBindViewHolder(@NonNull ProgramViewHolder holder, int position) {
-        holder.setProgramData(programs.get(position));
+
+        holder.setProgramData((Program) programs.get(position));
     }
 
     @Override

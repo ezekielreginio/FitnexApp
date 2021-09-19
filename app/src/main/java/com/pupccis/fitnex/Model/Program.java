@@ -1,23 +1,29 @@
 package com.pupccis.fitnex.Model;
 
-import com.google.firebase.database.Exclude;
-import com.pupccis.fitnex.API.globals.Mapper;
+import com.pupccis.fitnex.API.globals.Observer;
+import com.pupccis.fitnex.Repository.ProgramsRepository;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Program implements Serializable, Mapper {
-    private final String name;
-    private final String description;
-    private final String category;
-    private final String sessionNumber;
-    private final String duration;
-    private final String trainerID;
+public class Program implements Serializable, Observer {
+    private String name;
+    private String description;
+    private String category;
+    private String sessionNumber;
+    private String duration;
+    private String trainerID;
 
     private String trainees;
     private String programID;
+
+    private static Program instance;
+
+    public Program(){
+
+    }
 
     public Program(Builder builder) {
         this.name = builder.name;
@@ -44,6 +50,30 @@ public class Program implements Serializable, Mapper {
         return result;
 
     }
+
+    @Override
+    public Program map(Map<String, Object> data){
+        instance = new Program();
+        instance.name = data.get(ProgramConstants.KEY_PROGRAM_NAME).toString();
+        instance.description = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
+        instance.category = data.get(ProgramConstants.KEY_PROGRAM_CATEGORY).toString();
+        instance.sessionNumber = data.get(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).toString();
+        instance.duration = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
+        instance.programID = data.get(ProgramConstants.KEY_PROGRAM_ID).toString();
+        instance.trainerID = data.get(ProgramConstants.KEY_PROGRAM_TRAINER_ID).toString();
+        return instance;
+    }
+
+    @Override
+    public String getKey() {
+        return ProgramConstants.KEY_PROGRAM_ID;
+    }
+
+    @Override
+    public String getId() {
+        return this.programID;
+    }
+
 
     //Getter Methods
     public String getName() {

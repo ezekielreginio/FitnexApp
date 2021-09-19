@@ -173,6 +173,16 @@ public class ProgramsFragment extends Fragment {
         programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), programViewModel, GlobalConstants.KEY_ACCESS_TYPE_OWNER);
         programsRecyclerView.setAdapter(programAdapter);
 
+        programViewModel.getPrograms().observe(getActivity(), new Observer<ArrayList<Object>>() {
+            @Override
+            public void onChanged(ArrayList<Object> objects) {
+                Log.d("It worked", "worked");
+                programAdapter.notifyDataSetChanged();
+                programViewModel.getPrograms().removeObserver(this::onChanged);
+            }
+        });
+
+
         //Live Data Observers
         programViewModel.getLiveDataProgramUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
             @Override

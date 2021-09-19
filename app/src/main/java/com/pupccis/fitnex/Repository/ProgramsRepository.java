@@ -26,10 +26,10 @@ import java.util.HashMap;
 
 public class ProgramsRepository {
     //Private Attributes
-    private ArrayList<Program> programModels = new ArrayList<>();
+    private ArrayList<Object> programModels = new ArrayList<>();
 
     //Mutable Live Data
-    private MutableLiveData<ArrayList<Program>> program = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Object>> program = new MutableLiveData<>();
     private MutableLiveData<HashMap<String, Object>> programUpdate = new MutableLiveData<>();
 
     //Static Attributes
@@ -43,7 +43,7 @@ public class ProgramsRepository {
         return instance;
     }
 
-    public  MutableLiveData<ArrayList<Program>> getPrograms(){
+    public  MutableLiveData<ArrayList<Object>> getPrograms(){
         loadPrograms();
         program.setValue(programModels);
         return program;
@@ -101,9 +101,12 @@ public class ProgramsRepository {
                 switch (dc.getType()){
                     case ADDED:
                         Log.d("ADDED Raised", "triggered");
-                        for(Program programItem : programModels)
-                            if(programItem.getProgramID().equals(program.getProgramID()))
+                        for(Object programItem : programModels){
+                            Program prog = (Program) programItem;
+                            if(prog.getProgramID().equals(program.getProgramID()))
                                 flag = false;
+                        }
+
                         if (flag){
                             Log.d("Added Item Index", dc.getNewIndex()+"");
                             programModels.add(dc.getNewIndex(), program);
@@ -115,8 +118,9 @@ public class ProgramsRepository {
                         break;
                     case REMOVED:
                         Log.d("REMOVED RAISED", "triggered");
-                        for(Program programItem : programModels){
-                            if(programItem.getProgramID().equals(program.getProgramID())){
+                        for(Object programItem : programModels){
+                            Program prog = (Program) programItem;
+                            if(prog.getProgramID().equals(program.getProgramID())){
                                 Log.d("Pumasok sa IF", "triggered");
                                 Log.d("Old Index", dc.getOldIndex()+"");
                                 Log.d("New Index", dc.getNewIndex()+"");
@@ -131,11 +135,11 @@ public class ProgramsRepository {
 
                         break;
                     case MODIFIED:
-//                        Log.d("Update New Index", dc.getNewIndex()+"");
-//                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
-//                        data.put("index", dc.getNewIndex());
-//                        programModels.set(dc.getNewIndex(), program);
-//                        programUpdate.postValue(data);
+                        Log.d("Update New Index", dc.getNewIndex()+"");
+                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
+                        data.put("index", dc.getNewIndex());
+                        programModels.set(dc.getNewIndex(), program);
+                        programUpdate.postValue(data);
                         break;
                 }
 
