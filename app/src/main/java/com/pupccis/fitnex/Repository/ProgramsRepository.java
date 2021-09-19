@@ -105,34 +105,37 @@ public class ProgramsRepository {
                             if(programItem.getProgramID().equals(program.getProgramID()))
                                 flag = false;
                         if (flag){
-                            programModels.add(program);
+                            Log.d("Added Item Index", dc.getNewIndex()+"");
+                            programModels.add(dc.getNewIndex(), program);
+                            //programModels.add(program);
                             data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_INSERT);
+                            data.put("index", dc.getNewIndex());
                             programUpdate.postValue(data);
                         }
                         break;
                     case REMOVED:
-                        Log.d("REMOVED RAISED", "triggered");
-                        for(Program programItem : programModels){
-                            if(programItem.getProgramID().equals(program.getProgramID())){
-                                Log.d("Pumasok sa IF", "triggered");
-                                Log.d("Old Index", dc.getOldIndex()+"");
-                                Log.d("New Index", dc.getNewIndex()+"");
-                                Log.d("Index in Model", programModels.indexOf(programItem)+"");
-                                data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_DELETE);
-                                data.put("index", programModels.indexOf(programItem));
-                                programModels.remove(dc.getOldIndex());
-                                programUpdate.postValue(data);
-                                break;
-                            }
-                        }
+//                        Log.d("REMOVED RAISED", "triggered");
+//                        for(Program programItem : programModels){
+//                            if(programItem.getProgramID().equals(program.getProgramID())){
+//                                Log.d("Pumasok sa IF", "triggered");
+//                                Log.d("Old Index", dc.getOldIndex()+"");
+//                                Log.d("New Index", dc.getNewIndex()+"");
+//                                Log.d("Index in Model", programModels.indexOf(programItem)+"");
+//                                data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_DELETE);
+//                                data.put("index", programModels.indexOf(programItem));
+//                                programModels.remove(dc.getOldIndex());
+//                                programUpdate.postValue(data);
+//                                break;
+//                            }
+//                        }
 
                         break;
                     case MODIFIED:
-                        Log.d("Update New Index", dc.getNewIndex()+"");
-                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
-                        data.put("index", dc.getNewIndex());
-                        programModels.set(dc.getNewIndex(), program);
-                        programUpdate.postValue(data);
+//                        Log.d("Update New Index", dc.getNewIndex()+"");
+//                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
+//                        data.put("index", dc.getNewIndex());
+//                        programModels.set(dc.getNewIndex(), program);
+//                        programUpdate.postValue(data);
                         break;
                 }
 

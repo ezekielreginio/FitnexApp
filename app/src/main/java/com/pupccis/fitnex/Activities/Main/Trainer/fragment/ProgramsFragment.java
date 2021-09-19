@@ -178,7 +178,7 @@ public class ProgramsFragment extends Fragment {
             @Override
             public void onChanged(HashMap<String, Object> stringObjectHashMap) {
                 if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
-                    programAdapter.notifyItemInserted(programAdapter.getItemCount());
+                    programAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
                 else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
                     programAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
                 else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
