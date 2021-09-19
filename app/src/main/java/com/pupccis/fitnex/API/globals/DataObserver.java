@@ -88,6 +88,7 @@ public class DataObserver {
                         }
                         break;
                     case MODIFIED:
+                        Log.d("Modify", "Modify Triggered");
                         data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
                         data.put("index", dc.getNewIndex());
                         objectModels.set(dc.getNewIndex(), observer.map(documentData));
@@ -95,12 +96,14 @@ public class DataObserver {
                         break;
                     case REMOVED:
                         for(Object item : objectModels){
+                            Log.d("Delete", "Delete Triggered");
                             Observer mappedItem = (Observer) item;
                             if(mappedItem.getId().equals(dc.getDocument().getId())){
+                                objectModels.remove(dc.getOldIndex());
                                 data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_DELETE);
                                 data.put("index", dc.getOldIndex());
-                                objectModels.remove(dc.getOldIndex());
                                 mutableLiveData.postValue(data);
+                                break;
                             }
                         }
                         break;
