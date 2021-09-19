@@ -116,11 +116,11 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
                 int category = fitnessClassCategory.getSelectedItemPosition();
 
                 Date currentTime = calendar.getTime();
-                FitnessClass fitnessClass = new FitnessClass(name, description, category,  timeStart, timeEnd, sessionNo, duration, currentTime.toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                FitnessClass fitnessClass = new FitnessClass.Builder(name, description, category, timeStart, timeEnd, sessionNo, duration).setDateCreated(currentTime.toString()).setClassTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
 
                 if(fitness_intent != null){
-                    fitnessClass.setClassID(fitness_intent.getClassID());
-                    fitnessClass.setClassTrainerID(fitness_intent.getClassTrainerID());
+//                    fitnessClass.setClassID(fitness_intent.getClassID());
+//                    fitnessClass.setClassTrainerID(fitness_intent.getClassTrainerID());
                     Log.d("Category", fitnessClass.getCategory()+"");
                     fitnessClassDAO.updateClass(fitnessClass);
                     Toast.makeText(this, "Fitness Class Successfully Updated", Toast.LENGTH_SHORT).show();

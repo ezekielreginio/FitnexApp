@@ -173,7 +173,7 @@ public class ProgramsFragment extends Fragment {
         programsRecyclerView.setAdapter(programAdapter);
 
         //Live Data Observers
-        programViewModel.getPrograms().observe(this, new Observer<ArrayList<Program>>() {
+        programViewModel.getPrograms().observe(getActivity(), new Observer<ArrayList<Program>>() {
             @Override
             public void onChanged(ArrayList<Program> programs) {
                 programAdapter.notifyDataSetChanged();

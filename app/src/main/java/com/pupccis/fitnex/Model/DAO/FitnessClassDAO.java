@@ -38,14 +38,14 @@ public class FitnessClassDAO {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 for(DataSnapshot dataSnapshot : task.getResult().getChildren()){
-                    FitnessClass fitnessClass = new FitnessClass();
-                    fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
-                    fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
-                    fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
-                    fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
-                    fitnessClass.setDateCreated(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DATE_CREATED).getValue().toString());
-                    fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
-                    fitnessClassList.add(fitnessClass);
+                   // FitnessClass fitnessClass = new FitnessClass();
+//                    fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
+//                    fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
+//                    fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
+//                    fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
+//                    fitnessClass.setDateCreated(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DATE_CREATED).getValue().toString());
+//                    fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
+                    //fitnessClassList.add(fitnessClass);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

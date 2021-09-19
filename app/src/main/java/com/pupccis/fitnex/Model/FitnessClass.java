@@ -8,30 +8,29 @@ import java.util.Map;
 
 public class FitnessClass implements Serializable {
 
-    private String timeStart;
-    private String timeEnd;
-    private String className;
-    private String sessionNo;
-    private String dateCreated;
-    private String classTrainerID;
-    private String description;
+    private final String className;
+    private final String description;
+    private final int category;
+    private final String timeStart;
+    private final String timeEnd;
+    private final String duration;
+    private final String classTrainerID;
+    private final String sessionNo;
+    private final String dateCreated;
+
     private String classID;
-    private String duration;
-    private int category;
+    private String trainees;
 
-    public FitnessClass() {
-    }
-
-    public FitnessClass(String className,String description, int category, String timeStart, String timeEnd, String sessionNo, String duration, String dateCreated, String classTrainerID) {
-        this.className = className;
-        this.category = category;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
-        this.sessionNo = sessionNo;
-        this.dateCreated = dateCreated;
-        this.description = description;
-        this.classTrainerID = classTrainerID;
-        this.duration = duration;
+    public FitnessClass(Builder builder) {
+        this.className = builder.className;
+        this.category = builder.category;
+        this.timeStart = builder.timeStart;
+        this.timeEnd = builder.timeEnd;
+        this.sessionNo = builder.sessionNo;
+        this.dateCreated = builder.dateCreated;
+        this.description = builder.description;
+        this.classTrainerID = builder.classTrainerID;
+        this.duration = builder.duration;
     }
     @Exclude
     public Map<String, Object> toMap(){
@@ -89,45 +88,51 @@ public class FitnessClass implements Serializable {
         return category;
     }
 
-    //Fitness Class Setters
+    public static class Builder{
+        private final String className;
+        private final String description;
+        private final int category;
+        private final String timeStart;
+        private final String timeEnd;
+        private final String duration;
+        private final String sessionNo;
 
-    public void setTimeStart(String timeStart) {
-        this.timeStart = timeStart;
-    }
+        private String classTrainerID;
+        private String dateCreated;
+        private String classID;
+        private String trainees;
 
-    public void setTimeEnd(String timeEnd) {
-        this.timeEnd = timeEnd;
-    }
+        public Builder(String className, String description, int category, String timeStart, String timeEnd, String sessionNumber, String duration){
+            this.className = className;
+            this.description = description;
+            this.category = category;
+            this.timeStart = timeStart;
+            this.timeEnd = timeEnd;
+            this.duration = duration;
+            this.sessionNo = sessionNumber;
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
+        }
 
-    public void setSessionNo(String sessionNo) {
-        this.sessionNo = sessionNo;
-    }
+        public Builder setClassID(String classID){
+            this.classID = classID;
+            return this;
+        }
+        public Builder setTrainees(String trainees){
+            this.trainees = trainees;
+            return this;
+        }
+        public Builder setDateCreated(String currentTime){
+            this.dateCreated = currentTime;
+            return this;
+        }
+        public Builder setClassTrainerID(String trainer_id){
+            this.classTrainerID = trainer_id;
+            return this;
+        }
+        public FitnessClass build(){
+            FitnessClass fitnessClass = new FitnessClass(this);
+            return fitnessClass;
+        }
 
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public void setClassTrainerID(String classTrainerID) {
-        this.classTrainerID = classTrainerID;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setClassID(String classID) {
-        this.classID = classID;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
     }
 }

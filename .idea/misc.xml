@@ -42,7 +42,7 @@
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_comment.xml" value="0.5" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.23489583333333333" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.1956043956043956" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.42168674698795183" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/spinner_item.xml" value="0.15942028985507245" />
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_fitnex_register.xml" value="0.28940217391304346" />
@@ -59,6 +59,7 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_fitnex_logo_outline.xml" value="0.1" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_message_icon.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_side_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_class.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_program.xml" value="0.536" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_fitnex_register.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_fitnex_trainer_application.xml" value="0.4" />

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -26,6 +29,7 @@ import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
 
     private List<FitnessClass> fitnessClasses = new ArrayList<>();
     private DatabaseReference mDatabase;
+    private FitnessClassViewModel fitnessClassViewModel;
     public ClassFragment() {
         // Required empty public constructor
     }
@@ -84,46 +89,72 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        userPreferences = new UserPreferences(getActivity().getApplicationContext());
-
-        Query query = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).orderByChild(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fitnessClasses.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    FitnessClass fitnessClass = new FitnessClass();
-                    fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
-                    fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
-                    fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
-                    fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
-                    fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
-                    fitnessClass.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
-                    fitnessClass.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
-                    fitnessClass.setClassID(dataSnapshot.getKey());
-                    fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-                    fitnessClasses.add(fitnessClass);
-
-
-                }
-
-                fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
-                fitnessClassAdapter.notifyDataSetChanged();
-                fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
+//        userPreferences = new UserPreferences(getActivity().getApplicationContext());
+//
+//        Query query = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).orderByChild(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID).equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                fitnessClasses.clear();
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    FitnessClass fitnessClass = new FitnessClass.Builder(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString()
+//                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString()
+//                            ,(int)dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue()
+//                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString()
+//                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString()
+//                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString()
+//                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString()
+//                            ,userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).build();
+////                    fitnessClass.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
+////                    fitnessClass.setTimeStart(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString());
+////                    fitnessClass.setTimeEnd(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).getValue().toString());
+////                    fitnessClass.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
+////                    fitnessClass.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
+////                    fitnessClass.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
+////                    fitnessClass.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
+////                    fitnessClass.setClassID(dataSnapshot.getKey());
+////                    fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
+//                    fitnessClasses.add(fitnessClass);
+//
+//
+//                }
+//
+//                fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+//                fitnessClassAdapter.notifyDataSetChanged();
+//                fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//        });
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        //Recyclerview initialization
         fitnessClassRecyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
+        fitnessClassRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        //ViewModel Instantiation
+        fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
+        fitnessClassViewModel.init(getActivity().getApplicationContext());
+
+        //RecyclerView Adapter
+        fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext(),GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+        fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
+
+        //Live Data Observers
+        fitnessClassViewModel.getFitnessClasses().observe(getActivity(), new Observer<ArrayList<FitnessClass>>() {
+            @Override
+            public void onChanged(ArrayList<FitnessClass> fitnessClasses) {
+                fitnessClassAdapter.notifyDataSetChanged();
+                fitnessClassViewModel.getFitnessClasses().removeObserver(this::onChanged);
+            }
+        });
     }
 
     @Override

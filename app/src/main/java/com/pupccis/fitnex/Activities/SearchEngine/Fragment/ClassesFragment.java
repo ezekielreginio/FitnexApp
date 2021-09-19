@@ -85,15 +85,15 @@ public class ClassesFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         fitnessClassList.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            FitnessClass fitnessClassListContainer = new FitnessClass();
+                            //FitnessClass fitnessClassListContainer = new FitnessClass();
 
                             if (dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
-                                fitnessClassListContainer.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
-                                fitnessClassListContainer.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
-                                fitnessClassListContainer.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
-                                fitnessClassListContainer.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
-                                fitnessClassListContainer.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
-                                fitnessClassList.add(fitnessClassListContainer);
+//                                fitnessClassListContainer.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
+//                                fitnessClassListContainer.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
+//                                fitnessClassListContainer.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
+//                                fitnessClassListContainer.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
+//                                fitnessClassListContainer.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
+                               // fitnessClassList.add(fitnessClassListContainer);
                             }
                         }
                         fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
