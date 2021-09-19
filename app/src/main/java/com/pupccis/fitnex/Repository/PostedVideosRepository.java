@@ -175,7 +175,6 @@ public class PostedVideosRepository {
                             break;
                         case MODIFIED:
                             Log.d("Data Modified", dc.getDocument().getId());
-                            postVideoModels.get(dc.getNewIndex());
                             postVideoModels.set(dc.getNewIndex(), postVideo);
                             data.put("index", dc.getNewIndex());
                             data.put("updateType", "update");

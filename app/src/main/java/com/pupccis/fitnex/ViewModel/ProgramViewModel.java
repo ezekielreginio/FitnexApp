@@ -11,9 +11,11 @@ import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Repository.ProgramsRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProgramViewModel extends ViewModel {
     MutableLiveData<ArrayList<Program>> programs;
+    private MutableLiveData<HashMap<String, Object>> programUpdate = new MutableLiveData<>();
 
     //Private Attributes
     private ProgramsRepository programsRepository;
@@ -25,10 +27,15 @@ public class ProgramViewModel extends ViewModel {
         }
         this.context = context;
         programs = ProgramsRepository.getInstance().getPrograms();
+        programUpdate = ProgramsRepository.getInstance().updatePrograms();
     }
 
     public MutableLiveData<ArrayList<Program>> getPrograms(){
         return programs;
+    }
+
+    public MutableLiveData<HashMap<String, Object>> getLiveDataProgramUpdate(){
+        return programUpdate;
     }
 
     public void insertProgram(Program program){

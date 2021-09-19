@@ -32,6 +32,7 @@ import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.ViewModel.ProgramViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -173,11 +174,18 @@ public class ProgramsFragment extends Fragment {
         programsRecyclerView.setAdapter(programAdapter);
 
         //Live Data Observers
-        programViewModel.getPrograms().observe(this, new Observer<ArrayList<Program>>() {
+        programViewModel.getLiveDataProgramUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
             @Override
-            public void onChanged(ArrayList<Program> programs) {
-                programAdapter.notifyDataSetChanged();
-                programViewModel.getPrograms().removeObserver(this::onChanged);
+            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
+                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                    programAdapter.notifyItemInserted(programAdapter.getItemCount());
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+                    programAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+                    Log.d("Removed", "removed");
+                    programAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+                }
+
             }
         });
     }
