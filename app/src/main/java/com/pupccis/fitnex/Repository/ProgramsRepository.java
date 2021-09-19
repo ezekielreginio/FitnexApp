@@ -100,12 +100,14 @@ public class ProgramsRepository {
                         .build();
                 switch (dc.getType()){
                     case ADDED:
+                        Log.d("ADDED Raised", "triggered");
                         for(Program programItem : programModels)
                             if(programItem.getProgramID().equals(program.getProgramID()))
                                 flag = false;
                         if (flag){
                             programModels.add(program);
                             data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_INSERT);
+                            data.put("index", dc.getNewIndex());
                             programUpdate.postValue(data);
                         }
                         break;
