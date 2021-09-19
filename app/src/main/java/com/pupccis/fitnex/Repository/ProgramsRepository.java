@@ -107,7 +107,6 @@ public class ProgramsRepository {
                         if (flag){
                             programModels.add(program);
                             data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_INSERT);
-                            data.put("index", dc.getNewIndex());
                             programUpdate.postValue(data);
                         }
                         break;
