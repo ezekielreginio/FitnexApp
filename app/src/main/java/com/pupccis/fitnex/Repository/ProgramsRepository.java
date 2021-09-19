@@ -131,11 +131,11 @@ public class ProgramsRepository {
 
                         break;
                     case MODIFIED:
-                        Log.d("Update New Index", dc.getNewIndex()+"");
-                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
-                        data.put("index", dc.getNewIndex());
-                        programModels.set(dc.getNewIndex(), program);
-                        programUpdate.postValue(data);
+//                        Log.d("Update New Index", dc.getNewIndex()+"");
+//                        data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_UPDATE);
+//                        data.put("index", dc.getNewIndex());
+//                        programModels.set(dc.getNewIndex(), program);
+//                        programUpdate.postValue(data);
                         break;
                 }
 
