@@ -59,7 +59,7 @@ public class ProgramsRepository {
     }
 
     private void loadPrograms() {
-        Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid()).orderBy(ProgramConstants.KEY_PROGRAM_NAME);
         query.get().addOnCompleteListener(task -> {
             programModels.clear();
             for(DocumentSnapshot documentSnapshot: task.getResult().getDocuments()){
