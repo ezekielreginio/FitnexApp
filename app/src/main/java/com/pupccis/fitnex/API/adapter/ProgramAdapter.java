@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.API.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
@@ -21,21 +23,24 @@ import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.ViewModel.ProgramViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder>{
 
-    private ArrayList<Program> programs;
+    private ArrayList<Object> programs;
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
     private String access_type;
+    private ProgramViewModel programViewModel;
 
-    public ProgramAdapter(ArrayList<Program> programs, Context context, String access_type){
+    public ProgramAdapter(ArrayList<Object> programs, Context context, ProgramViewModel programViewModel, String access_type){
         this.programs = programs;
         this.context = context;
         this.access_type = access_type;
+        this.programViewModel = programViewModel;
     }
 
     @NonNull
@@ -52,7 +57,8 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
 
     @Override
     public void onBindViewHolder(@NonNull ProgramViewHolder holder, int position) {
-        holder.setProgramData(programs.get(position));
+
+        holder.setProgramData((Program) programs.get(position));
     }
 
     @Override
@@ -135,7 +141,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    programDAO.deleteProgram(program);
+                                    programViewModel.deleteProgram(program.getProgramID());
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:

@@ -79,6 +79,7 @@ dependencies {
 
     //FirebaseUI
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
 
     //Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }

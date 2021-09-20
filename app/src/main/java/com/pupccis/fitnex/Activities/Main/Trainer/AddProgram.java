@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -103,6 +104,11 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 Program program = new Program.Builder(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
 
                 if(program_intent != null){
+                    Program updatedProgram = new Program.Builder(program)
+                            .setProgramID(program_intent.getProgramID())
+                            .setTrainerID(program_intent.getTrainerID())
+                            .build();
+                    programViewModel.updateProgram(updatedProgram);
                     //program.setTrainerID(program_intent.getTrainerID());
                     //program.setProgramID(program_intent.getProgramID());
                     //programDAO.updateProgram(program);

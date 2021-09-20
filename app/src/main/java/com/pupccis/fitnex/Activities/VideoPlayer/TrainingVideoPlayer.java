@@ -5,6 +5,7 @@ import static com.pupccis.fitnex.API.NumberFormatter.numberFormatter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +49,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.API.adapter.VideoCommentsAdapter;
+import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Model.DAO.PostVideoDAO;
 import com.pupccis.fitnex.Model.DAO.VideoCommentDAO;
 import com.pupccis.fitnex.Model.PostVideo;
@@ -55,6 +57,7 @@ import com.pupccis.fitnex.Model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
 
 import java.util.Calendar;
 
@@ -74,10 +77,16 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     private Calendar calendar = Calendar.getInstance();
     private PostVideo postVideo;
     private VideoCommentsAdapter videoCommentsAdapter;
+    private PostVideoViewModel postVideoViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        //ViewModel Instantiation
+        postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
+        postVideoViewModel.init(TrainingVideoPlayer.this);
+
 
         //Extra Intent
         userPreferences = new UserPreferences(getApplicationContext());
@@ -111,11 +120,11 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         buttonCloseCommentsSection.setOnClickListener(this);
 
         //Load Video Data to Context
-        PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
+        //PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
 
         //DateUtils.getRelativeTimeSpanString();
         textViewVideoPlayerTitle.setText(postVideo.getVideoTitle());
-        PostVideoDAO.incrementViews(postVideo.getPostVideoID());
+        //PostVideoDAO.incrementViews(postVideo.getPostVideoID());
 
         //Video Url
         Uri videoUrl = Uri.parse(postVideo.getVideoURL());
@@ -210,11 +219,11 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         videoComments.setItemAnimator(null);
 
         //Comment RecyclerView and List Instance Read Query and Binding
-        VideoCommentDAO videoCommentDAO = new VideoCommentDAO.VideoCommentDAOBuilder()
-                .context(TrainingVideoPlayer.this)
-                .recyclerViewVideoComments(videoComments)
-                .build();
-        videoCommentDAO.queryCommentsList(postVideo.getPostVideoID(), "comment");
+        //VideoCommentDAO videoCommentDAO = new VideoCommentDAO.VideoCommentDAOBuilder()
+//                .context(TrainingVideoPlayer.this)
+//                .recyclerViewVideoComments(videoComments)
+//                .build();
+        //videoCommentDAO.queryCommentsList(postVideo.getPostVideoID(), "comment");
     }
 
     @Override
