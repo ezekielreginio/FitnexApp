@@ -21,6 +21,7 @@ import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
 
 import java.util.ArrayList;
 
@@ -130,7 +131,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    fitnessClassDAO.deleteClass(fitnessClass);
+                                    FitnessClassViewModel.deleteFitnessClass(fitnessClass.getClassID());
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:

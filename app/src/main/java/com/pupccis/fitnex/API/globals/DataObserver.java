@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class DataObserver {
                 }
                 documentData.put(observer.getKey(), documentSnapshot.getId());
                 objectModels.add(observer.map(documentData));
+                Log.d("Document ID", documentSnapshot.getId());
             }
 
             objects.postValue(objectModels);

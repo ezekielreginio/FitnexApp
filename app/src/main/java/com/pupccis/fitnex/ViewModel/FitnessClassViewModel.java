@@ -37,10 +37,17 @@ public class FitnessClassViewModel extends ViewModel {
     }
 
     public void insertFitnessClass(FitnessClass fitnessClass) {
-        fitnessClassesRepository.inseertFitnessClass(fitnessClass);
+        FitnessClassesRepository.insertFitnessClass(fitnessClass);
     }
 
     public MutableLiveData<HashMap<String, Object>> getLiveDataFitnessClassesUpdate(){
         return fitnessClassesUpdate;
+    }
+
+    public static void updateFitnessClass(FitnessClass fitnessClass){
+        FitnessClassesRepository.updateFitnessClass(fitnessClass);
+    }
+    public static void deleteFitnessClass(String fitnessClassId){
+        FitnessClassesRepository.deleteFitnessClass(fitnessClassId);
     }
 }

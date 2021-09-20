@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
+import static com.pupccis.fitnex.ViewModel.FitnessClassViewModel.updateFitnessClass;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -126,10 +128,9 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                 FitnessClass fitnessClass = new FitnessClass.Builder(name, description, category, timeStart, timeEnd, sessionNo, duration).setDateCreated(currentTime.toString()).setClassTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
 
                 if(fitness_intent != null){
-//                    fitnessClass.setClassID(fitness_intent.getClassID());
-//                    fitnessClass.setClassTrainerID(fitness_intent.getClassTrainerID());
+                    fitnessClass.setClassID(fitness_intent.getClassID());
                     Log.d("Category", fitnessClass.getCategory()+"");
-                    fitnessClassDAO.updateClass(fitnessClass);
+                    updateFitnessClass(fitnessClass);
                     Toast.makeText(this, "Fitness Class Successfully Updated", Toast.LENGTH_SHORT).show();
                     closeForm();
                 }

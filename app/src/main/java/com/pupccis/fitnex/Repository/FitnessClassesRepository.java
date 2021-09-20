@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.Repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -84,7 +86,15 @@ public class FitnessClassesRepository {
         });
     }
 
-    public static void inseertFitnessClass(FitnessClass fitnessClass) {
+    public static void insertFitnessClass(FitnessClass fitnessClass) {
         db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document().set(fitnessClass.toMap());
+    }
+
+    public static void updateFitnessClass(FitnessClass fitnessClass){
+        Log.d("Program ID", fitnessClass.getClassID());
+        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(fitnessClass.getClassID()).update(fitnessClass.toMap());
+    }
+    public static void deleteFitnessClass(String fitnessClassId){
+        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(fitnessClassId).delete();
     }
 }

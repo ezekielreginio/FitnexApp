@@ -50,6 +50,8 @@ public class FitnessClass implements Serializable, Observer {
         result.put("timeEnd", timeEnd);
         result.put("duration", duration);
         result.put("category", category);
+
+        result.put(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, classTrainerID);
         return result;
     }
 
@@ -62,8 +64,9 @@ public class FitnessClass implements Serializable, Observer {
         instance.sessionNo = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).toString();
         instance.timeEnd = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).toString();
         instance.duration = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).toString();
-        instance.category = (int) data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY);
+        instance.category = Integer.parseInt(data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).toString());
         instance.classID = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_ID).toString();
+        instance.classTrainerID = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID).toString();
         return instance;
     }
 
@@ -78,7 +81,6 @@ public class FitnessClass implements Serializable, Observer {
     }
 
     //Fitness Class Getters
-
 
     public String getTimeStart() {
         return timeStart;
@@ -118,6 +120,10 @@ public class FitnessClass implements Serializable, Observer {
 
     public int getCategory() {
         return category;
+    }
+
+    public void setClassID(String classID) {
+        this.classID = classID;
     }
 
     public static class Builder{
