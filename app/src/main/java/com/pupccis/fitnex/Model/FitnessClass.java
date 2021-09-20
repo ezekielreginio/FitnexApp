@@ -1,25 +1,33 @@
 package com.pupccis.fitnex.Model;
 
 import com.google.firebase.database.Exclude;
+import com.pupccis.fitnex.API.globals.DataObserver;
+import com.pupccis.fitnex.API.globals.Observer;
+import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FitnessClass implements Serializable {
+public class FitnessClass implements Serializable, Observer {
 
-    private final String className;
-    private final String description;
-    private final int category;
-    private final String timeStart;
-    private final String timeEnd;
-    private final String duration;
-    private final String classTrainerID;
-    private final String sessionNo;
-    private final String dateCreated;
+    private  String className;
+    private  String description;
+    private  int category;
+    private  String timeStart;
+    private  String timeEnd;
+    private  String duration;
+    private  String classTrainerID;
+    private  String sessionNo;
+    private  String dateCreated;
 
     private String classID;
     private String trainees;
+    private static FitnessClass instance;
+    public FitnessClass(){
+
+    }
 
     public FitnessClass(Builder builder) {
         this.className = builder.className;
@@ -32,7 +40,7 @@ public class FitnessClass implements Serializable {
         this.classTrainerID = builder.classTrainerID;
         this.duration = builder.duration;
     }
-    @Exclude
+    @Override
     public Map<String, Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("className", className);
@@ -43,6 +51,30 @@ public class FitnessClass implements Serializable {
         result.put("duration", duration);
         result.put("category", category);
         return result;
+    }
+
+    @Override
+    public FitnessClass map(Map<String, Object> data) {
+        instance = new FitnessClass();
+        instance.className = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).toString();
+        instance.description = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).toString();
+        instance.timeStart = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).toString();
+        instance.sessionNo = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).toString();
+        instance.timeEnd = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_END).toString();
+        instance.duration = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).toString();
+        instance.category = (int) data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY);
+        instance.classID = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_ID).toString();
+        return instance;
+    }
+
+    @Override
+    public String getKey() {
+        return FitnessClassConstants.KEY_FITNESS_CLASSES_ID;
+    }
+
+    @Override
+    public String getId() {
+        return this.classID;
     }
 
     //Fitness Class Getters

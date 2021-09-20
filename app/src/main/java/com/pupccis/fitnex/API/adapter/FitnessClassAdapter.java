@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +16,22 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.Activities.Main.Trainer.AddClass;
+import com.pupccis.fitnex.Activities.Main.Trainer.AddFitnessClass;
 import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapter.FitnessClassViewHolder>{
 
-    private List<FitnessClass> fitnessClasses;
+    private ArrayList<Object> fitnessClasses;
     private Context context;
     private FitnessClassDAO fitnessClassDAO;
     private String access_type;
 
-    public FitnessClassAdapter(List<FitnessClass> fitnessClasses, Context context, String access_type){
+    public FitnessClassAdapter(ArrayList<Object> fitnessClasses, Context context, String access_type){
         this.fitnessClasses = fitnessClasses;
         this.context = context;
         this.access_type = access_type;
@@ -51,7 +52,9 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FitnessClassViewHolder holder, int position) {
-        holder.setFitnessClassData(fitnessClasses.get(position));
+        Log.d("Bindviewholder", "Executed");
+        holder.setFitnessClassData((FitnessClass) fitnessClasses.get(position));
+
     }
 
     @Override
@@ -113,7 +116,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             fitnessClassUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent= new Intent(context, AddClass.class);
+                    Intent intent= new Intent(context, AddFitnessClass.class);
                     intent.putExtra("fitness", fitnessClass);
                     context.startActivity(intent);
                 }

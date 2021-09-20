@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -144,15 +146,30 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         fitnessClassViewModel.init(getActivity().getApplicationContext());
 
         //RecyclerView Adapter
-        fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext(),GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassViewModel.getFitnessClasses().getValue(), getContext(),GlobalConstants.KEY_ACCESS_TYPE_OWNER);
         fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
 
         //Live Data Observers
-        fitnessClassViewModel.getFitnessClasses().observe(getActivity(), new Observer<ArrayList<FitnessClass>>() {
+        fitnessClassViewModel.getFitnessClasses().observe(getActivity(), new Observer<ArrayList<Object>>() {
             @Override
-            public void onChanged(ArrayList<FitnessClass> fitnessClasses) {
+            public void onChanged(ArrayList<Object> fitnessClasses) {
+                Log.d("Fitness Class Read", "read");
                 fitnessClassAdapter.notifyDataSetChanged();
                 fitnessClassViewModel.getFitnessClasses().removeObserver(this::onChanged);
+            }
+        });
+
+        fitnessClassViewModel.getLiveDataFitnessClassesUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
+            @Override
+            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
+                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                    fitnessClassAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+                    fitnessClassAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+                    Log.d("Removed", "removed");
+                    fitnessClassAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+                }
             }
         });
     }

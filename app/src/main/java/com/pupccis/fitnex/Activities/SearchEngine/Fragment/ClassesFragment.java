@@ -96,9 +96,9 @@ public class ClassesFragment extends Fragment {
                                // fitnessClassList.add(fitnessClassListContainer);
                             }
                         }
-                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
-                        fitnessClassAdapter.notifyDataSetChanged();
-                        fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
+//                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
+//                        fitnessClassAdapter.notifyDataSetChanged();
+//                        fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
                     }
 
                     @Override

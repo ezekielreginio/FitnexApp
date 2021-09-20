@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
+import com.pupccis.fitnex.API.globals.DataObserver;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
@@ -26,8 +27,9 @@ public class FitnessClassesRepository {
     //Private attributes
     private ArrayList<FitnessClass> fitnessClassesModels = new ArrayList<>();
 
+
     //Mutable Live data
-    MutableLiveData<ArrayList<FitnessClass>> fitnessClass = new MutableLiveData<>();
+
 
     //Static attributes
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -40,12 +42,18 @@ public class FitnessClassesRepository {
         return instance;
     }
 
-    public MutableLiveData<ArrayList<FitnessClass>> getFitnessClasses() {
-        loadFitnessClasses();
-        fitnessClass.setValue(fitnessClassesModels);
-
-        return fitnessClass;
+    public static Query getFitnessClassesQuery(){
+        Query queryFitnessClass = db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).whereEqualTo(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        //fitnessClass = dataObserver.getObjects(queryFitnessClass, new FitnessClass());
+        return queryFitnessClass;
     }
+
+//    public MutableLiveData<ArrayList<FitnessClass>> getFitnessClasses() {
+//        loadFitnessClasses();
+//        fitnessClass.setValue(fitnessClassesModels);
+//
+//        return fitnessClass;
+//    }
 
     private void loadFitnessClasses() {
 
@@ -74,5 +82,9 @@ public class FitnessClassesRepository {
                 fitnessClassesModels.add(fitnessClass);
             }
         });
+    }
+
+    public static void inseertFitnessClass(FitnessClass fitnessClass) {
+        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document().set(fitnessClass.toMap());
     }
 }

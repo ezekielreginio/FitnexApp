@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class ProgramViewModel extends ViewModel {
     MutableLiveData<ArrayList<Object>> programs;
     private MutableLiveData<HashMap<String, Object>> programUpdate = new MutableLiveData<>();
-
+    
     //Private Attributes
     private ProgramsRepository programsRepository;
     private Context context;

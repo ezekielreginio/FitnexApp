@@ -2,6 +2,7 @@ package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -26,13 +27,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class AddClass extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener{
+public class AddFitnessClass extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener{
     private Animation rotateAnimation;
     private ImageView imageView;
     private EditText editTimeStart, editTimeEnd, editName, editSessionNumber, editDescription, editDuration;
@@ -44,10 +46,15 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
     private FitnessClassDAO fitnessClassDAO = new FitnessClassDAO();
     private Calendar calendar = Calendar.getInstance();
     private FitnessClass fitness_intent;
+    private FitnessClassViewModel fitnessClassViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ViewModel Instantiation
+        fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
+        fitnessClassViewModel.init(getApplicationContext());
+
         //Extra Intent
         fitness_intent = (FitnessClass) getIntent().getSerializableExtra("fitness");
 
@@ -127,7 +134,8 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
                     closeForm();
                 }
                 else{
-                    fitnessClassDAO.createClass(fitnessClass);
+                    //fitnessClassDAO.createClass(fitnessClass);
+                    fitnessClassViewModel.insertFitnessClass(fitnessClass);
                     Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
                     closeForm();
                 }
@@ -145,10 +153,10 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
         switch(view.getId()) {
             case (R.id.editTextTimeStart):
                 showTimeDialog(editTimeStart, 0);
-                Toast.makeText(AddClass.this, "time start click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFitnessClass.this, "time start click", Toast.LENGTH_SHORT).show();
                 break;
             case(R.id.editTextTimeEnd):
-                Toast.makeText(AddClass.this, "time end click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFitnessClass.this, "time end click", Toast.LENGTH_SHORT).show();
                 showTimeDialog(editTimeEnd, 1);
                 break;
         }
@@ -156,7 +164,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
 
     private void closeForm() {
         Log.d("close", "close");
-        Intent intent = new Intent(AddClass.this, TrainerDashboard.class);
+        Intent intent = new Intent(AddFitnessClass.this, TrainerDashboard.class);
         intent.putExtra("page", 1);
         overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
         startActivity(intent);
@@ -166,7 +174,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener,
 
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int mins = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(AddClass.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(AddFitnessClass.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 Calendar c = Calendar.getInstance();

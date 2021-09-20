@@ -1,18 +1,23 @@
 package com.pupccis.fitnex.ViewModel;
 
+import static com.pupccis.fitnex.Repository.FitnessClassesRepository.getFitnessClassesQuery;
+
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.pupccis.fitnex.API.globals.DataObserver;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Repository.FitnessClassesRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FitnessClassViewModel extends ViewModel {
-    MutableLiveData<ArrayList<FitnessClass>> fitnessClasses;
-
+    private MutableLiveData<ArrayList<Object>> fitnessClasses;
+    private MutableLiveData<HashMap<String, Object>> fitnessClassesUpdate = new MutableLiveData<>();
+    private DataObserver dataObserver = new DataObserver();
     //Private attributes
     private FitnessClassesRepository fitnessClassesRepository;
     private Context context;
@@ -22,9 +27,20 @@ public class FitnessClassViewModel extends ViewModel {
             return;
         }
         this.context = context;
-        fitnessClasses = FitnessClassesRepository.getInstance().getFitnessClasses();
+        //fitnessClasses = FitnessClassesRepository.getInstance().getFitnessClasses();
+        fitnessClasses = dataObserver.getObjects(getFitnessClassesQuery(), new FitnessClass());
+
+        fitnessClassesUpdate = dataObserver.getLiveData(getFitnessClassesQuery(), new FitnessClass());
     }
-    public MutableLiveData<ArrayList<FitnessClass>> getFitnessClasses(){
+    public MutableLiveData<ArrayList<Object>> getFitnessClasses(){
         return fitnessClasses;
+    }
+
+    public void insertFitnessClass(FitnessClass fitnessClass) {
+        fitnessClassesRepository.inseertFitnessClass(fitnessClass);
+    }
+
+    public MutableLiveData<HashMap<String, Object>> getLiveDataFitnessClassesUpdate(){
+        return fitnessClassesUpdate;
     }
 }

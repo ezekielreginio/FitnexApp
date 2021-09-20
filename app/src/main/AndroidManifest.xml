@@ -33,7 +33,7 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.AddClass"
+            android:name=".Activities.Main.Trainer.AddFitnessClass"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

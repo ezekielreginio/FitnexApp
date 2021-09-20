@@ -3,6 +3,7 @@ package com.pupccis.fitnex.Utilities.Constants;
 public class FitnessClassConstants {
 
     public static final String KEY_COLLECTION_FITNESS_CLASSES = "fitness_classes";
+    public static final String KEY_FITNESS_CLASSES_ID = "classID";
     public static final String KEY_COLLECTION_FITNESS_CLASSES_LIST = "fitness_classes_list";
 
     public static final String KEY_FITNESS_CLASSES_NAME = "className";

@@ -86,7 +86,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                     intent = new Intent(TrainerDashboard.this, AddProgram.class);
                 }
                 else if(pos==1){
-                    intent = new Intent(TrainerDashboard.this, AddClass.class);
+                    intent = new Intent(TrainerDashboard.this, AddFitnessClass.class);
                 }
                 else if(pos==2){
                     intent = new Intent(TrainerDashboard.this, FitnexRegister.class);
