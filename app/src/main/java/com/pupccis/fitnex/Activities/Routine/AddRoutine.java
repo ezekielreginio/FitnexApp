@@ -29,16 +29,21 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
     private LinearLayout linearLayoutAddRoutineStrengthFields;
     private Routine routine;
     private RoutineViewModel routineViewModel;
+    private Routine routine_intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_routine);
+
+        //Extra intent
+         routine_intent = (Routine) getIntent().getSerializableExtra("routine");
 
         //ViewModel Instantiation
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
 
         //Extra intents
         program = (Program) getIntent().getSerializableExtra("program");
+        Log.d("+=========================", program.getCategory());
         //Layout binding
         editTextAddRoutineName = findViewById(R.id.editTextAddRoutineName);
         editTextAddRoutineCategory = findViewById(R.id.editTextAddRoutineCategory);
@@ -62,6 +67,14 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
             linearLayoutAddRoutineStrengthFields.setVisibility(View.GONE);
         }
 
+        if(routine_intent != null){
+            editTextAddRoutineName.setText(routine_intent.getName());
+            editTextAddRoutineDuration.setText(routine_intent.getDuration()+"");
+            editTextAddRoutineReps.setText(routine_intent.getReps()+"");
+            editTextAddRoutineSets.setText(routine_intent.getSets()+"");
+            editTextAddRoutineWeights.setText(routine_intent.getWeight()+"");
+            buttonAddRoutineButton.setText("Update Routine");
+        }
 
     }
 
@@ -75,7 +88,12 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                     String reps = editTextAddRoutineReps.getText().toString();
                     String sets = editTextAddRoutineSets.getText().toString();
                     String weight = editTextAddRoutineWeights.getText().toString();
-                   routine = new Routine.Builder(routineName).reps(Integer.parseInt(reps)).sets(Integer.parseInt(sets)).weight(Double.parseDouble(weight)).build();
+                   routine = new Routine.Builder(routineName)
+                           .reps(Integer.parseInt(reps))
+                           .sets(Integer.parseInt(sets))
+                           .weight(Double.parseDouble(weight))
+                           .programID(program.getProgramID())
+                           .build();
                 }else{
                     String duration = editTextAddRoutineDuration.getText().toString();
                   routine = new Routine.Builder(routineName)
@@ -85,7 +103,13 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                     Log.d("Category", program.getCategory().toString());
                 }
              //   routineDAO.createRoutine(routine, program);
-                routineViewModel.insertRoutine(routine);
+                if(routine_intent != null){
+                    routine.setRoutineID(routine_intent.getId());
+                    routineViewModel.updateRoutine(routine);
+                }
+
+                else
+                    routineViewModel.insertRoutine(routine);
 
                 break;
 
