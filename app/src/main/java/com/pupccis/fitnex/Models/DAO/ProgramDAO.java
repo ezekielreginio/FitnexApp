@@ -81,7 +81,7 @@ public class ProgramDAO {
                 .setValue("subscribed");
 
 
-        FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
+        FirebaseDatabase.getInstance().getReference(GlobalConstants.KEY_COLLECTION_USERS)
                 .child(user_id)
                 .child(ProgramConstants.KEY_PROGRAM_USER_SUBSCRIBED)
                 .child(program.getProgramID())
