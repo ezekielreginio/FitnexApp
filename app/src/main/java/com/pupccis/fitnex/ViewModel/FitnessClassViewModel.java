@@ -15,9 +15,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FitnessClassViewModel extends ViewModel {
+    //MutableLiveData attributes
     private MutableLiveData<ArrayList<Object>> fitnessClasses;
     private MutableLiveData<HashMap<String, Object>> fitnessClassesUpdate = new MutableLiveData<>();
+
+    //Data Observer
     private DataObserver dataObserver = new DataObserver();
+
     //Private attributes
     private FitnessClassesRepository fitnessClassesRepository;
     private Context context;

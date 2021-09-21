@@ -2,6 +2,8 @@ package com.pupccis.fitnex.Activities.Routine;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,8 +29,10 @@ import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;
+import com.pupccis.fitnex.ViewModel.RoutineViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +47,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private List<Routine> routineList = new ArrayList<>();
     private RoutineAdapter routineAdapter;
     private RecyclerView routinePage;
+    private RoutineViewModel routineViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,11 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
         //Extra intents
         program = (Program) getIntent().getSerializableExtra("program");
-
+        Log.d("+=========================", program.getProgramID());
+        //ViewModel instantiation
+        routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
+        routineViewModel.init(getApplicationContext(), program.getProgramID());
+        Log.d("Query Routine", routineViewModel.getRoutines().getValue().toString());
         //Layout binding
         AddRoutineButton = findViewById(R.id.AddRoutineButton);
         textViewRoutinePageProgramName = findViewById(R.id.textViewRoutinePageProgramName);
@@ -64,6 +73,33 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
 
         textViewRoutinePageProgramName.setText(program.getName());
+
+        //Routine Adapter
+        routineAdapter = new RoutineAdapter(routineViewModel.getRoutines().getValue(), "owner", program.getCategory());
+        routinePage.setAdapter(routineAdapter);
+
+        routineViewModel.getRoutines().observe(this, new Observer<ArrayList<Object>>() {
+            @Override
+            public void onChanged(ArrayList<Object> objects) {
+                routineAdapter.notifyDataSetChanged();
+                routineViewModel.getRoutines().removeObserver(this::onChanged);
+                initObserver();
+            }
+
+
+        });
+        private void initObserver() {
+            routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
+                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                    routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+                    routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+                    Log.d("Removed", "removed");
+                    routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+                }
+            });
+        };
 
 
 

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
+import com.pupccis.fitnex.Activities.Routine.RoutinePage;
 import com.pupccis.fitnex.Model.DAO.ProgramDAO;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
@@ -69,7 +71,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     class ProgramViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout programContainer;
         LinearLayout layoutProgramInfo;
-        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration;
+        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration, textViewRoutine;
         Button programUpdate, programDelete, programView, programJoin;
 
         public ProgramViewHolder(@NonNull View itemView) {
@@ -88,6 +90,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             programDelete = itemView.findViewById(R.id.buttonProgramDelete);
             programJoin = itemView.findViewById(R.id.buttonProgramJoin);
             programView = itemView.findViewById(R.id.buttonProgramView);
+            textViewRoutine = itemView.findViewById(R.id.textViewRoutine);
         }
 
         void setProgramData(Program program){
@@ -130,6 +133,13 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                     intent.putExtra("program", program);
                     context.startActivity(intent);
                 }
+            });
+            textViewRoutine.setOnClickListener(view -> {
+                Intent intent = new Intent(context, RoutinePage.class);
+                intent.putExtra("program", program);
+                //intent.putExtra("access_type", access_type);
+                Log.d("Category from program", program.getCategory().toString());
+                context.startActivity(intent);
             });
 
             programDelete.setOnClickListener(new View.OnClickListener() {

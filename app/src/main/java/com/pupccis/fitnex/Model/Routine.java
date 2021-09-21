@@ -10,12 +10,14 @@ import java.util.Map;
 public class Routine implements Serializable, Observer {
 
     private String name;
+    private String routineID;
+    private String programID;
     private int sets;
     private int reps;
     private int duration;
     private double weight;
-    private String routineID;
     private Routine instance;
+
 
     public Routine(){
 
@@ -27,6 +29,7 @@ public class Routine implements Serializable, Observer {
         this.reps = builder.reps;
         this.duration = builder.duration;
         this.weight = builder.weight;
+        this.programID = builder.programID;
     }
 
 
@@ -38,6 +41,7 @@ public class Routine implements Serializable, Observer {
         result.put("reps", reps);
         result.put("duration", duration);
         result.put("weight", weight);
+
         return result;
     }
 
@@ -49,7 +53,7 @@ public class Routine implements Serializable, Observer {
         instance.reps = Integer.parseInt(data.get(RoutineConstants.KEY_ROUTINE_REPS).toString());
         instance.duration = Integer.parseInt(data.get(RoutineConstants.KEY_ROUTINE_DURATION).toString());
         instance.weight = Double.parseDouble(data.get(RoutineConstants.KEY_ROUTINE_WEIGHT).toString());
-
+        instance.routineID = data.get(RoutineConstants.KEY_ROUTINE_ID).toString();
         return instance;
     }
 
@@ -58,12 +62,12 @@ public class Routine implements Serializable, Observer {
         return RoutineConstants.KEY_ROUTINE_ID;
     }
 
-    //Routine Getters
     @Override
     public String getId() {
         return this.routineID;
     }
 
+    //Routine Getters
     public String getName() {
         return name;
     }
@@ -84,6 +88,10 @@ public class Routine implements Serializable, Observer {
         return weight;
     }
 
+    public String getProgramID() {
+        return programID;
+    }
+
     public void setRoutineID(String routineID) {
         this.routineID = routineID;
     }
@@ -95,6 +103,7 @@ public class Routine implements Serializable, Observer {
         private int duration;
         private double weight;
         private String routineID;
+        private String programID;
 
         public Builder(String name){
             this.name = name;
@@ -119,6 +128,10 @@ public class Routine implements Serializable, Observer {
 
         public Builder routineID(String routineID){
             this.routineID = routineID;
+            return this;
+        }
+        public Builder programID(String programID){
+            this.programID = programID;
             return this;
         }
 

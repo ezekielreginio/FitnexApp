@@ -18,10 +18,10 @@ import com.pupccis.fitnex.R;
 import java.util.List;
 
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineViewHolder> {
-    private List<Routine> routines;
+    private List<Object> routines;
     private String access_type, category;
 
-    public RoutineAdapter(List<Routine> routines, String access_type, String category) {
+    public RoutineAdapter(List<Object> routines, String access_type, String category) {
         this.routines = routines;
         this.access_type = access_type;
         this.category = category;
@@ -41,14 +41,14 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
     @Override
     public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
-        holder.setRoutineData(routines.get(position));
+        holder.setRoutineData((Routine) routines.get(position));
     }
 
     @Override
     public int getItemCount() {
         return routines.size();
     }
-    public void setList(List<Routine> routineList){
+    public void setList(List<Object> routineList){
         this.routines = routineList;
         notifyDataSetChanged();
     }

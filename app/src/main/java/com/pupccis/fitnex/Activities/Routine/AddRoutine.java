@@ -78,7 +78,10 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                    routine = new Routine.Builder(routineName).reps(Integer.parseInt(reps)).sets(Integer.parseInt(sets)).weight(Double.parseDouble(weight)).build();
                 }else{
                     String duration = editTextAddRoutineDuration.getText().toString();
-                  routine = new Routine.Builder(routineName).duration(Integer.parseInt(duration)).build();
+                  routine = new Routine.Builder(routineName)
+                          .duration(Integer.parseInt(duration))
+                          .programID(program.getProgramID())
+                          .build();
                     Log.d("Category", program.getCategory().toString());
                 }
              //   routineDAO.createRoutine(routine, program);

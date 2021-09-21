@@ -72,17 +72,21 @@ public class DataObserver {
                 for(Map.Entry<String, Object> entry: map.entrySet()){
                     documentData.put(entry.getKey(), dc.getDocument().get(entry.getKey()));
                 }
+                Log.d(observer.getKey(), dc.getDocument().getId());
                 documentData.put(observer.getKey(), dc.getDocument().getId());
                 switch (dc.getType()){
                     case ADDED:
                         Log.d("ADDED Raised", "triggered");
                         for(Object item : objectModels){
                             Observer mappedItem = (Observer) item;
+                            Log.d("mappped item ID", mappedItem.getId());
+                            Log.d("dc item iD", dc.getDocument().getId());
                             if(mappedItem.getId().equals(dc.getDocument().getId()))
                                 flag = false;
                         }
 
                         if (flag){
+                            Log.d("Flag entry", "entered flag");
                             objectModels.add(dc.getNewIndex(), observer.map(documentData));
                             data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_INSERT);
                             data.put("index", dc.getNewIndex());
