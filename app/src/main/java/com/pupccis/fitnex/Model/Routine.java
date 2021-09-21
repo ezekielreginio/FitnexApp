@@ -99,27 +99,32 @@ public class Routine implements Serializable, Observer {
         public Builder(String name){
             this.name = name;
         }
-        public Builder setSets(int sets){
+        public Builder sets(int sets){
             this.sets = sets;
             return this;
         }
-        public Builder setReps(int reps){
+        public Builder reps(int reps){
             this.reps = reps;
             return this;
         }
-        public Builder setDuration(int duration){
+        public Builder duration(int duration){
             this.duration = duration;
             return this;
         }
 
-        public Builder setWeight(double weight) {
+        public Builder weight(double weight) {
             this.weight = weight;
             return this;
         }
 
-        public Builder setRoutineID(String routineID){
+        public Builder routineID(String routineID){
             this.routineID = routineID;
             return this;
+        }
+
+        public Routine build(){
+            Routine routine = new Routine(this);
+            return routine;
         }
     }
 }

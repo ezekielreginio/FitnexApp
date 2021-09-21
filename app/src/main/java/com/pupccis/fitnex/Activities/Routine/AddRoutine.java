@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.Activities.Routine;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.ViewModel.RoutineViewModel;
 
 public class AddRoutine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private EditText editTextAddRoutineName, editTextAddRoutineReps, editTextAddRoutineSets, editTextAddRoutineWeights, editTextAddRoutineDuration;
@@ -26,10 +28,14 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
     private Button buttonAddRoutineButton;
     private LinearLayout linearLayoutAddRoutineStrengthFields;
     private Routine routine;
+    private RoutineViewModel routineViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_routine);
+
+        //ViewModel Instantiation
+        routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
 
         //Extra intents
         program = (Program) getIntent().getSerializableExtra("program");
@@ -69,13 +75,15 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                     String reps = editTextAddRoutineReps.getText().toString();
                     String sets = editTextAddRoutineSets.getText().toString();
                     String weight = editTextAddRoutineWeights.getText().toString();
-  //                  routine = new Routine.RoutineBuilder(routineName).reps(Integer.parseInt(reps)).sets(Integer.parseInt(sets)).weight(Double.parseDouble(weight)).build();
+                   routine = new Routine.Builder(routineName).reps(Integer.parseInt(reps)).sets(Integer.parseInt(sets)).weight(Double.parseDouble(weight)).build();
                 }else{
                     String duration = editTextAddRoutineDuration.getText().toString();
-            //        routine = new Routine.RoutineBuilder(routineName).duration(Integer.parseInt(duration)).build();
+                  routine = new Routine.Builder(routineName).duration(Integer.parseInt(duration)).build();
                     Log.d("Category", program.getCategory().toString());
                 }
              //   routineDAO.createRoutine(routine, program);
+                routineViewModel.insertRoutine(routine);
+
                 break;
 
         }
