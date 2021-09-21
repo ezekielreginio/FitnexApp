@@ -88,19 +88,6 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
 
         });
-        private void initObserver() {
-            routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
-                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
-                    routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
-                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
-                    routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
-                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
-                    Log.d("Removed", "removed");
-                    routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
-                }
-            });
-        };
-
 
 
         //Query
@@ -149,6 +136,19 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(routinePage);
+    }
+
+    private void initObserver(){
+        routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
+            if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+                routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+                Log.d("Removed", "removed");
+                routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+            }
+        });
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
