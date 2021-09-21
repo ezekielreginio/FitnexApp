@@ -94,6 +94,7 @@ public class ProgramsFragment extends Fragment {
                                 programListContainer.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
                                 programListContainer.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
                                 programListContainer.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
+                                programListContainer.setProgramID(dataSnapshot.getKey());
                                 programList.add(programListContainer);
                             }
                         }

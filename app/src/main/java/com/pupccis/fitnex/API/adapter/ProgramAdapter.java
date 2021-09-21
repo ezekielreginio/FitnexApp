@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
+import com.pupccis.fitnex.Activities.Routine.RoutinePage;
 import com.pupccis.fitnex.Activities.VideoConferencing.listeners.UsersListener;
 import com.pupccis.fitnex.Models.DAO.ProgramDAO;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
@@ -37,6 +39,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     private Context context;
     private ProgramDAO programDAO = new ProgramDAO();
     private String access_type;
+    private User user;
 
     public ProgramAdapter(List<Program> programs, Context context, String access_type){
         this.programs = programs;
@@ -69,7 +72,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
     class ProgramViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout programContainer;
         LinearLayout layoutProgramInfo;
-        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration;
+        TextView programName, programTrainees, programCategory, programDescription, programSessionCount, programDuration, textViewRoutine;
         Button programUpdate, programDelete, programView, programJoin;
 
         public ProgramViewHolder(@NonNull View itemView) {
@@ -80,6 +83,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             programDescription = itemView.findViewById(R.id.textProgramDescription);
             programSessionCount = itemView.findViewById(R.id.textProgramSessionCount);
             programDuration = itemView.findViewById(R.id.textProgramDuration);
+            textViewRoutine = itemView.findViewById(R.id.textViewRoutine);
 
             programContainer = itemView.findViewById(R.id.layoutProgramContainer);
             layoutProgramInfo = itemView.findViewById(R.id.layoutProgramInfo);
@@ -121,6 +125,18 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                     layoutProgramInfo.setVisibility(View.VISIBLE);
                 else
                     layoutProgramInfo.setVisibility(View.GONE);
+            });
+
+            programJoin.setOnClickListener(view -> {
+                programDAO.joinProgram(program);
+            });
+
+            textViewRoutine.setOnClickListener(view -> {
+                Intent intent = new Intent(context, RoutinePage.class);
+                intent.putExtra("program", program);
+                intent.putExtra("access_type", access_type);
+                Log.d("Category from program", program.getCategory().toString());
+                context.startActivity(intent);
             });
 
             programUpdate.setOnClickListener(new View.OnClickListener() {

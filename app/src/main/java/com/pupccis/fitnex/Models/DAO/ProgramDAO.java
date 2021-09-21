@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.Models.Program;
+import com.pupccis.fitnex.Models.User;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
@@ -25,11 +26,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ProgramDAO {
-
+    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS);
     public void createProgram(Program program){
         String program_key = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(user_id)
                 .push().getKey();
 
         FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS)
@@ -71,6 +72,20 @@ public class ProgramDAO {
 
     public void deleteProgram(Program program){
         mDatabase.child(program.getProgramID()).removeValue();
+    }
+
+    public void joinProgram(Program program){
+        mDatabase.child(program.getProgramID())
+                .child(ProgramConstants.KEY_PROGRAM_SUBSCRIBERS)
+                .child(user_id)
+                .setValue("subscribed");
+
+
+        FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.KEY_COLLECTION_USERS)
+                .child(user_id)
+                .child(ProgramConstants.KEY_PROGRAM_USER_SUBSCRIBED)
+                .child(program.getProgramID())
+                .setValue("subscribed");
     }
 
 }
