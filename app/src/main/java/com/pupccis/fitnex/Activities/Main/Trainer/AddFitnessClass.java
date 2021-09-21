@@ -135,7 +135,6 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                     closeForm();
                 }
                 else{
-                    //fitnessClassDAO.createClass(fitnessClass);
                     fitnessClassViewModel.insertFitnessClass(fitnessClass);
                     Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
                     closeForm();

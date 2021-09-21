@@ -18,16 +18,21 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Routine.AddRoutine"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.Routine.RoutinePage"
+            android:exported="true" />
+        <activity
             android:name=".Activities.SearchEngine.SearchEngine"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activities.VideoPlayer.TrainingVideoPlayer"
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|layoutDirection"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Main.Trainer.Studio.AddVideo"
             android:exported="true"
@@ -47,7 +52,7 @@
         <activity
             android:name=".Activities.Main.Trainee.TraineeDashboard"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Main.Trainer.AddProgram"
             android:background="#00000000"
@@ -97,6 +102,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
