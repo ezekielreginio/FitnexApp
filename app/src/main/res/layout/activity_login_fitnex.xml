@@ -180,14 +180,6 @@
         android:onClick="onLoginClick"
         android:src="@drawable/ic_add_img" />
 
-    <Button
-        android:id="@+id/buttonQuickLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="26dp"
-        android:text="Button" />
+
 
 </RelativeLayout>
