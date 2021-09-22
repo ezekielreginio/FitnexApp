@@ -25,13 +25,19 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.Validation.Services.FitnessClassValidationService;
+import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.Validation.ValidationModel;
 import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -49,10 +55,15 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     private Calendar calendar = Calendar.getInstance();
     private FitnessClass fitness_intent;
     private FitnessClassViewModel fitnessClassViewModel;
+    private TextInputLayout til_name, til_description, til_category,til_timeStart, til_timeEnd, til_sessionNumber, til_duration;
+    private ArrayList<ValidationModel> fields = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         //ViewModel Instantiation
         fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
         fitnessClassViewModel.init(getApplicationContext());
@@ -70,6 +81,27 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         editTimeEnd = (EditText) findViewById(R.id.editTextTimeEnd);
         editSessionNumber = (EditText) findViewById(R.id.editTextAddClassSessionNumber);
         editDuration = (EditText) findViewById(R.id.editTextAddClassDuration);
+
+        til_name = findViewById(R.id.textInputClassName);
+        til_description = findViewById(R.id.textInputClassDescription);
+        til_category = findViewById(R.id.textInputClassCategory);
+        til_timeStart = findViewById(R.id.textInputClassTimeStart);
+        til_timeEnd = findViewById(R.id.textInputClassTimeEnd);
+        til_sessionNumber = findViewById(R.id.textInputClassSessionNumber);
+        til_duration = findViewById(R.id.textInputClassDuration);
+
+        fields.add(new ValidationModel(til_name, com.pupccis.fitnex.Validation.InputType.STRING));
+        fields.add(new ValidationModel(til_description, com.pupccis.fitnex.Validation.InputType.STRING));
+        fields.add(new ValidationModel(til_category, com.pupccis.fitnex.Validation.InputType.INT));
+        fields.add(new ValidationModel(til_timeStart, com.pupccis.fitnex.Validation.InputType.TIME));
+        fields.add(new ValidationModel(til_timeEnd, com.pupccis.fitnex.Validation.InputType.TIME));
+        fields.add(new ValidationModel(til_sessionNumber, com.pupccis.fitnex.Validation.InputType.INT));
+        fields.add(new ValidationModel(til_duration, com.pupccis.fitnex.Validation.InputType.INT));
+
+        ValidationEventBinder validationEventBinder = new ValidationEventBinder();
+        validationEventBinder.bindEvents(fields, new FitnessClassValidationService());
+
+
 
         editTimeStart.setInputType(InputType.TYPE_NULL);
         editTimeEnd.setInputType(InputType.TYPE_NULL);
