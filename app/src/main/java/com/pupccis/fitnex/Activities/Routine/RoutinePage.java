@@ -56,7 +56,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
         //Extra intents
         program = (Program) getIntent().getSerializableExtra("program");
-        Log.d("+=========================", program.getProgramID());
+
         //ViewModel instantiation
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
         routineViewModel.init(getApplicationContext(), program.getProgramID());
@@ -75,7 +75,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         textViewRoutinePageProgramName.setText(program.getName());
 
         //Routine Adapter
-        routineAdapter = new RoutineAdapter(routineViewModel.getRoutines().getValue(), "owner", program.getCategory());
+        routineAdapter = new RoutineAdapter(routineViewModel.getRoutines().getValue(), "owner", program, getApplicationContext());
         routinePage.setAdapter(routineAdapter);
 
         routineViewModel.getRoutines().observe(this, new Observer<ArrayList<Object>>() {

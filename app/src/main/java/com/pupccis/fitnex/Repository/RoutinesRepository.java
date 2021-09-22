@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.Repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,5 +48,16 @@ public class RoutinesRepository {
 
         Query queryRoutines = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).collection(RoutineConstants.KEY_COLLECTION_ROUTINES);
         return queryRoutines;
+    }
+    public static void updateRoutine(Routine routine){
+        Log.d("ROutine ID", routine.getId());
+        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                .document(routine.getProgramID())
+                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId()).update(routine.toMap());
+    }
+    public static void deleteRoutine(Routine routine, String programID){
+        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                .document(programID)
+                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId()).delete();
     }
 }

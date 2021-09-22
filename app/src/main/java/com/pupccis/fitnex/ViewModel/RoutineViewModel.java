@@ -44,4 +44,10 @@ public class RoutineViewModel extends ViewModel {
 
         return routinesUpdate;
     }
+    public void updateRoutine(Routine routine){
+        RoutinesRepository.updateRoutine(routine);
+    }
+    public static void deleteRoutine(Routine routine, String programID){
+        RoutinesRepository.deleteRoutine(routine, programID);
+    }
 }
