@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -24,12 +25,13 @@ public class DataObserver {
 
     public  MutableLiveData<ArrayList<Object>> getObjects(Query query, Object obj){
         this.query = query;
-        loadObjects(obj);
+
         objects.setValue(objectModels);
         return objects;
     }
 
     private void loadObjects(Object obj) {
+        HashMap<String, Object> data = new HashMap<>();
         this.query.get().addOnCompleteListener(task -> {
             objectModels.clear();
 
@@ -45,8 +47,11 @@ public class DataObserver {
                 objectModels.add(observer.map(documentData));
                 Log.d("Document ID", documentSnapshot.getId());
             }
-            bindDataObserver(query, obj);
             objects.postValue(objectModels);
+            data.put(GlobalConstants.KEY_UPDATE_TYPE, GlobalConstants.KEY_UPDATE_TYPE_LOADED);
+            mutableLiveData.postValue(data);
+            bindDataObserver(query, obj);
+
         });
     }
 
@@ -54,7 +59,7 @@ public class DataObserver {
         HashMap<String, Object> data = new HashMap<>();
         data.put("updateType", "");
         mutableLiveData.setValue(data);
-
+        loadObjects(obj);
         return mutableLiveData;
     }
 
@@ -64,7 +69,6 @@ public class DataObserver {
         Observer observer = (Observer) obj;
         Map<String, Object> map = observer.toMap();
         HashMap<String, Object> documentData = new HashMap<>();
-
         query.addSnapshotListener((snapshot, error) -> {
             boolean flag = true;
             for(DocumentChange dc : snapshot.getDocumentChanges()){

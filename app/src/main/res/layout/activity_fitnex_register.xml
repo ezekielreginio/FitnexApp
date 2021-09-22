@@ -56,7 +56,6 @@
                         android:id="@+id/textInputName"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        
                         >
 
                         <EditText
@@ -67,14 +66,6 @@
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/helperTextRegisterName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:text="Name Field Error"
-                        android:textColor="@color/RedColor"
-                        android:visibility="gone" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputAge"
@@ -89,18 +80,10 @@
                             android:inputType="textPersonName"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
-                    <TextView
-                        android:id="@+id/helperTextRegisterAge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Age Field Error"
-                        android:textColor="@color/RedColor"
-                        android:visibility="gone"
-                        android:layout_marginLeft="2dp"
-                        />
+
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputEmail"
+                        android:id="@+id/textInputRegisterEmail"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
@@ -111,15 +94,7 @@
                             android:inputType="textPersonName"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
-                    <TextView
-                        android:id="@+id/helperTextRegisterEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email Field Error"
-                        android:textColor="@color/RedColor"
-                        android:visibility="gone"
-                        android:layout_marginLeft="2dp"
-                        />
+
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
@@ -133,15 +108,7 @@
                             android:inputType="textPersonName"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
-                    <TextView
-                        android:id="@+id/helperTextRegisterPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Password Field Error"
-                        android:textColor="@color/RedColor"
-                        android:visibility="gone"
-                        android:layout_marginLeft="2dp"
-                        />
+
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/buttonApplyButton"

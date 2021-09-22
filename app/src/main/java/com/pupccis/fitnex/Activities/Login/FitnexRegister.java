@@ -1,11 +1,15 @@
 package com.pupccis.fitnex.Activities.Login;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
@@ -27,6 +32,8 @@ import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Validation.InputType;
 import com.pupccis.fitnex.Validation.Services.UserValidationService;
+import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.Validation.Services.ValidationService;
 import com.pupccis.fitnex.Validation.ValidationModel;
 import com.pupccis.fitnex.Validation.ValidationResult;
 
@@ -34,9 +41,13 @@ import java.util.ArrayList;
 
 public class FitnexRegister extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private EditText editName, editAge, editEmail, editPassword;
-    private TextView registerUser, registerTrainer, helperName;
+    private TextView registerUser, registerTrainer, おっぱい;
     private FirebaseAuth mAuth;
     private ArrayList<ValidationModel> fields = new ArrayList<>();
+
+    private TextInputLayout til_name, til_age, til_email, til_password;
+
+    private Boolean isValid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,18 +61,27 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         editAge = (EditText) findViewById(R.id.editTextRegisterAge);
         editEmail = (EditText) findViewById(R.id.editTextApplicationEmail);
         editPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
-        helperName = findViewById(R.id.helperTextRegisterName);
 
-        //Fields Validation Model
-        fields.add(new ValidationModel(editName, helperName, InputType.STRING));
+        //Text Input Layouts
+        til_name = findViewById(R.id.textInputName);
+        til_age = findViewById(R.id.textInputAge);
+        til_email = findViewById(R.id.textInputRegisterEmail);
+        til_password = findViewById(R.id.textInputPassword);
 
-        for(ValidationModel field: fields){
-            field.getEditTextField().setOnFocusChangeListener((view, hasFocus) -> {
-                if(!hasFocus){
-                    ValidationResult result = UserValidationService.validate(field);
-                }
-            });
-        }
+        fields.add(new ValidationModel(til_name, InputType.STRING));
+        fields.add(new ValidationModel(til_age, InputType.INT));
+        fields.add(new ValidationModel(til_email, InputType.NEW_EMAIL));
+        fields.add(new ValidationModel(til_password, InputType.PASSWORD));
+
+        ValidationEventBinder validationEventBinder = new ValidationEventBinder(this);
+        validationEventBinder.bindEvents(fields, new UserValidationService());
+
+        validationEventBinder.getIsValid().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                isValid = aBoolean;
+            }
+        });
 
         registerUser = (Button) findViewById(R.id.buttonApplyButton);
         registerUser.setOnClickListener(this);
@@ -84,10 +104,6 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         startActivity(new Intent(this, FitnexLogin.class ));
         overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
-
-
-
-
 
 
 
@@ -122,66 +138,46 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         String name = editName.getText().toString();
         String password = editPassword.getText().toString();
         String age = editAge.getText().toString();
+        boolean isValid = true;
 
-        if(name.isEmpty()){
-            editName.setError("Fullname is Required");
-            editName.requestFocus();
-            return;
+        for(ValidationModel field: fields){
+            String input = field.getTextInputLayout().getEditText().getText().toString();
+            if(input == null || input.equals("")){
+                TextInputLayout textInputLayout = field.getTextInputLayout();
+                textInputLayout.setErrorEnabled(true);
+                textInputLayout.setError("This Field is required");
+                isValid = false;
+            }
         }
 
-        if(age.isEmpty()){
-            editAge.setError("Age is Required");
-            editAge.requestFocus();
-            return;
-        }
-
-        if(email.isEmpty()){
-            editEmail.setError("Email is required");
-            editEmail.requestFocus();
-            return;
-        }
-
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editEmail.setError("Please provide a valid email");
-            editEmail.requestFocus();
-            return;
-        }
-
-        if(password.isEmpty()){
-            editPassword.setError("Password is Required");
-            editPassword.requestFocus();
-            return;
-        }
-
-        if(password.length() < 6) {
-            editPassword.setError("Password must be longer than 6 characters");
-            editPassword.requestFocus();
-            return;
-        }
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(isValid && this.isValid){
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
 
-                        if(task.isSuccessful()){
-                            User user = new User(name, age, email, "trainee");
-                            FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT)
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user);
+                            if(task.isSuccessful()){
+                                User user = new User(name, age, email, "trainee");
+                                FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT)
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user);
 
-                            Toast.makeText(FitnexRegister.this, "Registration Successful!", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(FitnexRegister.this, TraineeDashboard.class));
+                                Toast.makeText(FitnexRegister.this, "Registration Successful!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(FitnexRegister.this, TraineeDashboard.class));
 
 
+                            }
+                            else{
+                                Toast.makeText(FitnexRegister.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+
+                            }
                         }
-                        else{
-                            Toast.makeText(FitnexRegister.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                });
+                    });
+        }
+        else{
+            Toast.makeText(FitnexRegister.this, "Failed to register, please check your inputs", Toast.LENGTH_LONG).show();
+        }
     }
 
 

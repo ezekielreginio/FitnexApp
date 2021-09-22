@@ -149,20 +149,12 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         fitnessClassAdapter = new FitnessClassAdapter(fitnessClassViewModel.getFitnessClasses().getValue(), getContext(),GlobalConstants.KEY_ACCESS_TYPE_OWNER);
         fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
 
-        //Live Data Observers
-        fitnessClassViewModel.getFitnessClasses().observe(getActivity(), new Observer<ArrayList<Object>>() {
-            @Override
-            public void onChanged(ArrayList<Object> fitnessClasses) {
-                Log.d("Fitness Class Read", "read");
-                fitnessClassAdapter.notifyDataSetChanged();
-                fitnessClassViewModel.getFitnessClasses().removeObserver(this::onChanged);
-            }
-        });
-
         fitnessClassViewModel.getLiveDataFitnessClassesUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
             @Override
             public void onChanged(HashMap<String, Object> stringObjectHashMap) {
-                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
+                    fitnessClassAdapter.notifyDataSetChanged();
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
                     fitnessClassAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
                 else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
                     fitnessClassAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));

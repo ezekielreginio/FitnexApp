@@ -22,7 +22,7 @@ public class ValidationResult {
     }
 
     public boolean isValid() {
-        return isValid;
+        return this.isValid;
     }
 
     public String getErrorMsg() {

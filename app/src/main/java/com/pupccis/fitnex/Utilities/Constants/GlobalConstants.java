@@ -12,5 +12,6 @@ public class GlobalConstants {
     public static final String KEY_UPDATE_TYPE_INSERT = "insert";
     public static final String KEY_UPDATE_TYPE_UPDATE = "update";
     public static final String KEY_UPDATE_TYPE_DELETE = "delete";
+    public static final String KEY_UPDATE_TYPE_LOADED = "loaded";
 
 }

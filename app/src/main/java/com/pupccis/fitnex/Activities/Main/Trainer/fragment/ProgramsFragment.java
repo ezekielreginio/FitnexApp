@@ -173,21 +173,13 @@ public class ProgramsFragment extends Fragment {
         programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), programViewModel, GlobalConstants.KEY_ACCESS_TYPE_OWNER);
         programsRecyclerView.setAdapter(programAdapter);
 
-        programViewModel.getPrograms().observe(getActivity(), new Observer<ArrayList<Object>>() {
-            @Override
-            public void onChanged(ArrayList<Object> objects) {
-                Log.d("It worked", "worked");
-                programAdapter.notifyDataSetChanged();
-                programViewModel.getPrograms().removeObserver(this::onChanged);
-            }
-        });
-
-
         //Live Data Observers
         programViewModel.getLiveDataProgramUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
             @Override
             public void onChanged(HashMap<String, Object> stringObjectHashMap) {
-                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
+                    programAdapter.notifyDataSetChanged();
+                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
                     programAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
                 else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
                     programAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));

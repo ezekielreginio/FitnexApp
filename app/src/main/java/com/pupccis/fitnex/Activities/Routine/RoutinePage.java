@@ -78,14 +78,18 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         routineAdapter = new RoutineAdapter(routineViewModel.getRoutines().getValue(), "owner", program, getApplicationContext());
         routinePage.setAdapter(routineAdapter);
 
-        routineViewModel.getRoutines().observe(this, new Observer<ArrayList<Object>>() {
-            @Override
-            public void onChanged(ArrayList<Object> objects) {
+        routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
+            if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
                 routineAdapter.notifyDataSetChanged();
-                routineViewModel.getRoutines().removeObserver(this::onChanged);
+            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+                routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+                routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+                Log.d("Removed", "removed");
+                routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
             }
         });
-        initObserver();
 
         //Query
 //        mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).child(program.getProgramID()).child(RoutineConstants.KEY_COLLECTION_ROUTINE);
@@ -136,16 +140,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initObserver(){
-        routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
-            if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
-                routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
-            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
-                routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
-            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
-                Log.d("Removed", "removed");
-                routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
-            }
-        });
+
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {

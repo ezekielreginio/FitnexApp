@@ -3,28 +3,26 @@ package com.pupccis.fitnex.Validation;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class ValidationModel {
-    private final EditText editTextField;
-    private final TextView editTextHelper;
+    private final TextInputLayout textInputLayout;
     private final InputType inputType;
 
-    public ValidationModel(EditText editTextField, TextView editTextHelper, InputType inputType) {
-        this.editTextField = editTextField;
-        this.editTextHelper = editTextHelper;
+    public ValidationModel(TextInputLayout textInputLayout, InputType inputType) {
+        this.textInputLayout = textInputLayout;
         this.inputType = inputType;
     }
 
-    public EditText getEditTextField() {
-        return editTextField;
-    }
 
-    public TextView getEditTextHelper() {
-        return editTextHelper;
+    public TextInputLayout getTextInputLayout() {
+        return textInputLayout;
     }
 
     public InputType getInputType() {
         return inputType;
     }
+
 }
 
 
