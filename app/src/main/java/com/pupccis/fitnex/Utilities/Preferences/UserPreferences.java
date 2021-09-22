@@ -44,7 +44,7 @@ public class UserPreferences {
         this.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
         this.putString(VideoConferencingConstants.KEY_FULLNAME, user.getName()); //$_SESSION['fullname']
         this.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
-        this.putString(VideoConferencingConstants.KEY_AGE, user.getAge());
+        this.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
         this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
     }
 }
