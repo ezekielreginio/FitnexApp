@@ -106,10 +106,12 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                         continue;
                     }
 
-                    User user = new User();
-                    user.setName(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString());
-                    user.setEmail(dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-                    user.setToken(token);
+                    User user = new User.Builder(
+                                dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString(),
+                                dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString()
+                            )
+                            .setToken(token)
+                            .build();
                     users.add(user);
                 }
                 if(users.size() > 0){

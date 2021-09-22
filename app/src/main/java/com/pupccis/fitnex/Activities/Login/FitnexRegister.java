@@ -36,13 +36,13 @@ import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
 import com.pupccis.fitnex.Validation.Services.ValidationService;
 import com.pupccis.fitnex.Validation.ValidationModel;
 import com.pupccis.fitnex.Validation.ValidationResult;
+import com.pupccis.fitnex.ViewModel.UserViewModel;
 
 import java.util.ArrayList;
 
 public class FitnexRegister extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private EditText editName, editAge, editEmail, editPassword;
     private TextView registerUser, registerTrainer, おっぱい;
-    private FirebaseAuth mAuth;
     private ArrayList<ValidationModel> fields = new ArrayList<>();
 
     private TextInputLayout til_name, til_age, til_email, til_password;
@@ -87,7 +87,6 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         registerUser.setOnClickListener(this);
         registerTrainer = (TextView) findViewById(R.id.textViewRegisterTrainerApplication);
         registerTrainer.setOnClickListener(this);
-        mAuth = FirebaseAuth.getInstance();
 
     }
     public void changeStatusBarColor(){
@@ -137,7 +136,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         String email = editEmail.getText().toString();
         String name = editName.getText().toString();
         String password = editPassword.getText().toString();
-        String age = editAge.getText().toString();
+        int age = Integer.parseInt(editAge.getText().toString());
         boolean isValid = true;
 
         for(ValidationModel field: fields){
@@ -151,29 +150,17 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         }
 
         if(isValid && this.isValid){
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-
-                            if(task.isSuccessful()){
-                                User user = new User(name, age, email, "trainee");
-                                FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT)
-                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .setValue(user);
-
-                                Toast.makeText(FitnexRegister.this, "Registration Successful!", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(FitnexRegister.this, TraineeDashboard.class));
-
-
-                            }
-                            else{
-                                Toast.makeText(FitnexRegister.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-
-                            }
-                        }
-                    });
+            User user = new User.Builder(name, email)
+                    .setPassword(password)
+                    .setAge(age)
+                    .build();
+            UserViewModel.registerUser(user).observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if(user != null)
+                        Toast.makeText(FitnexRegister.this, "Registration Successful, Welcome to Fitnex!", Toast.LENGTH_LONG).show();
+                }
+            });
         }
         else{
             Toast.makeText(FitnexRegister.this, "Failed to register, please check your inputs", Toast.LENGTH_LONG).show();

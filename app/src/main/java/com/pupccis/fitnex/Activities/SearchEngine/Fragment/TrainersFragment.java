@@ -93,13 +93,13 @@ public class TrainersFragment extends Fragment {
 
                         userList.clear();
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            User userListContainer = new User();
+                            //User userListContainer = new User();
 
                             if(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
-                                userListContainer.setName(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString());
-                                userListContainer.setEmail(dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-                                userListContainer.setUserID(dataSnapshot.getKey());
-                                userList.add(userListContainer);
+                                //userListContainer.setName(dataSnapshot.child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString());
+                                //userListContainer.setEmail(dataSnapshot.child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
+                                //userListContainer.setUserID(dataSnapshot.getKey());
+                                //userList.add(userListContainer);
                             }
 
                         }
