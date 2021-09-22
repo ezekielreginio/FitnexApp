@@ -26,7 +26,29 @@ public class FitnessClassValidationService implements ValidationServiceInterface
     }
 
     @Override
-    public ValidationResult validate() {
-        return null;
+    public ValidationResult validate(){
+        ValidationResult result = ValidationResult.valid();
+        ValidationService service = new ValidationService(this.validationModel);
+
+        switch (inputType){
+            case STRING:
+                result = service
+                        .requiredField()
+                        .validate();
+                break;
+            case INT:
+                result = service
+                        .requiredField()
+                        .validateInt()
+                        .notZero()
+                        .validate();
+                break;
+            case TIME:
+                result = service
+                        .requiredField()
+                        .regexValidation("/((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/", "Time Invalid")
+                        .validate();
+        }
+        return result;
     }
 }
