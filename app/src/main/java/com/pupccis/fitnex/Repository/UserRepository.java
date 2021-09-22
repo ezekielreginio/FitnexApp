@@ -42,7 +42,7 @@ public class UserRepository {
                         if(task.isSuccessful()){
                             FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
                                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(user.toMap());
-                            
+
                             userLiveData.postValue(user);
                         }
                         else{

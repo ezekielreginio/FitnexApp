@@ -19,6 +19,7 @@ public class User implements Serializable {
         this.age = builder.age;
         this.userID = builder.userID;
         this.userType = builder.userType;
+        this.token = builder.token;
     }
 
     public String getName() {
