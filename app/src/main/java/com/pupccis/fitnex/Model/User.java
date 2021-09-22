@@ -2,6 +2,7 @@ package com.pupccis.fitnex.Model;
 
 import java.io.Serializable;
 
+
 public class User implements Serializable {
 
     private String name;

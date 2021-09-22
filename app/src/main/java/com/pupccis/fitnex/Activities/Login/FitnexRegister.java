@@ -25,11 +25,18 @@ import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
+import com.pupccis.fitnex.Validation.InputType;
+import com.pupccis.fitnex.Validation.Services.UserValidationService;
+import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.Validation.ValidationResult;
 
-public class FitnexRegister extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class FitnexRegister extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private EditText editName, editAge, editEmail, editPassword;
-    private TextView registerUser, registerTrainer;
+    private TextView registerUser, registerTrainer, helperName;
     private FirebaseAuth mAuth;
+    private ArrayList<ValidationModel> fields = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +50,25 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         editAge = (EditText) findViewById(R.id.editTextRegisterAge);
         editEmail = (EditText) findViewById(R.id.editTextApplicationEmail);
         editPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
+        helperName = findViewById(R.id.helperTextRegisterName);
+
+        //Fields Validation Model
+        fields.add(new ValidationModel(editName, helperName, InputType.STRING));
+
+        for(ValidationModel field: fields){
+            field.getEditTextField().setOnFocusChangeListener((view, hasFocus) -> {
+                if(!hasFocus){
+                    ValidationResult result = UserValidationService.validate(field);
+                }
+            });
+        }
 
         registerUser = (Button) findViewById(R.id.buttonApplyButton);
         registerUser.setOnClickListener(this);
         registerTrainer = (TextView) findViewById(R.id.textViewRegisterTrainerApplication);
         registerTrainer.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
+
     }
     public void changeStatusBarColor(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
@@ -79,6 +99,21 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
                 break;
             case(R.id.textViewRegisterTrainerApplication):
                 startActivity(new Intent(this, FitnexTrainerApplication.class));
+        }
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if(!hasFocus){
+            switch (view.getId()){
+                case R.id.editTextRegisterName:
+                    String name = editName.getText().toString();
+                    if(name.isEmpty()){
+                        editName.setError("Minimum of 4 Characters");
+                        return;
+                    }
+                    break;
+            }
         }
     }
 
@@ -148,4 +183,6 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
+
+
 }

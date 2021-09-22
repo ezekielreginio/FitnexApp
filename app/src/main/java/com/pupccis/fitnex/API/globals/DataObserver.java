@@ -45,13 +45,12 @@ public class DataObserver {
                 objectModels.add(observer.map(documentData));
                 Log.d("Document ID", documentSnapshot.getId());
             }
-
+            bindDataObserver(query, obj);
             objects.postValue(objectModels);
         });
     }
 
     public MutableLiveData<HashMap<String, Object>> getLiveData(Query query, Object obj){
-        bindDataObserver(query, obj);
         HashMap<String, Object> data = new HashMap<>();
         data.put("updateType", "");
         mutableLiveData.setValue(data);

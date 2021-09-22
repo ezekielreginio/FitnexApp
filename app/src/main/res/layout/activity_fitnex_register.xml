@@ -51,73 +51,118 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="vertical">
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputName"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        
+                        >
+
                         <EditText
                             android:id="@+id/editTextRegisterName"
                             style="@style/modifiedEditText"
+                            android:hint="Name"
                             android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Name"/>
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/helperTextRegisterName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="Name Field Error"
+                        android:textColor="@color/RedColor"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputAge"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        >
+
                         <EditText
                             android:id="@+id/editTextRegisterAge"
                             style="@style/modifiedEditText"
+                            android:hint="Age"
                             android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Age"/>
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/helperTextRegisterAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Age Field Error"
+                        android:textColor="@color/RedColor"
+                        android:visibility="gone"
+                        android:layout_marginLeft="2dp"
+                        />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputEmail"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
+
                         <EditText
                             android:id="@+id/editTextApplicationEmail"
                             style="@style/modifiedEditText"
+                            android:hint="Email"
                             android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Email"/>
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/helperTextRegisterEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email Field Error"
+                        android:textColor="@color/RedColor"
+                        android:visibility="gone"
+                        android:layout_marginLeft="2dp"
+                        />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
+
                         <EditText
                             android:id="@+id/editTextRegisterPassword"
                             style="@style/modifiedEditText"
+                            android:hint="Password"
                             android:inputType="textPersonName"
-                            android:maxLines="1"
-                            android:hint="Password"/>
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/helperTextRegisterPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Password Field Error"
+                        android:textColor="@color/RedColor"
+                        android:visibility="gone"
+                        android:layout_marginLeft="2dp"
+                        />
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/buttonApplyButton"
                         style="@style/loginButton"
-                        app:spinning_bar_width="4dp"
-                        app:spinning_bar_color="#FFF"
-                        android:text="Register"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="Register"
                         app:initialCornerAngle="27dp"
-                        app:spinning_bar_padding="6dp"/>
+                        app:spinning_bar_color="#FFF"
+                        app:spinning_bar_padding="6dp"
+                        app:spinning_bar_width="4dp" />
 
                     <TextView
                         style="@style/parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:onClick="onLoginClick"
+                        android:text="Already have an account?"
                         android:textAlignment="center"
-                        android:textStyle="bold"
                         android:textColor="@color/themeColor"
                         android:textSize="17sp"
-                        android:text="Already have an account?"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:onClick="onLoginClick"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         style="@style/parent"

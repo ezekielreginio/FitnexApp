@@ -83,12 +83,9 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
             public void onChanged(ArrayList<Object> objects) {
                 routineAdapter.notifyDataSetChanged();
                 routineViewModel.getRoutines().removeObserver(this::onChanged);
-                initObserver();
             }
-
-
         });
-
+        initObserver();
 
         //Query
 //        mDatabase = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).child(program.getProgramID()).child(RoutineConstants.KEY_COLLECTION_ROUTINE);
