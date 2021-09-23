@@ -2,7 +2,6 @@ package com.pupccis.fitnex.Activities.Routine;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,31 +11,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.RoutineAdapter;
-import com.pupccis.fitnex.Activities.Main.Trainer.Studio.AddVideo;
-import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;
-import com.pupccis.fitnex.ViewModel.RoutineViewModel;
+import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class RoutinePage extends AppCompatActivity implements View.OnClickListener{

@@ -6,20 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Routine.AddRoutine;
-import com.pupccis.fitnex.Activities.Routine.RoutinePage;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.ViewModel.RoutineViewModel;
+import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.List;
 

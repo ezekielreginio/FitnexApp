@@ -32,7 +32,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
+import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 
 public class AddVideo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //Private Layout Attributes
