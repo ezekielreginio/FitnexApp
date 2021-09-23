@@ -1,6 +1,6 @@
 package com.pupccis.fitnex.model;
 
-import com.pupccis.fitnex.Utilities.Constants.UserConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;

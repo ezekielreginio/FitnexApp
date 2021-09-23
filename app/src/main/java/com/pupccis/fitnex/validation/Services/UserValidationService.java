@@ -2,7 +2,7 @@ package com.pupccis.fitnex.validation.Services;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.pupccis.fitnex.Repository.UserRepository;
+import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;

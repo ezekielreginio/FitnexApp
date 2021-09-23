@@ -1,7 +1,7 @@
 package com.pupccis.fitnex.model;
 
-import com.pupccis.fitnex.API.globals.Observer;
-import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;
+import com.pupccis.fitnex.api.globals.Observer;
+import com.pupccis.fitnex.utilities.Constants.RoutineConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;

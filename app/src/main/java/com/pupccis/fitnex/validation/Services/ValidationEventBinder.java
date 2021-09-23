@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.pupccis.fitnex.Activities.Login.FitnexRegister;
+import com.pupccis.fitnex.activities.Login.FitnexRegister;
 import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;

@@ -18,74 +18,74 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activities.Routine.AddRoutine"
+            android:name=".activities.Routine.AddRoutine"
             android:exported="true" />
         <activity
-            android:name=".Activities.Routine.RoutinePage"
+            android:name=".activities.Routine.RoutinePage"
             android:exported="true" />
         <activity
-            android:name=".Activities.SearchEngine.SearchEngine"
+            android:name=".activities.SearchEngine.SearchEngine"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activities.VideoPlayer.TrainingVideoPlayer"
+            android:name=".activities.VideoPlayer.TrainingVideoPlayer"
             android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.Studio.AddVideo"
+            android:name=".activities.Main.Trainer.Studio.AddVideo"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.AddFitnessClass"
+            android:name=".activities.Main.Trainer.AddFitnessClass"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainee.TraineeWorkoutFavorites"
+            android:name=".activities.Main.Trainee.TraineeWorkoutFavorites"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.Studio.TrainerStudio"
+            android:name=".activities.Main.Trainer.Studio.TrainerStudio"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainee.TraineeDashboard"
+            android:name=".activities.Main.Trainee.TraineeDashboard"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.AddProgram"
+            android:name=".activities.Main.Trainer.AddProgram"
             android:background="#00000000"
             android:exported="true"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.VideoConferencing.IncomingInvitationActivity"
+            android:name=".activities.VideoConferencing.IncomingInvitationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.VideoConferencing.OutgoingInvitationActivity"
+            android:name=".activities.VideoConferencing.OutgoingInvitationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.TrainerDashboard"
+            android:name=".activities.Main.Trainer.TrainerDashboard"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexTrainerApplication"
+            android:name=".activities.Login.FitnexTrainerApplication"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.VideoConferencing.VideoActivityDemo"
+            android:name=".activities.VideoConferencing.VideoActivityDemo"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexRegister"
+            android:name=".activities.Login.FitnexRegister"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexLogin"
+            android:name=".activities.Login.FitnexLogin"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -96,7 +96,7 @@
         </activity>
 
         <service
-            android:name=".API.firebase.MessagingService"
+            android:name=".api.firebase.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

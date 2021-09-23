@@ -12,7 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.model.Program;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 
 import java.util.ArrayList;
 import java.util.List;

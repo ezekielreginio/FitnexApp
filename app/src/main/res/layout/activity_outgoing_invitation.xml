@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.VideoConferencing.OutgoingInvitationActivity"
+    tools:context=".activities.VideoConferencing.OutgoingInvitationActivity"
     android:background="@drawable/background_meeting_invitation">
     <ImageView
         android:id="@+id/imageMeetingType"

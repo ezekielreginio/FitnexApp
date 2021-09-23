@@ -21,9 +21,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.pupccis.fitnex.model.PostVideo;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
-import com.pupccis.fitnex.Utilities.Constants.UserConstants;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 
 public class PostVideoDAO {
     private Uri videoUri;

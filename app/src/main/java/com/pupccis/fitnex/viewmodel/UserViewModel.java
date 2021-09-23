@@ -2,6 +2,7 @@ package com.pupccis.fitnex.viewmodel;
 
 import android.text.Editable;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -9,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.model.User;
-import com.pupccis.fitnex.Repository.UserRepository;
+import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -99,5 +100,9 @@ public class UserViewModel extends BaseObservable {
                 setValidationResultPassword(result);
                 break;
         }
+    }
+
+    public void onFocusChange(View view, Boolean hasFocus){
+
     }
 }

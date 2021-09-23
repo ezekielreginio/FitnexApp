@@ -1,15 +1,15 @@
 package com.pupccis.fitnex.viewmodel;
 
-import static com.pupccis.fitnex.Repository.FitnessClassesRepository.getFitnessClassesQuery;
+import static com.pupccis.fitnex.repository.FitnessClassesRepository.getFitnessClassesQuery;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.pupccis.fitnex.API.globals.DataObserver;
+import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.Repository.FitnessClassesRepository;
+import com.pupccis.fitnex.repository.FitnessClassesRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -2,7 +2,7 @@ package com.pupccis.fitnex.model;
 
 import android.net.Uri;
 
-import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;

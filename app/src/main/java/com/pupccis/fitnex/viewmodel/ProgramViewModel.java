@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.pupccis.fitnex.API.globals.DataObserver;
+import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Program;
-import com.pupccis.fitnex.Repository.ProgramsRepository;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.repository.ProgramsRepository;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
