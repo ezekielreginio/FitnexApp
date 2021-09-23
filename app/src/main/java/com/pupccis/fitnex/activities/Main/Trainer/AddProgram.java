@@ -3,39 +3,28 @@ package com.pupccis.fitnex.activities.Main.Trainer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.databinding.ActivityAddProgramBinding;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.validation.InputType;
-import com.pupccis.fitnex.validation.Services.FragmentFormsValidationService;
-import com.pupccis.fitnex.validation.Services.ValidationEventBinder;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
-import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 
@@ -101,7 +90,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 //        fields.add(new ValidationModel(til_duration, InputType.INT));
 //
 //        ValidationEventBinder validationEventBinder = new ValidationEventBinder();
-//        validationEventBinder.bindEvents(fields, new FragmentFormsValidationService());
+//        validationEventBinder.bindEvents(fields, new ProgramFitnessClassValidationService());
 //
 //        validationEventBinder.getIsValid().observe(this, new Observer<Boolean>() {
 //            @Override
@@ -230,5 +219,15 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     public static void validateDescription(View view, ValidationResult result){
         binding.textInputProgramDescription.setErrorEnabled(!result.isValid());
         binding.textInputProgramDescription.setError(result.getErrorMsg());
+    }
+    @BindingAdapter({"validationResultProgramSessionNumber"})
+    public static void validateSessionNumber(View view, ValidationResult result){
+        binding.textInputProgramSessionNumber.setErrorEnabled(!result.isValid());
+        binding.textInputProgramSessionNumber.setError(result.getErrorMsg());
+    }
+    @BindingAdapter({"validationResultProgramDuration"})
+    public static void validateDuration(View view, ValidationResult result){
+        binding.textInputProgramDuration.setErrorEnabled(!result.isValid());
+        binding.textInputProgramDuration.setError(result.getErrorMsg());
     }
 }

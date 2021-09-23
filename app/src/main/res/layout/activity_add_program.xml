@@ -8,7 +8,7 @@
             type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
         <variable
             name="fragmentFields"
-            type="com.pupccis.fitnex.validation.validationFields.FragmentFields" />
+            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields" />
     </data>
 <RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -130,7 +130,9 @@
                             style="@style/AddProgramText"
                             android:hint="Session Number"
                             android:inputType="time"
-                            android:maxLines="3" />
+                            android:maxLines="3"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.SESSION_NUMBER)}"
+                            bind:validationResultProgramSessionNumber="@{viewModel.validationResultProgramSessionNumber}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -144,7 +146,9 @@
                             style="@style/AddProgramText"
                             android:hint=" Duration(Minutes) "
                             android:inputType="time"
-                            android:maxLines="3" />
+                            android:maxLines="3"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.DURATION)}"
+                            bind:validationResultProgramDuration="@{viewModel.validationResultProgramDuration}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton

@@ -17,9 +17,9 @@ import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.validation.Services.FragmentFormsValidationService;
+import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.FragmentFields;
+import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +38,22 @@ public class ProgramViewModel extends BaseObservable {
     private ValidationResult validationResultProgramName = ValidationResult.valid();
     @Bindable
     private ValidationResult validationResultProgramDescription = ValidationResult.valid();
+    @Bindable
+    private ValidationResult validationResultProgramSessionNumber = ValidationResult.valid();
+    @Bindable
+    private ValidationResult validationResultProgramDuration = ValidationResult.valid();
 
     public ValidationResult getValidationResultProgramName() {
         return validationResultProgramName;
+    }
+    public ValidationResult getValidationResultProgramDescription() {
+        return validationResultProgramDescription;
+    }
+    public ValidationResult getValidationResultProgramSessionNumber() {
+        return validationResultProgramSessionNumber;
+    }
+    public ValidationResult getValidationResultProgramDuration() {
+        return validationResultProgramDuration;
     }
 
     private void setValidationResultProgramName(ValidationResult validationResultProgramName) {
@@ -48,14 +61,17 @@ public class ProgramViewModel extends BaseObservable {
         this.validationResultProgramName = validationResultProgramName;
         notifyPropertyChanged(BR.validationResultProgramName);
     }
-
-    public ValidationResult getValidationResultProgramDescription() {
-        return validationResultProgramDescription;
-    }
-
-    public void setValidationResultProgramDescription(ValidationResult validationResultProgramDescription) {
+    private void setValidationResultProgramDescription(ValidationResult validationResultProgramDescription) {
         this.validationResultProgramDescription = validationResultProgramDescription;
         notifyPropertyChanged(BR.validationResultProgramDescription);
+    }
+    private void setValidationResultProgramSessionNumber(ValidationResult validationResultProgramSessionNumber) {
+        this.validationResultProgramSessionNumber = validationResultProgramSessionNumber;
+        notifyPropertyChanged(BR.validationResultProgramSessionNumber);
+    }
+    public void setValidationResultProgramDuration(ValidationResult validationResultProgramDuration) {
+        this.validationResultProgramDuration = validationResultProgramDuration;
+        notifyPropertyChanged(BR.validationResultProgramDuration);
     }
 
     public void init(Context context){
@@ -99,10 +115,10 @@ public class ProgramViewModel extends BaseObservable {
         ProgramsRepository.getInstance().deleteProgram(programID);
     }
 
-    public void onTextChange(Editable editable, FragmentFields field){
+    public void onTextChange(Editable editable, ProgramFitnessClassFields field){
         Log.d("Enum", field.toString());
         Log.d("textChanged", editable.toString());
-        ValidationResult result = new FragmentFormsValidationService(editable.toString(), field).validate();
+        ValidationResult result = new ProgramFitnessClassValidationService(editable.toString(), field).validate();
         Log.d("Validation Result", result.isValid()+"");
 
         switch (field){
@@ -111,6 +127,13 @@ public class ProgramViewModel extends BaseObservable {
                 break;
             case DESCRIPTION:
                 setValidationResultProgramDescription(result);
+                break;
+            case SESSION_NUMBER:
+                setValidationResultProgramSessionNumber(result);
+                break;
+            case DURATION:
+                setValidationResultProgramDuration(result);
+                break;
         }
     }
 }

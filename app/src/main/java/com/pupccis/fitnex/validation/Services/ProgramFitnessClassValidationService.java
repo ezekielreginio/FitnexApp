@@ -1,19 +1,18 @@
 package com.pupccis.fitnex.validation.Services;
 
-import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.FragmentFields;
+import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 
-public class FragmentFormsValidationService{
+public class ProgramFitnessClassValidationService {
     private ValidationModel validationModel;
-    private FragmentFields field;
+    private ProgramFitnessClassFields field;
     private String input;
-    private static FragmentFormsValidationService instance;
-    public FragmentFormsValidationService(){
+    private static ProgramFitnessClassValidationService instance;
+    public ProgramFitnessClassValidationService(){
 
     }
-    public FragmentFormsValidationService(String input, FragmentFields field){
+    public ProgramFitnessClassValidationService(String input, ProgramFitnessClassFields field){
         this.input = input;
         this.field = field;
     }
@@ -24,16 +23,18 @@ public class FragmentFormsValidationService{
 
         switch (field){
             case NAME:
+            case DESCRIPTION:
                 result = service
                         .requiredField()
                         .validate();
                 break;
-//            case INT:
-//                result = service
-//                        .requiredField()
-//                        .validateInt()
-//                        .validate();
-//                break;
+            case SESSION_NUMBER:
+            case DURATION:
+                result = service
+                        .requiredField()
+                        .validateInt()
+                        .validate();
+                break;
         }
         return result;
     }
