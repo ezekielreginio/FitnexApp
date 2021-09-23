@@ -18,6 +18,9 @@ public class ValidationService {
     public ValidationService(){
 
     }
+    public ValidationService(String input){
+        this.input = input;
+    }
 
     public ValidationService (String input, InputType inputType){
         this.inputType = inputType;

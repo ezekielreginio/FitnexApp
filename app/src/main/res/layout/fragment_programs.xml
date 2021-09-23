@@ -3,9 +3,6 @@
     xmlns:bind="http://schemas.android.com/tools">
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
     </data>
 
 <FrameLayout
