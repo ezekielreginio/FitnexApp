@@ -44,8 +44,6 @@ public class RoutinesRepository {
     }
 
     public Query getRoutinesQuery(String programID){
-        //Query queryRoutines = db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).whereEqualTo(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-
         Query queryRoutines = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).collection(RoutineConstants.KEY_COLLECTION_ROUTINES);
         return queryRoutines;
     }

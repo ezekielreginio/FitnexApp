@@ -2,6 +2,7 @@ package com.pupccis.fitnex.Activities.Routine;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +34,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private DatabaseReference mDatabase;
     private List<Routine> routineList = new ArrayList<>();
     private RoutineAdapter routineAdapter;
-    private RecyclerView routinePage;
+    private RecyclerView recyclerViewRoutinePage;
     private RoutineViewModel routineViewModel;
 
     @Override
@@ -47,13 +48,14 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         //ViewModel instantiation
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
         routineViewModel.init(getApplicationContext(), program.getProgramID());
-        Log.d("Query Routine", routineViewModel.getRoutines().getValue().toString());
+
         //Layout binding
         AddRoutineButton = findViewById(R.id.AddRoutineButton);
         textViewRoutinePageProgramName = findViewById(R.id.textViewRoutinePageProgramName);
 
-        routinePage = (RecyclerView) findViewById(R.id.recyclerViewRoutinePage);
-        routinePage.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerViewRoutinePage = (RecyclerView) findViewById(R.id.recyclerViewRoutinePage);
+        recyclerViewRoutinePage.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
         //Event binding
         AddRoutineButton.setOnClickListener(this);
@@ -62,20 +64,28 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         textViewRoutinePageProgramName.setText(program.getName());
 
         //Routine Adapter
-        routineAdapter = new RoutineAdapter(routineViewModel.getRoutines().getValue(), "owner", program, getApplicationContext());
-        routinePage.setAdapter(routineAdapter);
+        routineAdapter = new RoutineAdapter( routineViewModel.getRoutines().getValue(), "owner", program, getApplicationContext());
+        recyclerViewRoutinePage.setAdapter(routineAdapter);
+        routineViewModel.getRoutines().observe(this, new Observer<ArrayList<Object>>() {
+            @Override
+            public void onChanged(ArrayList<Object> objects) {
+                routineAdapter.notifyDataSetChanged();
+                routineViewModel.getRoutines().removeObserver(this::onChanged);
+            }
+        });
+
 
         routineViewModel.getLiveDataRoutines(program.getProgramID()).observe(this, stringObjectHashMap -> {
             if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
                 routineAdapter.notifyDataSetChanged();
-            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
-                routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
-            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
-                routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
-            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
-                Log.d("Removed", "removed");
-                routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
-            }
+//            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+//                routineAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+//            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+//                routineAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+//            else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+//                Log.d("Removed", "removed");
+//                routineAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+            //}
         });
 
         //Query
@@ -123,19 +133,16 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 //        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(routinePage);
+        itemTouchHelper.attachToRecyclerView(recyclerViewRoutinePage);
     }
 
-    private void initObserver(){
 
-    }
-
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
-            Collections.swap(routineList, fromPosition, toPosition);
+            Collections.swap(routineViewModel.getRoutines().getValue(), fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
             //routineAdapter.notifyDataSetChanged();
             //updateRoutineOrder(routineList, program.getProgramID());
