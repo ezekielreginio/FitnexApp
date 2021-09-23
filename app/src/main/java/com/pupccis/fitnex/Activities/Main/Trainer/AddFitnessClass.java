@@ -1,6 +1,6 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
-import static com.pupccis.fitnex.ViewModel.FitnessClassViewModel.updateFitnessClass;
+import static com.pupccis.fitnex.viewmodel.FitnessClassViewModel.updateFitnessClass;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,16 +29,13 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Activities.Login.FitnexRegister;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Validation.Services.FitnessClassValidationService;
 import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
 import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
-import com.pupccis.fitnex.ViewModel.UserViewModel;
+import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

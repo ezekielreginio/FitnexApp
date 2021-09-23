@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.ViewModel;
+package com.pupccis.fitnex.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

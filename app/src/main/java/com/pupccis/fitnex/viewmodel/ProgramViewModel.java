@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.ViewModel;
+package com.pupccis.fitnex.viewmodel;
 
 
 import android.content.Context;

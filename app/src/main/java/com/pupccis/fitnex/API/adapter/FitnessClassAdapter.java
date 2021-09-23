@@ -21,7 +21,7 @@ import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
+import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.util.ArrayList;
 

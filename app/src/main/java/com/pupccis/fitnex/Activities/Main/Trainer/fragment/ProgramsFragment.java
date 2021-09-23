@@ -15,21 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.ProgramAdapter;
 import com.pupccis.fitnex.Model.DAO.ProgramDAO;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
-import com.pupccis.fitnex.ViewModel.ProgramViewModel;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

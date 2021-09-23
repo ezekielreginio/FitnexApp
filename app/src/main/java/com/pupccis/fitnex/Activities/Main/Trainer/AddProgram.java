@@ -1,14 +1,11 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
-import static com.pupccis.fitnex.ViewModel.FitnessClassViewModel.updateFitnessClass;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,17 +23,15 @@ import android.widget.EditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.DAO.ProgramDAO;
-import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Validation.InputType;
 import com.pupccis.fitnex.Validation.Services.ProgramValidationService;
 import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
 import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.ViewModel.ProgramViewModel;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddProgram extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private Animation rotateAnimation;
