@@ -1,8 +1,12 @@
-package com.pupccis.fitnex.Validation;
+package com.pupccis.fitnex.validation;
 
 public class ValidationResult {
-    private final boolean isValid;
-    private final String errorMsg;
+    private boolean isValid;
+    private String errorMsg;
+
+    public ValidationResult(){
+
+    }
 
     public ValidationResult(boolean isValid, String errorMsg) {
         this.isValid = isValid;

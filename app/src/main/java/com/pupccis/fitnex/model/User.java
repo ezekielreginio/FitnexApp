@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
 import com.pupccis.fitnex.Utilities.Constants.UserConstants;
 
@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 
 public class User implements Serializable {
+
+    public enum UserFields{ NAME, EMAIL, AGE, PASSWORD }
 
     private final String name, email, password, userType;
     private final int age;

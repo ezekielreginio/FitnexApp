@@ -1,34 +1,33 @@
-package com.pupccis.fitnex.Validation.Services;
+package com.pupccis.fitnex.validation.Services;
 
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.Validation.ValidationResult;
+import com.pupccis.fitnex.validation.InputType;
+import com.pupccis.fitnex.validation.ValidationModel;
+import com.pupccis.fitnex.validation.ValidationResult;
 
-public class FitnessClassValidationService implements ValidationServiceInterface {
+public class ProgramValidationService implements ValidationServiceInterface{
     private ValidationModel validationModel;
     private InputType inputType;
     private Object input;
-    private static FitnessClassValidationService instance;
+    private static ProgramValidationService instance;
+    public ProgramValidationService(){
 
-    public FitnessClassValidationService(){
     }
-    private FitnessClassValidationService(ValidationModel validationModel){
+    private ProgramValidationService(ValidationModel validationModel){
         this.validationModel = validationModel;
         this.inputType = validationModel.getInputType();
         this.input = validationModel.getTextInputLayout().getEditText().getText();
     }
 
-
     @Override
     public Object getInstance(ValidationModel object) {
-        instance = new FitnessClassValidationService(object);
+        instance = new ProgramValidationService(object);
         return instance;
     }
 
     @Override
     public ValidationResult validate(){
         ValidationResult result = ValidationResult.valid();
-        ValidationService service = new ValidationService(this.validationModel);
+        ValidationService service = new ValidationService();
 
         switch (inputType){
             case STRING:
@@ -40,14 +39,8 @@ public class FitnessClassValidationService implements ValidationServiceInterface
                 result = service
                         .requiredField()
                         .validateInt()
-                        .notZero()
                         .validate();
                 break;
-            case TIME:
-                result = service
-                        .requiredField()
-                        .regexValidation("/((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/", "Time Invalid")
-                        .validate();
         }
         return result;
     }

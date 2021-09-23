@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
 import com.pupccis.fitnex.API.globals.Observer;
 import com.pupccis.fitnex.Utilities.Constants.RoutineConstants;

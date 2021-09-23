@@ -2,15 +2,16 @@ package com.pupccis.fitnex.Activities.Login;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,16 +19,14 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 //import com.google.firebase.firestore.auth.User;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Model.User;
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.Services.UserValidationService;
-import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
-import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.validation.ValidationModel;
+import com.pupccis.fitnex.databinding.ActivityFitnexRegisterBinding;
+import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 
-public class FitnexRegister extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class FitnexRegister extends AppCompatActivity{
     private EditText editName, editAge, editEmail, editPassword;
     private TextView registerUser, registerTrainer, おっぱい;
     private ArrayList<ValidationModel> fields = new ArrayList<>();
@@ -35,46 +34,18 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
     private TextInputLayout til_name, til_age, til_email, til_password;
 
     private Boolean isValid;
+
+    private static ActivityFitnexRegisterBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fitnex_register);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_fitnex_register);
+        binding.setViewModel(new UserViewModel());
+        binding.setLifecycleOwner(this);
+        binding.executePendingBindings();
 
 
         changeStatusBarColor();
-
-        //Register Activity Object Casting
-        editName = (EditText) findViewById(R.id.editTextRegisterName);
-        editAge = (EditText) findViewById(R.id.editTextRegisterAge);
-        editEmail = (EditText) findViewById(R.id.editTextApplicationEmail);
-        editPassword = (EditText) findViewById(R.id.editTextRegisterPassword);
-
-        //Text Input Layouts
-        til_name = findViewById(R.id.textInputName);
-        til_age = findViewById(R.id.textInputAge);
-        til_email = findViewById(R.id.textInputRegisterEmail);
-        til_password = findViewById(R.id.textInputPassword);
-
-        fields.add(new ValidationModel(til_name, InputType.STRING));
-        fields.add(new ValidationModel(til_age, InputType.INT));
-        fields.add(new ValidationModel(til_email, InputType.NEW_EMAIL));
-        fields.add(new ValidationModel(til_password, InputType.PASSWORD));
-
-        ValidationEventBinder validationEventBinder = new ValidationEventBinder(this);
-        validationEventBinder.bindEvents(fields, new UserValidationService());
-
-        validationEventBinder.getIsValid().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                isValid = aBoolean;
-            }
-        });
-
-        registerUser = (Button) findViewById(R.id.buttonApplyButton);
-        registerUser.setOnClickListener(this);
-        registerTrainer = (TextView) findViewById(R.id.textViewRegisterTrainerApplication);
-        registerTrainer.setOnClickListener(this);
-
     }
     public void changeStatusBarColor(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
@@ -91,68 +62,31 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case(R.id.buttonApplyButton):
-                registerUser();
-                break;
-            case(R.id.textViewRegisterTrainerApplication):
-                startActivity(new Intent(this, FitnexTrainerApplication.class));
-        }
+    @BindingAdapter({"toastMessage"})
+    public static void runMe(View view, String message) {
+        if (message != null)
+            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onFocusChange(View view, boolean hasFocus) {
-        if(!hasFocus){
-            switch (view.getId()){
-                case R.id.editTextRegisterName:
-                    String name = editName.getText().toString();
-                    if(name.isEmpty()){
-                        editName.setError("Minimum of 4 Characters");
-                        return;
-                    }
-                    break;
-            }
-        }
+    @BindingAdapter({"validationResultName"})
+    public static void validateName(View view, ValidationResult result) {
+        Log.d("View Layer", result.isValid()+"");
+        binding.textInputName.setErrorEnabled(!result.isValid());
+        binding.textInputName.setError(result.getErrorMsg());
     }
 
-    private void registerUser() {
-        String email = editEmail.getText().toString();
-        String name = editName.getText().toString();
-        String password = editPassword.getText().toString();
-        int age = Integer.parseInt(editAge.getText().toString());
-        boolean isValid = true;
-
-        for(ValidationModel field: fields){
-            String input = field.getTextInputLayout().getEditText().getText().toString();
-            if(input == null || input.equals("")){
-                TextInputLayout textInputLayout = field.getTextInputLayout();
-                textInputLayout.setErrorEnabled(true);
-                textInputLayout.setError("This Field is required");
-                isValid = false;
-            }
-        }
-
-        if(isValid && this.isValid){
-            User user = new User.Builder(name, email)
-                    .setPassword(password)
-                    .setAge(age)
-                    .build();
-            UserViewModel.registerUser(user).observe(this, new Observer<User>() {
-                @Override
-                public void onChanged(User user) {
-                    if(user != null)
-                        Toast.makeText(FitnexRegister.this, "Registration Successful, Welcome to Fitnex!", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-        else{
-            Toast.makeText(FitnexRegister.this, "Failed to register, please check your inputs", Toast.LENGTH_LONG).show();
-        }
+    @BindingAdapter({"validationResultAge"})
+    public static void validateAge(View view, ValidationResult result) {
+        Log.d("View Layer", result.isValid()+"");
+        binding.textInputAge.setErrorEnabled(!result.isValid());
+        binding.textInputAge.setError(result.getErrorMsg());
     }
 
+    @BindingAdapter({"validationResultPassword"})
+    public static void validatePassword(View view, ValidationResult result) {
+        Log.d("View Layer", result.isValid()+"");
+        binding.textInputPassword.setErrorEnabled(!result.isValid());
+        binding.textInputPassword.setError(result.getErrorMsg());
+    }
 
 }

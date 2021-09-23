@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
 public class VideoComment {
     private final String trainerID, comment, trainerName, type;

@@ -22,13 +22,13 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Model.DAO.ProgramDAO;
-import com.pupccis.fitnex.Model.Program;
+import com.pupccis.fitnex.model.DAO.ProgramDAO;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.Services.ProgramValidationService;
-import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
-import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.validation.InputType;
+import com.pupccis.fitnex.validation.Services.ProgramValidationService;
+import com.pupccis.fitnex.validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;

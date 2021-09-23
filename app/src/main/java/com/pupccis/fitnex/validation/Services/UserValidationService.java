@@ -1,39 +1,33 @@
-package com.pupccis.fitnex.Validation.Services;
+package com.pupccis.fitnex.validation.Services;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.pupccis.fitnex.Repository.UserRepository;
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.Validation.ValidationResult;
+import com.pupccis.fitnex.validation.InputType;
+import com.pupccis.fitnex.validation.ValidationModel;
+import com.pupccis.fitnex.validation.ValidationResult;
 
 
 public class UserValidationService implements ValidationServiceInterface, EmailDuplicateChecker{
     private ValidationModel validationModel;
     private InputType inputType;
-    private Object input;
+    private String input;
     private static UserValidationService instance;
 
-    public UserValidationService(){
-
-    }
-
-    public UserValidationService(ValidationModel validationModel) {
-        this.validationModel = validationModel;
-        this.inputType = validationModel.getInputType();
-        this.input = validationModel.getTextInputLayout().getEditText().getText();
+    public UserValidationService(String input, InputType inputType){
+        this.input = input;
+        this.inputType = inputType;
     }
 
     @Override
     public UserValidationService getInstance(ValidationModel object){
-        instance = new UserValidationService(object);
-        return instance;
+        return null;
     }
 
     @Override
     public ValidationResult validate(){
         ValidationResult result = ValidationResult.valid();
-        ValidationService service = new ValidationService(this.validationModel);
+        ValidationService service = new ValidationService(this.input, this.inputType);
 
         switch (inputType){
             case STRING:

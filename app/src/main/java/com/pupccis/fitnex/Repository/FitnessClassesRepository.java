@@ -2,26 +2,12 @@ package com.pupccis.fitnex.Repository;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
-import com.pupccis.fitnex.API.globals.DataObserver;
-import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 import java.util.ArrayList;
 

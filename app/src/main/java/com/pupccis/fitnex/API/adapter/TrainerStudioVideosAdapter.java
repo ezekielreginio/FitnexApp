@@ -17,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoPlayer;
-import com.pupccis.fitnex.Model.PostVideo;
+import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TrainerStudioVideosAdapter extends RecyclerView.Adapter<TrainerStudioVideosAdapter.TrainerStudioVideosViewHolder> {
     private ArrayList<PostVideo> postVideoList;

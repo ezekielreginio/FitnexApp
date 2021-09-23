@@ -1,7 +1,6 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
 import com.pupccis.fitnex.API.globals.Observer;
-import com.pupccis.fitnex.Repository.ProgramsRepository;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.io.Serializable;

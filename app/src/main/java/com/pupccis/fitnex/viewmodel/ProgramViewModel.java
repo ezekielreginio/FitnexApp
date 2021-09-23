@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.API.globals.DataObserver;
-import com.pupccis.fitnex.Model.Program;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.Repository.ProgramsRepository;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 

@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Activities.VideoConferencing.network.ApiClient;

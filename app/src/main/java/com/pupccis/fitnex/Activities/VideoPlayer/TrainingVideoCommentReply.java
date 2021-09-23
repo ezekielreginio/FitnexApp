@@ -1,6 +1,6 @@
 package com.pupccis.fitnex.Activities.VideoPlayer;
 
-import static com.pupccis.fitnex.Model.DAO.VideoCommentDAO.postComment;
+import static com.pupccis.fitnex.model.DAO.VideoCommentDAO.postComment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Model.DAO.VideoCommentDAO;
-import com.pupccis.fitnex.Model.VideoComment;
+import com.pupccis.fitnex.model.DAO.VideoCommentDAO;
+import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;

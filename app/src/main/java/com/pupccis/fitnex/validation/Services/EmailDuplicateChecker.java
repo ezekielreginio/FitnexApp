@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Validation.Services;
+package com.pupccis.fitnex.validation.Services;
 
 import androidx.lifecycle.MutableLiveData;
 

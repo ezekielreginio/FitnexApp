@@ -1,7 +1,7 @@
 package com.pupccis.fitnex.API.adapter;
 
 import static com.pupccis.fitnex.Activities.VideoPlayer.TrainingVideoCommentReply.initiateReplyView;
-import static com.pupccis.fitnex.Model.DAO.VideoCommentDAO.setReplyCount;
+import static com.pupccis.fitnex.model.DAO.VideoCommentDAO.setReplyCount;
 
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -16,8 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Model.DAO.VideoCommentDAO;
-import com.pupccis.fitnex.Model.VideoComment;
+import com.pupccis.fitnex.model.DAO.VideoCommentDAO;
+import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.R;
 
 import java.util.List;

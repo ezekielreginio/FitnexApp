@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 
-import com.pupccis.fitnex.Model.Program;
-import com.pupccis.fitnex.Model.Routine;
+import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 

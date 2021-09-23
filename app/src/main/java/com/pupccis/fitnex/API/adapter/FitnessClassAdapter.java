@@ -17,8 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddFitnessClass;
-import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;

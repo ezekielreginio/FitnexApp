@@ -21,7 +21,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.pupccis.fitnex.Model.PostVideo;
+import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 
 import java.util.ArrayList;

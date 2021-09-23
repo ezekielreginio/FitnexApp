@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
 import android.net.Uri;
 

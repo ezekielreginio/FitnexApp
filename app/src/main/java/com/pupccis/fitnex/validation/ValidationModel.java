@@ -1,7 +1,4 @@
-package com.pupccis.fitnex.Validation;
-
-import android.widget.EditText;
-import android.widget.TextView;
+package com.pupccis.fitnex.validation;
 
 import com.google.android.material.textfield.TextInputLayout;
 

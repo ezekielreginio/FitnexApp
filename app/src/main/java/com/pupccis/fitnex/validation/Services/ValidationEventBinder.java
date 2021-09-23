@@ -1,22 +1,18 @@
-package com.pupccis.fitnex.Validation.Services;
+package com.pupccis.fitnex.validation.Services;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.pupccis.fitnex.Activities.Login.FitnexRegister;
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.Validation.ValidationResult;
+import com.pupccis.fitnex.validation.InputType;
+import com.pupccis.fitnex.validation.ValidationModel;
+import com.pupccis.fitnex.validation.ValidationResult;
 
 import java.util.ArrayList;
 

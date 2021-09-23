@@ -20,8 +20,8 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.API.adapter.TrainerStudioVideosAdapter;
-import com.pupccis.fitnex.Model.PostVideo;
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.PostVideo;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 

@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model.DAO;
+package com.pupccis.fitnex.model.DAO;
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.VideoCommentsAdapter;
-import com.pupccis.fitnex.Model.VideoComment;
+import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.Utilities.Constants.VideoCommentConstants;

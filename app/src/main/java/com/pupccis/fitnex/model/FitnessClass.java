@@ -1,10 +1,7 @@
-package com.pupccis.fitnex.Model;
+package com.pupccis.fitnex.model;
 
-import com.google.firebase.database.Exclude;
-import com.pupccis.fitnex.API.globals.DataObserver;
 import com.pupccis.fitnex.API.globals.Observer;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
-import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;

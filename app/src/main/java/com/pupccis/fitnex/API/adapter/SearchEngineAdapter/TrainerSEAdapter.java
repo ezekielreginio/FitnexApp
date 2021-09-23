@@ -13,8 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.Studio.TrainerStudio;
-import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;
 
 import java.util.List;

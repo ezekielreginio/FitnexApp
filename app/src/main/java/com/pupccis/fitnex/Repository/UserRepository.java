@@ -1,8 +1,5 @@
 package com.pupccis.fitnex.Repository;
 
-import android.content.Intent;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,13 +8,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.pupccis.fitnex.Activities.Login.FitnexRegister;
-import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class UserRepository {
     private static ProgramsRepository instance;

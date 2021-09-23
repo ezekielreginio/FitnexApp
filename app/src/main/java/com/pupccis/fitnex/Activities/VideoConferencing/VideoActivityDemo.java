@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pupccis.fitnex.API.adapter.UsersAdapter;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.Activities.Login.FitnexLogin;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;

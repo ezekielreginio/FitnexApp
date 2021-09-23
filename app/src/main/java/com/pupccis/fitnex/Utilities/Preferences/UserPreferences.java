@@ -3,7 +3,7 @@ package com.pupccis.fitnex.Utilities.Preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.pupccis.fitnex.Model.User;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 
 public class UserPreferences {

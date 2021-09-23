@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.pupccis.fitnex.API.globals.DataObserver;
-import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.Repository.FitnessClassesRepository;
 
 import java.util.ArrayList;

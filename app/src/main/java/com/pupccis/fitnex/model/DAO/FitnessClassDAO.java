@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.Model.DAO;
+package com.pupccis.fitnex.model.DAO;
 
 import android.util.Log;
 
@@ -10,7 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.Utilities.Constants.FitnessClassConstants;
 
 import java.util.ArrayList;

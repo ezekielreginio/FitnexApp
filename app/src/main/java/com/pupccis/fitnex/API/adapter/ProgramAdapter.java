@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
 import com.pupccis.fitnex.Activities.Routine.RoutinePage;
-import com.pupccis.fitnex.Model.DAO.ProgramDAO;
-import com.pupccis.fitnex.Model.Program;
+import com.pupccis.fitnex.model.DAO.ProgramDAO;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;

@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.API.adapter.RoutineAdapter;
-import com.pupccis.fitnex.Model.Program;
-import com.pupccis.fitnex.Model.Routine;
+import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;

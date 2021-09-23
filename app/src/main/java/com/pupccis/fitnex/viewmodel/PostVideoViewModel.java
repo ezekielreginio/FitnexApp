@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.pupccis.fitnex.Model.PostVideo;
+import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.Repository.PostedVideosRepository;
 
 import java.util.ArrayList;

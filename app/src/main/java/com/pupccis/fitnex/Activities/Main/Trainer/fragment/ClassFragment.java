@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.API.adapter.FitnessClassAdapter;
-import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.Model.FitnessClass;
+import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Preferences.UserPreferences;

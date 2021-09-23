@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.pupccis.fitnex.API.globals.DataObserver;
-import com.pupccis.fitnex.Model.Routine;
+import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.Repository.RoutinesRepository;
 
 import java.util.ArrayList;

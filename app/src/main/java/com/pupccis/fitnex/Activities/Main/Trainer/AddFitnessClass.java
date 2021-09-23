@@ -29,12 +29,12 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.Model.FitnessClass;
-import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
+import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Validation.Services.FitnessClassValidationService;
-import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
-import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.validation.Services.FitnessClassValidationService;
+import com.pupccis.fitnex.validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
@@ -92,13 +92,13 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         til_sessionNumber = findViewById(R.id.textInputClassSessionNumber);
         til_duration = findViewById(R.id.textInputClassDuration);
 
-        fields.add(new ValidationModel(til_name, com.pupccis.fitnex.Validation.InputType.STRING));
-        fields.add(new ValidationModel(til_description, com.pupccis.fitnex.Validation.InputType.STRING));
+        fields.add(new ValidationModel(til_name, com.pupccis.fitnex.validation.InputType.STRING));
+        fields.add(new ValidationModel(til_description, com.pupccis.fitnex.validation.InputType.STRING));
         //fields.add(new ValidationModel(til_category, com.pupccis.fitnex.Validation.InputType.CATEGORY));
-        fields.add(new ValidationModel(til_timeStart, com.pupccis.fitnex.Validation.InputType.TIME));
-        fields.add(new ValidationModel(til_timeEnd, com.pupccis.fitnex.Validation.InputType.TIME));
-        fields.add(new ValidationModel(til_sessionNumber, com.pupccis.fitnex.Validation.InputType.INT));
-        fields.add(new ValidationModel(til_duration, com.pupccis.fitnex.Validation.InputType.INT));
+        fields.add(new ValidationModel(til_timeStart, com.pupccis.fitnex.validation.InputType.TIME));
+        fields.add(new ValidationModel(til_timeEnd, com.pupccis.fitnex.validation.InputType.TIME));
+        fields.add(new ValidationModel(til_sessionNumber, com.pupccis.fitnex.validation.InputType.INT));
+        fields.add(new ValidationModel(til_duration, com.pupccis.fitnex.validation.InputType.INT));
 
         ValidationEventBinder validationEventBinder = new ValidationEventBinder();
         validationEventBinder.bindEvents(fields, new FitnessClassValidationService());

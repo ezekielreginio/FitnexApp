@@ -1,10 +1,10 @@
-package com.pupccis.fitnex.Validation.Services;
+package com.pupccis.fitnex.validation.Services;
 
 import android.util.Patterns;
 
-import com.pupccis.fitnex.Validation.InputType;
-import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.Validation.ValidationResult;
+import com.pupccis.fitnex.validation.InputType;
+import com.pupccis.fitnex.validation.ValidationModel;
+import com.pupccis.fitnex.validation.ValidationResult;
 
 import java.util.regex.Pattern;
 
@@ -15,10 +15,13 @@ public class ValidationService {
     private String input;
     ValidationResult result = ValidationResult.valid();
 
-    public ValidationService (ValidationModel model){
-        this.validationModel = model;
-        this.inputType = model.getInputType();
-        input = validationModel.getTextInputLayout().getEditText().getText().toString();
+    public ValidationService(){
+
+    }
+
+    public ValidationService (String input, InputType inputType){
+        this.inputType = inputType;
+        this.input = input;
     }
 
 
