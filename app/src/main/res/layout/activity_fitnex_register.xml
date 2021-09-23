@@ -110,7 +110,7 @@
                                 android:hint="Email"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                />
+                                app:onFocusChangeListener="@{viewModel::onFocusChange}"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
 

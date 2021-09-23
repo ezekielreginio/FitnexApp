@@ -102,7 +102,9 @@ public class UserViewModel extends BaseObservable {
         }
     }
 
-    public void onFocusChange(View view, Boolean hasFocus){
-
+    public void onFocusChange(View view, boolean hasFocus){
+        if(!hasFocus){
+            Log.d("Focus", "Lost");
+        }
     }
 }
