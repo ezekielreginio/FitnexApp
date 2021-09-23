@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -24,6 +25,7 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 import com.pupccis.fitnex.viewmodel.UserViewModel;
 
@@ -86,9 +88,9 @@ public class ProgramsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentProgramsBinding.setViewModel(new ProgramViewModel());
-        fragmentProgramsBinding.setLifecycleOwner(this);
-        fragmentProgramsBinding.executePendingBindings();
+       // fragmentProgramsBinding.setViewModel(new ProgramViewModel());
+//        fragmentProgramsBinding.setLifecycleOwner(this);
+//        fragmentProgramsBinding.executePendingBindings();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -160,37 +162,37 @@ public class ProgramsFragment extends Fragment {
 
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
-
-        //RecyclerView Initialization
-        programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
-        programsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        //options = new FirebaseRecyclerOptions.Builder<Program>().setQuery(ref, Program.class)
-
-        //ViewModel Instantiation
-        programViewModel = new ViewModelProvider(this).get(ProgramViewModel.class);
-        programViewModel.init(getActivity().getApplicationContext());
-
-        //RecyclerView Adapter
-        programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), programViewModel, GlobalConstants.KEY_ACCESS_TYPE_OWNER);
-        programsRecyclerView.setAdapter(programAdapter);
-
-        //Live Data Observers
-        programViewModel.getLiveDataProgramUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
-            @Override
-            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
-                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
-                    programAdapter.notifyDataSetChanged();
-                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
-                    programAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
-                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
-                    programAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
-                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
-                    Log.d("Removed", "removed");
-                    programAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
-                }
-
-            }
-        });
+//
+//        //RecyclerView Initialization
+//        programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
+//        programsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//        //options = new FirebaseRecyclerOptions.Builder<Program>().setQuery(ref, Program.class)
+//
+//        //ViewModel Instantiation
+////        programViewModel = new ViewModelProvider(this).get(ProgramViewModel.class);
+////        programViewModel.init(getActivity().getApplicationContext());
+//
+//        //RecyclerView Adapter
+//        programAdapter = new ProgramAdapter(programViewModel.getPrograms().getValue(), getContext(), programViewModel, GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+//        programsRecyclerView.setAdapter(programAdapter);
+//
+//        //Live Data Observers
+//        programViewModel.getLiveDataProgramUpdate().observe(getActivity(), new Observer<HashMap<String, Object>>() {
+//            @Override
+//            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
+//                if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_LOADED))
+//                    programAdapter.notifyDataSetChanged();
+//                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_INSERT))
+//                    programAdapter.notifyItemInserted((int) stringObjectHashMap.get("index"));
+//                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_UPDATE))
+//                    programAdapter.notifyItemChanged((int) stringObjectHashMap.get("index"));
+//                else if(stringObjectHashMap.get(GlobalConstants.KEY_UPDATE_TYPE).equals(GlobalConstants.KEY_UPDATE_TYPE_DELETE)){
+//                    Log.d("Removed", "removed");
+//                    programAdapter.notifyItemRemoved((int) stringObjectHashMap.get("index"));
+//                }
+//
+//            }
+//        });
     }
 
     @Override
@@ -207,4 +209,6 @@ public class ProgramsFragment extends Fragment {
         View view = fragmentProgramsBinding.getRoot();
         return view;
     }
+    //Binding Adapters
+
 }
