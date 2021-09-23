@@ -1,10 +1,8 @@
 package com.pupccis.fitnex.Activities.Main.Trainer.Studio;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,25 +18,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.API.adapter.TrainerStudioVideosAdapter;
-import com.pupccis.fitnex.Activities.SearchEngine.SearchEngine;
 import com.pupccis.fitnex.Model.PostVideo;
 import com.pupccis.fitnex.Model.User;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.Utilities.Constants.PostVideoConstants;
-import com.pupccis.fitnex.ViewModel.PostVideoViewModel;
+import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes

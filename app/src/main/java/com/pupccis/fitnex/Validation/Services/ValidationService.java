@@ -6,6 +6,8 @@ import com.pupccis.fitnex.Validation.InputType;
 import com.pupccis.fitnex.Validation.ValidationModel;
 import com.pupccis.fitnex.Validation.ValidationResult;
 
+import java.util.regex.Pattern;
+
 public class ValidationService {
     private ValidationResult validationResult;
     private ValidationModel validationModel;
@@ -24,6 +26,35 @@ public class ValidationService {
         if(result.isValid()){
             if(input.equals("") || input == null){
                 result = ValidationResult.invalid("This Field is Required");
+            }
+        }
+        return this;
+    }
+    public ValidationService regexValidation(String pattern, String errorMessage){
+
+        boolean isMatch = Pattern.compile(pattern).matcher(input).matches();
+        if(isMatch)
+            result = ValidationResult.invalid(errorMessage);
+        return this;
+    }
+    public ValidationService validateInt(){
+        if(result.isValid()){
+            try{
+                int number = Integer.parseInt(input);
+                if(number<0){
+                    result = ValidationResult.invalid("This must be higher than 0");
+                }
+            }catch (NumberFormatException ex){
+                result = ValidationResult.invalid("Invalid input, this must be a Number");
+            }
+        }
+        return this;
+    }
+    public ValidationService notZero(){
+        if(result.isValid()){
+            int number = Integer.parseInt(input);
+            if (number == 0){
+                result = ValidationResult.invalid("Input cannot be 0");
             }
         }
         return this;
@@ -61,7 +92,7 @@ public class ValidationService {
 
         if(result.isValid()){
             if(input.equals("") || input == null){
-                result = ValidationResult.invalid("This Field is Required");
+                result = ValidationResult.invalid("This Field is required");
             }
         }
 

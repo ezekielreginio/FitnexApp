@@ -1,11 +1,11 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,11 +20,18 @@ import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.DAO.ProgramDAO;
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.ViewModel.ProgramViewModel;
+import com.pupccis.fitnex.Validation.InputType;
+import com.pupccis.fitnex.Validation.Services.ProgramValidationService;
+import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
+
+import java.util.ArrayList;
 
 public class AddProgram extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private Animation rotateAnimation;
@@ -37,6 +44,9 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
 
     private Program program_intent;
     private ProgramViewModel programViewModel;
+    private TextInputLayout til_name, til_description, til_category, til_sessionNumber, til_duration;
+    private ArrayList<ValidationModel> fields = new ArrayList<>();
+    private Boolean isValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,6 +75,28 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         addProgram = (Button) findViewById(R.id.buttonAddProgramButton);
         addProgram.setOnClickListener(this);
         closeButton.setOnClickListener(this);
+
+        til_name = findViewById(R.id.textInputProgramName);
+        til_description = findViewById(R.id.textInputProgramDescription);
+        til_category = findViewById(R.id.textInputProgramCategory);
+        til_sessionNumber = findViewById(R.id.textInputProgramSessionNumber);
+        til_duration = findViewById(R.id.textInputProgramDuration);
+
+        fields.add(new ValidationModel(til_name, InputType.STRING));
+        fields.add(new ValidationModel(til_description, InputType.STRING));
+        //fields.add(new ValidationModel(til_category, InputType.INT));
+        fields.add(new ValidationModel(til_sessionNumber, InputType.INT));
+        fields.add(new ValidationModel(til_duration, InputType.INT));
+
+        ValidationEventBinder validationEventBinder = new ValidationEventBinder();
+        validationEventBinder.bindEvents(fields, new ProgramValidationService());
+
+        validationEventBinder.getIsValid().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                isValid = aBoolean;
+            }
+        });
 
         //ViewModel Instantiation
         programViewModel = new ViewModelProvider(this).get(ProgramViewModel .class);
@@ -96,35 +128,60 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
                 closeForm();
                 break;
             case(R.id.buttonAddProgramButton):
-                String name = editName.getText().toString();
-                String description = editDescription.getText().toString();
-                String category = "" + editCategory.getSelectedItemPosition();
-                String sessionNumber = editSessionNumber.getText().toString();
-                String duration = editDuration.getText().toString();
-                Program program = new Program.Builder(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
-
-                if(program_intent != null){
-                    Program updatedProgram = new Program.Builder(program)
-                            .setProgramID(program_intent.getProgramID())
-                            .setTrainerID(program_intent.getTrainerID())
-                            .build();
-                    programViewModel.updateProgram(updatedProgram);
-                    //program.setTrainerID(program_intent.getTrainerID());
-                    //program.setProgramID(program_intent.getProgramID());
-                    //programDAO.updateProgram(program);
-                    Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
-                }
-
-                else{
-                    programViewModel.insertProgram(program);
-                    //programDAO.createProgram(program);
-                    Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
-                }
-
+                addClass();
                 break;
 
         }
-        closeForm();
+
+    }
+
+    private void addClass(){
+        for(ValidationModel field: fields){
+            String input = field.getTextInputLayout().getEditText().getText().toString();
+            if(input == null || input.equals("")){
+                TextInputLayout textInputLayout = field.getTextInputLayout();
+                textInputLayout.setErrorEnabled(true);
+                textInputLayout.setError("This Field is required");
+                isValid = false;
+            }
+        }
+        if(isValid && this.isValid){
+            String name = editName.getText().toString();
+            String description = editDescription.getText().toString();
+            String category = "" + editCategory.getSelectedItemPosition();
+            String sessionNumber = editSessionNumber.getText().toString();
+            String duration = editDuration.getText().toString();
+            Program program = new Program.Builder(name, description, category, sessionNumber, duration, FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
+
+            if(program_intent != null){
+                Program updatedProgram = new Program.Builder(program)
+                        .setProgramID(program_intent.getProgramID())
+                        .setTrainerID(program_intent.getTrainerID())
+                        .build();
+                programViewModel.updateProgram(updatedProgram);
+                //program.setTrainerID(program_intent.getTrainerID());
+                //program.setProgramID(program_intent.getProgramID());
+                //programDAO.updateProgram(program);
+                Toast.makeText(this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
+            }
+
+            else{
+                programViewModel.insertProgram(program);
+                //programDAO.createProgram(program);
+                Toast.makeText(this, "Program Successfully Created", Toast.LENGTH_SHORT).show();
+            }
+            closeForm();
+//            UserViewModel.registerUser(user).observe(this, new Observer<User>() {
+//                @Override
+//                public void onChanged(User user) {
+//                    if(user != null)
+//                        Toast.makeText(FitnexRegister.this, "Registration Successful, Welcome to Fitnex!", Toast.LENGTH_LONG).show();
+//                }
+//            });
+        }
+        else{
+            Toast.makeText(AddProgram.this, "Failed to register, please check your inputs", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void closeForm(){

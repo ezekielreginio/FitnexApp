@@ -1,16 +1,12 @@
 package com.pupccis.fitnex.Activities.Login;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,24 +15,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.auth.User;
-import com.google.firebase.database.FirebaseDatabase;
-import com.pupccis.fitnex.Activities.Main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Model.User;
-import com.pupccis.fitnex.Utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.Validation.InputType;
 import com.pupccis.fitnex.Validation.Services.UserValidationService;
 import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
-import com.pupccis.fitnex.Validation.Services.ValidationService;
 import com.pupccis.fitnex.Validation.ValidationModel;
-import com.pupccis.fitnex.Validation.ValidationResult;
-import com.pupccis.fitnex.ViewModel.UserViewModel;
+import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 

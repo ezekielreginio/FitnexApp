@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.ViewModel;
+package com.pupccis.fitnex.viewmodel;
 
 import static com.pupccis.fitnex.Repository.FitnessClassesRepository.getFitnessClassesQuery;
 

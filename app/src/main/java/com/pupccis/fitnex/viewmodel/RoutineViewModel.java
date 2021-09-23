@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.ViewModel;
+package com.pupccis.fitnex.viewmodel;
 
 import android.content.Context;
 
@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.pupccis.fitnex.API.globals.DataObserver;
-import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.Repository.RoutinesRepository;
 

@@ -1,9 +1,10 @@
 package com.pupccis.fitnex.Activities.Main.Trainer;
 
-import static com.pupccis.fitnex.ViewModel.FitnessClassViewModel.updateFitnessClass;
+import static com.pupccis.fitnex.viewmodel.FitnessClassViewModel.updateFitnessClass;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
@@ -25,13 +26,19 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.Model.FitnessClass;
 import com.pupccis.fitnex.Model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.ViewModel.FitnessClassViewModel;
+import com.pupccis.fitnex.Validation.Services.FitnessClassValidationService;
+import com.pupccis.fitnex.Validation.Services.ValidationEventBinder;
+import com.pupccis.fitnex.Validation.ValidationModel;
+import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -49,10 +56,16 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     private Calendar calendar = Calendar.getInstance();
     private FitnessClass fitness_intent;
     private FitnessClassViewModel fitnessClassViewModel;
+    private TextInputLayout til_name, til_description, til_category,til_timeStart, til_timeEnd, til_sessionNumber, til_duration;
+    private ArrayList<ValidationModel> fields = new ArrayList<>();
+    private Boolean isValid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         //ViewModel Instantiation
         fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
         fitnessClassViewModel.init(getApplicationContext());
@@ -71,8 +84,37 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         editSessionNumber = (EditText) findViewById(R.id.editTextAddClassSessionNumber);
         editDuration = (EditText) findViewById(R.id.editTextAddClassDuration);
 
-        editTimeStart.setInputType(InputType.TYPE_NULL);
-        editTimeEnd.setInputType(InputType.TYPE_NULL);
+        til_name = findViewById(R.id.textInputClassName);
+        til_description = findViewById(R.id.textInputClassDescription);
+        til_category = findViewById(R.id.textInputClassCategory);
+        til_timeStart = findViewById(R.id.textInputClassTimeStart);
+        til_timeEnd = findViewById(R.id.textInputClassTimeEnd);
+        til_sessionNumber = findViewById(R.id.textInputClassSessionNumber);
+        til_duration = findViewById(R.id.textInputClassDuration);
+
+        fields.add(new ValidationModel(til_name, com.pupccis.fitnex.Validation.InputType.STRING));
+        fields.add(new ValidationModel(til_description, com.pupccis.fitnex.Validation.InputType.STRING));
+        //fields.add(new ValidationModel(til_category, com.pupccis.fitnex.Validation.InputType.CATEGORY));
+        fields.add(new ValidationModel(til_timeStart, com.pupccis.fitnex.Validation.InputType.TIME));
+        fields.add(new ValidationModel(til_timeEnd, com.pupccis.fitnex.Validation.InputType.TIME));
+        fields.add(new ValidationModel(til_sessionNumber, com.pupccis.fitnex.Validation.InputType.INT));
+        fields.add(new ValidationModel(til_duration, com.pupccis.fitnex.Validation.InputType.INT));
+
+        ValidationEventBinder validationEventBinder = new ValidationEventBinder();
+        validationEventBinder.bindEvents(fields, new FitnessClassValidationService());
+
+        validationEventBinder.getIsValid().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                isValid = aBoolean;
+            }
+        });
+
+
+        editTimeStart.setRawInputType(InputType.TYPE_NULL);
+        editTimeStart.setFocusable(false);
+        editTimeEnd.setRawInputType(InputType.TYPE_NULL);
+        editTimeEnd.setFocusable(false);
         addClass = (Button) findViewById(R.id.buttonAddClassButton);
 
         //Spinner Category Dropdown
@@ -84,8 +126,10 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         fitnessClassCategory = (Spinner) findViewById(R.id.editTextAddFitnessClassCategory);
 
         //Event Bindings
-        editTimeStart.setOnFocusChangeListener(this);
-        editTimeEnd.setOnFocusChangeListener(this);
+//        editTimeStart.setOnFocusChangeListener(this);
+//        editTimeEnd.setOnFocusChangeListener(this);
+        editTimeStart.setOnClickListener(this);
+        editTimeEnd.setOnClickListener(this);
         addClass.setOnClickListener(this);
         closeButton.setOnClickListener(this);
 
@@ -116,41 +160,11 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch(view.getId()){
             case(R.id.buttonAddClassButton):
-                String name = editName.getText().toString();
-                String description = editDescription.getText().toString();
-                String sessionNo = editSessionNumber.getText().toString();
-                String duration = editDuration.getText().toString();
-                String timeStart = editTimeStart.getText().toString();
-                String timeEnd = editTimeEnd.getText().toString();
-                int category = fitnessClassCategory.getSelectedItemPosition();
-
-                Date currentTime = calendar.getTime();
-                FitnessClass fitnessClass = new FitnessClass.Builder(name, description, category, timeStart, timeEnd, sessionNo, duration).setDateCreated(currentTime.toString()).setClassTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
-
-                if(fitness_intent != null){
-                    fitnessClass.setClassID(fitness_intent.getClassID());
-                    Log.d("Category", fitnessClass.getCategory()+"");
-                    updateFitnessClass(fitnessClass);
-                    Toast.makeText(this, "Fitness Class Successfully Updated", Toast.LENGTH_SHORT).show();
-                    closeForm();
-                }
-                else{
-                    fitnessClassViewModel.insertFitnessClass(fitnessClass);
-                    Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
-                    closeForm();
-                }
-
+                addClass();
                 break;
             case(R.id.relativeLayoutAddClassCloseButton):
 
                 break;
-        }
-
-    }
-
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        switch(view.getId()) {
             case (R.id.editTextTimeStart):
                 showTimeDialog(editTimeStart, 0);
                 Toast.makeText(AddFitnessClass.this, "time start click", Toast.LENGTH_SHORT).show();
@@ -159,6 +173,71 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(AddFitnessClass.this, "time end click", Toast.LENGTH_SHORT).show();
                 showTimeDialog(editTimeEnd, 1);
                 break;
+        }
+
+    }
+
+    private void addClass(){
+        for(ValidationModel field: fields){
+            String input = field.getTextInputLayout().getEditText().getText().toString();
+            if(input == null || input.equals("")){
+                TextInputLayout textInputLayout = field.getTextInputLayout();
+                textInputLayout.setErrorEnabled(true);
+                textInputLayout.setError("This Field is required");
+                isValid = false;
+            }
+        }
+        if(isValid && this.isValid){
+            String name = editName.getText().toString();
+            String description = editDescription.getText().toString();
+            String sessionNo = editSessionNumber.getText().toString();
+            String duration = editDuration.getText().toString();
+            String timeStart = editTimeStart.getText().toString();
+            String timeEnd = editTimeEnd.getText().toString();
+            int category = fitnessClassCategory.getSelectedItemPosition();
+            Date currentTime = calendar.getTime();
+            FitnessClass fitnessClass = new FitnessClass
+                    .Builder(name, description, category, timeStart, timeEnd, sessionNo, duration)
+                    .setDateCreated(currentTime.toString())
+                    .setClassTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .build();
+            Toast.makeText(AddFitnessClass.this, "Class created", Toast.LENGTH_LONG).show();
+            if(fitness_intent != null){
+                fitnessClass.setClassID(fitness_intent.getClassID());
+                Log.d("Category", fitnessClass.getCategory()+"");
+                updateFitnessClass(fitnessClass);
+                Toast.makeText(this, "Fitness Class Successfully Updated", Toast.LENGTH_SHORT).show();
+                closeForm();
+            }
+            else{
+                fitnessClassViewModel.insertFitnessClass(fitnessClass);
+                Toast.makeText(this, "Fitness Class  Successfully Created", Toast.LENGTH_SHORT).show();
+                closeForm();
+            }
+//            UserViewModel.registerUser(user).observe(this, new Observer<User>() {
+//                @Override
+//                public void onChanged(User user) {
+//                    if(user != null)
+//                        Toast.makeText(FitnexRegister.this, "Registration Successful, Welcome to Fitnex!", Toast.LENGTH_LONG).show();
+//                }
+//            });
+        }
+        else{
+            Toast.makeText(AddFitnessClass.this, "Failed to register, please check your inputs", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        switch(view.getId()) {
+//            case (R.id.editTextTimeStart):
+//                showTimeDialog(editTimeStart, 0);
+//                Toast.makeText(AddFitnessClass.this, "time start click", Toast.LENGTH_SHORT).show();
+//                break;
+//            case(R.id.editTextTimeEnd):
+//                Toast.makeText(AddFitnessClass.this, "time end click", Toast.LENGTH_SHORT).show();
+//                showTimeDialog(editTimeEnd, 1);
+//                break;
         }
     }
 

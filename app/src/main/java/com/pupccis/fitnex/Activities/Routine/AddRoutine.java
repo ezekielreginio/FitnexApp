@@ -12,14 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 
 import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.Model.Routine;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.ViewModel.RoutineViewModel;
+import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 public class AddRoutine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private EditText editTextAddRoutineName, editTextAddRoutineReps, editTextAddRoutineSets, editTextAddRoutineWeights, editTextAddRoutineDuration;

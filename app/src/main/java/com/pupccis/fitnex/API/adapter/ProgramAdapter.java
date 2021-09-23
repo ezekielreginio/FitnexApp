@@ -1,6 +1,5 @@
 package com.pupccis.fitnex.API.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.Activities.Main.Trainer.AddProgram;
@@ -25,10 +23,9 @@ import com.pupccis.fitnex.Model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.Utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.Utilities.Constants.ProgramConstants;
-import com.pupccis.fitnex.ViewModel.ProgramViewModel;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder>{
 
