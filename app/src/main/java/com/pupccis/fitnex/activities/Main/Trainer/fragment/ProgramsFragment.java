@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,16 +18,19 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.api.adapter.ProgramAdapter;
+import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
+import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +59,7 @@ public class ProgramsFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private ProgramViewModel programViewModel;
+    private static FragmentProgramsBinding fragmentProgramsBinding;
 
     public ProgramsFragment() {
         // Required empty public constructor
@@ -81,6 +86,9 @@ public class ProgramsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentProgramsBinding.setViewModel(new ProgramViewModel());
+        fragmentProgramsBinding.setLifecycleOwner(this);
+        fragmentProgramsBinding.executePendingBindings();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -195,6 +203,8 @@ public class ProgramsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_programs, container, false);
+        fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
+        View view = fragmentProgramsBinding.getRoot();
+        return view;
     }
 }
