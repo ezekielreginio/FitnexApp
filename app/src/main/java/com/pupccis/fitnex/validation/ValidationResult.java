@@ -3,6 +3,7 @@ package com.pupccis.fitnex.validation;
 public class ValidationResult {
     private boolean isValid;
     private String errorMsg;
+    private String helperMsg;
 
     public ValidationResult(){
 
@@ -20,6 +21,9 @@ public class ValidationResult {
     public static ValidationResult invalid(String errorMsg) {
         return new ValidationResult(false, errorMsg);
     }
+    public static ValidationResult invalid(String errorMsg, String helper) {
+        return new ValidationResult(false, errorMsg).setHelper(helper);
+    }
 
     public boolean notValid() {
         return !isValid;
@@ -31,5 +35,14 @@ public class ValidationResult {
 
     public String getErrorMsg() {
         return errorMsg;
+    }
+
+    public String getHelperMsg() {
+        return helperMsg;
+    }
+
+    public ValidationResult setHelper(String helperMsg){
+        this.helperMsg = helperMsg;
+        return this;
     }
 }

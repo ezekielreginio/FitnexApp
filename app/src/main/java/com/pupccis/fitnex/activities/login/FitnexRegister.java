@@ -44,18 +44,18 @@ public class FitnexRegister extends AppCompatActivity{
         binding.setViewModel(new UserViewModel());
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
-        changeStatusBarColor();
+        //changeStatusBarColor();
 
     }
-    public void changeStatusBarColor(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
-
-        }
-    }
+//    public void changeStatusBarColor(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+//
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
+//
+//        }
+//    }
 
     public void onLoginClick (View view){
         startActivity(new Intent(this, FitnexLogin.class ));
@@ -70,30 +70,22 @@ public class FitnexRegister extends AppCompatActivity{
 
     @BindingAdapter({"validationResultName"})
     public static void validateName(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputName.setErrorEnabled(!result.isValid());
-        binding.textInputName.setError(result.getErrorMsg());
+        errorHandler(binding.textInputName, result);
     }
 
     @BindingAdapter({"validationResultAge"})
     public static void validateAge(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputAge.setErrorEnabled(!result.isValid());
-        binding.textInputAge.setError(result.getErrorMsg());
+        errorHandler(binding.textInputAge, result);
     }
 
     @BindingAdapter({"validationResultPassword"})
     public static void validatePassword(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputPassword.setErrorEnabled(!result.isValid());
-        binding.textInputPassword.setError(result.getErrorMsg());
+        errorHandler(binding.textInputPassword, result);
     }
 
     @BindingAdapter({"validationResultEmail"})
     public static void validateEmail(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputRegisterEmail.setErrorEnabled(!result.isValid());
-        binding.textInputRegisterEmail.setError(result.getErrorMsg());
+        errorHandler(binding.textInputRegisterEmail, result);
     }
 
     @BindingAdapter({"triggerEmailObserver"})
@@ -106,6 +98,13 @@ public class FitnexRegister extends AppCompatActivity{
                 }
             });
         }
+    }
+
+    private static void errorHandler(TextInputLayout textInputLayout, ValidationResult result) {
+        textInputLayout.setErrorEnabled(!result.isValid());
+        textInputLayout.setError(result.getErrorMsg());
+        if(result.getHelperMsg() != null)
+            textInputLayout.getEditText().setError(result.getHelperMsg());
     }
 
 }
