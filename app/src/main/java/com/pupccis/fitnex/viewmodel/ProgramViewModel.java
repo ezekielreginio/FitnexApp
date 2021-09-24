@@ -33,6 +33,7 @@ public class ProgramViewModel extends BaseObservable {
     private Context context;
     private DataObserver dataObserver = new DataObserver();
 
+    
     //Bindable Validation Results
     @Bindable
     private ValidationResult validationResultProgramName = ValidationResult.valid();

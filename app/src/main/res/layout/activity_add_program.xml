@@ -17,7 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="100"
-    tools:context=".activities.Main.Trainer.AddProgram">
+    tools:context=".activities.main.Trainer.AddProgram">
 
     <LinearLayout
         android:id="@+id/linearLayoutAddProgramContainer"
@@ -65,6 +65,7 @@
                             style="@style/AddProgramText"
                             android:hint="Program Name"
                             android:maxLines="1"
+                            android:text=""
                             android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.NAME)}"
                             bind:validationResultProgramName="@{viewModel.validationResultProgramName}"/>
                     </com.google.android.material.textfield.TextInputLayout>

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.activities.Routine.AddRoutine;
+import com.pupccis.fitnex.activities.routine.AddRoutine;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;

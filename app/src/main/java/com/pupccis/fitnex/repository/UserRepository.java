@@ -51,15 +51,18 @@ public class UserRepository {
     public static MutableLiveData<Boolean> duplicateEmailLiveResponse(String email){
         MutableLiveData<Boolean> booleanMutableLiveData = new MutableLiveData<>();
         booleanMutableLiveData.setValue(null);
-        FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-            @Override
-            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                if(task.getResult().getSignInMethods().isEmpty())
-                    booleanMutableLiveData.postValue(true);
-                else
-                    booleanMutableLiveData.postValue(false);
-            }
-        });
+        if(email != null && !email.isEmpty()){
+            FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                @Override
+                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                    if(task.getResult().getSignInMethods().isEmpty())
+                        booleanMutableLiveData.postValue(true);
+                    else
+                        booleanMutableLiveData.postValue(false);
+                }
+            });
+        }
+
         return booleanMutableLiveData;
     }
 

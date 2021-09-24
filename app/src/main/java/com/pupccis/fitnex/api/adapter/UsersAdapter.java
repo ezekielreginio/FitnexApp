@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.model.User;
-import com.pupccis.fitnex.activities.VideoConferencing.listeners.UsersListener;
+import com.pupccis.fitnex.activities.videoconferencing.listeners.UsersListener;
 
 import java.util.List;
 
