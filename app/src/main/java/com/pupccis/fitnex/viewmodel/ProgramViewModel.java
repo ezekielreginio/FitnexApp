@@ -33,7 +33,52 @@ public class ProgramViewModel extends BaseObservable {
     private Context context;
     private DataObserver dataObserver = new DataObserver();
 
-    
+    //Bindable Attributes
+    @Bindable
+    private String addProgramName = null;
+    @Bindable
+    private String addProgramDescription = null;
+    @Bindable
+    private String addProgramCategory = null;
+    @Bindable
+    private String addProgramSessionNumber = null;
+    @Bindable
+    private String addProgramDuration = null;
+
+    //Bindable Attributes Getters
+    public String getAddProgramName() {
+        return addProgramName;
+    }
+    public String getAddProgramDescription() {
+        return addProgramDescription;
+    }
+    public String getAddProgramCategory() {
+        return addProgramCategory;
+    }
+    public String getAddProgramSessionNumber() {
+        return addProgramSessionNumber;
+    }
+    public String getAddProgramDuration() {
+        return addProgramDuration;
+    }
+
+    //Bindable Attributes Setters
+    public void setAddProgramName(String addProgramName) {
+        this.addProgramName = addProgramName;
+    }
+    public void setAddProgramDescription(String addProgramDescription) {
+        this.addProgramDescription = addProgramDescription;
+    }
+    public void setAddProgramCategory(String addProgramCategory) {
+        this.addProgramCategory = addProgramCategory;
+    }
+    public void setAddProgramSessionNumber(String addProgramSessionNumber) {
+        this.addProgramSessionNumber = addProgramSessionNumber;
+    }
+    public void setAddProgramDuration(String addProgramDuration) {
+        this.addProgramDuration = addProgramDuration;
+    }
+
     //Bindable Validation Results
     @Bindable
     private ValidationResult validationResultProgramName = ValidationResult.valid();
@@ -44,6 +89,7 @@ public class ProgramViewModel extends BaseObservable {
     @Bindable
     private ValidationResult validationResultProgramDuration = ValidationResult.valid();
 
+    //Bindable Validation Results Getters
     public ValidationResult getValidationResultProgramName() {
         return validationResultProgramName;
     }
@@ -57,6 +103,7 @@ public class ProgramViewModel extends BaseObservable {
         return validationResultProgramDuration;
     }
 
+    //Bindable Validation Results Setters
     private void setValidationResultProgramName(ValidationResult validationResultProgramName) {
         Log.d("Set trigger", "Troggered");
         this.validationResultProgramName = validationResultProgramName;
@@ -70,7 +117,7 @@ public class ProgramViewModel extends BaseObservable {
         this.validationResultProgramSessionNumber = validationResultProgramSessionNumber;
         notifyPropertyChanged(BR.validationResultProgramSessionNumber);
     }
-    public void setValidationResultProgramDuration(ValidationResult validationResultProgramDuration) {
+    private void setValidationResultProgramDuration(ValidationResult validationResultProgramDuration) {
         this.validationResultProgramDuration = validationResultProgramDuration;
         notifyPropertyChanged(BR.validationResultProgramDuration);
     }
@@ -116,10 +163,10 @@ public class ProgramViewModel extends BaseObservable {
         ProgramsRepository.getInstance().deleteProgram(programID);
     }
 
-    public void onTextChange(Editable editable, ProgramFitnessClassFields field){
+    public void onTextChange(String input, ProgramFitnessClassFields field){
         Log.d("Enum", field.toString());
-        Log.d("textChanged", editable.toString());
-        ValidationResult result = new ProgramFitnessClassValidationService(editable.toString(), field).validate();
+
+        ValidationResult result = new ProgramFitnessClassValidationService(input, field).validate();
         Log.d("Validation Result", result.isValid()+"");
 
         switch (field){

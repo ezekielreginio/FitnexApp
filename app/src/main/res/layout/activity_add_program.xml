@@ -65,8 +65,8 @@
                             style="@style/AddProgramText"
                             android:hint="Program Name"
                             android:maxLines="1"
-                            android:text=""
-                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.NAME)}"
+                            android:text="@={viewModel.addProgramName}"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(viewModel.addProgramName, fragmentFields.NAME)}"
                             bind:validationResultProgramName="@{viewModel.validationResultProgramName}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,8 @@
                             style="@style/AddProgramText"
                             android:hint="Program Description"
                             android:maxLines="3"
-                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.DESCRIPTION)}"
+                            android:text="@={viewModel.addProgramDescription}"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(viewModel.addProgramDescription, fragmentFields.DESCRIPTION)}"
                             bind:validationResultProgramDescription="@{viewModel.validationResultProgramDescription}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +133,8 @@
                             android:hint="Session Number"
                             android:inputType="time"
                             android:maxLines="3"
-                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.SESSION_NUMBER)}"
+                            android:text="@={viewModel.addProgramSessionNumber}"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(viewModel.addProgramSessionNumber, fragmentFields.SESSION_NUMBER)}"
                             bind:validationResultProgramSessionNumber="@{viewModel.validationResultProgramSessionNumber}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +150,8 @@
                             android:hint=" Duration(Minutes) "
                             android:inputType="time"
                             android:maxLines="3"
-                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, fragmentFields.DURATION)}"
+                            android:text="@={viewModel.addProgramDuration}"
+                            android:afterTextChanged="@{(text) -> viewModel.onTextChange(viewModel.addProgramDuration, fragmentFields.DURATION)}"
                             bind:validationResultProgramDuration="@{viewModel.validationResultProgramDuration}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
