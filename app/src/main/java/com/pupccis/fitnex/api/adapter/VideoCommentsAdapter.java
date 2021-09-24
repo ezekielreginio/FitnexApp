@@ -1,6 +1,6 @@
 package com.pupccis.fitnex.api.adapter;
 
-import static com.pupccis.fitnex.activities.VideoPlayer.TrainingVideoCommentReply.initiateReplyView;
+import static com.pupccis.fitnex.activities.videoplayer.TrainingVideoCommentReply.initiateReplyView;
 import static com.pupccis.fitnex.model.DAO.VideoCommentDAO.setReplyCount;
 
 import android.content.Context;

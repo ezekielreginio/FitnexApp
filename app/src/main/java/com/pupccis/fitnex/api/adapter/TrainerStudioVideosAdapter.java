@@ -16,7 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.pupccis.fitnex.activities.VideoPlayer.TrainingVideoPlayer;
+import com.pupccis.fitnex.activities.videoplayer.TrainingVideoPlayer;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="100"
-    tools:context=".activities.Routine.AddRoutine">
+    tools:context=".activities.routine.AddRoutine">
 
     <LinearLayout
         android:id="@+id/linearLayoutAddProgramContainer"

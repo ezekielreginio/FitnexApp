@@ -1,47 +1,44 @@
 package com.pupccis.fitnex.validation.Services;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
+import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 
 
-public class UserValidationService implements ValidationServiceInterface, EmailDuplicateChecker{
+public class UserValidationService{
     private ValidationModel validationModel;
-    private InputType inputType;
+    private RegistrationFields field;
     private String input;
     private static UserValidationService instance;
 
-    public UserValidationService(String input, InputType inputType){
+    public UserValidationService(String input, RegistrationFields field){
         this.input = input;
-        this.inputType = inputType;
+        this.field = field;
     }
 
-    @Override
-    public UserValidationService getInstance(ValidationModel object){
-        return null;
-    }
-
-    @Override
     public ValidationResult validate(){
         ValidationResult result = ValidationResult.valid();
-        ValidationService service = new ValidationService(this.input, this.inputType);
+        ValidationService service = new ValidationService(this.input);
 
-        switch (inputType){
-            case STRING:
+        switch (field){
+            case NAME:
                 result = service
                         .requiredField()
                         .validate();
                 break;
-            case INT:
+            case AGE:
                 result = service
                         .requiredField()
                         .validateAge()
                         .validate();
                 break;
-            case NEW_EMAIL:
+            case EMAIL:
                 result = service
                         .requiredField()
                         .validateEmail()
@@ -56,9 +53,8 @@ public class UserValidationService implements ValidationServiceInterface, EmailD
         return result;
     }
 
-    @Override
     public MutableLiveData<Boolean> checkEmailDuplicate() {
-
+        Log.d("Checking for Duplicates", "Validation Service");
         MutableLiveData<Boolean> booleanMutableLiveData = UserRepository.duplicateEmailLiveResponse(input.toString());
         return booleanMutableLiveData;
     }

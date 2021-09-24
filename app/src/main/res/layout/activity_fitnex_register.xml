@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/tools">
     <data>
-
+        <variable
+            name="view"
+            type="com.pupccis.fitnex.activities.login.FitnexRegister" />
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.UserViewModel" />
@@ -11,14 +13,15 @@
             type="com.pupccis.fitnex.validation.InputType" />
         <variable
             name="registerFields"
-            type="com.pupccis.fitnex.model.User.UserFields" />
+            type="com.pupccis.fitnex.validation.validationFields.RegistrationFields" />
+
     </data>
     <RelativeLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.Login.FitnexRegister"
+        tools:context=".activities.login.FitnexRegister"
         android:background="@color/register_bk_color"
         android:focusableInTouchMode="true"
         android:gravity="center"
@@ -77,7 +80,8 @@
                                 android:hint="Name"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, inputType.STRING, registerFields.NAME)}"
+                                android:text="@={viewModel.registerName}"
+                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerName, registerFields.NAME)}"
                                 bind:validationResultName="@{viewModel.validationResultName}"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +98,8 @@
                                 android:hint="Age"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, inputType.INT, registerFields.AGE)}"
+                                android:text="@={viewModel.registerAge}"
+                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerAge, registerFields.AGE)}"
                                 bind:validationResultAge="@{viewModel.validationResultAge}"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +115,12 @@
                                 android:hint="Email"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
+                                android:text="@={viewModel.registerEmail}"
+                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerEmail, registerFields.EMAIL)}"
+                                bind:validationResultEmail="@{viewModel.validationResultEmail}"
+                                bind:triggerEmailObserver="@{viewModel.triggerEmailObserver}"
                                 />
+                            <!--app:onFocusChangeListener="@{viewModel::onFocusChange}"-->
                         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -125,7 +135,8 @@
                                 android:hint="Password"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:afterTextChanged="@{(text) -> viewModel.onTextChange(text, inputType.PASSWORD, registerFields.PASSWORD)}"
+                                android:text="@={viewModel.registerPassword}"
+                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerPassword, registerFields.PASSWORD)}"
                                 bind:validationResultPassword="@{viewModel.validationResultPassword}"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
