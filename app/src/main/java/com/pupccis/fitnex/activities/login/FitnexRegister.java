@@ -1,6 +1,9 @@
 package com.pupccis.fitnex.activities.login;
 
 
+import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
@@ -20,23 +23,21 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 //import com.google.firebase.firestore.auth.User;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.databinding.ActivityFitnexRegisterBinding;
 import com.pupccis.fitnex.validation.ValidationResult;
+import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class FitnexRegister extends AppCompatActivity{
-    private EditText editName, editAge, editEmail, editPassword;
-    private TextView registerUser, registerTrainer, おっぱい;
-    private ArrayList<ValidationModel> fields = new ArrayList<>();
-
-    private TextInputLayout til_name, til_age, til_email, til_password;
-
-    private Boolean isValid;
+public class FitnexRegister extends AppCompatActivity implements View.OnClickListener{
 
     private static ActivityFitnexRegisterBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,17 +45,7 @@ public class FitnexRegister extends AppCompatActivity{
         binding.setViewModel(new UserViewModel());
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
-        changeStatusBarColor();
-
-    }
-    public void changeStatusBarColor(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
-
-        }
+        binding.setPresenter(this);
     }
 
     public void onLoginClick (View view){
@@ -62,50 +53,77 @@ public class FitnexRegister extends AppCompatActivity{
         overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
+    @BindingAdapter({"validationData"})
+    public static void setValidate(View view, HashMap<String, Object> validationData){
+        if(validationData != null){
+            Log.d("Validation Data", "Triggered");
+            ValidationResult result =(ValidationResult) validationData.get("validationResult");
+            RegistrationFields field = (RegistrationFields) validationData.get("field");
+            switch(field){
+                case NAME:
+                    errorHandler(binding.textInputName, result);
+                    break;
+                case AGE:
+                    errorHandler(binding.textInputAge, result);
+                    break;
+                case PASSWORD:
+                    errorHandler(binding.textInputPassword, result);
+                    break;
+                case EMAIL:
+                    errorHandler(binding.textInputRegisterEmail, result);
+                    if(result.isValid()){
+                        binding.getViewModel().emailCheckerLiveData().observe(binding.getLifecycleOwner(), new Observer<ValidationResult>() {
+                            @Override
+                            public void onChanged(ValidationResult validationResult) {
+                                if(validationResult!=null){
+                                    errorHandler(binding.textInputRegisterEmail, validationResult);
+                                    binding.getViewModel().emailCheckerLiveData().removeObserver(this::onChanged);
+                                }
+                            }
+                        });
+                    }
+                    break;
+            }
+        }
+    }
+
     @BindingAdapter({"toastMessage"})
     public static void runMe(View view, String message) {
         if (message != null)
             Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+        binding.textInputName.isErrorEnabled();
     }
 
-    @BindingAdapter({"validationResultName"})
-    public static void validateName(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputName.setErrorEnabled(!result.isValid());
-        binding.textInputName.setError(result.getErrorMsg());
-    }
 
-    @BindingAdapter({"validationResultAge"})
-    public static void validateAge(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputAge.setErrorEnabled(!result.isValid());
-        binding.textInputAge.setError(result.getErrorMsg());
-    }
 
-    @BindingAdapter({"validationResultPassword"})
-    public static void validatePassword(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputPassword.setErrorEnabled(!result.isValid());
-        binding.textInputPassword.setError(result.getErrorMsg());
-    }
 
-    @BindingAdapter({"validationResultEmail"})
-    public static void validateEmail(View view, ValidationResult result) {
-        Log.d("View Layer", result.isValid()+"");
-        binding.textInputRegisterEmail.setErrorEnabled(!result.isValid());
-        binding.textInputRegisterEmail.setError(result.getErrorMsg());
-    }
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonRegisterButton){
+            Log.d("Register", "clicked");
+            ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
+            textInputLayouts.add(binding.textInputAge);
+            textInputLayouts.add(binding.textInputName);
+            textInputLayouts.add(binding.textInputRegisterEmail);
+            textInputLayouts.add(binding.textInputPassword);
+            boolean isInvalid = false;
 
-    @BindingAdapter({"triggerEmailObserver"})
-    public static void sampleBind(View view, String string){
-        if(string != null){
-            binding.getViewModel().emailCheckerLiveData().observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean aBoolean) {
-                    binding.getViewModel().processEmailResponse(aBoolean);
-                }
-            });
+            uiErrorHandler(textInputLayouts);
+
+            if(isInvalid)
+                Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
+            else{
+                binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
+                binding.getViewModel().registerUser().observe(binding.getLifecycleOwner(), new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+                        if(user!= null)
+                            Toast.makeText(FitnexRegister.this, "User Successfully Registered", Toast.LENGTH_SHORT).show();
+                        binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                        binding.getViewModel().registerUser().removeObserver(this::onChanged);
+                    }
+                });
+            }
         }
     }
-
 }

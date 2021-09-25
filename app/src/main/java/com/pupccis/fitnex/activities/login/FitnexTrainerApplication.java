@@ -22,7 +22,7 @@ public class FitnexTrainerApplication extends AppCompatActivity {
         setContentView(R.layout.activity_fitnex_trainer_application);
 
         recipient = (EditText) findViewById(R.id.editTextApplicationEmail);
-        applyButton = (Button) findViewById(R.id.buttonApplyButton);
+        applyButton = (Button) findViewById(R.id.buttonRegisterButton);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { sendClick(); }

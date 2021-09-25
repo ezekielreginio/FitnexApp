@@ -53,22 +53,6 @@ public class UserValidationService{
         return result;
     }
 
-    public MutableLiveData<Boolean> checkEmailDuplicate() {
-        Log.d("Checking for Duplicates", "Validation Service");
-        MutableLiveData<Boolean> booleanMutableLiveData = UserRepository.duplicateEmailLiveResponse(input.toString());
-        return booleanMutableLiveData;
-    }
-
-
-//    public ValidationResult validate(ValidationModel model){
-//        String input = model.getTextInputLayout().getEditText().getText().toString();
-//        if(model.getInputType().equals(InputType.STRING)){
-//            ValidationResult result = validateString(input).validate();
-//            return result;
-//        }
-//        return null;
-//    }
-
 
 
 }
