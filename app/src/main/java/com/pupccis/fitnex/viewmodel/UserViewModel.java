@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.viewmodel;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -14,9 +15,10 @@ import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 
-public class UserViewModel extends BaseObservable {
+import java.util.HashMap;
 
-    MediatorLiveData mediatorLiveData = new MediatorLiveData<>();
+public class UserViewModel extends BaseObservable{
+
     @Bindable
     private String registerEmail = null;
     @Bindable
@@ -25,189 +27,82 @@ public class UserViewModel extends BaseObservable {
     private String registerAge = null;
     @Bindable
     private String registerPassword = null;
-
-    //Bindable Attributes
     @Bindable
-    private String toastMessage = null;
-
-    //Bindable Validation Results
-    @Bindable
-    private ValidationResult validationResultName = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultAge = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultPassword = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultEmail = ValidationResult.valid();
-
-    @Bindable
-    private String triggerEmailObserver = null;
-
+    private HashMap<String, Object> validationData = null;
 
     //Getter Methods
-    @Bindable
     public String getRegisterEmail() {
         return registerEmail;
     }
-    @Bindable
+
     public String getRegisterName() {
         return registerName;
     }
-    @Bindable
+
     public String getRegisterAge() {
         return registerAge;
     }
-    @Bindable
+
     public String getRegisterPassword() {
         return registerPassword;
     }
-    @Bindable
-    public ValidationResult getValidationResultName() {
-        return validationResultName;
+
+    public HashMap<String, Object> getValidationData() {
+        return validationData;
     }
-    @Bindable
-    public ValidationResult getValidationResultAge() {
-        return validationResultAge;
-    }
-    @Bindable
-    public ValidationResult getValidationResultEmail() {
-        return validationResultEmail;
-    }
-    @Bindable
-    public ValidationResult getValidationResultPassword() {
-        return validationResultPassword;
-    }
-    @Bindable
-    public String getToastMessage() {
-        return toastMessage;
-    }
-    @Bindable
-    public String getTriggerEmailObserver() {
-        return triggerEmailObserver;
+
+    public void setValidationData(HashMap<String, Object> validationData) {
+        this.validationData = validationData;
+        notifyPropertyChanged(BR.validationData);
     }
 
     //Setter Methods
     public void setRegisterName(String registerName) {
         this.registerName = registerName;
         notifyPropertyChanged(BR.registerName);
+        onTextChange(registerName, RegistrationFields.NAME);
     }
 
     public void setRegisterAge(String registerAge) {
         this.registerAge = registerAge;
         notifyPropertyChanged(BR.registerAge);
+        onTextChange(registerAge, RegistrationFields.AGE);
     }
 
     public void setRegisterPassword(String registerPassword) {
         this.registerPassword = registerPassword;
         notifyPropertyChanged(BR.registerPassword);
-    }
-
-    private void setValidationResultName(ValidationResult validationResult) {
-        this.validationResultName = validationResult;
-        notifyPropertyChanged(BR.validationResultName);
-    }
-
-    public void setValidationResultAge(ValidationResult validationResultAge) {
-        this.validationResultAge = validationResultAge;
-        notifyPropertyChanged(BR.validationResultAge);
-    }
-
-
-    public void setValidationResultPassword(ValidationResult validationResultPassword) {
-        this.validationResultPassword = validationResultPassword;
-        notifyPropertyChanged(BR.validationResultPassword);
-    }
-
-
-    public void setValidationResultEmail(ValidationResult validationResultEmail) {
-        this.validationResultEmail = validationResultEmail;
-        notifyPropertyChanged(BR.validationResultEmail);
-    }
-
-
-    private void setToastMessage(String toastMessage) {
-        this.toastMessage = toastMessage;
-        notifyPropertyChanged(BR.toastMessage);
+        onTextChange(registerPassword, RegistrationFields.PASSWORD);
     }
 
     public void setRegisterEmail(String registerEmail) {
+        Log.d("register email", "click");
         this.registerEmail = registerEmail;
         notifyPropertyChanged(BR.registerEmail);
+        onTextChange(registerEmail, RegistrationFields.EMAIL);
     }
 
-    public void setTriggerEmailObserver(String triggerEmailObserver) {
-        this.triggerEmailObserver = triggerEmailObserver;
-        notifyPropertyChanged(BR.triggerEmailObserver);
-    }
-
-    public static MutableLiveData<User> registerUser(User user){
-        MutableLiveData<User> userLiveData = UserRepository.registerUser(user);
-        return userLiveData;
-    }
-
-    public static MutableLiveData<Boolean> checkDuplicateEmail(String email){
-        MutableLiveData<Boolean> booleanMutableLiveData = UserRepository.duplicateEmailLiveResponse(email);
-        return  booleanMutableLiveData;
-    }
-
-    public void onRegisterClicked(){
-        Log.d("register", "clicked");
-        setToastMessage("Register Clicked");
-
-    }
-
+    //ViewModel Methods
     public void onTextChange(String input, RegistrationFields field){
-        Log.d("Enum", field.toString());
-        Log.d("textChanged", input);
         UserValidationService userValidationService= new UserValidationService(input, field);
         ValidationResult result = userValidationService.validate();
-        Log.d("Validation Result", result.isValid()+"");
 
-        switch (field){
-            case NAME:
-                setValidationResultName(result);
-                break;
-            case AGE:
-                setValidationResultAge(result);
-                break;
-            case PASSWORD:
-                setValidationResultPassword(result);
-                break;
-            case EMAIL:
-                setValidationResultEmail(result);
-                if(result.isValid()){
-                    setTriggerEmailObserver("Sample bindable");
-//                    userValidationService.checkEmailDuplicate().observeForever(new Observer<Boolean>() {
-//                        @Override
-//                        public void onChanged(Boolean aBoolean) {
-//                            Log.d("Duplicate", aBoolean+"");
-//                        }
-//                    });
-//                    mediatorLiveData.addSource(userValidationService.checkEmailDuplicate(), new Observer<Boolean>() {
-//                        @Override
-//                        public void onChanged(@Nullable Boolean valid) {
-//                            Log.d("Duplicate", valid+"");
-//                        }
-//                    });
-
-                }
-                break;
-        }
+        HashMap<String, Object> validationData = new HashMap<>();
+        validationData.put("validationResult", result);
+        validationData.put("field", field);
+        setValidationData(validationData);
     }
 
-    public MutableLiveData<Boolean> emailCheckerLiveData(){
+    public MutableLiveData<ValidationResult> emailCheckerLiveData(){
         Log.d("Email Input", getRegisterEmail()+"");
-        return UserRepository.duplicateEmailLiveResponse(getRegisterEmail()+"");
+        return UserRepository.getInstance().duplicateEmailLiveResponse(getRegisterEmail());
     }
 
-    public void processEmailResponse(Boolean isValid){
-        Log.d("Result from repo", isValid+"");
-        if(isValid!=null){
-            if(isValid)
-                setValidationResultEmail(new ValidationResult(true, ""));
-            else
-                setValidationResultEmail(new ValidationResult(false, "This Email is already Registered"));
-        }
+    public MutableLiveData<User> registerUser(){
+        User user = new User.Builder(getRegisterName(), getRegisterEmail())
+                .setAge(Integer.parseInt(getRegisterAge()))
+                .setPassword(getRegisterPassword())
+                .build();
+        return UserRepository.registerUser(user);
     }
-
 }

@@ -1,42 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-            name="view"
+            name="presenter"
             type="com.pupccis.fitnex.activities.login.FitnexRegister" />
+
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.UserViewModel" />
-        <variable
-            name="inputType"
-            type="com.pupccis.fitnex.validation.InputType" />
+
         <variable
             name="registerFields"
             type="com.pupccis.fitnex.validation.validationFields.RegistrationFields" />
 
     </data>
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.login.FitnexRegister"
+        android:layout_gravity="center"
         android:background="@color/register_bk_color"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:layout_gravity="center">
+        bind:validationData="@{viewModel.validationData}"
+        tools:context=".activities.login.FitnexRegister">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutRegisterProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/themetintColor"
+            android:translationZ="1dp"
+            android:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/registerProgressBar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:indeterminateTint="@color/whiteTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Processing, Please Wait"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintTop_toBottomOf="@id/registerProgressBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:orientation="vertical"
-                android:padding="20dp"
-                android:layout_marginTop="30dp">
+                android:padding="20dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -55,6 +93,7 @@
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_register_hero" />
                 </RelativeLayout>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,8 +110,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputName"
                             style="@style/parent"
-                            android:layout_marginTop="@dimen/loginViewsMargin"
-                            >
+                            android:layout_marginTop="@dimen/loginViewsMargin">
 
                             <EditText
                                 android:id="@+id/editTextRegisterName"
@@ -80,17 +118,14 @@
                                 android:hint="Name"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:text="@={viewModel.registerName}"
-                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerName, registerFields.NAME)}"
-                                bind:validationResultName="@{viewModel.validationResultName}"/>
+                                android:text="@={viewModel.registerName}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputAge"
                             style="@style/parent"
-                            android:layout_marginTop="@dimen/loginViewsMargin"
-                            >
+                            android:layout_marginTop="@dimen/loginViewsMargin">
 
                             <EditText
                                 android:id="@+id/editTextRegisterAge"
@@ -98,9 +133,7 @@
                                 android:hint="Age"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:text="@={viewModel.registerAge}"
-                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerAge, registerFields.AGE)}"
-                                bind:validationResultAge="@{viewModel.validationResultAge}"/>
+                                android:text="@={viewModel.registerAge}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -115,12 +148,7 @@
                                 android:hint="Email"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:text="@={viewModel.registerEmail}"
-                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerEmail, registerFields.EMAIL)}"
-                                bind:validationResultEmail="@{viewModel.validationResultEmail}"
-                                bind:triggerEmailObserver="@{viewModel.triggerEmailObserver}"
-                                />
-                            <!--app:onFocusChangeListener="@{viewModel::onFocusChange}"-->
+                                android:text="@={viewModel.registerEmail}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -135,25 +163,21 @@
                                 android:hint="Password"
                                 android:inputType="textPersonName"
                                 android:maxLines="1"
-                                android:text="@={viewModel.registerPassword}"
-                                android:afterTextChanged="@{() -> viewModel.onTextChange(viewModel.registerPassword, registerFields.PASSWORD)}"
-                                bind:validationResultPassword="@{viewModel.validationResultPassword}"/>
+                                android:text="@={viewModel.registerPassword}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
                         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                            android:id="@+id/buttonApplyButton"
+                            android:id="@+id/buttonRegisterButton"
                             style="@style/loginButton"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/loginViewsMargin"
+                            android:onClick="onClick"
                             android:text="Register"
                             app:initialCornerAngle="27dp"
                             app:spinning_bar_color="#FFF"
                             app:spinning_bar_padding="6dp"
-                            app:spinning_bar_width="4dp"
-                            android:onClick="@{()-> viewModel.onRegisterClicked()}"
-                            bind:toastMessage="@{viewModel.toastMessage}"
-                            />
+                            app:spinning_bar_width="4dp" />
 
                         <TextView
                             style="@style/parent"
@@ -191,44 +215,45 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="12"
+                    android:layout_marginTop="30dp"
                     android:gravity="center"
-                    android:layout_marginTop="30dp">
+                    android:weightSum="12">
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="@color/whiteTextColor"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3"
+                        android:background="@color/whiteTextColor" />
 
                     <TextView
                         style="@style/viewParent.headerText.NoMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/whiteTextColor"
-                        android:text="Use other Methods"
                         android:layout_weight="6"
-                        android:textSize="12sp"
-                        android:textAlignment="center"/>
+                        android:text="Use other Methods"
+                        android:textAlignment="center"
+                        android:textColor="@color/whiteTextColor"
+                        android:textSize="12sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:background="@color/whiteTextColor"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3"
+                        android:background="@color/whiteTextColor" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="30dp">
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_facebook"/>
+                        android:src="@drawable/ic_facebook" />
                 </LinearLayout>
 
 

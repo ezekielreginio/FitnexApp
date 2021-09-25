@@ -88,7 +88,7 @@
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                        android:id="@+id/buttonApplyButton"
+                        android:id="@+id/buttonRegisterButton"
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"

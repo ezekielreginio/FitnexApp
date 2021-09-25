@@ -98,7 +98,7 @@ public class ValidationService {
 
         if(result.isValid()){
             if(input.equals("") || input == null){
-                result = new ValidationResult().invalid("This Field is required", "Name Should not Be Empty");
+                result = new ValidationResult().invalid("This Field is required");
             }
         }
 
