@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -13,12 +14,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.L;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
-import com.pupccis.fitnex.api.adapter.ProgramAdapter;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.adapters.ProgramModel;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
@@ -41,7 +49,6 @@ public class ProgramsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ProgramAdapter programAdapter;
     private UserPreferences userPreferences;
     private ProgramDAO programDAO = new ProgramDAO();
 
@@ -54,18 +61,14 @@ public class ProgramsFragment extends Fragment {
     private ProgramViewModel programViewModel;
     private static FragmentProgramsBinding fragmentProgramsBinding;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference programRef = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+    private ProgramAdapter adapter;
+    private RecyclerView recyclerView;
     public ProgramsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProgramsFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ProgramsFragment newInstance(String param1, String param2) {
         ProgramsFragment fragment = new ProgramsFragment();
@@ -78,6 +81,8 @@ public class ProgramsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("On Create", "Init");
+        //Log.d("RecyclerView", fragmentProgramsBinding.programsRecyclerView.toString());
         super.onCreate(savedInstanceState);
        // fragmentProgramsBinding.setViewModel(new ProgramViewModel());
 //        fragmentProgramsBinding.setLifecycleOwner(this);
@@ -87,6 +92,9 @@ public class ProgramsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
+
+
+
 
 //        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 //
@@ -153,6 +161,7 @@ public class ProgramsFragment extends Fragment {
 
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
+
 //
 //        //RecyclerView Initialization
 //        programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
@@ -190,14 +199,33 @@ public class ProgramsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d("Started", "onStartExecuted");
+        adapter.startListening();;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("OnCreateView", "executed");
         // Inflate the layout for this fragment
         fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
         View view = fragmentProgramsBinding.getRoot();
+        Query query = programRef;
+
+        FirestoreRecyclerOptions<ProgramModel> options = new FirestoreRecyclerOptions.Builder<ProgramModel>()
+                .setQuery(query, ProgramModel.class)
+                .build();
+        recyclerView = fragmentProgramsBinding.programsRecyclerView;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ProgramAdapter(options);
+
+        recyclerView.setAdapter(adapter);
         return view;
     }
     //Binding Adapters

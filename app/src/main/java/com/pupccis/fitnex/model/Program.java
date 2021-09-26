@@ -108,6 +108,37 @@ public class Program implements Serializable, Observer {
         return programID;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setTrainerID(String trainerID) {
+        this.trainerID = trainerID;
+    }
+
+    public void setTrainees(String trainees) {
+        this.trainees = trainees;
+    }
+
+    public void setProgramID(String programID) {
+        this.programID = programID;
+    }
 
 
     public static class Builder{
