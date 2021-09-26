@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.Trainer;
+package com.pupccis.fitnex.activities.main.trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;

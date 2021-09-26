@@ -3,34 +3,20 @@ package com.pupccis.fitnex.activities.login;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.activities.main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.main.Trainer.TrainerDashboard;
 import com.pupccis.fitnex.databinding.ActivityLoginFitnexBinding;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.VideoConferencingConstants;
@@ -104,7 +90,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                             userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
                             userPreferences.putString("usertype", user.getUserType());
                             if(user.getUserType().equals("trainer")){
-                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                startActivity(new Intent(getApplicationContext(), null));
                             }
                             else if(user.getUserType().equals("trainee")){
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));

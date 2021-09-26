@@ -34,11 +34,11 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.Trainer.Studio.AddVideo"
+            android:name=".activities.main.trainer.Studio.AddVideo"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.Trainer.AddFitnessClass"
+            android:name=".activities.main.trainer.AddFitnessClass"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -46,7 +46,7 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.Trainer.Studio.TrainerStudio"
+            android:name=".activities.main.trainer.Studio.TrainerStudio"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -54,7 +54,7 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.Trainer.AddProgram"
+            android:name=".activities.main.trainer.AddProgram"
             android:background="#00000000"
             android:exported="true"
             android:theme="@style/Theme.Transparent" />
@@ -69,7 +69,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.Trainer.TrainerDashboard"
+            android:name=".activities.main.trainer.TrainerDashboard"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

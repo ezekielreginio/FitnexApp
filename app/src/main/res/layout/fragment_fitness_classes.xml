@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.main.Trainer.fragment.ClassFragment"
+    tools:context=".activities.main.trainer.fragment.ClassFragment"
     android:background="@drawable/ic_trainer_bg"
     android:padding="5dp">
 
