@@ -97,7 +97,6 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if(view == binding.buttonRegisterButton){
-            Log.d("Register", "clicked");
             ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
             textInputLayouts.add(binding.textInputAge);
             textInputLayouts.add(binding.textInputName);
