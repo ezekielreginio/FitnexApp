@@ -79,7 +79,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                         if(user == null)
                             Toast.makeText(FitnexLogin.this, "Invalid Username and/or Password, Please Try Again.", Toast.LENGTH_SHORT).show();
                         else{
-                            binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);
+
                             userPreferences.setUserPreferences(user);
                             if(user.getUserType().equals("trainer")){
                                 startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
@@ -88,6 +88,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
                             }
                         }
+                        binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);
                     }
                 });
             }
