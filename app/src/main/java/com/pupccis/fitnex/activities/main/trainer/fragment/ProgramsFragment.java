@@ -217,8 +217,8 @@ public class ProgramsFragment extends Fragment {
         View view = fragmentProgramsBinding.getRoot();
         Query query = programRef;
 
-        FirestoreRecyclerOptions<ProgramModel> options = new FirestoreRecyclerOptions.Builder<ProgramModel>()
-                .setQuery(query, ProgramModel.class)
+        FirestoreRecyclerOptions<Program> options = new FirestoreRecyclerOptions.Builder<Program>()
+                .setQuery(query, Program.class)
                 .build();
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);

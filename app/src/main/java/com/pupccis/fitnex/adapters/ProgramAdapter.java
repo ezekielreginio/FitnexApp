@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.Program;
 
-public class ProgramAdapter extends FirestoreRecyclerAdapter<ProgramModel, ProgramAdapter.ProgramHolder> {
+public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
-    public ProgramAdapter(@NonNull FirestoreRecyclerOptions<ProgramModel> options) {
+    public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull ProgramModel model) {
-        holder.textProgramName.setText(model.getName());
+    protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
+        holder.setProgramData(model);
     }
 
     @NonNull
@@ -36,6 +37,9 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<ProgramModel, Progr
         public ProgramHolder(@NonNull View itemView) {
             super(itemView);
             textProgramName = itemView.findViewById(R.id.textProgramName);
+        }
+        void setProgramData(Program model){
+            textProgramName.setText(model.getName());
         }
     }
 }
