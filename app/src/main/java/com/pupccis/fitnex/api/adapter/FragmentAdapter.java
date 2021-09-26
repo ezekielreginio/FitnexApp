@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.pupccis.fitnex.activities.main.Trainer.fragment.ProgramsFragment;
-import com.pupccis.fitnex.activities.main.Trainer.fragment.ScheduleFragment;
-import com.pupccis.fitnex.activities.main.Trainer.fragment.ClassFragment;
+import com.pupccis.fitnex.activities.main.trainer.fragment.ProgramsFragment;
+import com.pupccis.fitnex.activities.main.trainer.fragment.ScheduleFragment;
+import com.pupccis.fitnex.activities.main.trainer.fragment.ClassFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {
 

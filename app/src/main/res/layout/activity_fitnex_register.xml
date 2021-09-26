@@ -46,7 +46,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ProgressBar
-                    android:id="@+id/registerProgressBar"
+                    android:id="@+id/addProgramProgressBar"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:indeterminateTint="@color/whiteTextColor"
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:text="Processing, Please Wait"
                     android:textColor="@color/whiteTextColor"
-                    app:layout_constraintTop_toBottomOf="@id/registerProgressBar" />
+                    app:layout_constraintTop_toBottomOf="@id/addProgramProgressBar" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

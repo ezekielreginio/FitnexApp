@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.Trainer;
+package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.viewmodel.FitnessClassViewModel.updateFitnessClass;
 

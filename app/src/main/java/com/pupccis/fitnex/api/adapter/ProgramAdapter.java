@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.activities.main.Trainer.AddProgram;
+import com.pupccis.fitnex.activities.main.trainer.AddProgram;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;

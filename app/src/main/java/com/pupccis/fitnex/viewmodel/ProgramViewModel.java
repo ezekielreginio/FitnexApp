@@ -2,8 +2,6 @@ package com.pupccis.fitnex.viewmodel;
 
 
 import android.content.Context;
-import android.text.Editable;
-import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -44,6 +42,8 @@ public class ProgramViewModel extends BaseObservable {
     private String addProgramSessionNumber = null;
     @Bindable
     private String addProgramDuration = null;
+    @Bindable
+    private HashMap<String, Object> programValidationData = null;
 
     //Bindable Attributes Getters
     public String getAddProgramName() {
@@ -61,65 +61,34 @@ public class ProgramViewModel extends BaseObservable {
     public String getAddProgramDuration() {
         return addProgramDuration;
     }
+    public HashMap<String, Object> getProgramValidationData() {
+        return programValidationData;
+    }
+
+    public void setProgramValidationData(HashMap<String, Object> programValidationData) {
+        this.programValidationData = programValidationData;
+        notifyPropertyChanged(BR.programValidationData);
+    }
 
     //Bindable Attributes Setters
     public void setAddProgramName(String addProgramName) {
         this.addProgramName = addProgramName;
+        onTextChangeProgram(addProgramName, ProgramFitnessClassFields.NAME);
     }
     public void setAddProgramDescription(String addProgramDescription) {
         this.addProgramDescription = addProgramDescription;
+        onTextChangeProgram(addProgramDescription, ProgramFitnessClassFields.DESCRIPTION);
     }
     public void setAddProgramCategory(String addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
         this.addProgramSessionNumber = addProgramSessionNumber;
+        onTextChangeProgram(addProgramSessionNumber, ProgramFitnessClassFields.DESCRIPTION);
     }
     public void setAddProgramDuration(String addProgramDuration) {
         this.addProgramDuration = addProgramDuration;
-    }
-
-    //Bindable Validation Results
-    @Bindable
-    private ValidationResult validationResultProgramName = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultProgramDescription = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultProgramSessionNumber = ValidationResult.valid();
-    @Bindable
-    private ValidationResult validationResultProgramDuration = ValidationResult.valid();
-
-    //Bindable Validation Results Getters
-    public ValidationResult getValidationResultProgramName() {
-        return validationResultProgramName;
-    }
-    public ValidationResult getValidationResultProgramDescription() {
-        return validationResultProgramDescription;
-    }
-    public ValidationResult getValidationResultProgramSessionNumber() {
-        return validationResultProgramSessionNumber;
-    }
-    public ValidationResult getValidationResultProgramDuration() {
-        return validationResultProgramDuration;
-    }
-
-    //Bindable Validation Results Setters
-    private void setValidationResultProgramName(ValidationResult validationResultProgramName) {
-        Log.d("Set trigger", "Troggered");
-        this.validationResultProgramName = validationResultProgramName;
-        notifyPropertyChanged(BR.validationResultProgramName);
-    }
-    private void setValidationResultProgramDescription(ValidationResult validationResultProgramDescription) {
-        this.validationResultProgramDescription = validationResultProgramDescription;
-        notifyPropertyChanged(BR.validationResultProgramDescription);
-    }
-    private void setValidationResultProgramSessionNumber(ValidationResult validationResultProgramSessionNumber) {
-        this.validationResultProgramSessionNumber = validationResultProgramSessionNumber;
-        notifyPropertyChanged(BR.validationResultProgramSessionNumber);
-    }
-    private void setValidationResultProgramDuration(ValidationResult validationResultProgramDuration) {
-        this.validationResultProgramDuration = validationResultProgramDuration;
-        notifyPropertyChanged(BR.validationResultProgramDuration);
+        onTextChangeProgram(addProgramDuration, ProgramFitnessClassFields.DURATION);
     }
 
     public void init(Context context){
@@ -142,6 +111,16 @@ public class ProgramViewModel extends BaseObservable {
     }
 
 
+    //ViewModel Methods
+    public void onTextChangeProgram(String input, ProgramFitnessClassFields field){
+        ProgramFitnessClassValidationService programFitnessClassValidationService= new ProgramFitnessClassValidationService(input, field);
+        ValidationResult result = programFitnessClassValidationService.validate();
+
+        HashMap<String, Object> validationData = new HashMap<>();
+        validationData.put("validationResult", result);
+        validationData.put("field", field);
+        setProgramValidationData(validationData);
+    }
 
     public MutableLiveData<ArrayList<Object>> getPrograms(){
         return programs;
@@ -151,8 +130,15 @@ public class ProgramViewModel extends BaseObservable {
         return programUpdate;
     }
 
-    public void insertProgram(Program program){
-        ProgramsRepository.getInstance().insertProgram(program);
+    public MutableLiveData<Program> insertProgram(){
+        //ProgramsRepository.getInstance().insertProgram(program);
+        Program program = new Program.Builder(getAddProgramName()
+                ,getAddProgramDescription()
+                ,getAddProgramCategory()
+                ,getAddProgramSessionNumber()
+                ,getAddProgramDuration())
+                .setTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
+        return ProgramsRepository.getInstance().insertProgram(program);
     }
 
     public void updateProgram(Program updatedProgram) {
@@ -161,27 +147,5 @@ public class ProgramViewModel extends BaseObservable {
 
     public void deleteProgram(String programID){
         ProgramsRepository.getInstance().deleteProgram(programID);
-    }
-
-    public void onTextChange(String input, ProgramFitnessClassFields field){
-        Log.d("Enum", field.toString());
-
-        ValidationResult result = new ProgramFitnessClassValidationService(input, field).validate();
-        Log.d("Validation Result", result.isValid()+"");
-
-        switch (field){
-            case NAME:
-                setValidationResultProgramName(result);
-                break;
-            case DESCRIPTION:
-                setValidationResultProgramDescription(result);
-                break;
-            case SESSION_NUMBER:
-                setValidationResultProgramSessionNumber(result);
-                break;
-            case DURATION:
-                setValidationResultProgramDuration(result);
-                break;
-        }
     }
 }

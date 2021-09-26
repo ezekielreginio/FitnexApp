@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.activities.main.Trainer.Studio.TrainerStudio;
+import com.pupccis.fitnex.activities.main.trainer.Studio.TrainerStudio;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;

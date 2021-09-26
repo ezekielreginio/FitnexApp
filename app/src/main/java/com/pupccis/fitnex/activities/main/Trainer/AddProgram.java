@@ -1,8 +1,13 @@
-package com.pupccis.fitnex.activities.main.Trainer;
+package com.pupccis.fitnex.activities.main.trainer;
+
+import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,19 +21,25 @@ import android.widget.Spinner;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.pupccis.fitnex.activities.login.FitnexRegister;
 import com.pupccis.fitnex.databinding.ActivityAddProgramBinding;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
+import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
+import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Animation rotateAnimation;
     private ImageView imageView;
     private RelativeLayout closeButton;
@@ -45,12 +56,13 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     private static ActivityAddProgramBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_program);
         binding.setViewModel(new ProgramViewModel());
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
+        binding.setPresenter(this);
         //Extra Intents:
         program_intent = (Program) getIntent().getSerializableExtra("program");
 
@@ -118,9 +130,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 //        closeButton.setVisibility(View.VISIBLE);
 
     }
-
-
-
 
 
 //    @Override
@@ -208,26 +217,78 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
     //Binding Adapters
-    @BindingAdapter({"validationResultProgramName"})
-    public static void validateName(View view, ValidationResult result){
-        Log.d("Trigger", "Triggered");
-        binding.textInputProgramName.setErrorEnabled(!result.isValid());
-        binding.textInputProgramName.setError(result.getErrorMsg());
+//    @BindingAdapter({"validationResultProgramName"})
+//    public static void validateName(View view, ValidationResult result){
+//        Log.d("Trigger", "Triggered");
+//        binding.textInputProgramName.setErrorEnabled(!result.isValid());
+//        binding.textInputProgramName.setError(result.getErrorMsg());
+//    }
+//    @BindingAdapter({"validationResultProgramDescription"})
+//    public static void validateDescription(View view, ValidationResult result){
+//        binding.textInputProgramDescription.setErrorEnabled(!result.isValid());
+//        binding.textInputProgramDescription.setError(result.getErrorMsg());
+//    }
+//    @BindingAdapter({"validationResultProgramSessionNumber"})
+//    public static void validateSessionNumber(View view, ValidationResult result){
+//        binding.textInputProgramSessionNumber.setErrorEnabled(!result.isValid());
+//        binding.textInputProgramSessionNumber.setError(result.getErrorMsg());
+//    }
+//    @BindingAdapter({"validationResultProgramDuration"})
+//    public static void validateDuration(View view, ValidationResult result){
+//        binding.textInputProgramDuration.setErrorEnabled(!result.isValid());
+//        binding.textInputProgramDuration.setError(result.getErrorMsg());
+//    }
+    @BindingAdapter({"programValidationData"})
+    public static void validateProgramData(View view, HashMap<String, Object> validationData) {
+        if (validationData != null) {
+            Log.d("Validation Data", "Triggered");
+            ValidationResult result = (ValidationResult) validationData.get("validationResult");
+            ProgramFitnessClassFields field = (ProgramFitnessClassFields) validationData.get("field");
+            switch (field) {
+                case NAME:
+                    errorHandler(binding.textInputProgramName, result);
+                    break;
+                case DESCRIPTION:
+                    errorHandler(binding.textInputProgramDescription, result);
+                    break;
+                case SESSION_NUMBER:
+                    errorHandler(binding.textInputProgramSessionNumber, result);
+                    break;
+                case DURATION:
+                    errorHandler(binding.textInputProgramDuration, result);
+            }
+        }
     }
-    @BindingAdapter({"validationResultProgramDescription"})
-    public static void validateDescription(View view, ValidationResult result){
-        binding.textInputProgramDescription.setErrorEnabled(!result.isValid());
-        binding.textInputProgramDescription.setError(result.getErrorMsg());
-    }
-    @BindingAdapter({"validationResultProgramSessionNumber"})
-    public static void validateSessionNumber(View view, ValidationResult result){
-        binding.textInputProgramSessionNumber.setErrorEnabled(!result.isValid());
-        binding.textInputProgramSessionNumber.setError(result.getErrorMsg());
-    }
-    @BindingAdapter({"validationResultProgramDuration"})
-    public static void validateDuration(View view, ValidationResult result){
-        binding.textInputProgramDuration.setErrorEnabled(!result.isValid());
-        binding.textInputProgramDuration.setError(result.getErrorMsg());
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonAddProgramButton){
+            Log.d("Register", "clicked");
+            ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
+            textInputLayouts.add(binding.textInputProgramName);
+            textInputLayouts.add(binding.textInputProgramDescription);
+            textInputLayouts.add(binding.textInputProgramSessionNumber);
+            textInputLayouts.add(binding.textInputProgramDuration);
+            boolean isInvalid = false;
+
+            isInvalid = uiErrorHandler(textInputLayouts);
+
+            if(isInvalid)
+                Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
+            else{
+                binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
+                MutableLiveData<Program> programMutableLiveData = binding.getViewModel().insertProgram();
+                programMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Program>() {
+                    @Override
+                    public void onChanged(Program program) {
+                        if(program!= null)
+                            Toast.makeText(AddProgram.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
+                        binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                        programMutableLiveData.removeObserver(this::onChanged);
+                    }
+                });
+            }
+        }
     }
 }

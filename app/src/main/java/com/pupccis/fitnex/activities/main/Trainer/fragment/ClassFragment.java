@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.Trainer.fragment;
+package com.pupccis.fitnex.activities.main.trainer.fragment;
 
 import android.os.Bundle;
 

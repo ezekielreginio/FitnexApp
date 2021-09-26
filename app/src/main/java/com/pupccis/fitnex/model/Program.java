@@ -121,13 +121,12 @@ public class Program implements Serializable, Observer {
         private String trainees;
         private String programID;
 
-        public Builder(String name, String description, String category, String sessionNumber, String duration, String trainerID){
+        public Builder(String name, String description, String category, String sessionNumber, String duration){
             this.name = name;
             this.description = description;
             this.category = category;
             this.sessionNumber = sessionNumber;
             this.duration = duration;
-            this.trainerID = trainerID;
             this.trainees = "0";
         }
 

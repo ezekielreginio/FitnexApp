@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.activities.main.Trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.main.Trainer.TrainerDashboard;
+import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
