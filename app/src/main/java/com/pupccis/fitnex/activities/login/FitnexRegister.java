@@ -94,9 +94,6 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         binding.textInputName.isErrorEnabled();
     }
 
-
-
-
     @Override
     public void onClick(View view) {
         if(view == binding.buttonRegisterButton){
@@ -108,7 +105,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
             textInputLayouts.add(binding.textInputPassword);
             boolean isInvalid = false;
 
-            uiErrorHandler(textInputLayouts);
+            isInvalid = uiErrorHandler(textInputLayouts);
 
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
