@@ -63,6 +63,10 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
         binding.setPresenter(this);
+
+
+
+
         //Extra Intents:
         program_intent = (Program) getIntent().getSerializableExtra("program");
 
@@ -263,6 +267,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     }
     @Override
     public void onClick(View view) {
+        Log.d("Class add clicked", "Clicked!");
         if(view == binding.buttonAddProgramButton){
             Log.d("Register", "clicked");
             ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
@@ -277,14 +282,14 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
-                binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
+                binding.constraintLayoutProgramProgressBar.setVisibility(View.VISIBLE);
                 MutableLiveData<Program> programMutableLiveData = binding.getViewModel().insertProgram();
                 programMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Program>() {
                     @Override
                     public void onChanged(Program program) {
                         if(program!= null)
                             Toast.makeText(AddProgram.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
-                        binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                        binding.constraintLayoutProgramProgressBar.setVisibility(View.GONE);
                         programMutableLiveData.removeObserver(this::onChanged);
                     }
                 });

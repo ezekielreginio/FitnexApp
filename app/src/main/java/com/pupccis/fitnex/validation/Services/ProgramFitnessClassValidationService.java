@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.validation.Services;
 
+import android.util.Log;
+
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
@@ -24,6 +26,7 @@ public class ProgramFitnessClassValidationService {
         switch (field){
             case NAME:
             case DESCRIPTION:
+                Log.d("Validation service Trigger", "triggered");
                 result = service
                         .requiredField()
                         .validate();

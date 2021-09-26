@@ -2,6 +2,11 @@ package com.pupccis.fitnex.repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -72,8 +77,20 @@ public class FitnessClassesRepository {
         });
     }
 
-    public static void insertFitnessClass(FitnessClass fitnessClass) {
-        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document().set(fitnessClass.toMap());
+    public static MutableLiveData<FitnessClass> insertFitnessClass(FitnessClass fitnessClass) {
+        MutableLiveData<FitnessClass> fitnessClassLiveData = new MutableLiveData<>();
+        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document().set(fitnessClass.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    fitnessClassLiveData.postValue(fitnessClass);
+                }
+                else{
+                    fitnessClassLiveData.postValue(null);
+                }
+            }
+        });
+        return fitnessClassLiveData;
     }
 
     public static void updateFitnessClass(FitnessClass fitnessClass){
