@@ -71,6 +71,15 @@ public class User implements Serializable {
             this.email = email;
             this.userType = "trainee";
         }
+        public Builder(User user){
+            this.name = user.getName();
+            this.email = user.getEmail();
+            this.password = user.getPassword();
+            this.age = user.getAge();
+            this.userID = user.getUserID();
+            this.userType = user.getUserType();
+            this.token = user.getToken();
+        }
 
         public Builder setUserID(String userID) {
             this.userID = userID;

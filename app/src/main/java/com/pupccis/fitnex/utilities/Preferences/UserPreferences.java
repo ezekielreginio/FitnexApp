@@ -14,6 +14,15 @@ public class UserPreferences {
          editor= sharedPreferences.edit();
     }
 
+    public void setUserPreferences(User user){
+        this.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
+        this.putString(VideoConferencingConstants.KEY_FULLNAME, user.getName());
+        this.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
+        this.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
+        this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
+        this.putString("usertype", user.getUserType());
+    }
+
     public void putBoolean(String key, Boolean value){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, value);
@@ -38,13 +47,5 @@ public class UserPreferences {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-    }
-
-    public void set(User user){
-        this.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-        this.putString(VideoConferencingConstants.KEY_FULLNAME, user.getName()); //$_SESSION['fullname']
-        this.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
-        this.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
-        this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
     }
 }

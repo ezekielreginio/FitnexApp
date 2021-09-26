@@ -44,8 +44,10 @@ public class UserRepository {
                         if(task.isSuccessful()){
                             FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
                                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(user.toMap());
-
-                            userLiveData.postValue(user);
+                            User newUser = new User.Builder(user)
+                                    .setUserID(FirebaseAuth.getInstance().getUid())
+                                    .build();
+                            userLiveData.postValue(newUser);
                         }
                         else{
                             userLiveData.postValue(null);
