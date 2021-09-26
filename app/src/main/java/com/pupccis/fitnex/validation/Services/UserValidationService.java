@@ -17,9 +17,9 @@ public class UserValidationService{
     private String input;
     private static UserValidationService instance;
 
-    public UserValidationService(String input, RegistrationFields field){
+    public UserValidationService(String input, Object field){
         this.input = input;
-        this.field = field;
+        this.field = (RegistrationFields) field;
     }
 
     public ValidationResult validate(){

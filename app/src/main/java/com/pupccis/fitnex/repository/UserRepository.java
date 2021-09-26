@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +34,7 @@ public class UserRepository {
     }
 
     public static MutableLiveData<User> registerUser(User user){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         MutableLiveData<User> userLiveData = new MutableLiveData<>();
 
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
@@ -54,6 +55,40 @@ public class UserRepository {
                 });
 
         return userLiveData;
+    }
+
+    public static MutableLiveData<User> loginUser(String email, String password){
+        MutableLiveData<User> userLoggedIn = new MutableLiveData<>();
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful() && task.getResult() != null){
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
+                            .document(FirebaseAuth.getInstance().getUid())
+                            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+
+                            User user = new User.Builder(
+                                        documentSnapshot.get(UserConstants.KEY_USER_NAME).toString(),
+                                        documentSnapshot.get(UserConstants.KEY_USER_EMAIL).toString()
+                                    )
+                                    .setUserID(documentSnapshot.getId())
+                                    .setUserType(documentSnapshot.get(UserConstants.KEY_USER_TYPE).toString())
+                                    .setAge(Integer.parseInt(documentSnapshot.get(UserConstants.KEY_USER_AGE).toString()))
+                                    .build();
+                            userLoggedIn.postValue(user);
+                        }
+                    });
+                }
+                else{
+                    userLoggedIn.postValue(null);
+                }
+            }
+        });
+        return userLoggedIn;
     }
 
     public MutableLiveData<ValidationResult> duplicateEmailLiveResponse(String email){
