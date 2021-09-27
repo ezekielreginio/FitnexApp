@@ -56,6 +56,8 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:focusable="false"
                     android:text="Processing, Please Wait"
                     android:textColor="@color/whiteTextColor"
                     app:layout_constraintTop_toBottomOf="@id/addProgramProgressBar" />

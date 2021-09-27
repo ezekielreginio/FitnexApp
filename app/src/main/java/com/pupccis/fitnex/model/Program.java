@@ -2,12 +2,13 @@ package com.pupccis.fitnex.model;
 
 import com.pupccis.fitnex.api.globals.Observer;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Program implements Serializable, Observer {
+public class Program implements Serializable {
 
     private String name;
     private String description;
@@ -37,7 +38,6 @@ public class Program implements Serializable, Observer {
         this.programID = builder.programID;
     }
 
-    @Override
     public Map<String, Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("name", name);
@@ -49,29 +49,6 @@ public class Program implements Serializable, Observer {
         result.put(ProgramConstants.KEY_PROGRAM_TRAINER_ID, trainerID);
         return result;
 
-    }
-
-    @Override
-    public Program map(Map<String, Object> data){
-        instance = new Program();
-        instance.name = data.get(ProgramConstants.KEY_PROGRAM_NAME).toString();
-        instance.description = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
-        instance.category = data.get(ProgramConstants.KEY_PROGRAM_CATEGORY).toString();
-        instance.sessionNumber = data.get(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).toString();
-        instance.duration = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
-        instance.programID = data.get(ProgramConstants.KEY_PROGRAM_ID).toString();
-        instance.trainerID = data.get(ProgramConstants.KEY_PROGRAM_TRAINER_ID).toString();
-        return instance;
-    }
-
-    @Override
-    public String getKey() {
-        return ProgramConstants.KEY_PROGRAM_ID;
-    }
-
-    @Override
-    public String getId() {
-        return this.programID;
     }
 
 
@@ -108,7 +85,37 @@ public class Program implements Serializable, Observer {
         return programID;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setTrainerID(String trainerID) {
+        this.trainerID = trainerID;
+    }
+
+    public void setTrainees(String trainees) {
+        this.trainees = trainees;
+    }
+
+    public void setProgramID(String programID) {
+        this.programID = programID;
+    }
 
     public static class Builder{
         private final String name;

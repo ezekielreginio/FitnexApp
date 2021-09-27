@@ -2,11 +2,13 @@ package com.pupccis.fitnex.viewmodel;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -19,15 +21,21 @@ import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationServi
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProgramViewModel extends BaseObservable {
+public class ProgramViewModel extends BaseObservable implements Serializable {
     MutableLiveData<ArrayList<Object>> programs;
     private MutableLiveData<HashMap<String, Object>> programUpdate = new MutableLiveData<>();
+
+    private ProgramsRepository programsRepository= ProgramsRepository.getInstance();
+
+    //Mutable Live Data
+    private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
+    private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
     
     //Private Attributes
-    private ProgramsRepository programsRepository;
     private Context context;
     private DataObserver dataObserver = new DataObserver();
 
@@ -44,6 +52,8 @@ public class ProgramViewModel extends BaseObservable {
     private String addProgramDuration = null;
     @Bindable
     private HashMap<String, Object> programValidationData = null;
+    @Bindable
+    private String programID = null;
 
     //Bindable Attributes Getters
     public String getAddProgramName() {
@@ -64,6 +74,7 @@ public class ProgramViewModel extends BaseObservable {
     public HashMap<String, Object> getProgramValidationData() {
         return programValidationData;
     }
+    public String getProgramID() { return programID; }
 
     public void setProgramValidationData(HashMap<String, Object> programValidationData) {
         this.programValidationData = programValidationData;
@@ -89,6 +100,10 @@ public class ProgramViewModel extends BaseObservable {
     public void setAddProgramDuration(String addProgramDuration) {
         this.addProgramDuration = addProgramDuration;
         onTextChangeProgram(addProgramDuration, ProgramFitnessClassFields.DURATION);
+    }
+
+    public void setProgramID(String programID) {
+        this.programID = programID;
     }
 
     public void init(Context context){
@@ -122,30 +137,59 @@ public class ProgramViewModel extends BaseObservable {
         setProgramValidationData(validationData);
     }
 
-    public MutableLiveData<ArrayList<Object>> getPrograms(){
-        return programs;
-    }
-
-    public MutableLiveData<HashMap<String, Object>> getLiveDataProgramUpdate(){
-        return programUpdate;
+    public FirestoreRecyclerOptions<Program> getFirebaseUIOptions(){
+        Log.d("Pumasok", "pumasok");
+       return new FirestoreRecyclerOptions.Builder<Program>()
+               .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
+               .build();
     }
 
     public MutableLiveData<Program> insertProgram(){
         //ProgramsRepository.getInstance().insertProgram(program);
+        Program program = programInstance();
+        return programsRepository.insertProgram(program);
+    }
+
+    public void triggerUpdateObserver(Program program) {
+        setProgramID(program.getProgramID());
+        updateProgramLivedata.postValue(program);
+        //ProgramsRepository.getInstance().updateProgram(updatedProgram);
+    }
+
+    public void triggerDeleteObserver(Program program) {
+        setProgramID(program.getProgramID());
+        deleteProgramLivedata.postValue(program);
+        //ProgramsRepository.getInstance().updateProgram(updatedProgram);
+    }
+
+    public MutableLiveData<Program> updateObserver(){
+        return updateProgramLivedata;
+    }
+
+    public MutableLiveData<Program> deleteObserver(){
+        return deleteProgramLivedata;
+    }
+
+    public void deleteProgram(String programID){
+        programsRepository.deleteProgram(programID);
+    }
+
+    public MutableLiveData<Program> updateProgram() {
+        Program program = programInstance();
+        Log.d("Program ID", program.getProgramID());
+
+        return programsRepository.updateProgram(program);
+    }
+
+    public Program programInstance(){
         Program program = new Program.Builder(getAddProgramName()
                 ,getAddProgramDescription()
                 ,getAddProgramCategory()
                 ,getAddProgramSessionNumber()
                 ,getAddProgramDuration())
-                .setTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid()).build();
-        return ProgramsRepository.getInstance().insertProgram(program);
-    }
-
-    public void updateProgram(Program updatedProgram) {
-        ProgramsRepository.getInstance().updateProgram(updatedProgram);
-    }
-
-    public void deleteProgram(String programID){
-        ProgramsRepository.getInstance().deleteProgram(programID);
+                .setTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setProgramID(getProgramID())
+                .build();
+        return program;
     }
 }

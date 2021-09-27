@@ -22,6 +22,42 @@
         android:layout_gravity="center"
         bind:loginValidationData="@{viewModel.loginValidationData}">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutLoginProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/themetintColor"
+            android:translationZ="1dp"
+            android:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/loginProgressBar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:indeterminateTint="@color/whiteTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:layout_height="wrap_content"
+                    android:text="Processing, Please Wait"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintTop_toBottomOf="@id/loginProgressBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

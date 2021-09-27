@@ -1,11 +1,18 @@
 package com.pupccis.fitnex.activities.main.trainer.fragment;
 
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIProgramOptions;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -13,17 +20,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DatabaseReference;
-import com.pupccis.fitnex.api.adapter.ProgramAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
-import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.viewmodel.ProgramViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,31 +47,18 @@ public class ProgramsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ProgramAdapter programAdapter;
     private UserPreferences userPreferences;
-    private ProgramDAO programDAO = new ProgramDAO();
 
-    private RecyclerView programsRecyclerView;
-
-
-    private List<Program> programs = new ArrayList<>();
-    private DatabaseReference mDatabase;
-
-    private ProgramViewModel programViewModel;
     private static FragmentProgramsBinding fragmentProgramsBinding;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference programRef = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+    private ProgramAdapter adapter;
+    private RecyclerView recyclerView;
     public ProgramsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProgramsFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ProgramsFragment newInstance(String param1, String param2) {
         ProgramsFragment fragment = new ProgramsFragment();
@@ -79,9 +72,6 @@ public class ProgramsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // fragmentProgramsBinding.setViewModel(new ProgramViewModel());
-//        fragmentProgramsBinding.setLifecycleOwner(this);
-//        fragmentProgramsBinding.executePendingBindings();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -153,6 +143,7 @@ public class ProgramsFragment extends Fragment {
 
         Log.d("ViewCreate", "onViewCreateExecuted");
         super.onViewCreated(view, savedInstanceState);
+
 //
 //        //RecyclerView Initialization
 //        programsRecyclerView = (RecyclerView) getView().findViewById(R.id.programsRecyclerView);
@@ -190,16 +181,80 @@ public class ProgramsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d("Started", "onStartExecuted");
+        adapter.startListening();;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("OnCreateView", "executed");
         // Inflate the layout for this fragment
         fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
+
+        //Get FirestoreOptions From ViewModel
+        FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
+
+        //FirestoreRecyclerOptions<Program> options = new FirestoreRecyclerOptions.Builder<Program>()
+//                .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
+//                .build();
+
+        //Instantiate and Set RecyclerView Settings
+        recyclerView = fragmentProgramsBinding.programsRecyclerView;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //Instantiate Adapter and Bind to RecyclerView
+        adapter = new ProgramAdapter(options);
+        recyclerView.setAdapter(adapter);
+
+        //Set Lifecycle and ViewModel of Binding
+        fragmentProgramsBinding.setLifecycleOwner(this);
+        fragmentProgramsBinding.setViewModel(adapter.getViewModel()); //Get the View Model from Adapter
+
+        //ViewModel Observers
+        fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
+            @Override
+            public void onChanged(Program program) {
+                Log.d("Program Fragment", "Observer Triggered");
+                Intent intent= new Intent(getContext(), AddProgram.class);
+                intent.putExtra("program", program);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+            }
+        });
+
+        fragmentProgramsBinding.getViewModel().deleteObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
+            @Override
+            public void onChanged(Program program) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Log.d("Delete", "Clicked");
+                                fragmentProgramsBinding.getViewModel().deleteProgram(program.getProgramID());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Are you sure you wish to delete this program?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+        });
+
+        //Get the View from binding and return its value *REQUIRED
         View view = fragmentProgramsBinding.getRoot();
         return view;
     }
-    //Binding Adapters
 
 }

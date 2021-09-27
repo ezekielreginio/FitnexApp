@@ -49,12 +49,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 //        }
 //
 //        setContentView(R.layout.activity_login_fitnex);
-//
-//        editEmail = (EditText) findViewById(R.id.editTextLoginEmail);
-//        editPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-//        loginUser = (Button) findViewById(R.id.buttonLoginButton);
-//        loginUser.setOnClickListener(this);
-//        mAuth = FirebaseAuth.getInstance();
+
     }
 
     public void onLoginClick(View View){
@@ -77,19 +72,15 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
+                binding.constraintLayoutLoginProgressBar.setVisibility(View.VISIBLE);
                 binding.getViewModel().loginUser().observe(binding.getLifecycleOwner(), new Observer<User>() {
                     @Override
                     public void onChanged(User user) {
                         if(user == null)
                             Toast.makeText(FitnexLogin.this, "Invalid Username and/or Password, Please Try Again.", Toast.LENGTH_SHORT).show();
                         else{
-                            Toast.makeText(FitnexLogin.this, "User Type:"+user.getUserType(), Toast.LENGTH_SHORT).show();
-                            userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-                            userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, user.getName());
-                            userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
-                            userPreferences.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
-                            userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
-                            userPreferences.putString("usertype", user.getUserType());
+
+                            userPreferences.setUserPreferences(user);
                             if(user.getUserType().equals("trainer")){
                                 startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
                             }
@@ -97,16 +88,11 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
                             }
                         }
+                        binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);
                     }
                 });
             }
         }
-//        switch(view.getId()){
-//            case(R.id.buttonLoginButton):
-//                Toast.makeText(FitnexLogin.this, "clcik", Toast.LENGTH_SHORT).show();
-//                userLogin();
-//                break;
-//        }
     }
 
     //Binding Adapters
@@ -125,66 +111,4 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
-//    private void userLogin() {
-//        String email = editEmail.getText().toString();
-//        String password = editPassword.getText().toString();
-//
-//        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//
-//        if(email.isEmpty()){
-//            editEmail.setError("Email address is required!");
-//            editEmail.requestFocus();
-//            return;
-//        }
-//        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-//            editEmail.setError("Please provide a valid email address");
-//            editEmail.requestFocus();
-//            return;
-//        }
-//        if(password.isEmpty()||password.length()<6){
-//            editPassword.setError("Your password is invalid!");
-//            editPassword.requestFocus();
-//            return;
-//        }
-//
-//
-//        mAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful() && task.getResult() != null){
-//                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
-//                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                            mDatabase.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                                    String userType = task.getResult().child("userType").getValue().toString();
-//                                    userPreferences.putBoolean(VideoConferencingConstants.KEY_IS_SIGNED_ID, true);
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_FULLNAME, task.getResult().child(VideoConferencingConstants.KEY_FULLNAME).getValue().toString()); //$_SESSION['fullname']
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_EMAIL, task.getResult().child(VideoConferencingConstants.KEY_EMAIL).getValue().toString());
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_AGE, task.getResult().child(VideoConferencingConstants.KEY_AGE).getValue().toString());
-//                                    userPreferences.putString(VideoConferencingConstants.KEY_USER_ID, userId);
-//                                    userPreferences.putString("usertype", userType);
-//
-//                                    Toast.makeText(FitnexLogin.this, "Login Successful! Welcome User", Toast.LENGTH_SHORT).show();
-//                                    if(userType.equals("trainer")){
-//                                        startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
-//                                    }
-//                                    else if(userType.equals("trainee")){
-//                                        startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
-//                                    }
-//                                }
-//                            });
-//
-//
-//
-//                        }
-//                        else{
-//                            Toast.makeText(FitnexLogin.this, "Invalid username or password! Please try again", Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//                });
-//    }
 }

@@ -7,6 +7,7 @@ import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
@@ -23,7 +24,10 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 //import com.google.firebase.firestore.auth.User;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.activities.main.Trainee.TraineeDashboard;
+import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.model.User;
+import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.databinding.ActivityFitnexRegisterBinding;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -35,8 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FitnexRegister extends AppCompatActivity implements View.OnClickListener{
-
     private static ActivityFitnexRegisterBinding binding;
+    private UserPreferences userPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
         binding.setPresenter(this);
+
+        userPreferences = new UserPreferences(getApplicationContext());
     }
 
     public void onLoginClick (View view){
@@ -110,13 +116,22 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
                 binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
-                binding.getViewModel().registerUser().observe(binding.getLifecycleOwner(), new Observer<User>() {
+                MutableLiveData<User> userMutableLiveData = binding.getViewModel().registerUser();
+                userMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<User>() {
                     @Override
                     public void onChanged(User user) {
-                        if(user!= null)
+                        if(user!= null){
                             Toast.makeText(FitnexRegister.this, "User Successfully Registered", Toast.LENGTH_SHORT).show();
+                            userPreferences.setUserPreferences(user);
+                            if(user.getUserType().equals("trainer")){
+                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                            }
+                            else if(user.getUserType().equals("trainee")){
+                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                            }
+                        }
                         binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
-                        binding.getViewModel().registerUser().removeObserver(this::onChanged);
+                        userMutableLiveData.removeObserver(this::onChanged);
                     }
                 });
             }
