@@ -61,8 +61,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramSessionCount.setText(model.getSessionNumber());
             binding.textProgramDuration.setText(model.getDuration());
             Log.d("Program ID from model", model.getProgramID());
-
-            Timber.d(model.getProgramID());
             binding.setVariable(BR.program, model);
         }
     }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Program implements Serializable, Observer {
+public class Program implements Serializable {
 
     private String name;
     private String description;
@@ -38,7 +38,6 @@ public class Program implements Serializable, Observer {
         this.programID = builder.programID;
     }
 
-    @Override
     public Map<String, Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("name", name);
@@ -50,29 +49,6 @@ public class Program implements Serializable, Observer {
         result.put(ProgramConstants.KEY_PROGRAM_TRAINER_ID, trainerID);
         return result;
 
-    }
-
-    @Override
-    public Program map(Map<String, Object> data){
-        instance = new Program();
-        instance.name = data.get(ProgramConstants.KEY_PROGRAM_NAME).toString();
-        instance.description = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
-        instance.category = data.get(ProgramConstants.KEY_PROGRAM_CATEGORY).toString();
-        instance.sessionNumber = data.get(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).toString();
-        instance.duration = data.get(ProgramConstants.KEY_PROGRAM_DESCRIPTION).toString();
-        instance.programID = data.get(ProgramConstants.KEY_PROGRAM_ID).toString();
-        instance.trainerID = data.get(ProgramConstants.KEY_PROGRAM_TRAINER_ID).toString();
-        return instance;
-    }
-
-    @Override
-    public String getKey() {
-        return ProgramConstants.KEY_PROGRAM_ID;
-    }
-
-    @Override
-    public String getId() {
-        return this.programID;
     }
 
 

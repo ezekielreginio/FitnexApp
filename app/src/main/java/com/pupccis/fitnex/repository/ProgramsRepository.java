@@ -161,6 +161,11 @@ public class ProgramsRepository {
         return programLiveData;
     }
 
+    public Query readProgramsQuery(){
+        Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getUid());
+        return query;
+    }
+
     public MutableLiveData<Program> updateProgram(Program updatedProgram) {
         MutableLiveData<Program> programLiveData = new MutableLiveData<>();
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(updatedProgram.getProgramID()).update(updatedProgram.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {

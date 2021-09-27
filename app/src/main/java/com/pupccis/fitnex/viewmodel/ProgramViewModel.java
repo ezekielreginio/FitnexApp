@@ -8,6 +8,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -32,6 +33,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
 
     //Mutable Live Data
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
+    private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
     
     //Private Attributes
     private Context context;
@@ -135,12 +137,11 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         setProgramValidationData(validationData);
     }
 
-    public MutableLiveData<ArrayList<Object>> getPrograms(){
-        return programs;
-    }
-
-    public MutableLiveData<HashMap<String, Object>> getLiveDataProgramUpdate(){
-        return programUpdate;
+    public FirestoreRecyclerOptions<Program> getFirebaseUIOptions(){
+        Log.d("Pumasok", "pumasok");
+       return new FirestoreRecyclerOptions.Builder<Program>()
+               .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
+               .build();
     }
 
     public MutableLiveData<Program> insertProgram(){
@@ -155,8 +156,18 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         //ProgramsRepository.getInstance().updateProgram(updatedProgram);
     }
 
+    public void triggerDeleteObserver(Program program) {
+        setProgramID(program.getProgramID());
+        deleteProgramLivedata.postValue(program);
+        //ProgramsRepository.getInstance().updateProgram(updatedProgram);
+    }
+
     public MutableLiveData<Program> updateObserver(){
         return updateProgramLivedata;
+    }
+
+    public MutableLiveData<Program> deleteObserver(){
+        return deleteProgramLivedata;
     }
 
     public void deleteProgram(String programID){
