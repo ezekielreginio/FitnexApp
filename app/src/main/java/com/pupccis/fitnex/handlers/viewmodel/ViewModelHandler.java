@@ -1,13 +1,12 @@
 package com.pupccis.fitnex.handlers.viewmodel;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessModel;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 
 import java.util.HashMap;
 
@@ -28,9 +27,9 @@ public class ViewModelHandler {
                 .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
                 .build();
     }
-    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
-        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
-                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+    public static FirestoreRecyclerOptions<FitnessModel> getFirebaseUIFitnessClassOptions(){
+        return new FirestoreRecyclerOptions.Builder<FitnessModel>()
+                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessModel.class)
                 .build();
     }
 }

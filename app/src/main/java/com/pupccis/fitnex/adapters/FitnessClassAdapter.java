@@ -10,25 +10,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerFitnessClassBinding;
-import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
-import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.adapters.FitnessModel;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
-public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, FitnessClassAdapter.FitnessClassHolder> {
+public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessModel, FitnessClassAdapter.FitnessClassHolder> {
     private ItemContainerFitnessClassBinding binding;
     private FitnessClassViewModel fitnessClassViewModel = new FitnessClassViewModel();
 
 
 
-    public FitnessClassAdapter(@NonNull FirestoreRecyclerOptions<FitnessClass> options) {
+    public FitnessClassAdapter(@NonNull FirestoreRecyclerOptions<FitnessModel> options) {
         super(options);
+        Log.e("Pumasok sa Constructor", "Pumasok");
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull FitnessClassHolder holder, int position, @NonNull FitnessClass model) {
+    protected void onBindViewHolder(@NonNull FitnessClassHolder holder, int position, @NonNull FitnessModel model) {
         Log.e("Pumasok sa onBindViewHolder", "Pumasok");
         model.setClassID(this.getSnapshots().getSnapshot(position).getId());
         holder.setFitnessClassData(model);
@@ -37,6 +35,7 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
     @NonNull
     @Override
     public FitnessClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.e("Pumasok sa onCreateViewHolder", "Pumasok");
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         binding = ItemContainerFitnessClassBinding.inflate(inflater, parent, false);
         binding.setViewModel(fitnessClassViewModel);
@@ -50,7 +49,7 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
         public FitnessClassHolder(@NonNull View itemView) {
             super(itemView);
         }
-        void setFitnessClassData(FitnessClass model){
+        void setFitnessClassData(FitnessModel model){
             binding.textFitnessClassName.setText(model.getClassName());
         }
 

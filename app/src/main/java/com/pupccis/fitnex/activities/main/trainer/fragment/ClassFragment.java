@@ -1,7 +1,5 @@
 package com.pupccis.fitnex.activities.main.trainer.fragment;
 
-import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIFitnessClassOptions;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
 import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.adapters.FitnessModel;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
+import com.pupccis.fitnex.utilities.Constants.FitnessClassConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
@@ -51,7 +53,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
 
     private RecyclerView recyclerView;
 
-    private List<FitnessClass> fitnessClasses = new ArrayList<>();
+    private List<FitnessModel> fitnessModels = new ArrayList<>();
     private DatabaseReference mDatabase;
     private FitnessClassViewModel fitnessClassViewModel;
     private static FragmentFitnessClassesBinding binding;
@@ -92,9 +94,9 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
 //        query.addValueEventListener(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                fitnessClasses.clear();
+//                fitnessModels.clear();
 //                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    FitnessClass fitnessClass = new FitnessClass.Builder(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString()
+//                    FitnessModel fitnessClass = new FitnessModel.Builder(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString()
 //                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString()
 //                            ,(int)dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue()
 //                            ,dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).getValue().toString()
@@ -111,12 +113,12 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
 ////                    fitnessClass.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
 ////                    fitnessClass.setClassID(dataSnapshot.getKey());
 ////                    fitnessClass.setClassTrainerID(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
-//                    fitnessClasses.add(fitnessClass);
+//                    fitnessModels.add(fitnessClass);
 //
 //
 //                }
 //
-//                fitnessClassAdapter = new FitnessClassAdapter(fitnessClasses, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
+//                fitnessClassAdapter = new FitnessClassAdapter(fitnessModels, getContext(), GlobalConstants.KEY_ACCESS_TYPE_OWNER);
 //                fitnessClassAdapter.notifyDataSetChanged();
 //                fitnessClassRecyclerView.setAdapter(fitnessClassAdapter);
 //            }
@@ -132,8 +134,8 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         //Recyclerview initialization
-        recyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//        recyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         //ViewModel Instantiation
 //        fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
@@ -167,9 +169,10 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fitness_classes, container, false);
 
         //Get FirestoreOptions From ViewModel
-//        FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
-        FirestoreRecyclerOptions<FitnessClass> options = new FirestoreRecyclerOptions.Builder<FitnessClass>()
-                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+//        FirestoreRecyclerOptions<FitnessModel> options = getFirebaseUIFitnessClassOptions();
+        Query query = FirebaseFirestore.getInstance().collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).whereEqualTo(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, FirebaseAuth.getInstance().getUid());
+        FirestoreRecyclerOptions<FitnessModel> options = new FirestoreRecyclerOptions.Builder<FitnessModel>()
+                .setQuery(query, FitnessModel.class)
                 .build();
 
 

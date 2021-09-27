@@ -2,7 +2,6 @@ package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
-import static com.pupccis.fitnex.viewmodel.FitnessClassViewModel.updateFitnessClass;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,19 +9,16 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,14 +29,10 @@ import android.widget.Toast;
 
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
-import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessModel;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.model.Program;
-import com.pupccis.fitnex.validation.Services.FitnessClassValidationService;
-import com.pupccis.fitnex.validation.Services.ValidationEventBinder;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
@@ -49,7 +41,6 @@ import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
@@ -64,7 +55,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     private String timeStartHolder, timeEndHolder;
     private FitnessClassDAO fitnessClassDAO = new FitnessClassDAO();
     private Calendar calendar = Calendar.getInstance();
-    private FitnessClass fitness_intent;
+    private FitnessModel fitness_intent;
     private FitnessClassViewModel fitnessClassViewModel;
     private TextInputLayout til_name, til_description, til_category,til_timeStart, til_timeEnd, til_sessionNumber, til_duration;
     private ArrayList<ValidationModel> fields = new ArrayList<>();
@@ -85,7 +76,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //        fitnessClassViewModel.init(getApplicationContext());
 
         //Extra Intent
-        fitness_intent = (FitnessClass) getIntent().getSerializableExtra("fitness");
+        fitness_intent = (FitnessModel) getIntent().getSerializableExtra("fitness");
 
 //        closeButton = (RelativeLayout) findViewById(R.id.relativeLayoutAddClassCloseButton);
 //        imageView = (ImageView) findViewById(R.id.closeAddClassButton);
@@ -219,11 +210,11 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
                     else{
                         binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.VISIBLE);
-                        MutableLiveData<FitnessClass> fitnessClassMutableLiveData = binding.getViewModel().insertFitnessClass();
-                        fitnessClassMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+                        MutableLiveData<FitnessModel> fitnessClassMutableLiveData = binding.getViewModel().insertFitnessClass();
+                        fitnessClassMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<FitnessModel>() {
                             @Override
-                            public void onChanged(FitnessClass fitnessClass) {
-                                if(fitnessClass!= null)
+                            public void onChanged(FitnessModel fitnessModel) {
+                                if(fitnessModel != null)
                                     Toast.makeText(AddFitnessClass.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
                                 binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.GONE);
                                 fitnessClassMutableLiveData.removeObserver(this::onChanged);
@@ -268,7 +259,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //            String timeEnd = editTimeEnd.getText().toString();
 //            int category = fitnessClassCategory.getSelectedItemPosition();
 //            Date currentTime = calendar.getTime();
-//            FitnessClass fitnessClass = new FitnessClass
+//            FitnessModel fitnessClass = new FitnessModel
 //                    .Builder(name, description, category, timeStart, timeEnd, sessionNo, duration)
 //                    .setDateCreated(currentTime.toString())
 //                    .setClassTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid())

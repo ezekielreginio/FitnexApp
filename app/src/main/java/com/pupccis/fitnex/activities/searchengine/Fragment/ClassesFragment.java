@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.api.adapter.FitnessClassAdapter;
-import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessModel;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.FitnessClassConstants;
 
@@ -45,7 +45,7 @@ public class ClassesFragment extends Fragment {
     private RecyclerView fitnessClassSERecyclerView;
     private DatabaseReference mDatabase;
     private View view;
-    private List<FitnessClass> fitnessClassList = new ArrayList<>();
+    private List<FitnessModel> fitnessModelList = new ArrayList<>();
     public ClassesFragment(View view) {
         // Required empty public constructor
         this.view = view;
@@ -82,9 +82,9 @@ public class ClassesFragment extends Fragment {
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        fitnessClassList.clear();
+                        fitnessModelList.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            //FitnessClass fitnessClassListContainer = new FitnessClass();
+                            //FitnessModel fitnessClassListContainer = new FitnessModel();
 
                             if (dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
 //                                fitnessClassListContainer.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
@@ -92,10 +92,10 @@ public class ClassesFragment extends Fragment {
 //                                fitnessClassListContainer.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
 //                                fitnessClassListContainer.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
 //                                fitnessClassListContainer.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
-                               // fitnessClassList.add(fitnessClassListContainer);
+                               // fitnessModelList.add(fitnessClassListContainer);
                             }
                         }
-//                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
+//                        fitnessClassAdapter = new FitnessClassAdapter(fitnessModelList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
 //                        fitnessClassAdapter.notifyDataSetChanged();
 //                        fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
                     }

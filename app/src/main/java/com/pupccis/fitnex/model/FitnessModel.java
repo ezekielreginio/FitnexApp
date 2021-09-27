@@ -7,26 +7,26 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FitnessClass implements Serializable, Observer {
-
-    private  String className;
-    private  String description;
+public class FitnessModel implements Serializable, Observer {
     private  int category;
-    private  String timeStart;
-    private  String timeEnd;
-    private  String duration;
+    private  String className;
     private  String classTrainerID;
+    private  String description;
+    private  String duration;
     private  String sessionNo;
-    private  String dateCreated;
+    private  String timeEnd;
+    private  String timeStart;
 
+
+    private  String dateCreated;
     private String classID;
     private String trainees;
-    private static FitnessClass instance;
-    public FitnessClass(){
+    private static FitnessModel instance;
+    public FitnessModel(){
 
     }
 
-    public FitnessClass(Builder builder) {
+    public FitnessModel(Builder builder) {
         this.className = builder.className;
         this.category = builder.category;
         this.timeStart = builder.timeStart;
@@ -53,8 +53,8 @@ public class FitnessClass implements Serializable, Observer {
     }
 
     @Override
-    public FitnessClass map(Map<String, Object> data) {
-        instance = new FitnessClass();
+    public FitnessModel map(Map<String, Object> data) {
+        instance = new FitnessModel();
         instance.className = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).toString();
         instance.description = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).toString();
         instance.timeStart = data.get(FitnessClassConstants.KEY_FITNESS_CLASSES_TIME_START).toString();
@@ -168,12 +168,12 @@ public class FitnessClass implements Serializable, Observer {
         this.trainees = trainees;
     }
 
-    public static FitnessClass getInstance() {
+    public static FitnessModel getInstance() {
         return instance;
     }
 
-    public static void setInstance(FitnessClass instance) {
-        FitnessClass.instance = instance;
+    public static void setInstance(FitnessModel instance) {
+        FitnessModel.instance = instance;
     }
 
     public static class Builder{
@@ -217,9 +217,9 @@ public class FitnessClass implements Serializable, Observer {
             this.classTrainerID = trainer_id;
             return this;
         }
-        public FitnessClass build(){
-            FitnessClass fitnessClass = new FitnessClass(this);
-            return fitnessClass;
+        public FitnessModel build(){
+            FitnessModel fitnessModel = new FitnessModel(this);
+            return fitnessModel;
         }
 
     }

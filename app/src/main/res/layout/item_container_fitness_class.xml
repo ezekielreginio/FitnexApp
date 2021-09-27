@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="fitnessClass"
-            type="com.pupccis.fitnex.model.FitnessClass" />
+            name="fitnessModel"
+            type="com.pupccis.fitnex.model.FitnessModel" />
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.FitnessClassViewModel" />

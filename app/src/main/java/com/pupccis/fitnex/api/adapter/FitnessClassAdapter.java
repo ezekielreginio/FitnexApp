@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
-import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.FitnessModel;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
@@ -56,7 +55,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
     @Override
     public void onBindViewHolder(@NonNull FitnessClassViewHolder holder, int position) {
 
-        holder.setFitnessClassData((FitnessClass) fitnessClasses.get(position));
+        holder.setFitnessClassData((FitnessModel) fitnessClasses.get(position));
 
     }
 
@@ -87,16 +86,16 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             fitnessClassJoin = itemView.findViewById(R.id.buttonClassJoin);
             fitnessClassView = itemView.findViewById(R.id.buttonClassView);
         }
-        void setFitnessClassData(FitnessClass fitnessClass){
+        void setFitnessClassData(FitnessModel fitnessModel){
             boolean clicked = false;
 
-            className.setText(fitnessClass.getClassName());
-            category.setText(GlobalConstants.KEY_CATEGORY_ARRAY[fitnessClass.getCategory()]);
-            classTimeStart.setText(fitnessClass.getTimeStart());
-            classTimeEnd.setText(fitnessClass.getTimeEnd());
-            classSessionNo.setText(fitnessClass.getSessionNo());
-            classDescription.setText(fitnessClass.getDescription());
-            classDuration.setText(fitnessClass.getDuration());
+            className.setText(fitnessModel.getClassName());
+            category.setText(GlobalConstants.KEY_CATEGORY_ARRAY[fitnessModel.getCategory()]);
+            classTimeStart.setText(fitnessModel.getTimeStart());
+            classTimeEnd.setText(fitnessModel.getTimeEnd());
+            classSessionNo.setText(fitnessModel.getSessionNo());
+            classDescription.setText(fitnessModel.getDescription());
+            classDuration.setText(fitnessModel.getDuration());
             classContainer.setOnClickListener(view -> {
                 if(layoutClassInfo.getVisibility()==View.GONE)
                     layoutClassInfo.setVisibility(View.VISIBLE);
@@ -120,7 +119,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
                 @Override
                 public void onClick(View view) {
                     Intent intent= new Intent(context, AddFitnessClass.class);
-                    intent.putExtra("fitness", fitnessClass);
+                    intent.putExtra("fitness", fitnessModel);
                     context.startActivity(intent);
                 }
             });
@@ -133,7 +132,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    FitnessClassViewModel.deleteFitnessClass(fitnessClass.getClassID());
+                                    FitnessClassViewModel.deleteFitnessClass(fitnessModel.getClassID());
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:

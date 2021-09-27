@@ -8,13 +8,11 @@ import android.util.Log;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
-import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.FitnessModel;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -131,9 +129,9 @@ public class FitnessClassViewModel extends BaseObservable {
         }
         this.context = context;
         //fitnessClasses = FitnessClassesRepository.getInstance().getFitnessClasses();
-        fitnessClasses = dataObserver.getObjects(getFitnessClassesQuery(), new FitnessClass());
+        fitnessClasses = dataObserver.getObjects(getFitnessClassesQuery(), new FitnessModel());
 
-        fitnessClassesUpdate = dataObserver.getLiveData(getFitnessClassesQuery(), new FitnessClass());
+        fitnessClassesUpdate = dataObserver.getLiveData(getFitnessClassesQuery(), new FitnessModel());
     }
     public void onTextChangeFitnessClass (String input, ProgramFitnessClassFields field){
         Log.d("Ontextchange trigger", "triggered");
@@ -149,8 +147,8 @@ public class FitnessClassViewModel extends BaseObservable {
         return fitnessClasses;
     }
 
-    public MutableLiveData<FitnessClass> insertFitnessClass() {
-        FitnessClass fitnessClass = new FitnessClass.Builder(getAddFitnessClassName()
+    public MutableLiveData<FitnessModel> insertFitnessClass() {
+        FitnessModel fitnessModel = new FitnessModel.Builder(getAddFitnessClassName()
                 ,getAddFitnessClassDescription()
                 ,0
                 ,getAddFitnessClassTimeStart()
@@ -159,15 +157,15 @@ public class FitnessClassViewModel extends BaseObservable {
                 .setClassTrainerID(FirebaseAuth.getInstance().getUid())
                 .build();
 
-        return FitnessClassesRepository.insertFitnessClass(fitnessClass);
+        return FitnessClassesRepository.insertFitnessClass(fitnessModel);
     }
 
     public MutableLiveData<HashMap<String, Object>> getLiveDataFitnessClassesUpdate(){
         return fitnessClassesUpdate;
     }
 
-    public static void updateFitnessClass(FitnessClass fitnessClass){
-        FitnessClassesRepository.updateFitnessClass(fitnessClass);
+    public static void updateFitnessClass(FitnessModel fitnessModel){
+        FitnessClassesRepository.updateFitnessClass(fitnessModel);
     }
     public static void deleteFitnessClass(String fitnessClassId){
         FitnessClassesRepository.deleteFitnessClass(fitnessClassId);
