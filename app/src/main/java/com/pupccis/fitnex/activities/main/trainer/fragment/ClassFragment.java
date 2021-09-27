@@ -194,4 +194,16 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }
