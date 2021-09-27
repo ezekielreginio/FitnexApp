@@ -124,9 +124,9 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //        });
 //
 //
-        binding.editTextTimeStart.setRawInputType(InputType.TYPE_NULL);
+//        binding.editTextTimeStart.setRawInputType(InputType.TYPE_NULL);
         binding.editTextTimeStart.setFocusable(false);
-        binding.editTextTimeEnd.setRawInputType(InputType.TYPE_NULL);
+//        binding.editTextTimeEnd.setRawInputType(InputType.TYPE_NULL);
         binding.editTextTimeEnd.setFocusable(false);
 //        addClass = (Button) findViewById(R.id.buttonAddClassButton);
 //
@@ -146,8 +146,8 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //        addClass.setOnClickListener(this);
 //        closeButton.setOnClickListener(this);
 
-  //      rotateAnimation();
-//        closeButton.setVisibility(View.VISIBLE);
+        rotateAnimation();
+        binding.closeAddClassButton.setVisibility(View.VISIBLE);
 
 //        if(fitness_intent != null){
 //            editName.setText(fitness_intent.getClassName());
@@ -163,8 +163,8 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 
     private void rotateAnimation() {
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-//        imageView.setImageResource(R.drawable.ic_close_button);
-//        imageView.startAnimation(rotateAnimation);
+        binding.closeAddClassButton.setImageResource(R.drawable.ic_close_button);
+        binding.closeAddClassButton.startAnimation(rotateAnimation);
     }
     @BindingAdapter({"fitnessClassValidationData"})
     public static void validateFitnessClassData(View view, HashMap<String, Object> validationData){
@@ -185,6 +185,13 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                     break;
                 case DURATION:
                     errorHandler(binding.textInputClassDuration, result);
+                    break;
+                case TIME_START:
+                    errorHandler(binding.textInputClassTimeStart, result);
+                    break;
+                case TIME_END:
+                errorHandler(binding.textInputClassTimeEnd, result);
+                    break;
             }
         }
     }
@@ -220,6 +227,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
                                     Toast.makeText(AddFitnessClass.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
                                 binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.GONE);
                                 fitnessClassMutableLiveData.removeObserver(this::onChanged);
+                                closeForm();
                             }
                         });
                     }
@@ -305,13 +313,13 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         }
     }
 //
-//    private void closeForm() {
-//        Log.d("close", "close");
-//        Intent intent = new Intent(AddFitnessClass.this, TrainerDashboard.class);
-//        intent.putExtra("page", 1);
-//        overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
-//        startActivity(intent);
-//    }
+    private void closeForm() {
+        Log.d("close", "close");
+        Intent intent = new Intent(AddFitnessClass.this, TrainerDashboard.class);
+        intent.putExtra("page", 1);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+    }
 
 
     private String showTimeDialog(EditText time, int setter) {

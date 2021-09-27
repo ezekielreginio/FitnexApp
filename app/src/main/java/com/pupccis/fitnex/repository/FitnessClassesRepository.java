@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.utilities.Constants.FitnessClassConstants;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 
 import java.util.ArrayList;
 
@@ -99,5 +100,10 @@ public class FitnessClassesRepository {
     }
     public static void deleteFitnessClass(String fitnessClassId){
         db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(fitnessClassId).delete();
+    }
+
+    public Query readFitnessClassesQuery() {
+        Query query = db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).whereEqualTo(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, FirebaseAuth.getInstance().getUid());
+        return query;
     }
 }

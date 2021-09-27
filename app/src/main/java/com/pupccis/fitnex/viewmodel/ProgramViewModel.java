@@ -95,7 +95,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
         this.addProgramSessionNumber = addProgramSessionNumber;
-        onTextChangeProgram(addProgramSessionNumber, ProgramFitnessClassFields.DESCRIPTION);
+        onTextChangeProgram(addProgramSessionNumber, ProgramFitnessClassFields.SESSION_NUMBER);
     }
     public void setAddProgramDuration(String addProgramDuration) {
         this.addProgramDuration = addProgramDuration;

@@ -79,48 +79,101 @@ public class FitnessClass implements Serializable, Observer {
 
     //Fitness Class Getters
 
-    public String getTimeStart() {
-        return timeStart;
-    }
-
-    public String getTimeEnd() {
-        return timeEnd;
-    }
 
     public String getClassName() {
         return className;
     }
 
-    public String getSessionNo() {
-        return sessionNo;
-    }
-
-    public String getDateCreated() {
-        return dateCreated;
-    }
-
-    public String getClassTrainerID() {
-        return classTrainerID;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getClassID() {
-        return classID;
-    }
-
-    public String getDuration() {
-        return duration;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getCategory() {
         return category;
     }
 
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getClassTrainerID() {
+        return classTrainerID;
+    }
+
+    public void setClassTrainerID(String classTrainerID) {
+        this.classTrainerID = classTrainerID;
+    }
+
+    public String getSessionNo() {
+        return sessionNo;
+    }
+
+    public void setSessionNo(String sessionNo) {
+        this.sessionNo = sessionNo;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
     public void setClassID(String classID) {
         this.classID = classID;
+    }
+
+    public String getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(String trainees) {
+        this.trainees = trainees;
+    }
+
+    public static FitnessClass getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(FitnessClass instance) {
+        FitnessClass.instance = instance;
     }
 
     public static class Builder{

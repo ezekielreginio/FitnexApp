@@ -38,6 +38,13 @@ public class ProgramFitnessClassValidationService {
                         .validateInt()
                         .validate();
                 break;
+            case TIME_END:
+            case TIME_START:
+                result = service
+                        .requiredField()
+                        //.regexValidation("[a-z]", "Invalid Time Input")
+                        .regexValidation("((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))", "Invalid Time Input")
+                        .validate();
         }
         return result;
     }

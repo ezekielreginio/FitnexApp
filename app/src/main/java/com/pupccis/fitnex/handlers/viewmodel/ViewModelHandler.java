@@ -3,6 +3,7 @@ package com.pupccis.fitnex.handlers.viewmodel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -25,6 +26,11 @@ public class ViewModelHandler {
     public static FirestoreRecyclerOptions<Program> getFirebaseUIProgramOptions(){
         return new FirestoreRecyclerOptions.Builder<Program>()
                 .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
+        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
                 .build();
     }
 }

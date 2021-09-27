@@ -1,31 +1,32 @@
 package com.pupccis.fitnex.activities.main.trainer.fragment;
 
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIFitnessClassOptions;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
-import com.pupccis.fitnex.api.adapter.FitnessClassAdapter;
+import com.pupccis.fitnex.adapters.FitnessClassAdapter;
+import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,15 +45,16 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
-    private FitnessClassAdapter fitnessClassAdapter;
+    private FitnessClassAdapter adapter;
     private UserPreferences userPreferences;
     private FitnessClassDAO fitnessClassDAO = new FitnessClassDAO();
 
-    private RecyclerView fitnessClassRecyclerView;
+    private RecyclerView recyclerView;
 
     private List<FitnessClass> fitnessClasses = new ArrayList<>();
     private DatabaseReference mDatabase;
     private FitnessClassViewModel fitnessClassViewModel;
+    private static FragmentFitnessClassesBinding binding;
     public ClassFragment() {
         // Required empty public constructor
     }
@@ -130,8 +132,8 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         //Recyclerview initialization
-        fitnessClassRecyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
-        fitnessClassRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         //ViewModel Instantiation
 //        fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
@@ -162,11 +164,31 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fitness_classes, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fitness_classes, container, false);
+
+        //Get FirestoreOptions From ViewModel
+//        FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
+        FirestoreRecyclerOptions<FitnessClass> options = new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+                .build();
+
+
+        //Recycler view
+        recyclerView = binding.fitnessClassesRecyclerView;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter = new FitnessClassAdapter(options);
+        recyclerView.setAdapter(adapter);
+
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(adapter.getViewModel());
+
+
+        return binding.getRoot();
     }
 
     @Override
     public void onClick(View view) {
-
     }
 }

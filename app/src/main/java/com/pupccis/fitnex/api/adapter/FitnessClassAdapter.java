@@ -32,6 +32,8 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
     private FitnessClassDAO fitnessClassDAO;
     private String access_type;
 
+
+
     public FitnessClassAdapter(ArrayList<Object> fitnessClasses, Context context, String access_type){
         this.fitnessClasses = fitnessClasses;
         this.context = context;

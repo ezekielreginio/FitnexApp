@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.validation.Services;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.pupccis.fitnex.validation.InputType;
@@ -37,10 +38,15 @@ public class ValidationService {
         return this;
     }
     public ValidationService regexValidation(String pattern, String errorMessage){
+        boolean isMatch = input.matches(pattern);
+       // boolean isMatch = Pattern.compile(pattern).matcher(input).matches();
 
-        boolean isMatch = Pattern.compile(pattern).matcher(input).matches();
-        if(isMatch)
+        Log.e("Pumasok sa RegEx", "Pumasok: "+input);
+        if(!isMatch){
+            Log.e("Pumasok sa if", "pasok1");
             result = ValidationResult.invalid(errorMessage);
+        }
+
         return this;
     }
     public ValidationService validateInt(){

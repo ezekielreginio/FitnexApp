@@ -10,6 +10,7 @@ import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.FitnessClass;
@@ -51,6 +52,7 @@ public class FitnessClassViewModel extends BaseObservable {
     private HashMap<String, Object> fitnessClassValidationData = null;
 
 
+
     public String getAddFitnessClassName() {
         return addFitnessClassName;
     }
@@ -82,6 +84,7 @@ public class FitnessClassViewModel extends BaseObservable {
     }
 
     public void setAddFitnessClassTimeStart(String addFitnessClassTimeStart) {
+        Log.i("Time start setter", addFitnessClassTimeStart);
         this.addFitnessClassTimeStart = addFitnessClassTimeStart;
         onTextChangeFitnessClass(addFitnessClassTimeStart, ProgramFitnessClassFields.TIME_START);
     }
@@ -153,6 +156,7 @@ public class FitnessClassViewModel extends BaseObservable {
                 ,getAddFitnessClassTimeStart()
                 ,getAddFitnessClassTimeEnd(), getAddFitnessClassSessionNumber()
                 ,getAddFitnessClassDuration())
+                .setClassTrainerID(FirebaseAuth.getInstance().getUid())
                 .build();
 
         return FitnessClassesRepository.insertFitnessClass(fitnessClass);
