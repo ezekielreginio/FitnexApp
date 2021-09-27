@@ -36,6 +36,7 @@ public class FitnessClass implements Serializable, Observer {
         this.description = builder.description;
         this.classTrainerID = builder.classTrainerID;
         this.duration = builder.duration;
+        this.classID = builder.classID;
     }
     @Override
     public Map<String, Object> toMap(){

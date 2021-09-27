@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -29,9 +30,9 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
 
     @Override
     protected void onBindViewHolder(@NonNull FitnessClassHolder holder, int position, @NonNull FitnessClass model) {
-        Log.e("Pumasok sa onBindViewHolder", "Pumasok");
         model.setClassID(this.getSnapshots().getSnapshot(position).getId());
         holder.setFitnessClassData(model);
+        Log.e("Pumasok sa onBindViewHolder", model.getClassID());
     }
 
     @NonNull
@@ -52,6 +53,13 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
         }
         void setFitnessClassData(FitnessClass model){
             binding.textFitnessClassName.setText(model.getClassName());
+            binding.textFitnessClassCategory.setText(model.getCategory()+"");
+            binding.textClassDescription.setText(model.getDescription());
+            binding.textTimeStart.setText(model.getTimeStart());
+            binding.textTimeEnd.setText(model.getTimeEnd());
+            binding.textClassSessionCount.setText(model.getSessionNo());
+            binding.textClassDuration.setText(model.getDuration());
+            binding.setVariable(BR.fitnessClass, model);
         }
 
     }

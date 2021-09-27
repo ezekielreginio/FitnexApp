@@ -257,7 +257,8 @@
                 android:background="@drawable/button_update"
                 android:text="Update"
                 android:textColor="@color/whiteTextColor"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{()-> viewModel.triggerUpdateObserver(fitnessClass)}"/>
 
             <Button
                 android:id="@+id/buttonClassView"
@@ -277,7 +278,8 @@
                 android:background="@drawable/button_delete"
                 android:text="Delete"
                 android:textColor="@color/whiteTextColor"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{()-> viewModel.triggerDeleteObserver(fitnessClass)}"/>
             <Button
                 android:id="@+id/buttonClassJoin"
                 android:layout_width="wrap_content"

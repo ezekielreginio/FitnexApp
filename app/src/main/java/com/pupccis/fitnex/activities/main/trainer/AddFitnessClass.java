@@ -2,7 +2,7 @@ package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
-import static com.pupccis.fitnex.viewmodel.FitnessClassViewModel.updateFitnessClass;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +71,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     private Boolean isValid;
     private static ActivityAddClassBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +86,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //        fitnessClassViewModel.init(getApplicationContext());
 
         //Extra Intent
-        fitness_intent = (FitnessClass) getIntent().getSerializableExtra("fitness");
+        fitness_intent = (FitnessClass) getIntent().getSerializableExtra("fitnessClass");
 
 //        closeButton = (RelativeLayout) findViewById(R.id.relativeLayoutAddClassCloseButton);
 //        imageView = (ImageView) findViewById(R.id.closeAddClassButton);
@@ -149,16 +150,18 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         rotateAnimation();
         binding.closeAddClassButton.setVisibility(View.VISIBLE);
 
-//        if(fitness_intent != null){
-//            editName.setText(fitness_intent.getClassName());
-//            editSessionNumber.setText(fitness_intent.getSessionNo());
-//            editTimeStart.setText(fitness_intent.getTimeStart());
-//            editTimeEnd.setText(fitness_intent.getTimeEnd());
-//            editDescription.setText(fitness_intent.getDescription());
-//            editDuration.setText(fitness_intent.getDuration());
-//            fitnessClassCategory.setSelection(fitness_intent.getCategory());
-//            addClass.setText("Update Class");
-//        }
+        if(fitness_intent != null){
+            Log.d("Fitness INtent ID", fitness_intent.getClassID());
+            binding.editTextAddClassName.setText(fitness_intent.getClassName());
+            binding.editTextAddClassSessionNumber.setText(fitness_intent.getSessionNo());
+            binding.editTextTimeStart.setText(fitness_intent.getTimeStart());
+            binding.editTextTimeEnd.setText(fitness_intent.getTimeEnd());
+            binding.editTextAddFitnessClassDescription.setText(fitness_intent.getDescription());
+            binding.editTextAddClassDuration.setText(fitness_intent.getDuration());
+            //fitnessClassCategory.setSelection(fitness_intent.getCategory());
+            binding.getViewModel().setFitnessClassID(fitness_intent.getClassID());
+            binding.buttonAddClassButton.setText("Update Class");
+        }
     }
 
     private void rotateAnimation() {
@@ -200,56 +203,69 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
-            case(R.id.buttonAddClassButton):
-                if(view == binding.buttonAddClassButton){
-                    Log.d("Register", "clicked");
-                    ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
-                    textInputLayouts.add(binding.textInputClassName);
-                    textInputLayouts.add(binding.textInputClassDescription);
-                    textInputLayouts.add(binding.textInputClassSessionNumber);
-                    textInputLayouts.add(binding.textInputClassTimeStart);
-                    textInputLayouts.add(binding.textInputClassTimeEnd);
-                    textInputLayouts.add(binding.textInputClassDuration);
-                    boolean isInvalid = false;
+        if(view == binding.buttonAddClassButton){
+            Log.d("Register", "clicked");
+            ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
+            textInputLayouts.add(binding.textInputClassName);
+            textInputLayouts.add(binding.textInputClassDescription);
+            textInputLayouts.add(binding.textInputClassSessionNumber);
+            textInputLayouts.add(binding.textInputClassTimeStart);
+            textInputLayouts.add(binding.textInputClassTimeEnd);
+            textInputLayouts.add(binding.textInputClassDuration);
+            boolean isInvalid = false;
 
-                    isInvalid = uiErrorHandler(textInputLayouts);
+            isInvalid = uiErrorHandler(textInputLayouts);
 
-                    if(isInvalid)
-                        Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
-                    else{
-                        binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.VISIBLE);
-                        MutableLiveData<FitnessClass> fitnessClassMutableLiveData = binding.getViewModel().insertFitnessClass();
-                        fitnessClassMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
-                            @Override
-                            public void onChanged(FitnessClass fitnessClass) {
-                                if(fitnessClass!= null)
-                                    Toast.makeText(AddFitnessClass.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
-                                binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.GONE);
-                                fitnessClassMutableLiveData.removeObserver(this::onChanged);
-                                closeForm();
-                            }
-                        });
-                    }
+            if(isInvalid)
+                Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
+            else{
+
+                binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.VISIBLE);
+
+                if(fitness_intent != null){
+                    MutableLiveData<FitnessClass> fitnessClassMutableLiveData = binding.getViewModel().updateFitnessClass();
+                    Log.d("Pumasok sa update with intent", "Pumasok");
+                    fitnessClassMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+                        @Override
+                        public void onChanged(FitnessClass fitnessClass) {
+
+                            fitnessClassMutableLiveData.removeObserver(this::onChanged);
+                        }
+                    });
                 }
-                //addClass();
-                break;
-            case(R.id.relativeLayoutAddClassCloseButton):
+                else{
+                    MutableLiveData<FitnessClass> fitnessClassMutableLiveData = binding.getViewModel().insertFitnessClass();
+                    fitnessClassMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+                        @Override
+                        public void onChanged(FitnessClass fitnessClass) {
+                            if(fitnessClass!= null)
+                                Toast.makeText(AddFitnessClass.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
 
-                break;
-            case (R.id.editTextTimeStart):
-                showTimeDialog(binding.editTextTimeStart, 0);
-                Toast.makeText(AddFitnessClass.this, "time start click", Toast.LENGTH_SHORT).show();
-                break;
-            case(R.id.editTextTimeEnd):
-                Toast.makeText(AddFitnessClass.this, "time end click", Toast.LENGTH_SHORT).show();
-                showTimeDialog(binding.editTextTimeEnd, 1);
-                break;
+                            fitnessClassMutableLiveData.removeObserver(this::onChanged);
+                        }
+                    });
+                }
+                binding.constraintLayoutFitnessClassProgressBar.setVisibility(View.GONE);
+                closeForm();
+            }
         }
+        else if (view == binding.relativeLayoutAddClassCloseButton){
+            closeForm();
+        }
+        else if (view == binding.editTextTimeStart)
+            showTimeDialog(binding.editTextTimeStart, 0);
+        else if(view == binding.editTextTimeEnd)
+            showTimeDialog(binding.editTextTimeStart, 1);
 
     }
 
-//    private void addClass(){
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        closeForm();
+    }
+
+    //    private void addClass(){
 //        for(ValidationModel field: fields){
 //            String input = field.getTextInputLayout().getEditText().getText().toString();
 //            if(input == null || input.equals("")){

@@ -128,23 +128,24 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             fitnessClassDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    FitnessClassViewModel.deleteFitnessClass(fitnessClass.getClassID());
-                                    break;
 
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    break;
-                            }
-                        }
-                    };
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("Are you sure you wish to delete this fitness class?").setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener).show();
+//                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            switch (which){
+//                                case DialogInterface.BUTTON_POSITIVE:
+//                                    FitnessClassViewModel.deleteFitnessClass();
+//                                    break;
+//
+//                                case DialogInterface.BUTTON_NEGATIVE:
+//                                    break;
+//                            }
+//                        }
+//                    };
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                    builder.setMessage("Are you sure you wish to delete this fitness class?").setPositiveButton("Yes", dialogClickListener)
+//                            .setNegativeButton("No", dialogClickListener).show();
                 }
             });
         }

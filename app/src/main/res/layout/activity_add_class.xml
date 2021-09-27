@@ -251,7 +251,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="656dp"
                 android:background="@drawable/ic_circle_add_button"
-
+                android:onClick="onClick"
                 app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
                 <ImageView
@@ -260,7 +260,8 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="7.5dp"
-                    android:layout_marginTop="7.5dp" />
+                    android:layout_marginTop="7.5dp"
+                    />
 
             </RelativeLayout>
         </LinearLayout>

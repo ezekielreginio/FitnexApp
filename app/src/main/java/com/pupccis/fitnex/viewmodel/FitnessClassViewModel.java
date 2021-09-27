@@ -27,12 +27,16 @@ public class FitnessClassViewModel extends BaseObservable {
     //MutableLiveData attributes
     private MutableLiveData<ArrayList<Object>> fitnessClasses;
     private MutableLiveData<HashMap<String, Object>> fitnessClassesUpdate = new MutableLiveData<>();
+    private MutableLiveData<FitnessClass> updateFitnessClassLiveData = new MutableLiveData<>();
+    private MutableLiveData<FitnessClass> deleteFitnessClassLiveData = new MutableLiveData<>();
+    private FitnessClassesRepository fitnessClassesRepository = new FitnessClassesRepository();
+
 
     //Data Observer
     private DataObserver dataObserver = new DataObserver();
 
     //Private attributes
-    private FitnessClassesRepository fitnessClassesRepository;
+    //private FitnessClassesRepository fitnessClassesRepository;
     private Context context;
     @Bindable
     private String addFitnessClassName = null;
@@ -50,8 +54,16 @@ public class FitnessClassViewModel extends BaseObservable {
     private String addFitnessClassDuration = null;
     @Bindable
     private HashMap<String, Object> fitnessClassValidationData = null;
+    @Bindable
+    private String fitnessClassID = null;
 
+    public String getFitnessClassID() {
+        return fitnessClassID;
+    }
 
+    public void setFitnessClassID(String fitnessClassID) {
+        this.fitnessClassID = fitnessClassID;
+    }
 
     public String getAddFitnessClassName() {
         return addFitnessClassName;
@@ -150,26 +162,51 @@ public class FitnessClassViewModel extends BaseObservable {
     }
 
     public MutableLiveData<FitnessClass> insertFitnessClass() {
+        FitnessClass fitnessClass = fitnessClassInstance();
+        return FitnessClassesRepository.insertFitnessClass(fitnessClass);
+    }
+    public MutableLiveData<FitnessClass> updateFitnessClass(){
+
+        FitnessClass fitnessClass = fitnessClassInstance();
+        Log.d("Update Fitness class", fitnessClass.getClassID());
+        return fitnessClassesRepository.updateFitnessClass(fitnessClass);
+    }
+    public void deleteFitnessClass(String fitnessClassID){
+        FitnessClass fitnessClass = fitnessClassInstance();
+        fitnessClassesRepository.deleteFitnessClass(fitnessClassID);
+    }
+    public FitnessClass fitnessClassInstance(){
         FitnessClass fitnessClass = new FitnessClass.Builder(getAddFitnessClassName()
                 ,getAddFitnessClassDescription()
                 ,0
                 ,getAddFitnessClassTimeStart()
-                ,getAddFitnessClassTimeEnd(), getAddFitnessClassSessionNumber()
+                ,getAddFitnessClassTimeEnd()
+                ,getAddFitnessClassSessionNumber()
                 ,getAddFitnessClassDuration())
                 .setClassTrainerID(FirebaseAuth.getInstance().getUid())
+                .setClassID(getFitnessClassID())
                 .build();
-
-        return FitnessClassesRepository.insertFitnessClass(fitnessClass);
+        return fitnessClass;
     }
 
     public MutableLiveData<HashMap<String, Object>> getLiveDataFitnessClassesUpdate(){
         return fitnessClassesUpdate;
     }
 
-    public static void updateFitnessClass(FitnessClass fitnessClass){
-        FitnessClassesRepository.updateFitnessClass(fitnessClass);
+    public void triggerUpdateObserver(FitnessClass fitnessClass) {
+        Log.d("Trigger ID",fitnessClass.getClassID());
+        setFitnessClassID(fitnessClass.getClassID());
+        updateFitnessClassLiveData.postValue(fitnessClass);
     }
-    public static void deleteFitnessClass(String fitnessClassId){
-        FitnessClassesRepository.deleteFitnessClass(fitnessClassId);
+    public void triggerDeleteObserver(FitnessClass fitnessClass) {
+        setFitnessClassID(fitnessClass.getClassID());
+        deleteFitnessClassLiveData.postValue(fitnessClass);
     }
+    public MutableLiveData<FitnessClass> updateObserver(){
+        return updateFitnessClassLiveData;
+    }
+    public MutableLiveData<FitnessClass> deleteObserver(){
+        return deleteFitnessClassLiveData;
+    }
+
 }

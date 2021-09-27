@@ -2,21 +2,28 @@ package com.pupccis.fitnex.activities.main.trainer.fragment;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIFitnessClassOptions;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
+import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
+import com.pupccis.fitnex.activities.main.trainer.AddProgram;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
 import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
@@ -132,8 +139,8 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         //Recyclerview initialization
-        recyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//        recyclerView = (RecyclerView) getView().findViewById(R.id.fitnessClassesRecyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         //ViewModel Instantiation
 //        fitnessClassViewModel = new ViewModelProvider(this).get(FitnessClassViewModel.class);
@@ -167,16 +174,13 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fitness_classes, container, false);
 
         //Get FirestoreOptions From ViewModel
-//        FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
-        FirestoreRecyclerOptions<FitnessClass> options = new FirestoreRecyclerOptions.Builder<FitnessClass>()
-                .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
-                .build();
-
+        FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
 
         //Recycler view
         recyclerView = binding.fitnessClassesRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//        recyclerView.setItemAnimator(null);
 
         adapter = new FitnessClassAdapter(options);
         recyclerView.setAdapter(adapter);
@@ -184,11 +188,55 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         binding.setLifecycleOwner(this);
         binding.setViewModel(adapter.getViewModel());
 
+        binding.getViewModel().updateObserver().observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+            @Override
+            public void onChanged(FitnessClass fitnessClass) {
+
+                Intent intent= new Intent(getContext(), AddFitnessClass.class);
+                intent.putExtra("fitnessClass", fitnessClass);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+            }
+        });
+        binding.getViewModel().deleteObserver().observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+            @Override
+            public void onChanged(FitnessClass fitnessClass) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Log.d("Delete", "Clicked");
+                                binding.getViewModel().deleteFitnessClass(fitnessClass.getClassID());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Are you sure you wish to delete this program?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+        });
 
         return binding.getRoot();
     }
 
     @Override
     public void onClick(View view) {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

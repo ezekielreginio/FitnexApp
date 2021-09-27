@@ -94,11 +94,22 @@ public class FitnessClassesRepository {
         return fitnessClassLiveData;
     }
 
-    public static void updateFitnessClass(FitnessClass fitnessClass){
-        Log.d("Program ID", fitnessClass.getClassID());
-        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(fitnessClass.getClassID()).update(fitnessClass.toMap());
+    public MutableLiveData<FitnessClass>  updateFitnessClass(FitnessClass updatedFitnessClass){
+        MutableLiveData<FitnessClass> fitnessClassLiveData = new MutableLiveData<>();
+        db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(updatedFitnessClass.getClassID()).update(updatedFitnessClass.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    fitnessClassLiveData.postValue(updatedFitnessClass);
+                }
+                else{
+                    fitnessClassLiveData.postValue(null);
+                }
+            }
+        });
+        return fitnessClassLiveData;
     }
-    public static void deleteFitnessClass(String fitnessClassId){
+    public void  deleteFitnessClass(String fitnessClassId){
         db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).document(fitnessClassId).delete();
     }
 
