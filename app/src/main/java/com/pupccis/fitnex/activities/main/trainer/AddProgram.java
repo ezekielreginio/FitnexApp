@@ -290,7 +290,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
-                binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
+                binding.constraintLayoutProgramProgressBar.setVisibility(View.VISIBLE);
                 if(program_intent!= null){
                     MutableLiveData<Program> programMutableLiveData = binding.getViewModel().updateProgram();
 
@@ -299,7 +299,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
                         public void onChanged(Program program) {
                             if(program!= null)
                                 Toast.makeText(AddProgram.this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
-                            binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                            binding.constraintLayoutProgramProgressBar.setVisibility(View.GONE);
                             programMutableLiveData.removeObserver(this::onChanged);
                             closeForm();
                         }
@@ -312,7 +312,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
                         public void onChanged(Program program) {
                             if(program!= null)
                                 Toast.makeText(AddProgram.this, "Program Successfully Added!", Toast.LENGTH_SHORT).show();
-                            binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                            binding.constraintLayoutProgramProgressBar.setVisibility(View.GONE);
                             programMutableLiveData.removeObserver(this::onChanged);
                             closeForm();
                         }
