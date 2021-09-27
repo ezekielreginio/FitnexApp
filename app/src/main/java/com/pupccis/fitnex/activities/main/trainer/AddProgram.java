@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,13 +59,24 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Extra Intents:
+        program_intent = (Program) getIntent().getSerializableExtra("program");
+
+        //Binding Initialization
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_program);
         binding.setViewModel(new ProgramViewModel());
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
         binding.setPresenter(this);
-        //Extra Intents:
-        program_intent = (Program) getIntent().getSerializableExtra("program");
+
+        if(program_intent!=null){
+            Log.d("Program ID",program_intent.getProgramID());
+            binding.editTextAddProgramName.setText(program_intent.getName());
+            binding.editTextAddProgramDescription.setText(program_intent.getDescription());
+            binding.editTextAddProgramSessionNumber.setText(program_intent.getSessionNumber());
+            binding.editTextAddProgramDuration.setText(program_intent.getDuration());
+            binding.getViewModel().setProgramID(program_intent.getProgramID());
+        }
 
         //setContentView(R.layout.activity_add_program);
 
@@ -195,10 +207,10 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 //        }
 //    }
 
-//    private void closeForm(){
-//        startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
-//        overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
-//    }
+    private void closeForm(){
+        startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
+        overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
+    }
 
 //    private void rotateAnimation() {
 //        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -278,16 +290,33 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
                 binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
-                MutableLiveData<Program> programMutableLiveData = binding.getViewModel().insertProgram();
-                programMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Program>() {
-                    @Override
-                    public void onChanged(Program program) {
-                        if(program!= null)
-                            Toast.makeText(AddProgram.this, "Program Successfully Registered", Toast.LENGTH_SHORT).show();
-                        binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
-                        programMutableLiveData.removeObserver(this::onChanged);
-                    }
-                });
+                if(program_intent!= null){
+                    MutableLiveData<Program> programMutableLiveData = binding.getViewModel().updateProgram();
+
+                    programMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Program>() {
+                        @Override
+                        public void onChanged(Program program) {
+                            if(program!= null)
+                                Toast.makeText(AddProgram.this, "Program Successfully Updated", Toast.LENGTH_SHORT).show();
+                            binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                            programMutableLiveData.removeObserver(this::onChanged);
+                            closeForm();
+                        }
+                    });
+                }
+                else{
+                    MutableLiveData<Program> programMutableLiveData = binding.getViewModel().insertProgram();
+                    programMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Program>() {
+                        @Override
+                        public void onChanged(Program program) {
+                            if(program!= null)
+                                Toast.makeText(AddProgram.this, "Program Successfully Added!", Toast.LENGTH_SHORT).show();
+                            binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                            programMutableLiveData.removeObserver(this::onChanged);
+                            closeForm();
+                        }
+                    });
+                }
             }
         }
     }

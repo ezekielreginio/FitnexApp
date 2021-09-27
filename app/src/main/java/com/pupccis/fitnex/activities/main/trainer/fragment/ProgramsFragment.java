@@ -1,11 +1,13 @@
 package com.pupccis.fitnex.activities.main.trainer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.adapters.ProgramModel;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
@@ -92,9 +96,6 @@ public class ProgramsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
-
-
-
 
 //        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 //
@@ -214,6 +215,7 @@ public class ProgramsFragment extends Fragment {
         Log.d("OnCreateView", "executed");
         // Inflate the layout for this fragment
         fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
+
         View view = fragmentProgramsBinding.getRoot();
         Query query = programRef;
 
@@ -224,8 +226,23 @@ public class ProgramsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ProgramAdapter(options);
-
         recyclerView.setAdapter(adapter);
+
+        fragmentProgramsBinding.setLifecycleOwner(this);
+        fragmentProgramsBinding.setViewModel(adapter.getViewModel());
+
+        //ViewModel Observers
+        fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
+            @Override
+            public void onChanged(Program program) {
+                Log.d("Program Fragment", "Observer Triggered");
+                Intent intent= new Intent(getContext(), AddProgram.class);
+                intent.putExtra("program", program);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+            }
+        });
+
         return view;
     }
     //Binding Adapters

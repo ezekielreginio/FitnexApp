@@ -53,7 +53,7 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FitnessClassViewHolder holder, int position) {
-        Log.d("Bindviewholder", "Executed");
+
         holder.setFitnessClassData((FitnessClass) fitnessClasses.get(position));
 
     }

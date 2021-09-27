@@ -2,6 +2,7 @@ package com.pupccis.fitnex.model;
 
 import com.pupccis.fitnex.api.globals.Observer;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -139,7 +140,6 @@ public class Program implements Serializable, Observer {
     public void setProgramID(String programID) {
         this.programID = programID;
     }
-
 
     public static class Builder{
         private final String name;

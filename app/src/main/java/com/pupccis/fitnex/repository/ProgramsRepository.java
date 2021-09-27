@@ -161,9 +161,21 @@ public class ProgramsRepository {
         return programLiveData;
     }
 
-    public void updateProgram(Program updatedProgram) {
-        Log.d("Program update name", updatedProgram.getName());
-        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(updatedProgram.getProgramID()).update(updatedProgram.toMap());
+    public MutableLiveData<Program> updateProgram(Program updatedProgram) {
+        MutableLiveData<Program> programLiveData = new MutableLiveData<>();
+        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(updatedProgram.getProgramID()).update(updatedProgram.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    programLiveData.postValue(updatedProgram);
+                }
+                else{
+                    programLiveData.postValue(null);
+                }
+
+            }
+        });
+        return programLiveData;
     }
 
     public void deleteProgram(String programID){
