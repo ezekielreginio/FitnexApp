@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.FitnessClassViewModel" />
+    </data>
+<FrameLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Activities.Main.Trainer.fragment.ClassFragment"
+    tools:context=".activities.main.trainer.fragment.ClassFragment"
     android:background="@drawable/ic_trainer_bg"
     android:padding="5dp">
 
@@ -19,3 +26,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 </FrameLayout>
+</layout>

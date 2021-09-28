@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Login.FitnexRegister"
+    tools:context=".activities.login.FitnexRegister"
     android:background="@color/register_bk_color"
     android:focusableInTouchMode="true"
     android:gravity="center"
@@ -72,7 +72,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputEmail"
+                        android:id="@+id/textInputLoginEmail"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
@@ -83,12 +83,12 @@
                             android:hint="Email"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputPassword"
+                        android:id="@+id/textInputEmailPassword"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                        android:id="@+id/buttonApplyButton"
+                        android:id="@+id/buttonRegisterButton"
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"

@@ -7,7 +7,7 @@
     android:background="@color/themeColor"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
-    tools:context=".Activities.SearchEngine.Fragment.TrainersFragment">
+    tools:context=".activities.searchengine.Fragment.TrainersFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewSearchEngineTrainers"
