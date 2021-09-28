@@ -65,7 +65,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
         binding.setLifecycleOwner(this);
         binding.setViewModel(adapter.getViewModel());
-
+        binding.setPresenter(this);
 
 //        //ViewModel instantiation
 //        routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
@@ -182,13 +182,11 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.AddRoutineButton:
-                Intent intent = new Intent(RoutinePage.this, AddRoutine.class);
-                intent.putExtra("program", program);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
-                break;
+        if(view == binding.linearLayoutAddProgramButton){
+            Intent intent = new Intent(RoutinePage.this, AddRoutine.class);
+            intent.putExtra("program", program);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
         }
     }
 }

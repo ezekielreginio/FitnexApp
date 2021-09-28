@@ -31,6 +31,7 @@
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_login_fitnex.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_outgoing_invitation.xml" value="0.35733695652173914" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_routine_page.xml" value="0.2234375" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainee_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainee_workout_favorites.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.22" />
@@ -85,7 +86,7 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_trainees.xml" value="0.15625" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_videos_se.xml" value="0.2105978260869565" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.4" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.1974050046339203" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_routines.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_trainer.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_videos.xml" value="0.20516304347826086" />

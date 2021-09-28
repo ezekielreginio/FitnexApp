@@ -3,6 +3,9 @@
     xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.routine.RoutinePage" />
+        <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
     </data>
@@ -51,6 +54,7 @@
         android:background="@drawable/ic_circle_add_button"
         android:orientation="vertical"
         android:translationZ="1dp"
+        android:onClick="onClick"
         app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

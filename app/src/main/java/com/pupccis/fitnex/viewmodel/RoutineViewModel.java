@@ -22,13 +22,14 @@ public class RoutineViewModel extends ViewModel {
 
     //Private Attributes
     private RoutinesRepository routinesRepository = new RoutinesRepository();
-    private Context context;
-    public void init(Context context, String programID){
-        if(routines != null){
-            return;
-        }
-        this.context = context;
-        routines = dataObserver.getObjects(routinesRepository.getRoutinesQuery(programID), new Routine());
+    private String programID = null;
+
+    public String getProgramID() {
+        return programID;
+    }
+
+    public void setProgramID(String programID) {
+        this.programID = programID;
     }
 
     public void insertRoutine(Routine routine){

@@ -18,6 +18,7 @@ public class ProgramViewModel extends BaseObservable {
     //Mutable Live Data
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
+    private MutableLiveData<Program> routineProgramID = new MutableLiveData<>();
     //Bindable Attributes
     @Bindable
     private String addProgramName = null;
@@ -110,6 +111,14 @@ public class ProgramViewModel extends BaseObservable {
     public void triggerDeleteObserver(Program program) {
         setProgramID(program.getProgramID());
         deleteProgramLivedata.postValue(program);
+    }
+
+    public void triggerRoutineObserver(Program program){
+        setProgramID(program.getProgramID());
+        routineProgramID.postValue(program);
+    }
+    public MutableLiveData<Program> routineObserver(){
+        return routineProgramID;
     }
 
     public MutableLiveData<Program> updateObserver(){
