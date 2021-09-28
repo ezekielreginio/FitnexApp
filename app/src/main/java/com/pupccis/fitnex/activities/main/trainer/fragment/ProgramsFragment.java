@@ -24,6 +24,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
@@ -210,7 +211,7 @@ public class ProgramsFragment extends Fragment {
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+       recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);
@@ -221,6 +222,14 @@ public class ProgramsFragment extends Fragment {
         fragmentProgramsBinding.setViewModel(adapter.getViewModel()); //Get the View Model from Adapter
 
         //ViewModel Observers
+        fragmentProgramsBinding.getViewModel().routineObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
+            @Override
+            public void onChanged(Program program) {
+                Intent intent = new Intent(getContext(), RoutinePage.class);
+                intent.putExtra("program", program);
+                startActivity(intent);
+            }
+        });
         fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
             @Override
             public void onChanged(Program program) {

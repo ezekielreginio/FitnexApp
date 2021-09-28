@@ -34,6 +34,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     //Mutable Live Data
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
+    private MutableLiveData<Program> routineProgramID = new MutableLiveData<>();
     
     //Private Attributes
     private Context context;
@@ -161,6 +162,11 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         deleteProgramLivedata.postValue(program);
         //ProgramsRepository.getInstance().updateProgram(updatedProgram);
     }
+    public void triggerRoutineObserver(Program program){
+        setProgramID(program.getProgramID());
+        routineProgramID.postValue(program);
+    }
+
 
     public MutableLiveData<Program> updateObserver(){
         return updateProgramLivedata;
@@ -170,6 +176,9 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         return deleteProgramLivedata;
     }
 
+    public MutableLiveData<Program> routineObserver(){
+        return routineProgramID;
+    }
     public void deleteProgram(String programID){
         programsRepository.deleteProgram(programID);
     }

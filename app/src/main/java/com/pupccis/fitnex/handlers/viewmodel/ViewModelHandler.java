@@ -3,8 +3,10 @@ package com.pupccis.fitnex.handlers.viewmodel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
+import com.pupccis.fitnex.repository.RoutinesRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
@@ -31,6 +33,11 @@ public class ViewModelHandler {
     public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
         return new FirestoreRecyclerOptions.Builder<FitnessClass>()
                 .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<Routine> getFirebaseUIRoutineOptions(String program_id){
+        return new FirestoreRecyclerOptions.Builder<Routine>()
+                .setQuery(RoutinesRepository.getInstance().getRoutinesQuery(program_id), Routine.class)
                 .build();
     }
 }
