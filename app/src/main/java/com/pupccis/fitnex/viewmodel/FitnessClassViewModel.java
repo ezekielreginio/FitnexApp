@@ -57,16 +57,32 @@ public class FitnessClassViewModel extends BaseObservable {
     @Bindable
     private String fitnessClassID = null;
 
+
+    //Getter Methods
     public String getFitnessClassID() {
         return fitnessClassID;
     }
-
-    public void setFitnessClassID(String fitnessClassID) {
-        this.fitnessClassID = fitnessClassID;
-    }
-
     public String getAddFitnessClassName() {
         return addFitnessClassName;
+    }
+    public String getAddFitnessClassDescription() {
+        return addFitnessClassDescription;
+    }
+    public int getAddFitnessClassCategory() {
+        return addFitnessClassCategory;
+    }
+    public String getAddFitnessClassTimeStart() {
+        return addFitnessClassTimeStart;
+    }
+    public String getAddFitnessClassTimeEnd() {
+        return addFitnessClassTimeEnd;
+    }
+    public String getAddFitnessClassSessionNumber() { return addFitnessClassSessionNumber; }
+    public String getAddFitnessClassDuration() { return addFitnessClassDuration; }
+
+    //Setter Methods
+    public void setFitnessClassID(String fitnessClassID) {
+        this.fitnessClassID = fitnessClassID;
     }
 
     public void setAddFitnessClassName(String addFitnessClassName) {
@@ -74,25 +90,13 @@ public class FitnessClassViewModel extends BaseObservable {
         onTextChangeFitnessClass(addFitnessClassName, ProgramFitnessClassFields.NAME);
     }
 
-    public String getAddFitnessClassDescription() {
-        return addFitnessClassDescription;
-    }
-
     public void setAddFitnessClassDescription(String addFitnessClassDescription) {
         this.addFitnessClassDescription = addFitnessClassDescription;
         onTextChangeFitnessClass(addFitnessClassDescription, ProgramFitnessClassFields.DESCRIPTION);
     }
 
-    public int getAddFitnessClassCategory() {
-        return addFitnessClassCategory;
-    }
-
     public void setAddFitnessClassCategory(int addFitnessClassCategory) {
         this.addFitnessClassCategory = addFitnessClassCategory;
-    }
-
-    public String getAddFitnessClassTimeStart() {
-        return addFitnessClassTimeStart;
     }
 
     public void setAddFitnessClassTimeStart(String addFitnessClassTimeStart) {
@@ -101,26 +105,14 @@ public class FitnessClassViewModel extends BaseObservable {
         onTextChangeFitnessClass(addFitnessClassTimeStart, ProgramFitnessClassFields.TIME_START);
     }
 
-    public String getAddFitnessClassTimeEnd() {
-        return addFitnessClassTimeEnd;
-    }
-
     public void setAddFitnessClassTimeEnd(String addFitnessClassTimeEnd) {
         this.addFitnessClassTimeEnd = addFitnessClassTimeEnd;
         onTextChangeFitnessClass(addFitnessClassTimeEnd, ProgramFitnessClassFields.TIME_END);
     }
 
-    public String getAddFitnessClassSessionNumber() {
-        return addFitnessClassSessionNumber;
-    }
-
     public void setAddFitnessClassSessionNumber(String addFitnessClassSessionNumber) {
         this.addFitnessClassSessionNumber = addFitnessClassSessionNumber;
         onTextChangeFitnessClass(addFitnessClassSessionNumber, ProgramFitnessClassFields.SESSION_NUMBER);
-    }
-
-    public String getAddFitnessClassDuration() {
-        return addFitnessClassDuration;
     }
 
     public void setAddFitnessClassDuration(String addFitnessClassDuration) {
@@ -137,16 +129,6 @@ public class FitnessClassViewModel extends BaseObservable {
         notifyPropertyChanged(BR.fitnessClassValidationData);
     }
 
-    public void init(Context context){
-        if(fitnessClasses != null){
-            return;
-        }
-        this.context = context;
-        //fitnessClasses = FitnessClassesRepository.getInstance().getFitnessClasses();
-        fitnessClasses = dataObserver.getObjects(getFitnessClassesQuery(), new FitnessClass());
-
-        fitnessClassesUpdate = dataObserver.getLiveData(getFitnessClassesQuery(), new FitnessClass());
-    }
     public void onTextChangeFitnessClass (String input, ProgramFitnessClassFields field){
         Log.d("Ontextchange trigger", "triggered");
         ProgramFitnessClassValidationService programFitnessClassValidationService= new ProgramFitnessClassValidationService(input, field);
@@ -157,9 +139,7 @@ public class FitnessClassViewModel extends BaseObservable {
         validationData.put("field", field);
         setFitnessClassValidationData(validationData);
     }
-    public MutableLiveData<ArrayList<Object>> getFitnessClasses(){
-        return fitnessClasses;
-    }
+
 
     public MutableLiveData<FitnessClass> insertFitnessClass() {
         FitnessClass fitnessClass = fitnessClassInstance();
@@ -189,10 +169,6 @@ public class FitnessClassViewModel extends BaseObservable {
         return fitnessClass;
     }
 
-    public MutableLiveData<HashMap<String, Object>> getLiveDataFitnessClassesUpdate(){
-        return fitnessClassesUpdate;
-    }
-
     public void triggerUpdateObserver(FitnessClass fitnessClass) {
         Log.d("Trigger ID",fitnessClass.getClassID());
         setFitnessClassID(fitnessClass.getClassID());
@@ -208,5 +184,4 @@ public class FitnessClassViewModel extends BaseObservable {
     public MutableLiveData<FitnessClass> deleteObserver(){
         return deleteFitnessClassLiveData;
     }
-
 }
