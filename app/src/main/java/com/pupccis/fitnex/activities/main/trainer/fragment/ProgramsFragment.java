@@ -210,7 +210,7 @@ public class ProgramsFragment extends Fragment {
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);
