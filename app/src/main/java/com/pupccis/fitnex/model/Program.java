@@ -12,7 +12,7 @@ public class Program implements Serializable {
 
     private String name;
     private String description;
-    private String category;
+    private int category;
     private String sessionNumber;
     private String duration;
     private String trainerID;
@@ -61,7 +61,7 @@ public class Program implements Serializable {
         return description;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
@@ -93,7 +93,7 @@ public class Program implements Serializable {
         this.description = description;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -120,7 +120,7 @@ public class Program implements Serializable {
     public static class Builder{
         private final String name;
         private final String description;
-        private final String category;
+        private final int category;
         private final String sessionNumber;
         private final String duration;
         private String trainerID;
@@ -128,7 +128,7 @@ public class Program implements Serializable {
         private String trainees;
         private String programID;
 
-        public Builder(String name, String description, String category, String sessionNumber, String duration){
+        public Builder(String name, String description, int category, String sessionNumber, String duration){
             this.name = name;
             this.description = description;
             this.category = category;

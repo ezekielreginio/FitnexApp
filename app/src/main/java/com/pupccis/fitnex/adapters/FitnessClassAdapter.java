@@ -16,6 +16,7 @@ import com.pupccis.fitnex.databinding.ItemContainerFitnessClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, FitnessClassAdapter.FitnessClassHolder> {
@@ -53,13 +54,24 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
         }
         void setFitnessClassData(FitnessClass model){
             binding.textFitnessClassName.setText(model.getClassName());
-            binding.textFitnessClassCategory.setText(model.getCategory()+"");
+            binding.textFitnessClassCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
             binding.textClassDescription.setText(model.getDescription());
             binding.textTimeStart.setText(model.getTimeStart());
             binding.textTimeEnd.setText(model.getTimeEnd());
             binding.textClassSessionCount.setText(model.getSessionNo());
             binding.textClassDuration.setText(model.getDuration());
             binding.setVariable(BR.fitnessClass, model);
+
+            binding.layoutClassInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("Layout", "Clicked");
+                    if(binding.layoutClassInfo.getVisibility() == View.VISIBLE)
+                        binding.layoutClassInfo.setVisibility(View.GONE);
+                    else
+                        binding.layoutClassInfo.setVisibility(View.VISIBLE);
+                }
+            });
         }
 
     }

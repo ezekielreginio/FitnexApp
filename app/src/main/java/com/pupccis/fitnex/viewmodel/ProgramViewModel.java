@@ -1,52 +1,30 @@
 package com.pupccis.fitnex.viewmodel;
 
-
-import android.content.Context;
 import android.util.Log;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
-
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.BR;
-import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.ProgramsRepository;
-import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProgramViewModel extends BaseObservable implements Serializable {
-    MutableLiveData<ArrayList<Object>> programs;
-    private MutableLiveData<HashMap<String, Object>> programUpdate = new MutableLiveData<>();
-
+public class ProgramViewModel extends BaseObservable {
     private ProgramsRepository programsRepository= ProgramsRepository.getInstance();
-
     //Mutable Live Data
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
-    private MutableLiveData<Program> routineProgramID = new MutableLiveData<>();
-    
-    //Private Attributes
-    private Context context;
-    private DataObserver dataObserver = new DataObserver();
-
     //Bindable Attributes
     @Bindable
     private String addProgramName = null;
     @Bindable
     private String addProgramDescription = null;
     @Bindable
-    private String addProgramCategory = null;
+    private int addProgramCategory = -1;
     @Bindable
     private String addProgramSessionNumber = null;
     @Bindable
@@ -63,7 +41,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     public String getAddProgramDescription() {
         return addProgramDescription;
     }
-    public String getAddProgramCategory() {
+    public int getAddProgramCategory() {
         return addProgramCategory;
     }
     public String getAddProgramSessionNumber() {
@@ -77,11 +55,6 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     }
     public String getProgramID() { return programID; }
 
-    public void setProgramValidationData(HashMap<String, Object> programValidationData) {
-        this.programValidationData = programValidationData;
-        notifyPropertyChanged(BR.programValidationData);
-    }
-
     //Bindable Attributes Setters
     public void setAddProgramName(String addProgramName) {
         this.addProgramName = addProgramName;
@@ -91,7 +64,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         this.addProgramDescription = addProgramDescription;
         onTextChangeProgram(addProgramDescription, ProgramFitnessClassFields.DESCRIPTION);
     }
-    public void setAddProgramCategory(String addProgramCategory) {
+    public void setAddProgramCategory(int addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
@@ -107,23 +80,9 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         this.programID = programID;
     }
 
-    public void init(Context context){
-        if(programs != null){
-            return;
-        }
-        this.context = context;
-
-        //programs = ProgramsRepository.getInstance().getPrograms();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Query queryProgram = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-        programs = dataObserver.getObjects(queryProgram, new Program());
-
-        ArrayList<Object> programModels = new ArrayList<>();
-        Program program = new Program();
-
-        Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        programUpdate = dataObserver.getLiveData(query, program);
+    public void setProgramValidationData(HashMap<String, Object> programValidationData) {
+        this.programValidationData = programValidationData;
+        notifyPropertyChanged(BR.programValidationData);
     }
 
 
@@ -138,15 +97,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         setProgramValidationData(validationData);
     }
 
-    public FirestoreRecyclerOptions<Program> getFirebaseUIOptions(){
-        Log.d("Pumasok", "pumasok");
-       return new FirestoreRecyclerOptions.Builder<Program>()
-               .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
-               .build();
-    }
-
     public MutableLiveData<Program> insertProgram(){
-        //ProgramsRepository.getInstance().insertProgram(program);
         Program program = programInstance();
         return programsRepository.insertProgram(program);
     }
@@ -154,19 +105,12 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     public void triggerUpdateObserver(Program program) {
         setProgramID(program.getProgramID());
         updateProgramLivedata.postValue(program);
-        //ProgramsRepository.getInstance().updateProgram(updatedProgram);
     }
 
     public void triggerDeleteObserver(Program program) {
         setProgramID(program.getProgramID());
         deleteProgramLivedata.postValue(program);
-        //ProgramsRepository.getInstance().updateProgram(updatedProgram);
     }
-    public void triggerRoutineObserver(Program program){
-        setProgramID(program.getProgramID());
-        routineProgramID.postValue(program);
-    }
-
 
     public MutableLiveData<Program> updateObserver(){
         return updateProgramLivedata;
@@ -176,9 +120,6 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         return deleteProgramLivedata;
     }
 
-    public MutableLiveData<Program> routineObserver(){
-        return routineProgramID;
-    }
     public void deleteProgram(String programID){
         programsRepository.deleteProgram(programID);
     }
@@ -186,7 +127,6 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     public MutableLiveData<Program> updateProgram() {
         Program program = programInstance();
         Log.d("Program ID", program.getProgramID());
-
         return programsRepository.updateProgram(program);
     }
 

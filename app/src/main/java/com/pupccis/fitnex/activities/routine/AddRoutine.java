@@ -41,7 +41,6 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
 
         //Extra intents
         program = (Program) getIntent().getSerializableExtra("program");
-        Log.d("+=========================", program.getCategory());
         //Layout binding
         editTextAddRoutineName = findViewById(R.id.editTextAddRoutineName);
         editTextAddRoutineCategory = findViewById(R.id.editTextAddRoutineCategory);
@@ -59,11 +58,6 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        if(Integer.parseInt(program.getCategory())==2){
-
-        }else{
-            linearLayoutAddRoutineStrengthFields.setVisibility(View.GONE);
-        }
 
         if(routine_intent != null){
             editTextAddRoutineName.setText(routine_intent.getName());
@@ -82,24 +76,7 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
             case(R.id.buttonAddRoutineButton):
                 String routineName = editTextAddRoutineName.getText().toString();
 
-                if(Integer.parseInt(program.getCategory())==2){
-                    String reps = editTextAddRoutineReps.getText().toString();
-                    String sets = editTextAddRoutineSets.getText().toString();
-                    String weight = editTextAddRoutineWeights.getText().toString();
-                   routine = new Routine.Builder(routineName)
-                           .reps(Integer.parseInt(reps))
-                           .sets(Integer.parseInt(sets))
-                           .weight(Double.parseDouble(weight))
-                           .programID(program.getProgramID())
-                           .build();
-                }else{
-                    String duration = editTextAddRoutineDuration.getText().toString();
-                  routine = new Routine.Builder(routineName)
-                          .duration(Integer.parseInt(duration))
-                          .programID(program.getProgramID())
-                          .build();
-                    Log.d("Category", program.getCategory().toString());
-                }
+
              //   routineDAO.createRoutine(routine, program);
                 if(routine_intent != null){
                     routine.setRoutineID(routine_intent.getId());
