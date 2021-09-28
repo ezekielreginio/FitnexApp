@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -78,6 +80,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
             binding.getViewModel().setProgramID(program_intent.getProgramID());
         }
 
+        rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
         //setContentView(R.layout.activity_add_program);
 
         //
@@ -320,5 +323,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
                 }
             }
         }
+        else if(view == binding.relativeLayoutAddProgramCloseButton)
+            closeForm();
     }
 }
