@@ -86,7 +86,6 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
         postVideoViewModel.init(TrainingVideoPlayer.this);
 
-
         //Extra Intent
         userPreferences = new UserPreferences(getApplicationContext());
         postVideo = (PostVideo) getIntent().getSerializableExtra("PostVideo");
