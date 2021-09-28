@@ -151,9 +151,11 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 
         rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddClassButton);
         setDropdown(binding.editTextAddFitnessClassCategory, this);
+        binding.editTextAddFitnessClassCategory.setOnItemSelectedListener(this);
         if(fitness_intent != null){
             Log.d("Fitness INtent ID", fitness_intent.getClassID());
             binding.editTextAddClassName.setText(fitness_intent.getClassName());
+            binding.editTextAddFitnessClassCategory.setSelection(fitness_intent.getCategory());
             binding.editTextAddClassSessionNumber.setText(fitness_intent.getSessionNo());
             binding.editTextTimeStart.setText(fitness_intent.getTimeStart());
             binding.editTextTimeEnd.setText(fitness_intent.getTimeEnd());
@@ -211,6 +213,13 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
             boolean isInvalid = false;
 
             isInvalid = uiErrorHandler(textInputLayouts);
+
+            if(binding.editTextAddFitnessClassCategory.getSelectedItemPosition() < 1){
+                binding.textInputClassCategory.setErrorEnabled(true);
+                binding.textInputClassCategory.setError("Please Select a Category");
+                isInvalid = true;
+            }
+
 
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
@@ -358,7 +367,9 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        fitnessClassCategory.setSelection(i);
+        binding.editTextAddFitnessClassCategory.setSelection(i);
+        binding.getViewModel().setAddFitnessClassCategory(i);
+        binding.textInputClassCategory.setErrorEnabled(false);
     }
 
     @Override

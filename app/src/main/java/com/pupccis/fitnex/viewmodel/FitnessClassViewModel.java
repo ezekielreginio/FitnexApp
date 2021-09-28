@@ -43,7 +43,7 @@ public class FitnessClassViewModel extends BaseObservable {
     @Bindable
     private String addFitnessClassDescription = null;
     @Bindable
-    private String addFitnessClassCategory = null;
+    private int addFitnessClassCategory = -1;
     @Bindable
     private String addFitnessClassTimeStart = null;
     @Bindable
@@ -83,11 +83,11 @@ public class FitnessClassViewModel extends BaseObservable {
         onTextChangeFitnessClass(addFitnessClassDescription, ProgramFitnessClassFields.DESCRIPTION);
     }
 
-    public String getAddFitnessClassCategory() {
+    public int getAddFitnessClassCategory() {
         return addFitnessClassCategory;
     }
 
-    public void setAddFitnessClassCategory(String addFitnessClassCategory) {
+    public void setAddFitnessClassCategory(int addFitnessClassCategory) {
         this.addFitnessClassCategory = addFitnessClassCategory;
     }
 
@@ -178,7 +178,7 @@ public class FitnessClassViewModel extends BaseObservable {
     public FitnessClass fitnessClassInstance(){
         FitnessClass fitnessClass = new FitnessClass.Builder(getAddFitnessClassName()
                 ,getAddFitnessClassDescription()
-                ,0
+                ,getAddFitnessClassCategory()
                 ,getAddFitnessClassTimeStart()
                 ,getAddFitnessClassTimeEnd()
                 ,getAddFitnessClassSessionNumber()

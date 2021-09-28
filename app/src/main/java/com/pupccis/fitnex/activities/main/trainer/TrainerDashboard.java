@@ -72,6 +72,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         int page_intent = (int) getIntent().getIntExtra("page", -1);
         if(page_intent != -1){
             Log.d("Intent",page_intent+"");
+            intent = new Intent(TrainerDashboard.this, AddFitnessClass.class);
             viewPager2.setCurrentItem(page_intent);
             TabLayout.Tab tab = tabLayout.getTabAt(page_intent);
             tab.select();

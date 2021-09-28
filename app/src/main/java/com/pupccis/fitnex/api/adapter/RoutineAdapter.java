@@ -74,14 +74,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         void setRoutineData(Routine routine){
             textViewRoutineName.setText(routine.getName());
             Log.d("Routine ID", routine.getId());
-            if(program.getCategory().equals("2")){
-                textViewRoutineDescriptionFirst.setText(routine.getReps()+" Reps");
-                textViewRoutineDescriptionSecond.setText(routine.getSets()+ "Sets");
-            }else{
-                //textViewRoutineDescription1.setText(routine.getDuration());
-                Log.d("Duration", ""+routine.getDuration());
-                textViewRoutineDescriptionSecond.setVisibility(View.INVISIBLE);
-            }
+
             constraintLayoutRoutineThumbnailEdit.setOnClickListener(view -> {
                 Intent intent = new Intent(context, AddRoutine.class);
                 intent.putExtra("program", program);

@@ -94,16 +94,11 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             boolean clicked = false;
             programName.setText(program.getName());
             programTrainees.setText(program.getTrainees());
-            programCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[Integer.parseInt(program.getCategory())]);
+            programCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[program.getCategory()]);
             programDescription.setText(program.getDescription());
             programSessionCount.setText(program.getSessionNumber());
             programDuration.setText(program.getDuration());
-            if(program.getCategory().equals(ProgramConstants.KEY_PROGRAM_CATEGORY_CARDIO)){
-                programContainer.setBackgroundResource(R.drawable.layout_bg_program_cardio);
-            }
-            else if(program.getCategory().equals(ProgramConstants.KEY_PROGRAM_CATEGORY_STRENGTH)){
-                programContainer.setBackgroundResource(R.drawable.layout_bg_program_strength);
-            }
+
             if(access_type==GlobalConstants.KEY_ACCESS_TYPE_VIEW){
                 programJoin.setVisibility(View.VISIBLE);
                 programView.setVisibility(View.VISIBLE);
@@ -135,7 +130,6 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
                 Intent intent = new Intent(context, RoutinePage.class);
                 intent.putExtra("program", program);
                 //intent.putExtra("access_type", access_type);
-                Log.d("Category from program", program.getCategory().toString());
                 context.startActivity(intent);
             });
 

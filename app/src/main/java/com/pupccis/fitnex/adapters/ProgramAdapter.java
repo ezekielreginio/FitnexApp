@@ -16,6 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import timber.log.Timber;
@@ -60,6 +61,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramDescription.setText(model.getDescription());
             binding.textProgramSessionCount.setText(model.getSessionNumber());
             binding.textProgramDuration.setText(model.getDuration());
+            binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
             Log.d("Program ID from model", model.getProgramID());
             binding.setVariable(BR.program, model);
         }

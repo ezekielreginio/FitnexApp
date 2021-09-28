@@ -2,6 +2,7 @@ package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.setDropdown;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,16 +72,21 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         binding.executePendingBindings();
         binding.setPresenter(this);
 
+        rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
+        setDropdown(binding.editTextAddProgramCategory, this);
+        binding.editTextAddProgramCategory.setOnItemSelectedListener(this);
+
         if(program_intent!=null){
             Log.d("Program ID",program_intent.getProgramID());
             binding.editTextAddProgramName.setText(program_intent.getName());
             binding.editTextAddProgramDescription.setText(program_intent.getDescription());
             binding.editTextAddProgramSessionNumber.setText(program_intent.getSessionNumber());
             binding.editTextAddProgramDuration.setText(program_intent.getDuration());
+            binding.editTextAddProgramCategory.setSelection(program_intent.getCategory());
             binding.getViewModel().setProgramID(program_intent.getProgramID());
         }
 
-        rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
+
         //setContentView(R.layout.activity_add_program);
 
         //
@@ -224,8 +230,9 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        editCategory.setSelection(i);
+        binding.editTextAddProgramCategory.setSelection(i);
+        binding.getViewModel().setAddProgramCategory(i);
+        binding.textInputProgramCategory.setErrorEnabled(false);
     }
 
     @Override
@@ -289,6 +296,12 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
             boolean isInvalid = false;
 
             isInvalid = uiErrorHandler(textInputLayouts);
+
+            if(binding.editTextAddProgramCategory.getSelectedItemPosition() < 1){
+                binding.textInputProgramCategory.setErrorEnabled(true);
+                binding.textInputProgramCategory.setError("Please Select a Category");
+                isInvalid = true;
+            }
 
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();

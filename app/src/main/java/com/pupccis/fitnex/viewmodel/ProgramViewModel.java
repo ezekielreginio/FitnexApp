@@ -45,7 +45,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     @Bindable
     private String addProgramDescription = null;
     @Bindable
-    private String addProgramCategory = null;
+    private int addProgramCategory = -1;
     @Bindable
     private String addProgramSessionNumber = null;
     @Bindable
@@ -62,7 +62,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
     public String getAddProgramDescription() {
         return addProgramDescription;
     }
-    public String getAddProgramCategory() {
+    public int getAddProgramCategory() {
         return addProgramCategory;
     }
     public String getAddProgramSessionNumber() {
@@ -90,7 +90,7 @@ public class ProgramViewModel extends BaseObservable implements Serializable {
         this.addProgramDescription = addProgramDescription;
         onTextChangeProgram(addProgramDescription, ProgramFitnessClassFields.DESCRIPTION);
     }
-    public void setAddProgramCategory(String addProgramCategory) {
+    public void setAddProgramCategory(int addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
