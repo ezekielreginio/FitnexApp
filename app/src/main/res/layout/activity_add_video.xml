@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Main.Trainer.Studio.AddVideo">
+    tools:context=".activities.main.trainer.Studio.AddVideo">
     <LinearLayout
         android:id="@+id/linearLayoutAddProgramContainer"
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputPassword"
+                        android:id="@+id/textInputEmailPassword"
                         style="@style/parent"
                         android:layout_height="wrap_content"
                         >
@@ -70,7 +70,7 @@
                             android:textSize="12sp" />
 
                         <Spinner
-                            android:id="@+id/editTextAddProgramCategory"
+                            android:id="@+id/editTextPostVideoCategory"
                             android:layout_width="match_parent"
                             android:layout_height="42dp"
                             android:textColorHint="#C5B2B2"
@@ -102,7 +102,9 @@
                             android:textColor="#958585"
                             android:textSize="12sp"
                             app:layout_constraintTop_toTopOf="parent"/>
+
                         <EditText
+                            android:id="@+id/editTextVideoDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:minLines="3"
@@ -132,7 +134,16 @@
                             android:textSize="12sp"
                             app:layout_constraintTop_toTopOf="parent"/>
 
+                        <VideoView
+                            android:id="@+id/videoViewUploadedVideo"
+                            android:layout_width="176dp"
+                            android:layout_height="120dp"
+                            app:layout_constraintTop_toBottomOf="@id/labelAddVideo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:visibility="gone"/>
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutAddVideo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/labelAddVideo"
@@ -149,60 +160,77 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:layout_marginTop="10dp"
                                 android:background="#092f62"
-
+                                android:textColor="@color/whiteTextColor"
                                 />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutClassTimeEnd"
-                        style="@style/AddProgram"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/textInputLayoutAddVideoThumbnail"
+                        style="@style/parent"
+                        app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescription"
                         android:layout_marginTop="20dp"
-                        android:textColorHint="#C5B2B2">
+                        >
 
-                        <EditText
-                            android:id="@+id/editTextTimeEnd"
-                            style="@style/AddProgramText"
-                            android:hint="End Time"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:id="@+id/labelAddVideoThumbnail"
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Add Video Thumbnail"
+                            android:textAlignment="center"
+                            android:textColor="#958585"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddClassSessionNumber"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="10dp"
-                        android:textColorHint="#C5B2B2">
+                        <ImageView
+                            android:id="@+id/imageViewVideoThumbnail"
+                            android:layout_width="176dp"
+                            android:layout_height="120dp"
+                            app:layout_constraintTop_toBottomOf="@id/labelAddVideoThumbnail"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:visibility="visible"/>
 
-                        <EditText
-                            android:id="@+id/editTextAddClassSessionNumber"
-                            style="@style/AddProgramText"
-                            android:hint="Session Number"
-                            android:inputType="time"
-                            android:maxLines="3" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutAddVideoThumbnail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/labelAddVideoThumbnail"
+                            android:background="@drawable/background_textfield"
+                            android:minHeight="70dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddClassDescription"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="10dp"
-                        android:textColorHint="#C5B2B2">
+                            <Button
+                                android:id="@+id/btnAddVideoThumbnail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add File"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="10dp"
+                                android:background="#092f62"
+                                android:textColor="@color/whiteTextColor"
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <EditText
-                            android:id="@+id/editTextAddClassDescription"
-                            style="@style/AddProgramText"
-                            android:hint="Duration"
-                            android:inputType="time"
-                            android:maxLines="3" />
-                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
 
                         style="@style/loginButton"
-                        android:id="@+id/buttonAddClassButton"
+                        android:id="@+id/buttonUploadVideo"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Add Class"
+                        android:text="Upload Video"
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"

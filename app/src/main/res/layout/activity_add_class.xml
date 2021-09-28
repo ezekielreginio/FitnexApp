@@ -1,157 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Activities.Main.Trainer.AddClass">
-    <LinearLayout
-        android:id="@+id/linearLayoutAddProgramContainer"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.main.trainer.AddFitnessClass" />
+
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.FitnessClassViewModel" />
+
+        <variable
+            name="fragmentFields"
+            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        bind:fitnessClassValidationData="@{viewModel.fitnessClassValidationData}"
+        tools:context=".activities.main.trainer.AddFitnessClass">
 
-        <FrameLayout
-            android:id="@+id/linearLayoutTrainerDashboardNavbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutFitnessClassProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/ic_slideup_bg"
-            android:clipChildren="false"
-            android:orientation="vertical"
-            android:transitionName="addProgramTransition"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="671dp">
+            android:background="@color/themetintColor"
+            android:translationZ="1dp"
+            android:visibility="gone">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_gravity="top|center"
-                app:cardBackgroundColor="@color/whiteTextColor"
-                app:cardCornerRadius="50dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <ProgressBar
+                    android:id="@+id/addProgramProgressBar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:indeterminateTint="@color/whiteTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Processing, Please Wait"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintTop_toBottomOf="@id/addProgramProgressBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAddProgramContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+
+            >
+
+            <FrameLayout
+                android:id="@+id/linearLayoutTrainerDashboardNavbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/ic_slideup_bg"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:transitionName="addProgramTransition"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteY="671dp">
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginRight="30dp"
+                    app:cardBackgroundColor="@color/whiteTextColor"
+                    app:cardCornerRadius="50dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddprogramName"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="20dp"
-                        android:textColorHint="#C5B2B2">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/editTextAddClassName"
-                            style="@style/AddProgramText"
-                            android:hint="Fitness Class Name"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassName"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="#C5B2B2">
+
+                            <EditText
+                                android:id="@+id/editTextAddClassName"
+                                style="@style/AddProgramText"
+                                android:hint="Fitness Class Name"
+                                android:maxLines="1"
+                                android:text="@={viewModel.addFitnessClassName}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassDescription"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="#C5B2B2">
+
+                            <EditText
+                                android:id="@+id/editTextAddFitnessClassDescription"
+                                style="@style/AddProgramText"
+                                android:hint="Fitness Class Description"
+                                android:maxLines="1"
+                                android:text="@={viewModel.addFitnessClassDescription}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutClassTimeStart"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="20dp"
-                        android:textColorHint="#C5B2B2">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassCategory"
+                            style="@style/parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/loginViewsMargin">
 
-                        <EditText
-                            android:id="@+id/editTextTimeStart"
-                            style="@style/AddProgramText"
-                            android:hint="Start Time"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <TextView
+                                style="@style/modifiedEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6"
+                                android:text="Category"
+                                android:textAlignment="center"
+                                android:textColor="#26355E"
+                                android:textSize="12sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutClassTimeEnd"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="20dp"
-                        android:textColorHint="#C5B2B2">
+                            <Spinner
+                                android:id="@+id/editTextAddFitnessClassCategory"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:background="#FFFFFF"
+                                android:textColorHint="#C5B2B2"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.502"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.498" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/editTextTimeEnd"
-                            style="@style/AddProgramText"
-                            android:hint="End Time"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddClassSessionNumber"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="10dp"
-                        android:textColorHint="#C5B2B2">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassTimeStart"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="#C5B2B2">
 
-                        <EditText
-                            android:id="@+id/editTextAddClassSessionNumber"
-                            style="@style/AddProgramText"
-                            android:hint="Session Number"
-                            android:inputType="time"
-                            android:maxLines="3" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <EditText
+                                android:id="@+id/editTextTimeStart"
+                                style="@style/AddProgramText"
+                                android:hint="Start Time"
+                                android:maxLines="1"
+                                android:onClick="onClick"
+                                android:text="@={viewModel.addFitnessClassTimeStart}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddClassDescription"
-                        style="@style/AddProgram"
-                        android:layout_marginTop="10dp"
-                        android:textColorHint="#C5B2B2">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassTimeEnd"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="#C5B2B2">
 
-                        <EditText
-                            android:id="@+id/editTextAddClassDescription"
-                            style="@style/AddProgramText"
-                            android:hint="Duration"
-                            android:inputType="time"
-                            android:maxLines="3" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <EditText
+                                android:id="@+id/editTextTimeEnd"
+                                style="@style/AddProgramText"
+                                android:hint="End Time"
+                                android:maxLines="1"
+                                android:onClick="onClick"
+                                android:text="@={viewModel.addFitnessClassTimeEnd}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassSessionNumber"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="10dp"
+                            android:textColorHint="#C5B2B2">
 
-                        style="@style/loginButton"
-                        android:id="@+id/buttonAddClassButton"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Add Class"
-                        app:initialCornerAngle="27dp"
-                        app:spinning_bar_color="#FFF"
-                        app:spinning_bar_padding="6dp"
-                        app:spinning_bar_width="4dp" />
+                            <EditText
+                                android:id="@+id/editTextAddClassSessionNumber"
+                                style="@style/AddProgramText"
+                                android:hint="Session Number"
+                                android:inputType="time"
+                                android:maxLines="3"
+                                android:text="@={viewModel.addFitnessClassSessionNumber}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputClassDuration"
+                            style="@style/AddProgram"
+                            android:layout_marginTop="10dp"
+                            android:textColorHint="#C5B2B2">
 
-        </FrameLayout>
-    </LinearLayout>
+                            <EditText
+                                android:id="@+id/editTextAddClassDuration"
+                                style="@style/AddProgramText"
+                                android:hint="Duration"
+                                android:inputType="time"
+                                android:maxLines="3"
+                                android:text="@={viewModel.addFitnessClassDuration}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+                        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
 
-        android:layout_marginBottom="0dp"
+                            android:id="@+id/buttonAddClassButton"
+                            style="@style/loginButton"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/loginViewsMargin"
+                            android:onClick="onClick"
+                            android:text="Add Class"
+                            app:initialCornerAngle="27dp"
+                            app:spinning_bar_color="#FFF"
+                            app:spinning_bar_padding="6dp"
+                            app:spinning_bar_width="4dp" />
 
-        android:gravity="top|start"
-        android:orientation="vertical">
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
-            android:id="@+id/relativeLayoutAddClassCloseButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="656dp"
-            android:background="@drawable/ic_circle_add_button"
+            </FrameLayout>
+        </LinearLayout>
 
-            app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
 
-            <ImageView
-                android:id="@+id/closeAddClassButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
+
+            android:gravity="top|start"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutAddClassCloseButton"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="7.5dp"
-                android:layout_marginTop="7.5dp" />
+                android:layout_marginBottom="656dp"
+                android:background="@drawable/ic_circle_add_button"
+                android:onClick="onClick"
+                app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
-        </RelativeLayout>
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/closeAddClassButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_marginTop="7.5dp"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

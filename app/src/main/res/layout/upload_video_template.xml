@@ -9,7 +9,7 @@
 
 
     android:background="@drawable/clean"
-    tools:context=".Activities.Main.Trainer.AddProgram">
+    tools:context=".activities.main.trainer.AddProgram">
 
     <LinearLayout
         android:id="@+id/linearLayoutId"

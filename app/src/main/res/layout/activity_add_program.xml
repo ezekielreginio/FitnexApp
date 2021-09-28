@@ -1,12 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.main.trainer.AddProgram" />
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
+        <variable
+            name="fragmentFields"
+            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields" />
+    </data>
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activityAddProgram"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="100"
-    tools:context=".Activities.Main.Trainer.AddProgram">
+    tools:context=".activities.main.trainer.AddProgram"
+    bind:programValidationData="@{viewModel.programValidationData}">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutProgramProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/themetintColor"
+        android:translationZ="1dp"
+        android:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/addProgramProgressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:indeterminateTint="@color/whiteTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Processing, Please Wait"
+                android:textColor="@color/whiteTextColor"
+                app:layout_constraintTop_toBottomOf="@id/addProgramProgressBar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutAddProgramContainer"
@@ -44,7 +93,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddprogramName"
+                        android:id="@+id/textInputProgramName"
                         style="@style/AddProgram"
                         android:layout_marginTop="20dp"
                         android:textColorHint="#C5B2B2">
@@ -53,11 +102,12 @@
                             android:id="@+id/editTextAddProgramName"
                             style="@style/AddProgramText"
                             android:hint="Program Name"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:text="@={viewModel.addProgramName}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddProgramDescription"
+                        android:id="@+id/textInputProgramDescription"
                         style="@style/AddProgram"
                         android:layout_marginTop="10dp"
                         android:textColorHint="#C5B2B2">
@@ -66,12 +116,13 @@
                             android:id="@+id/editTextAddProgramDescription"
                             style="@style/AddProgramText"
                             android:hint="Program Description"
-                            android:maxLines="3" />
+                            android:maxLines="3"
+                            android:text="@={viewModel.addProgramDescription}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputPassword"
+                        android:id="@+id/textInputProgramCategory"
                         style="@style/parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/loginViewsMargin"
@@ -105,7 +156,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddProgramSessionNumber"
+                        android:id="@+id/textInputProgramSessionNumber"
                         style="@style/AddProgram"
                         android:layout_marginTop="10dp"
                         android:textColorHint="#C5B2B2">
@@ -115,11 +166,12 @@
                             style="@style/AddProgramText"
                             android:hint="Session Number"
                             android:inputType="time"
-                            android:maxLines="3" />
+                            android:maxLines="3"
+                            android:text="@={viewModel.addProgramSessionNumber}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddProgramDuration"
+                        android:id="@+id/textInputProgramDuration"
                         style="@style/AddProgram"
                         android:layout_marginTop="10dp"
                         android:textColorHint="#C5B2B2">
@@ -129,7 +181,8 @@
                             style="@style/AddProgramText"
                             android:hint=" Duration(Minutes) "
                             android:inputType="time"
-                            android:maxLines="3" />
+                            android:maxLines="3"
+                            android:text="@={viewModel.addProgramDuration}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
@@ -141,7 +194,8 @@
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"
-                        app:spinning_bar_width="4dp" />
+                        app:spinning_bar_width="4dp"
+                        android:onClick="onClick"/>
 
 
                 </LinearLayout>
@@ -169,6 +223,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="656dp"
             android:background="@drawable/ic_circle_add_button"
+            android:onClick="onClick"
             app:layout_constraintBottom_toBottomOf="@id/linearLayoutTrainerDashboardNavbar">
 
             <ImageView
@@ -208,3 +263,4 @@
 
     <!--    </LinearLayout>-->
 </RelativeLayout>
+</layout>

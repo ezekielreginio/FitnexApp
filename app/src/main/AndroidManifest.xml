@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pupccis.fitnex" >
+    package="com.pupccis.fitnex">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,66 +11,83 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/fitnex_copy"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activities.Main.Trainer.Studio.AddVideo"
+            android:name=".activities.routine.AddRoutine"
+            android:exported="true" />
+        <activity
+            android:name=".activities.routine.RoutinePage"
+            android:exported="true" />
+        <activity
+            android:name=".activities.searchengine.SearchEngine"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activities.Main.Trainer.AddClass"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".Activities.Main.Trainee.TraineeWorkoutFavorites"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".Activities.Main.Trainer.Studio.TrainerStudio"
+            android:name=".activities.videoplayer.TrainingVideoPlayer"
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainee.TraineeDashboard"
-            android:exported="true" />
+            android:name=".activities.main.trainer.Studio.AddVideo"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.AddProgram"
+            android:name=".activities.main.trainer.AddFitnessClass"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.main.Trainee.TraineeWorkoutFavorites"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.main.trainer.Studio.TrainerStudio"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.main.Trainee.TraineeDashboard"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.main.trainer.AddProgram"
             android:background="#00000000"
             android:exported="true"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.VideoConferencing.IncomingInvitationActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activities.VideoConferencing.OutgoingInvitationActivity"
+            android:name=".activities.videoconferencing.IncomingInvitationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Main.Trainer.TrainerDashboard"
+            android:name=".activities.videoconferencing.OutgoingInvitationActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.main.trainer.TrainerDashboard"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexTrainerApplication"
+            android:name=".activities.login.FitnexTrainerApplication"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.VideoConferencing.VideoActivityDemo"
+            android:name=".activities.videoconferencing.VideoActivityDemo"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexRegister"
+            android:name=".activities.login.FitnexRegister"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Login.FitnexLogin"
+            android:name=".activities.login.FitnexLogin"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,12 +96,16 @@
         </activity>
 
         <service
-            android:name=".API.firebase.MessagingService"
-            android:exported="false" >
+            android:name=".api.firebase.MessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
