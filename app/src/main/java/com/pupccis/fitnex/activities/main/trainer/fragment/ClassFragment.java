@@ -180,7 +180,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         //Recycler view
         recyclerView = binding.fitnessClassesRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 //        recyclerView.setItemAnimator(null);
 
         adapter = new FitnessClassAdapter(options);

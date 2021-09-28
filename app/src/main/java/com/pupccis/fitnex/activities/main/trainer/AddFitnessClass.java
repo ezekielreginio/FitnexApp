@@ -254,7 +254,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
             showTimeDialog(binding.editTextTimeStart, 1);
 
     }
-    
+
     //    private void addClass(){
 //        for(ValidationModel field: fields){
 //            String input = field.getTextInputLayout().getEditText().getText().toString();
