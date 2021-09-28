@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">FitnexApp</string>
+    <string name="spinner_hint">Select</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="sign_out">Sign Out</string>
 
     <string-array name="category">
+        <item>Select a Category</item>
         <item>Cardio</item>
         <item>Sport</item>
         <item>Strength</item>

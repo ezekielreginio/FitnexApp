@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.pupccis.fitnex.activities.main.trainer.AddProgram;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
@@ -77,6 +78,8 @@ public class ProgramsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
+
+
 
 //        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 //
@@ -207,7 +210,7 @@ public class ProgramsFragment extends Fragment {
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);

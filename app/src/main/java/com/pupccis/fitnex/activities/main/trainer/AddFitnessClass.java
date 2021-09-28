@@ -1,6 +1,8 @@
 package com.pupccis.fitnex.activities.main.trainer;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.setDropdown;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 
@@ -147,9 +149,8 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 //        addClass.setOnClickListener(this);
 //        closeButton.setOnClickListener(this);
 
-        rotateAnimation();
-        binding.closeAddClassButton.setVisibility(View.VISIBLE);
-
+        rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddClassButton);
+        setDropdown(binding.editTextAddFitnessClassCategory, this);
         if(fitness_intent != null){
             Log.d("Fitness INtent ID", fitness_intent.getClassID());
             binding.editTextAddClassName.setText(fitness_intent.getClassName());
@@ -164,11 +165,6 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void rotateAnimation() {
-        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        binding.closeAddClassButton.setImageResource(R.drawable.ic_close_button);
-        binding.closeAddClassButton.startAnimation(rotateAnimation);
-    }
     @BindingAdapter({"fitnessClassValidationData"})
     public static void validateFitnessClassData(View view, HashMap<String, Object> validationData){
         Log.d("Binding adapter trgger", "Triggered");
@@ -258,13 +254,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
             showTimeDialog(binding.editTextTimeStart, 1);
 
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        closeForm();
-    }
-
+    
     //    private void addClass(){
 //        for(ValidationModel field: fields){
 //            String input = field.getTextInputLayout().getEditText().getText().toString();

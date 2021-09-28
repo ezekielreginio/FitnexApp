@@ -26,6 +26,7 @@ import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
 import com.pupccis.fitnex.activities.main.trainer.AddProgram;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
 import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
@@ -179,7 +180,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
         //Recycler view
         recyclerView = binding.fitnessClassesRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 //        recyclerView.setItemAnimator(null);
 
         adapter = new FitnessClassAdapter(options);
