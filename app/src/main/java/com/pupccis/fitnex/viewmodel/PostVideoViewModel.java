@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PostVideoViewModel extends ViewModel {
+    //Comment This
     MutableLiveData<ArrayList<PostVideo>> postVideos;
 
-    private PostedVideosRepository postedVideosRepository;
+    private PostedVideosRepository postedVideosRepository = new PostedVideosRepository();
     private MutableLiveData<HashMap<String, Object>> postVideoUpdate = new MutableLiveData<>();
     private Context context;
 
@@ -40,4 +41,19 @@ public class PostVideoViewModel extends ViewModel {
     public void uploadVideo(PostVideo postVideo){
         PostedVideosRepository.getInstance().uploadVideo(postVideo);
     }
+    //Comment This
+
+
+    public MutableLiveData<HashMap<String, Object>> getVideoLikesData(String videoID){
+        return postedVideosRepository.getVideoLikesData(videoID);
+    }
+
+    public MutableLiveData<String> getUserLikeStatus(String videoID){
+        return postedVideosRepository.getUserLikeStatus(videoID);
+    }
+
+    public void likeVideo(String videoID, String liked){
+        postedVideosRepository.likeVideo(videoID, liked);
+    }
+
 }

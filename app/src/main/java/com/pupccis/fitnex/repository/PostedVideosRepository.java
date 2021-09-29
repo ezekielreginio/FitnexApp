@@ -12,7 +12,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,10 +24,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pupccis.fitnex.model.PostVideo;
+import com.pupccis.fitnex.model.User;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PostedVideosRepository {
     //Private Attributes
@@ -219,5 +229,145 @@ public class PostedVideosRepository {
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
             return  mimeTypeMap.getExtensionFromMimeType(filetype);
         }
+    }
+
+    //New Code
+    //Private Attributes
+    private DocumentReference userRef = db.collection(GlobalConstants.KEY_COLLECTION_USERS).document(FirebaseAuth.getInstance().getUid());
+
+    public MutableLiveData<HashMap<String, Object>> getVideoLikesData(String videoID){
+        MutableLiveData<HashMap<String, Object>> livevideoLikesData = new MutableLiveData<>();
+        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(videoID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                HashMap<String, Object> videoLikesData = new HashMap<>();
+                int likes = Integer.parseInt(value.get(PostVideoConstants.KEY_POST_VIDEO_LIKES).toString());
+                int dislikes = Integer.parseInt(value.get(PostVideoConstants.KEY_POST_VIDEO_DISLIKES).toString());
+                Log.d("likes", likes+"");
+                videoLikesData.put(PostVideoConstants.KEY_POST_VIDEO_LIKES, likes);
+                videoLikesData.put(PostVideoConstants.KEY_POST_VIDEO_DISLIKES, dislikes);
+
+                livevideoLikesData.postValue(videoLikesData);
+            }
+        });
+
+
+        return livevideoLikesData;
+    }
+
+    public MutableLiveData<String> getUserLikeStatus(String videoID) {
+        MutableLiveData<String> userIsLiked = new MutableLiveData<>();
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                if((List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS)!= null) {
+                    List<String> liked_videos = (List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS);
+                    if(liked_videos.contains(videoID))
+                        userIsLiked.postValue("liked");
+                    else
+                        userIsLiked.postValue("unliked");
+                }
+            }
+        });
+
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if((List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS)!= null) {
+                    List<String> liked_videos = (List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS);
+
+                }
+            }
+        });
+
+        return userIsLiked;
+    }
+
+    public void likeVideo(String videoID, String button){
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                
+                if(button.equals("liked")){
+                    List<String> liked_videos = new ArrayList<>();
+                    boolean isLiked = false;
+                    if((List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS)!= null){
+                        liked_videos = (List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS);
+                        if(liked_videos.contains(videoID)){
+                            liked_videos.remove(videoID);
+                            userRef.update(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS, liked_videos);
+                            updateLikesCounter(videoID, -1);
+                        }
+                        else{
+                            isLiked = true;
+                        }
+                    }
+                    else{
+                        isLiked = true;
+                    }
+                    if(isLiked){
+                        executeLike(liked_videos, videoID);
+                    }
+                }
+
+                else if(button.equals("disliked")){
+                    List<String> disliked_videos = new ArrayList<>();
+                    boolean isDisliked = false;
+                    if((List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_DISLIKED_VIDEOS)!= null){
+                        disliked_videos = (List<String>) documentSnapshot.get(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS);
+                        if(disliked_videos.contains(videoID)){
+                            disliked_videos.remove(videoID);
+                            userRef.update(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS, disliked_videos);
+                            updateLikesCounter(videoID, -1);
+                        }
+                        else{
+                            isDisliked = true;
+                        }
+                    }
+                    else
+                        isDisliked = true;
+
+                    if(isDisliked)
+                        executeDislike(disliked_videos, videoID);
+                }
+            }
+
+
+        });
+
+//        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if(task.isSuccessful())
+//                    Log.d("Query", "Successful");
+//                else
+//                    Log.d("Query", "Unsuccessful");
+//            }
+//        });
+    }
+
+    private void executeLike(List<String> liked_videos, String videoID){
+        liked_videos.add(videoID);
+        userRef.update(UserConstants.KEY_COLLECTION_USER_LIKED_VIDEOS, liked_videos);
+
+        updateLikesCounter(videoID, 1);
+    }
+
+    private void executeDislike(List<String> disliked_videos, String videoID) {
+        disliked_videos.add(videoID);
+        userRef.update(UserConstants.KEY_COLLECTION_USER_DISLIKED_VIDEOS, disliked_videos);
+    }
+
+    private void updateLikesCounter(String videoID, int value){
+        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(videoID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                int likes = Integer.parseInt(documentSnapshot.get(PostVideoConstants.KEY_POST_VIDEO_LIKES).toString());
+                likes = likes + value;
+                db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(videoID).update(PostVideoConstants.KEY_POST_VIDEO_LIKES, likes);
+            }
+        });
     }
 }
