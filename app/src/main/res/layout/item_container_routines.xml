@@ -96,6 +96,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
+            android:onClick="@{()->viewModel.triggerUpdateObserver(routine)}"
             android:background="@drawable/background_thumbnail_btn"
             android:backgroundTint="#2c90bb"
             android:paddingBottom="5dp"
@@ -128,6 +129,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/background_thumbnail_btn"
             android:backgroundTint="#d20909"
+            android:onClick="@{()->viewModel.triggerDeleteObserver(routine)}"
             android:paddingBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent">
 

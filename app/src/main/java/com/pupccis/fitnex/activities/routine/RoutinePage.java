@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +28,6 @@ import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import java.util.List;
 
 public class RoutinePage extends AppCompatActivity implements View.OnClickListener{
     private ImageView AddRoutineButton;
-    private Program program;
+    private Program program_intent;
     private TextView textViewRoutinePageProgramName;
     private DatabaseReference mDatabase;
     private List<Routine> routineList = new ArrayList<>();
@@ -48,11 +49,12 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Extra intents
-        program = (Program) getIntent().getSerializableExtra("program");
+        program_intent = (Program) getIntent().getSerializableExtra("program");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
 
+
         //Get FirestoreOptions From ViewModel
-        FirestoreRecyclerOptions<Routine> options = getFirebaseUIRoutineOptions(program.getProgramID());
+        FirestoreRecyclerOptions<Routine> options = getFirebaseUIRoutineOptions(program_intent.getProgramID());
 
         //RecyclerView
         recyclerView = binding.recyclerViewRoutinePage;
@@ -67,6 +69,42 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         binding.setViewModel(adapter.getViewModel());
         binding.setPresenter(this);
 
+
+        binding.getViewModel().updateObserver().observe(binding.getLifecycleOwner(), new Observer<Routine>() {
+            @Override
+            public void onChanged(Routine routine) {
+                Intent intent = new Intent(getApplicationContext(), AddRoutine.class);
+                intent.putExtra("routine", routine);
+                intent.putExtra("program", program_intent);
+                Log.d("Routine intent content", routine.getName());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+            }
+        });
+        binding.getViewModel().deleteObserver().observe(binding.getLifecycleOwner(), new Observer<Routine>() {
+            @Override
+            public void onChanged(Routine routine) {
+                binding.getViewModel().deleteRoutine(program_intent.getProgramID());
+
+//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case DialogInterface.BUTTON_POSITIVE:
+//                                binding.getViewModel().deleteRoutine(program_intent.getProgramID());
+//                                break;
+//
+//                            case DialogInterface.BUTTON_NEGATIVE:
+//                                break;
+//                        }
+//                    }
+//                };
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+//                builder.setMessage("Are you sure you wish to delete this routine?").setPositiveButton("Yes", dialogClickListener)
+//                        .setNegativeButton("No", dialogClickListener).show();
+
+            }
+        });
 //        //ViewModel instantiation
 //        routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
 //        routineViewModel.init(getApplicationContext(), program.getProgramID());
@@ -156,35 +194,51 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 //
 //            }
 //        });
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+//
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+//        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+    public void getProgramID(){
+        binding.getViewModel().setProgramID(program_intent.getProgramID());
     }
 
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition = viewHolder.getAdapterPosition();
-            int toPosition = target.getAdapterPosition();
-            Collections.swap(routineViewModel.getRoutines().getValue(), fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            //routineAdapter.notifyDataSetChanged();
-            //updateRoutineOrder(routineList, program.getProgramID());
-            return false;
-        }
+//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//            int fromPosition = viewHolder.getAdapterPosition();
+//            int toPosition = target.getAdapterPosition();
+//            Collections.swap(routineViewModel.getRoutines().getValue(), fromPosition, toPosition);
+//            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+//            //routineAdapter.notifyDataSetChanged();
+//            //updateRoutineOrder(routineList, program.getProgramID());
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//        }
+//    };
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
-        }
-    };
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 
     @Override
     public void onClick(View view) {
         if(view == binding.linearLayoutAddProgramButton){
             Intent intent = new Intent(RoutinePage.this, AddRoutine.class);
-            intent.putExtra("program", program);
+            intent.putExtra("program", program_intent);
+            Log.e("Program ID from routine page to add routine", program_intent.getProgramID());
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
         }

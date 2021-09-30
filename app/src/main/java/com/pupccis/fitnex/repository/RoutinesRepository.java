@@ -2,6 +2,11 @@ package com.pupccis.fitnex.repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.model.Routine;
@@ -19,7 +24,8 @@ public class RoutinesRepository {
         }
         return instance;
     }
-    public static void insertRoutine(Routine routine) {
+    public MutableLiveData<Routine> insertRoutine(Routine routine) {
+        MutableLiveData<Routine> routineLiveData = new MutableLiveData<>();
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .document(routine.getProgramID())
                 .collection(RoutineConstants.KEY_COLLECTION_ROUTINES)
@@ -28,9 +34,19 @@ public class RoutinesRepository {
                     db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                             .document(routine.getProgramID())
                             .collection(RoutineConstants.KEY_COLLECTION_ROUTINES)
-                            .document(childCount+1+"").set(routine.toMap());
+                            .document(childCount+1+"").set(routine.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                                routineLiveData.postValue(routine);
+                            else
+                                routineLiveData.postValue(null);
+
+                        }
+                    });
                 }
         );
+      return routineLiveData;
         //db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(routine.getProgramID()).collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document().set(routine.toMap());
     }
 
@@ -38,15 +54,25 @@ public class RoutinesRepository {
         Query queryRoutines = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).collection(RoutineConstants.KEY_COLLECTION_ROUTINES);
         return queryRoutines;
     }
-    public static void updateRoutine(Routine routine){
+    public MutableLiveData<Routine> updateRoutine(Routine routine){
+        MutableLiveData<Routine> routineMutableLiveData = new MutableLiveData<>();
         Log.d("ROutine ID", routine.getId());
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .document(routine.getProgramID())
-                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId()).update(routine.toMap());
+                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId()).update(routine.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    routineMutableLiveData.postValue(routine);
+                else
+                    routineMutableLiveData.postValue(null);
+            }
+        });
+        return routineMutableLiveData;
     }
-    public static void deleteRoutine(Routine routine, String programID){
+    public void deleteRoutine(String routineID, String programID){
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .document(programID)
-                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId()).delete();
+                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routineID).delete();
     }
 }

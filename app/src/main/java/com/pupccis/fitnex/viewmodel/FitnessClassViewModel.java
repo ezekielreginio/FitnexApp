@@ -1,24 +1,19 @@
 package com.pupccis.fitnex.viewmodel;
 
-import static com.pupccis.fitnex.repository.FitnessClassesRepository.getFitnessClassesQuery;
-
 import android.content.Context;
 import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
-import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationService;
+import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,12 +82,12 @@ public class FitnessClassViewModel extends BaseObservable {
 
     public void setAddFitnessClassName(String addFitnessClassName) {
         this.addFitnessClassName = addFitnessClassName;
-        onTextChangeFitnessClass(addFitnessClassName, ProgramFitnessClassFields.NAME);
+        onTextChangeFitnessClass(addFitnessClassName, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.NAME);
     }
 
     public void setAddFitnessClassDescription(String addFitnessClassDescription) {
         this.addFitnessClassDescription = addFitnessClassDescription;
-        onTextChangeFitnessClass(addFitnessClassDescription, ProgramFitnessClassFields.DESCRIPTION);
+        onTextChangeFitnessClass(addFitnessClassDescription, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DESCRIPTION);
     }
 
     public void setAddFitnessClassCategory(int addFitnessClassCategory) {
@@ -102,22 +97,22 @@ public class FitnessClassViewModel extends BaseObservable {
     public void setAddFitnessClassTimeStart(String addFitnessClassTimeStart) {
         Log.i("Time start setter", addFitnessClassTimeStart);
         this.addFitnessClassTimeStart = addFitnessClassTimeStart;
-        onTextChangeFitnessClass(addFitnessClassTimeStart, ProgramFitnessClassFields.TIME_START);
+        onTextChangeFitnessClass(addFitnessClassTimeStart, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.TIME_START);
     }
 
     public void setAddFitnessClassTimeEnd(String addFitnessClassTimeEnd) {
         this.addFitnessClassTimeEnd = addFitnessClassTimeEnd;
-        onTextChangeFitnessClass(addFitnessClassTimeEnd, ProgramFitnessClassFields.TIME_END);
+        onTextChangeFitnessClass(addFitnessClassTimeEnd, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.TIME_END);
     }
 
     public void setAddFitnessClassSessionNumber(String addFitnessClassSessionNumber) {
         this.addFitnessClassSessionNumber = addFitnessClassSessionNumber;
-        onTextChangeFitnessClass(addFitnessClassSessionNumber, ProgramFitnessClassFields.SESSION_NUMBER);
+        onTextChangeFitnessClass(addFitnessClassSessionNumber, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.SESSION_NUMBER);
     }
 
     public void setAddFitnessClassDuration(String addFitnessClassDuration) {
         this.addFitnessClassDuration = addFitnessClassDuration;
-        onTextChangeFitnessClass(addFitnessClassDuration, ProgramFitnessClassFields.DURATION);
+        onTextChangeFitnessClass(addFitnessClassDuration, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DURATION);
     }
 
     public HashMap<String, Object> getFitnessClassValidationData() {
@@ -129,9 +124,9 @@ public class FitnessClassViewModel extends BaseObservable {
         notifyPropertyChanged(BR.fitnessClassValidationData);
     }
 
-    public void onTextChangeFitnessClass (String input, ProgramFitnessClassFields field){
+    public void onTextChangeFitnessClass(String input, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field){
         Log.d("Ontextchange trigger", "triggered");
-        ProgramFitnessClassValidationService programFitnessClassValidationService= new ProgramFitnessClassValidationService(input, field);
+        ProgramFitnessClassRoutineValidationService programFitnessClassValidationService= new ProgramFitnessClassRoutineValidationService(input, field);
         ValidationResult result = programFitnessClassValidationService.validate();
 
         HashMap<String, Object> validationData = new HashMap<>();

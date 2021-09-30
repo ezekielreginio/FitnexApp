@@ -8,9 +8,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.ProgramsRepository;
-import com.pupccis.fitnex.validation.Services.ProgramFitnessClassValidationService;
+import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
+
 import java.util.HashMap;
 
 public class ProgramViewModel extends BaseObservable {
@@ -59,22 +59,22 @@ public class ProgramViewModel extends BaseObservable {
     //Bindable Attributes Setters
     public void setAddProgramName(String addProgramName) {
         this.addProgramName = addProgramName;
-        onTextChangeProgram(addProgramName, ProgramFitnessClassFields.NAME);
+        onTextChangeProgram(addProgramName, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.NAME);
     }
     public void setAddProgramDescription(String addProgramDescription) {
         this.addProgramDescription = addProgramDescription;
-        onTextChangeProgram(addProgramDescription, ProgramFitnessClassFields.DESCRIPTION);
+        onTextChangeProgram(addProgramDescription, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DESCRIPTION);
     }
     public void setAddProgramCategory(int addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
         this.addProgramSessionNumber = addProgramSessionNumber;
-        onTextChangeProgram(addProgramSessionNumber, ProgramFitnessClassFields.SESSION_NUMBER);
+        onTextChangeProgram(addProgramSessionNumber, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.SESSION_NUMBER);
     }
     public void setAddProgramDuration(String addProgramDuration) {
         this.addProgramDuration = addProgramDuration;
-        onTextChangeProgram(addProgramDuration, ProgramFitnessClassFields.DURATION);
+        onTextChangeProgram(addProgramDuration, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DURATION);
     }
 
     public void setProgramID(String programID) {
@@ -88,8 +88,8 @@ public class ProgramViewModel extends BaseObservable {
 
 
     //ViewModel Methods
-    public void onTextChangeProgram(String input, ProgramFitnessClassFields field){
-        ProgramFitnessClassValidationService programFitnessClassValidationService= new ProgramFitnessClassValidationService(input, field);
+    public void onTextChangeProgram(String input, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field){
+        ProgramFitnessClassRoutineValidationService programFitnessClassValidationService= new ProgramFitnessClassRoutineValidationService(input, field);
         ValidationResult result = programFitnessClassValidationService.validate();
 
         HashMap<String, Object> validationData = new HashMap<>();
@@ -115,6 +115,7 @@ public class ProgramViewModel extends BaseObservable {
 
     public void triggerRoutineObserver(Program program){
         setProgramID(program.getProgramID());
+        Log.e("Why u not work my fremnd", program.getProgramID());
         routineProgramID.postValue(program);
     }
     public MutableLiveData<Program> routineObserver(){

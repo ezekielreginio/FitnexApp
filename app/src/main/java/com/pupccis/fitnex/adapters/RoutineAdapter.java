@@ -11,6 +11,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.databinding.ItemContainerFitnessClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.databinding.ItemContainerRoutinesBinding;
@@ -69,6 +70,7 @@ public class RoutineAdapter extends FirestoreRecyclerAdapter<Routine, RoutineAda
         }
         void setRoutineData(Routine model){
             binding.textViewRoutineName.setText(model.getName());
+            binding.setVariable(BR.routine, model);
         }
 
     }

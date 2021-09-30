@@ -4,17 +4,16 @@ import android.util.Log;
 
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 
-public class ProgramFitnessClassValidationService {
+public class ProgramFitnessClassRoutineValidationService {
     private ValidationModel validationModel;
-    private ProgramFitnessClassFields field;
+    private com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field;
     private String input;
-    private static ProgramFitnessClassValidationService instance;
-    public ProgramFitnessClassValidationService(){
+    private static ProgramFitnessClassRoutineValidationService instance;
+    public ProgramFitnessClassRoutineValidationService(){
 
     }
-    public ProgramFitnessClassValidationService(String input, ProgramFitnessClassFields field){
+    public ProgramFitnessClassRoutineValidationService(String input, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field){
         this.input = input;
         this.field = field;
     }
@@ -33,6 +32,9 @@ public class ProgramFitnessClassValidationService {
                 break;
             case SESSION_NUMBER:
             case DURATION:
+            case REPS:
+            case SETS:
+            case WEIGHT:
                 result = service
                         .requiredField()
                         .validateInt()
@@ -44,6 +46,11 @@ public class ProgramFitnessClassValidationService {
                         .requiredField()
                         //.regexValidation("[a-z]", "Invalid Time Input")
                         .regexValidation("((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))", "Invalid Time Input")
+                        .validate();
+            case CATEGORY:
+                result = service
+                        .requiredField()
+                        .validateCategory()
                         .validate();
         }
         return result;

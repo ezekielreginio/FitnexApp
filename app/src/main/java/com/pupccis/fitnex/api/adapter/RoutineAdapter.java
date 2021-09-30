@@ -90,7 +90,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
             });
             constraintLayoutRoutineThumbnailDelete.setOnClickListener(view -> {
-                RoutineViewModel.deleteRoutine(routine, program.getProgramID());
+               // RoutineViewModel.deleteRoutine(routine, program.getProgramID());
             });
         }
 

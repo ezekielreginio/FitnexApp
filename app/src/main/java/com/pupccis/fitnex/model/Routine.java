@@ -12,12 +12,12 @@ public class Routine implements Serializable, Observer {
     private String name;
     private String routineID;
     private String programID;
+    private int category;
     private int sets;
     private int reps;
     private int duration;
     private double weight;
     private Routine instance;
-
 
     public Routine(){
 
@@ -25,11 +25,13 @@ public class Routine implements Serializable, Observer {
 
     public Routine(Builder builder){
         this.name = builder.name;
+        this.category = builder.category;
         this.sets = builder.sets;
         this.reps = builder.reps;
         this.duration = builder.duration;
         this.weight = builder.weight;
         this.programID = builder.programID;
+        this.routineID = builder.routineID;
     }
 
 
@@ -37,6 +39,7 @@ public class Routine implements Serializable, Observer {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("name", name);
+        result.put("category", category);
         result.put("sets", sets);
         result.put("reps", reps);
         result.put("duration", duration);
@@ -72,6 +75,10 @@ public class Routine implements Serializable, Observer {
         return name;
     }
 
+    public int getCategory() {
+        return category;
+    }
+
     public int getSets() {
         return sets;
     }
@@ -98,6 +105,7 @@ public class Routine implements Serializable, Observer {
 
     public static class Builder{
         private final String name;
+        private int category;
         private int sets;
         private int reps;
         private int duration;
@@ -120,6 +128,10 @@ public class Routine implements Serializable, Observer {
             this.duration = duration;
             return this;
         }
+        public Builder category(int category){
+            this.category = category;
+            return this;
+        }
 
         public Builder weight(double weight) {
             this.weight = weight;
@@ -134,6 +146,7 @@ public class Routine implements Serializable, Observer {
             this.programID = programID;
             return this;
         }
+
 
         public Routine build(){
             Routine routine = new Routine(this);

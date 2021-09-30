@@ -1,21 +1,44 @@
 package com.pupccis.fitnex.viewmodel;
 
-import android.content.Context;
+import android.util.Log;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.repository.RoutinesRepository;
+import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
+import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields;
+import com.pupccis.fitnex.validation.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RoutineViewModel extends ViewModel {
+public class RoutineViewModel extends BaseObservable {
     //MutableLiveData attributes
-    private MutableLiveData<ArrayList<Object>> routines;
-    private MutableLiveData<HashMap<String, Object>> routinesUpdate = new MutableLiveData<>();
+    MutableLiveData<Routine> updateMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<Routine> deleteMutableLiveData = new MutableLiveData<>();
+
+    //Bindable Attributes
+    @Bindable
+    private String addRoutineName = null;
+    @Bindable
+    private String addRoutineCategory = null;
+    @Bindable
+    private String addRoutineRepCount = null;
+    @Bindable
+    private String addRoutineSetCount = null;
+    @Bindable
+    private String addRoutineWeight = null;
+    @Bindable
+    private String addRoutineDuration = null;
+    @Bindable
+    private HashMap<String, Object> routineValidationData = null;
+    @Bindable
+    private String routineID = null;
 
     //Data Observer
     private DataObserver dataObserver = new DataObserver();
@@ -24,30 +47,130 @@ public class RoutineViewModel extends ViewModel {
     private RoutinesRepository routinesRepository = new RoutinesRepository();
     private String programID = null;
 
+    public String getAddRoutineName() {
+        return addRoutineName;
+    }
+    public String getAddRoutineCategory() {
+        return addRoutineCategory;
+    }
+    public String getAddRoutineRepCount() {
+        return addRoutineRepCount;
+    }
+    public String getAddRoutineSetCount() {
+        return addRoutineSetCount;
+    }
+    public String getAddRoutineWeight() {
+        return addRoutineWeight;
+    }
+    public String getAddRoutineDuration() {
+        return addRoutineDuration;
+    }
+    public HashMap<String, Object> getRoutineValidationData() {
+        return routineValidationData;
+    }
     public String getProgramID() {
         return programID;
     }
+    public String getRoutineID() {
+        return routineID;
+    }
 
+
+    public void setAddRoutineName(String addRoutineName) {
+        this.addRoutineName = addRoutineName;
+        onTextChangeRoutine(addRoutineName, ProgramFitnessClassRoutineFields.NAME);
+    }
+    public void setAddRoutineCategory(String addRoutineCategory) {
+        this.addRoutineCategory = addRoutineCategory;
+        onTextChangeRoutine(addRoutineCategory, ProgramFitnessClassRoutineFields.CATEGORY);
+    }
+    public void setAddRoutineRepCount(String addRoutineRepCount) {
+        this.addRoutineRepCount = addRoutineRepCount;
+        onTextChangeRoutine(addRoutineRepCount, ProgramFitnessClassRoutineFields.REPS);
+    }
+    public void setAddRoutineSetCount(String addRoutineSetCount) {
+        this.addRoutineSetCount = addRoutineSetCount;
+        onTextChangeRoutine(addRoutineSetCount, ProgramFitnessClassRoutineFields.SETS);
+    }
+    public void setAddRoutineWeight(String addRoutineWeight) {
+        this.addRoutineWeight = addRoutineWeight;
+        onTextChangeRoutine(addRoutineWeight, ProgramFitnessClassRoutineFields.WEIGHT);
+    }
+    public void setAddRoutineDuration(String addRoutineDuration) {
+        this.addRoutineDuration = addRoutineDuration;
+        onTextChangeRoutine(addRoutineDuration, ProgramFitnessClassRoutineFields.DURATION);
+    }
+    public void setRoutineValidationData(HashMap<String, Object> routineValidationData) {
+        this.routineValidationData = routineValidationData;
+        notifyPropertyChanged(BR.routineValidationData);
+    }
     public void setProgramID(String programID) {
         this.programID = programID;
     }
+    public void setRoutineID(String routineID) {
+        this.routineID = routineID;
+    }
+    //    public void insertRoutine(Routine routine){
+//        routinesRepository.insertRoutine(routine);
+//    }
+//
 
-    public void insertRoutine(Routine routine){
-        routinesRepository.insertRoutine(routine);
+    public Routine routineInstance(){
+        Routine routine = new Routine.Builder(getAddRoutineName())
+                .category(0)
+                .sets(Integer.parseInt(getAddRoutineSetCount()))
+                .reps(Integer.parseInt(getAddRoutineRepCount()))
+                .weight(Integer.parseInt(getAddRoutineWeight()))
+                .duration(Integer.parseInt(getAddRoutineDuration()))
+                .programID(getProgramID())
+                .routineID(getRoutineID())
+                .build();
+        return routine;
+    }
+    public MutableLiveData<Routine> insertRoutine(){
+        Routine routine = routineInstance();
+        return routinesRepository.insertRoutine(routine);
+    }
+    public MutableLiveData<Routine> updateRoutine(){
+        Routine routine = routineInstance();
+        return routinesRepository.updateRoutine(routine);
+    }
+    public void deleteRoutine(String programID){
+        //Routine routine = routineInstance();
+        routinesRepository.deleteRoutine(getRoutineID(), programID);
+    }
+    public void triggerUpdateObserver(Routine routine){
+        setRoutineID(routine.getId());
+        Log.e("ID sa routine view model",getRoutineID());
+        updateMutableLiveData.postValue(routine);
     }
 
-    public MutableLiveData<ArrayList<Object>>getRoutines(){
-        return routines;
+    public void triggerDeleteObserver(Routine routine){
+        setRoutineID(routine.getId());
+        deleteMutableLiveData.postValue(routine);
     }
-    public MutableLiveData<HashMap<String, Object>> getLiveDataRoutines(String programID){
-        routinesUpdate = dataObserver.getLiveData(routinesRepository.getRoutinesQuery(programID), new Routine());
+    public MutableLiveData<Routine> updateObserver(){
+        return updateMutableLiveData;
+    }
+    public MutableLiveData<Routine> deleteObserver(){
+        return deleteMutableLiveData;
+    }
+//    public MutableLiveData<ArrayList<Object>>getRoutines(){
+//        return routines;
+//    }
+//    public void updateRoutine(Routine routine){
+//        RoutinesRepository.updateRoutine(routine);
+//    }
+//    public static void deleteRoutine(Routine routine, String programID){
+//        RoutinesRepository.deleteRoutine(routine, programID);
+//    }
+    public void onTextChangeRoutine(String input, ProgramFitnessClassRoutineFields field){
+        ProgramFitnessClassRoutineValidationService programFitnessClassRoutineValidationService= new ProgramFitnessClassRoutineValidationService(input, field);
+        ValidationResult result = programFitnessClassRoutineValidationService.validate();
 
-        return routinesUpdate;
-    }
-    public void updateRoutine(Routine routine){
-        RoutinesRepository.updateRoutine(routine);
-    }
-    public static void deleteRoutine(Routine routine, String programID){
-        RoutinesRepository.deleteRoutine(routine, programID);
+        HashMap<String, Object> validationData = new HashMap<>();
+        validationData.put("validationResult", result);
+        validationData.put("field", field);
+        setRoutineValidationData(validationData);
     }
 }

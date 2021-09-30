@@ -227,13 +227,14 @@ public class ProgramsFragment extends Fragment {
             public void onChanged(Program program) {
                 Intent intent = new Intent(getContext(), RoutinePage.class);
                 intent.putExtra("program", program);
+                Log.e("Program Fragment", program.getProgramID());
                 startActivity(intent);
             }
         });
         fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
             @Override
             public void onChanged(Program program) {
-                Log.d("Program Fragment", "Observer Triggered");
+
                 Intent intent= new Intent(getContext(), AddProgram.class);
                 intent.putExtra("program", program);
                 startActivity(intent);
