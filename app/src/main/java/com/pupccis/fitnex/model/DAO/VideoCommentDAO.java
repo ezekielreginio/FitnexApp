@@ -126,8 +126,8 @@ public class VideoCommentDAO {
                 commentsList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     VideoComment comment = new VideoComment.VideoCommentBuilder(
-                            dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_TRAINER_ID).getValue().toString(),
-                            dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_TRAINER_NAME).getValue().toString(),
+                            dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_ID).getValue().toString(),
+                            dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_NAME).getValue().toString(),
                             (long) dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED).getValue(),
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT).getValue().toString(),
                             dataSnapshot.child(VideoCommentConstants.KEY_VIDEO_COMMENT_TYPE).getValue().toString()

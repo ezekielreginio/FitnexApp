@@ -1,11 +1,10 @@
-package com.pupccis.fitnex.activities.main.trainer.Studio;
+package com.pupccis.fitnex.activities.main.trainer.studio;
 
 import static com.pupccis.fitnex.utilities.Globals.RotateAnimation.rotateAnimation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Intent;
@@ -85,8 +84,8 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
         rotateAnimation(this, btnClose);
 
         //ViewModel Instantiation
-        postVideoViewModel = new ViewModelProvider(AddVideo.this).get(PostVideoViewModel.class);
-        postVideoViewModel.init(AddVideo.this);
+//        postVideoViewModel = new ViewModelProvider(AddVideo.this).get(PostVideoViewModel.class);
+//        postVideoViewModel.init(AddVideo.this);
 
         //Event Bindings
         btnAddVideo.setOnClickListener(this);

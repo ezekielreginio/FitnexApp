@@ -29,10 +29,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         super(options);
     }
 
-    public ProgramViewModel getViewModel(){
-        return programViewModel;
-    }
-
     @Override
     protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
         model.setProgramID(this.getSnapshots().getSnapshot(position).getId());
@@ -43,13 +39,15 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     @Override
     public ProgramHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        // DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         binding = ItemContainerProgramBinding.inflate(inflater, parent, false);
         binding.setViewModel(programViewModel);
-        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_container_program, parent, false);
 
         return new ProgramHolder(binding.getRoot());
+    }
+
+    public ProgramViewModel getViewModel(){
+        return programViewModel;
     }
 
     class ProgramHolder extends RecyclerView.ViewHolder{

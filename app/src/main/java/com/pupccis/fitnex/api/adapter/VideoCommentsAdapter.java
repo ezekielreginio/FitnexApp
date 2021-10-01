@@ -86,7 +86,7 @@ public class VideoCommentsAdapter extends RecyclerView.Adapter<VideoCommentsAdap
 
         void setVideoCommentData(VideoComment videoComment){
             this.videoComment = videoComment;
-            commentUsername.setText(videoComment.getTrainerName());
+            commentUsername.setText(videoComment.getUserName());
             commentContent.setText(videoComment.getComment());
             commentId = videoComment.getCommentId();
 

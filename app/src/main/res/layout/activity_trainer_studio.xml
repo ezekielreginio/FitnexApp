@@ -1,195 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress AndroidUnresolvableTag -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nestedViewTrainerStudio"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.main.trainer.Studio.TrainerStudio"
-    android:background="#FFFFFF"
-
-    >
-    <androidx.core.widget.NestedScrollView
+<layout
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio" />
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.PostVideoViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nestedViewTrainerStudio"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutTrainerStudioStaticContent"
+        tools:context=".activities.main.trainer.studio.TrainerStudio"
+        android:background="#FFFFFF"
+
+        >
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="40dp"
-            android:paddingBottom="100dp">
-
+            android:padding="5dp">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutTrainerProfileDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints">
-                <TextView
-                    android:id="@+id/textViewTrainerProfileDisplay"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:background="@drawable/ic_circle_imageview"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toEndOf="@id/constraintLayoutTrainerProfileDisplay"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="John Perez"
-                    android:textColor="@color/blueTextColor"
-                    android:textSize="50dp"
-                    android:textStyle="bold"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutStudioDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayoutTrainerProfileDisplay"
-                tools:ignore="MissingConstraints">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur"
-                    android:textColor="@color/blueTextColor"
-                    android:textSize="16dp"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutVideosUploaded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayoutStudioDescription"
-                tools:ignore="MissingConstraints">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Videos Uploaded"
-                    android:textColor="@color/blueTextColor"
-                    android:textSize="26dp"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutTrainerStudioStaticContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideosUploaded"
-                tools:ignore="MissingConstraints">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:paddingBottom="100dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTrainerStudioVideo"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutTrainerProfileDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints">
+                    <TextView
+                        android:id="@+id/textViewTrainerProfileDisplay"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/ic_circle_imageview"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/constraintLayoutTrainerProfileDisplay"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="John Perez"
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="50dp"
+                        android:textStyle="bold"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutStudioDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutTrainerProfileDisplay"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur"
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="16dp"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutVideosUploaded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutStudioDescription"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Videos Uploaded"
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="26dp"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideosUploaded"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewTrainerStudioVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.core.widget.NestedScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutStudioAddVideoButton"
-        android:layout_gravity="center"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
-        app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
-        android:translationZ="1dp"
-        android:orientation="vertical"
-        android:background="@drawable/ic_circle_add_button"
-        >
-
-        <ImageView
-            android:id="@+id/btnAddVideo"
+        <LinearLayout
+            android:id="@+id/linearLayoutStudioAddVideoButton"
             android:layout_gravity="center"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            app:srcCompat="@drawable/ic__add_icon" />
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutTrainerDashboardNavbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/ic_trainer_menubar"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteY="671dp"
-        android:transitionName="addProgramTransition">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutTrainerHomeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="8dp">
-            <ImageView
-                android:id="@+id/buttonTrainerHome"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:srcCompat="@drawable/ic_baseline_home_24"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutTraineeSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingTop="5dp"
-            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTrainerStudioButton"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayoutTrainerHomeButton"
-            tools:layout_editor_absoluteY="8dp"
-            android:visibility="gone">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
+            app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"
+            android:translationZ="1dp"
+            android:orientation="vertical"
+            android:background="@drawable/ic_circle_add_button"
+            >
 
             <ImageView
-                android:id="@+id/buttonTraineeSearch"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:srcCompat="@drawable/ic_search_icon"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:id="@+id/btnAddVideo"
+                android:layout_gravity="center"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/ic__add_icon" />
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutTrainerStudioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:id="@+id/buttonTrainerStudio"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:srcCompat="@drawable/ic_trainer_studio"
-                tools:ignore="MissingConstraints" />
+            android:id="@+id/constraintLayoutTrainerDashboardNavbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_trainer_menubar"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteY="671dp"
+            android:transitionName="addProgramTransition">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutTrainerHomeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="8dp">
+                <ImageView
+                    android:id="@+id/buttonTrainerHome"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_home_24"
+                    tools:ignore="MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutTraineeSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTrainerStudioButton"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayoutTrainerHomeButton"
+                tools:layout_editor_absoluteY="8dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/buttonTraineeSearch"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_search_icon"
+                    tools:ignore="MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutTrainerStudioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="60dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:id="@+id/buttonTrainerStudio"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_trainer_studio"
+                    tools:ignore="MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>

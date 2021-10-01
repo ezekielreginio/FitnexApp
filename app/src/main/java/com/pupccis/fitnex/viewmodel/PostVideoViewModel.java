@@ -1,18 +1,25 @@
 package com.pupccis.fitnex.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.model.PostVideo;
+import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
+import com.pupccis.fitnex.utilities.Constants.VideoCommentConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PostVideoViewModel extends ViewModel {
+public class PostVideoViewModel extends BaseObservable {
     //Comment This
     MutableLiveData<ArrayList<PostVideo>> postVideos;
 
@@ -31,6 +38,7 @@ public class PostVideoViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<PostVideo>> getLiveDataPostVideos(){
+        postVideos = PostedVideosRepository.getInstance().getVideos();
         return postVideos;
     }
 
@@ -42,13 +50,29 @@ public class PostVideoViewModel extends ViewModel {
         PostedVideosRepository.getInstance().uploadVideo(postVideo);
     }
     //Comment This
+    //Bindable Attributes
+    @Bindable
+    private String commentSectionAddComment;
+
+    //Getter Methods
+    public String getCommentSectionAddComment() {
+        return commentSectionAddComment;
+    }
+
+    //Setter Methods
+    public void setCommentSectionAddComment(String commentSectionAddComment) {
+        this.commentSectionAddComment = commentSectionAddComment;
+        notifyPropertyChanged(BR.commentSectionAddComment);
+    }
+
+    private MutableLiveData<PostVideo> itemPostVideoMutableLiveData = new MutableLiveData<>();
 
 
     public MutableLiveData<HashMap<String, Object>> getVideoLikesData(String videoID){
         return postedVideosRepository.getVideoLikesData(videoID);
     }
 
-    public MutableLiveData<String> getUserLikeStatus(String videoID){
+    public MutableLiveData<HashMap<String, Boolean>> getUserLikeStatus(String videoID){
         return postedVideosRepository.getUserLikeStatus(videoID);
     }
 
@@ -56,4 +80,26 @@ public class PostVideoViewModel extends ViewModel {
         postedVideosRepository.likeVideo(videoID, liked);
     }
 
+    public void postComment(String videoID, String userName) {
+        Log.d("Comment", getCommentSectionAddComment());
+        VideoComment videoComment = new VideoComment.VideoCommentBuilder(
+                FirebaseAuth.getInstance().getUid(),
+                userName,
+                System.currentTimeMillis(),
+                getCommentSectionAddComment(),
+                VideoCommentConstants.KEY_VIDEO_COMMENT
+                )
+                .initializeData()
+                .videoId(videoID)
+                .build();
+        postedVideosRepository.postComment(videoComment);
+    }
+
+    public void triggerContainerObserver(PostVideo postVideo){
+        itemPostVideoMutableLiveData.postValue(postVideo);
+    }
+
+    public MutableLiveData<PostVideo> itemContainerClickObserver(){
+        return itemPostVideoMutableLiveData;
+    }
 }

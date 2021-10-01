@@ -1,14 +1,23 @@
 package com.pupccis.fitnex.model;
 
-public class VideoComment {
-    private final String trainerID, comment, trainerName, type;
-    private final long dateCreated;
+import com.pupccis.fitnex.utilities.Constants.VideoCommentConstants;
+
+import java.io.Serializable;
+import java.util.HashMap;
+
+public class VideoComment implements Serializable {
+    private String userID, comment, userName, type;
+    private long dateCreated;
     private String commentId, videoId, parentCommentId;
     private int likes, dislikes;
 
+    public VideoComment(){
+
+    }
+
     public VideoComment(VideoCommentBuilder builder) {
-        this.trainerID = builder.trainerID;
-        this.trainerName = builder.trainerName;
+        this.userID = builder.userID;
+        this.userName = builder.userName;
         this.dateCreated = builder.dateCreated;
         this.comment = builder.comment;
         this.type = builder.type;
@@ -20,13 +29,11 @@ public class VideoComment {
         this.parentCommentId = builder.parentCommentId;
     }
 
-    public String getTrainerID() {
-        return trainerID;
+    public String getUserID() {
+        return userID;
     }
 
-    public String getTrainerName() {
-        return trainerName;
-    }
+    public String getUserName() { return userName; }
 
     public long getDateCreated() {
         return dateCreated;
@@ -52,16 +59,40 @@ public class VideoComment {
         return parentCommentId;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
+
+    public HashMap<String, Object> map(){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT, getComment());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED, getDateCreated());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, getLikes());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES, getDislikes());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_ID, getUserID());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_NAME, getUserName());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_TYPE, getType());
+        return map;
+    }
+
     public static class VideoCommentBuilder{
-        private final String trainerID, comment, trainerName, type;
+        private final String userID, comment, userName, type;
         private final long dateCreated;
         private String commentId, videoId, parentCommentId;
         private int likes, dislikes;
 
 
-        public VideoCommentBuilder(String trainerID, String trainerName, long dateCreated, String comment, String type) {
-            this.trainerID = trainerID;
-            this.trainerName = trainerName;
+        public VideoCommentBuilder(String userID, String userName, long dateCreated, String comment, String type) {
+            this.userID = userID;
+            this.userName = userName;
             this.dateCreated = dateCreated;
             this.comment = comment;
             this.type = type;

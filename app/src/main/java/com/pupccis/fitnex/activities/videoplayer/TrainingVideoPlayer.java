@@ -2,6 +2,7 @@ package com.pupccis.fitnex.activities.videoplayer;
 
 import static com.pupccis.fitnex.api.NumberFormatter.dateFormatter;
 import static com.pupccis.fitnex.api.NumberFormatter.numberFormatter;
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIVideoCommentOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -29,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -50,14 +52,16 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pupccis.fitnex.api.adapter.VideoCommentsAdapter;
+import com.pupccis.fitnex.adapters.VideoCommentAdapter;
 import com.pupccis.fitnex.databinding.ActivityVideoPlayerBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.DAO.PostVideoDAO;
 import com.pupccis.fitnex.model.DAO.VideoCommentDAO;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
@@ -79,9 +83,9 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     boolean flag = false;
     private Calendar calendar = Calendar.getInstance();
     private PostVideo postVideo;
-    private VideoCommentsAdapter videoCommentsAdapter;
     private PostVideoViewModel postVideoViewModel;
 
+    private VideoCommentAdapter adapter;
     private ActivityVideoPlayerBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +96,9 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         binding.setLifecycleOwner(this);
         binding.setPresenter(this);
 
-        //ViewModel Instantiation
-        postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
-        postVideoViewModel.init(TrainingVideoPlayer.this);
+//        //ViewModel Instantiation
+//        postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
+//        postVideoViewModel.init(TrainingVideoPlayer.this);
 
         //Extra Intent
         userPreferences = new UserPreferences(getApplicationContext());
@@ -223,6 +227,16 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
 //                .build();
         //videoCommentDAO.queryCommentsList(postVideo.getPostVideoID(), "comment");
 
+        //Comment RecyclerView Firebase UI
+        FirestoreRecyclerOptions<VideoComment> options = getFirebaseUIVideoCommentOptions(postVideo.getPostVideoID());
+        binding.recyclerViewVideoComments.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        adapter = new VideoCommentAdapter(options);
+        binding.recyclerViewVideoComments.setAdapter(adapter);
+
+        //Set Lifecycle and ViewModel of Binding
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(adapter.getPostVideoViewModel());
+
         //Observers
         binding.getViewModel().getVideoLikesData(postVideo.getPostVideoID()).observe(binding.getLifecycleOwner(), new Observer<HashMap<String, Object>>() {
             @Override
@@ -234,25 +248,34 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
             }
         });
 
-        binding.getViewModel().getUserLikeStatus(postVideo.getPostVideoID()).observe(binding.getLifecycleOwner(), new Observer<String>() {
+        binding.getViewModel().getUserLikeStatus(postVideo.getPostVideoID()).observe(binding.getLifecycleOwner(), new Observer<HashMap<String, Boolean>>() {
             @Override
-            public void onChanged(String isLiked) {
-                if(isLiked.equals("liked"))
+            public void onChanged(HashMap<String, Boolean> stringBooleanHashMap) {
+                Log.d("Like Event", "Triggered");
+                if(stringBooleanHashMap.get("liked"))
                     binding.buttonVideoLike.setImageResource(R.drawable.ic_baseline_thumb_up_24);
                 else
                     binding.buttonVideoLike.setImageResource(R.drawable.ic_outline_thumb_up_alt_24);
+
+                if(stringBooleanHashMap.get("disliked"))
+                    binding.buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
+                else
+                    binding.buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
             }
         });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        adapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        adapter.stopListening();
     }
 
 //    private BroadcastReceiver postedVideoBroadcastReceiver = new BroadcastReceiver() {
@@ -291,6 +314,13 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
             binding.getViewModel().likeVideo(postVideo.getPostVideoID(), "liked");
         else if(view == binding.buttonVideoDislike)
             binding.getViewModel().likeVideo(postVideo.getPostVideoID(), "disliked");
+        else if(view == binding.constraintLayoutVideoCommentBox){
+            binding.constraintLayoutCommentsSection.setVisibility(View.VISIBLE);
+            Animation slideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+            binding.constraintLayoutCommentsSection.startAnimation(slideUp);
+        }
+        else if(view == binding.buttonUploadVideoComment)
+            binding.getViewModel().postComment(postVideo.getPostVideoID(), userPreferences.getString(UserConstants.KEY_USER_NAME));
 //        switch (view.getId()){
 //            case R.id.bt_fullscreen:
 ////                if(flag){
@@ -353,5 +383,6 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         simpleExoPlayer.setPlayWhenReady(true);
         simpleExoPlayer.getPlaybackState();
     }
+
 
 }

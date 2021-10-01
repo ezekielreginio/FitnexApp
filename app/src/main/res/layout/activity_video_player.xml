@@ -343,6 +343,7 @@
                 android:id="@+id/constraintLayoutVideoCommentBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onClick"
                 app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideoCommentsHeader"
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="10dp">
@@ -390,7 +391,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayoutVideoPlayer"
             android:background="@color/whiteTextColor"
             android:translationZ="3dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:animateLayoutChanges="true">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutCommentsSectionHead"
@@ -459,6 +460,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/background_textfield"
+                    android:text="@={viewModel.commentSectionAddComment}"
                     android:gravity="top"
                     android:hint="Write a Comment"
                     android:minLines="2"
@@ -470,6 +472,7 @@
                     android:id="@+id/buttonUploadVideoComment"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:onClick="onClick"
                     app:srcCompat="@drawable/ic_baseline_send_24"
                     tools:ignore="MissingConstraints"
                     app:layout_constraintStart_toEndOf="@id/editTextWriteComment"

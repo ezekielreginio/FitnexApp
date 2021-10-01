@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.model;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
 
@@ -24,7 +25,7 @@ public class PostVideo implements Serializable {
     private long views, date_posted;
 
     public PostVideo(){
-
+        Log.d("Post Video", "Instantiated");
     }
 
     private PostVideo(PostVideoBuilder builder) {
@@ -122,6 +123,46 @@ public class PostVideo implements Serializable {
 
     public String getVideoFiletype() {
         return videoFiletype;
+    }
+
+    public void setPostVideoID(String postVideoID) {
+        this.postVideoID = postVideoID;
+    }
+
+    public void setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTrainerID(String trainerID) {
+        this.trainerID = trainerID;
+    }
+
+    public void setThumbnailFiletype(String thumbnailFiletype) {
+        this.thumbnailFiletype = thumbnailFiletype;
+    }
+
+    public void setVideoFiletype(String videoFiletype) {
+        this.videoFiletype = videoFiletype;
+    }
+
+    public void setVideoUri(Uri videoUri) {
+        this.videoUri = videoUri;
+    }
+
+    public void setThumbnailUri(Uri thumbnailUri) {
+        this.thumbnailUri = thumbnailUri;
+    }
+
+    public void setDate_posted(long date_posted) {
+        this.date_posted = date_posted;
     }
 
     public Map<String, Object> map(){
