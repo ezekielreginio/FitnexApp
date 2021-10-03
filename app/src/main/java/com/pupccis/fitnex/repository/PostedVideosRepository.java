@@ -401,6 +401,14 @@ public class PostedVideosRepository {
                 .set(comment.map());
     }
 
+    public void deleteComment(VideoComment comment) {
+        if(comment.getType().equals(VideoCommentConstants.KEY_VIDEO_COMMENT))
+            db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .document(comment.getVideoId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .document(comment.getCommentId()).delete();
+    }
+
     public void likeComment(VideoComment comment, LikeType likeType){
         DocumentReference commentsDoc = null;
         if(comment.getType().equals(VideoCommentConstants.KEY_VIDEO_COMMENT))

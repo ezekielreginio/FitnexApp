@@ -32,7 +32,7 @@
             android:name=".activities.videoplayer.TrainingVideoPlayer"
             android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.main.trainer.studio.AddVideo"
             android:exported="true"

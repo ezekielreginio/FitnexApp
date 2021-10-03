@@ -5,6 +5,7 @@ import static com.pupccis.fitnex.api.NumberFormatter.numberFormatter;
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIVideoCommentOptions;
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIVideoCommentReplyOptions;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
@@ -19,13 +20,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -134,6 +142,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
 
         //DateUtils.getRelativeTimeSpanString();
         binding.textViewVideoPlayerTitle.setText(postVideo.getVideoTitle());
+
         //PostVideoDAO.incrementViews(postVideo.getPostVideoID());
 
         //Video Url
@@ -289,6 +298,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d("Start", "Activity");
         adapter.startListening();
     }
 
@@ -298,7 +308,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         adapter.stopListening();
     }
 
-//    private BroadcastReceiver postedVideoBroadcastReceiver = new BroadcastReceiver() {
+    //    private BroadcastReceiver postedVideoBroadcastReceiver = new BroadcastReceiver() {
 //        @Override
 //        public void onReceive(Context context, Intent intent) {
 //            Log.d("Broadcast Received", "received");
@@ -395,9 +405,6 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
 //        }
     }
 
-
-
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -411,6 +418,4 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         simpleExoPlayer.setPlayWhenReady(true);
         simpleExoPlayer.getPlaybackState();
     }
-
-
 }

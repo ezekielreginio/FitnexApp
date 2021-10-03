@@ -154,4 +154,8 @@ public class PostVideoViewModel extends BaseObservable {
                 .build();
         postedVideosRepository.postReply(videoComment);
     }
+
+    public void deleteComment(VideoComment model) {
+        postedVideosRepository.deleteComment(model);
+    }
 }

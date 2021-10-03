@@ -1,14 +1,18 @@
 package com.pupccis.fitnex.adapters;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -64,7 +68,7 @@ public class VideoCommentAdapter extends FirestoreRecyclerAdapter<VideoComment, 
 
     class VideoCommentHolder extends RecyclerView.ViewHolder{
         TextView commentUsername, commentContent, commentDate, commentLikesCounter, commentDislikesCounter, commentReplyCounter;
-        ImageView buttonCommentLike, buttonCommentDislike, buttonCommentReply;
+        ImageView buttonCommentLike, buttonCommentDislike, buttonCommentReply, buttonCommentMenu;
         ConstraintLayout constraintLayoutCommentReplyLink;
         public VideoCommentHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +82,7 @@ public class VideoCommentAdapter extends FirestoreRecyclerAdapter<VideoComment, 
             buttonCommentLike = itemView.findViewById(R.id.buttonCommentLike);
             buttonCommentDislike = itemView.findViewById(R.id.buttonCommentDislike);
             buttonCommentReply = itemView.findViewById(R.id.buttonCommentReply);
+            buttonCommentMenu = itemView.findViewById(R.id.buttonCommentMenu);
 
             constraintLayoutCommentReplyLink = itemView.findViewById(R.id.constraintLayoutCommentReplyLink);
         }
@@ -163,6 +168,44 @@ public class VideoCommentAdapter extends FirestoreRecyclerAdapter<VideoComment, 
                 @Override
                 public void onClick(View view) {
                     postVideoViewModel.triggerReplyClickObserver(model);
+                }
+            });
+
+            buttonCommentMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.inflate(R.menu.comment_menu);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()){
+                                case R.id.menuEditComment:
+                                    break;
+                                case R.id.menuEditDelete:
+                                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            switch (which){
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    postVideoViewModel.deleteComment(model);
+                                                    break;
+
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    break;
+                                            }
+                                        }
+                                    };
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                    builder.setMessage("Are you sure you wish to delete this comment?").setPositiveButton("Yes", dialogClickListener)
+                                            .setNegativeButton("No", dialogClickListener).show();
+
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
                 }
             });
 

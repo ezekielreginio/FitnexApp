@@ -39,7 +39,7 @@
             app:layout_constraintStart_toEndOf="@id/commentUserPicture">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutCommentUsernameDateContainer"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 >
@@ -72,6 +72,16 @@
                     android:layout_marginStart="5dp"
                     app:layout_constraintStart_toEndOf="@id/commentNameDateSeparator"
                     app:layout_constraintTop_toTopOf="parent"/>
+                <ImageView
+                    android:id="@+id/buttonCommentMenu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_submenu"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="@{()->viewModel.likeComment(videoCommentInstance, liketype.DISLIKE)}"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,8 +113,8 @@
                 >
                 <ImageView
                     android:id="@+id/buttonCommentLike"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:srcCompat="@drawable/ic_outline_thumb_up_alt_24"
                     android:onClick="@{()->viewModel.likeComment(videoCommentInstance, liketype.LIKE)}"
                     />
@@ -121,8 +131,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
                 <ImageView
                     android:id="@+id/buttonCommentDislike"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:srcCompat="@drawable/ic_outline_thumb_down_alt_24"
                     app:layout_constraintStart_toEndOf="@id/commentContainerLikesCounter"
                     app:layout_constraintTop_toTopOf="parent"
@@ -142,8 +152,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
                 <ImageView
                     android:id="@+id/buttonCommentReply"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:srcCompat="@drawable/ic_baseline_comment_24"
                     app:layout_constraintStart_toEndOf="@id/commentContainerDislikesCounter"
                     app:layout_constraintTop_toTopOf="parent"
