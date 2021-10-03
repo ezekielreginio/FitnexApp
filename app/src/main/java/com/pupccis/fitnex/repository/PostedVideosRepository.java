@@ -407,6 +407,14 @@ public class PostedVideosRepository {
                     .document(comment.getVideoId())
                     .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .document(comment.getCommentId()).delete();
+        else
+            db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .document(comment.getVideoId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .document(comment.getParentCommentId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_REPLIES)
+                    .document(comment.getCommentId())
+                    .delete();
     }
 
     public void likeComment(VideoComment comment, LikeType likeType){
