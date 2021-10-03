@@ -24,6 +24,7 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -62,6 +63,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.adapters.VideoCommentAdapter;
+import com.pupccis.fitnex.api.enums.VideoPlayerNavigation;
 import com.pupccis.fitnex.databinding.ActivityVideoPlayerBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.DAO.PostVideoDAO;
@@ -76,26 +78,20 @@ import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
-public class TrainingVideoPlayer extends AppCompatActivity implements View.OnClickListener {
+public class TrainingVideoPlayer extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
     private UserPreferences userPreferences;
     private SimpleExoPlayer simpleExoPlayer;
-
-    private ConstraintLayout constraintLayoutVideoCommentBox, constraintLayoutCommentsSection;
-    private ImageView buttonUploadVideoComment, buttonVideoLike, buttonVideoDislike, buttonCloseCommentsSection;
-    private EditText editTextWriteComment;
-    private RecyclerView videoComments;
-    private TextView textViewVideoPlayerTitle, textViewVideoPlayerLikeCounter, textViewVideoPlayerDislikeCounter, textViewVideoPlayerViewCounter, textViewVideoPlayerTimestamp;
-
-    boolean flag = false;
-    private Calendar calendar = Calendar.getInstance();
     private PostVideo postVideo;
 
     private VideoCommentAdapter adapter, replyAdapter;
     private ActivityVideoPlayerBinding binding;
     private PostVideoViewModel postVideoViewModel = new PostVideoViewModel();
+    private List<VideoPlayerNavigation> navigationHistory = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,45 +101,38 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         binding.setPresenter(this);
         binding.setViewModel(postVideoViewModel);
 
-//        //ViewModel Instantiation
-//        postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
-//        postVideoViewModel.init(TrainingVideoPlayer.this);
-
         //Extra Intent
         userPreferences = new UserPreferences(getApplicationContext());
         postVideo = (PostVideo) getIntent().getSerializableExtra("PostVideo");
 
-        //Layout Bindings
-        //btFullScreen = findViewById(R.id.bt_fullscreen);
 
-//        constraintLayoutVideoCommentBox = findViewById(R.id.constraintLayoutVideoCommentBox);
-//        constraintLayoutCommentsSection = findViewById(R.id.constraintLayoutCommentsSection);
-//        editTextWriteComment = findViewById(R.id.editTextWriteComment);
-//        buttonUploadVideoComment = findViewById(R.id.buttonUploadVideoComment);
-//        buttonVideoLike = findViewById(R.id.buttonVideoLike);
-//        buttonVideoDislike = findViewById(R.id.buttonVideoDislike);
-//        textViewVideoPlayerTitle = findViewById(R.id.textViewVideoPlayerTitle);
-//        textViewVideoPlayerLikeCounter = findViewById(R.id.textViewVideoPlayerLikeCounter);
-//        textViewVideoPlayerDislikeCounter = findViewById(R.id.textViewVideoPlayerDislikeCounter);
-//        textViewVideoPlayerViewCounter = findViewById(R.id.textViewVideoPlayerViewCounter);
-//        textViewVideoPlayerTimestamp = findViewById(R.id.textViewVideoPlayerTimestamp);
-//        buttonCloseCommentsSection  = findViewById(R.id.buttonCloseCommentsSection);
-
-        //Event Bindings
-        //btFullScreen.setOnClickListener(this);
-//        constraintLayoutVideoCommentBox.setOnClickListener(this);
-//        buttonUploadVideoComment.setOnClickListener(this);
-//        buttonVideoLike.setOnClickListener(this);
-//        buttonVideoDislike.setOnClickListener(this);
-//        buttonCloseCommentsSection.setOnClickListener(this);
-
-        //Load Video Data to Context
-        //PostVideoDAO.loadVideoData(postVideo, getBaseContext(), FirebaseAuth.getInstance().getUid());
-
-        //DateUtils.getRelativeTimeSpanString();
         binding.textViewVideoPlayerTitle.setText(postVideo.getVideoTitle());
 
-        //PostVideoDAO.incrementViews(postVideo.getPostVideoID());
+        binding.editTextWriteComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    binding.getViewModel().postComment(postVideo.getPostVideoID(), userPreferences.getString(UserConstants.KEY_USER_NAME));
+                    handled = true;
+                    hideCommentInput();
+                }
+                return handled;
+            }
+        });
+
+        binding.editTextVideoCommentReply.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    binding.getViewModel().postReply(userPreferences.getString(UserConstants.KEY_USER_NAME));
+                    handled = true;
+                    hideReplyInput();
+                }
+                return handled;
+            }
+        });
 
         //Video Url
         Uri videoUrl = Uri.parse(postVideo.getVideoURL());
@@ -225,18 +214,6 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
             }
         });
 
-        //RecyclerView Initialization
-//        videoComments = (RecyclerView) findViewById(R.id.recyclerViewVideoComments);
-//        videoComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        videoComments.setItemAnimator(null);
-
-        //Comment RecyclerView and List Instance Read Query and Binding
-        //VideoCommentDAO videoCommentDAO = new VideoCommentDAO.VideoCommentDAOBuilder()
-//                .context(TrainingVideoPlayer.this)
-//                .recyclerViewVideoComments(videoComments)
-//                .build();
-        //videoCommentDAO.queryCommentsList(postVideo.getPostVideoID(), "comment");
-
         //Comment RecyclerView Firebase UI
         FirestoreRecyclerOptions<VideoComment> options = getFirebaseUIVideoCommentOptions(postVideo.getPostVideoID());
         //binding.recyclerViewVideoComments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -308,101 +285,78 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         adapter.stopListening();
     }
 
-    //    private BroadcastReceiver postedVideoBroadcastReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            Log.d("Broadcast Received", "received");
-//            PostVideo postVideo = (PostVideo) intent.getSerializableExtra("videoData");
-//            String postLikes = numberFormatter((long) postVideo.getLikes());
-//            textViewVideoPlayerLikeCounter.setText(postLikes);
-//            textViewVideoPlayerDislikeCounter.setText(postVideo.getDislikes()+"");
-//            textViewVideoPlayerViewCounter.setText(String.format("%,d", postVideo.getViews())+" views");
-//            textViewVideoPlayerTimestamp.setText(dateFormatter("MMM dd, y", postVideo.getDate_posted()));
-//            //Log.d("Relative Date", DateUtils.getRelativeTimeSpanString(postVideo.getDate_posted())+"");
-//
-//            boolean liked = intent.getBooleanExtra("liked", false);
-//            boolean disliked = intent.getBooleanExtra("disliked", false);
-//
-//            if(liked){
-//                buttonVideoLike.setImageResource(R.drawable.ic_baseline_thumb_up_24);
-//            }
-//            else{
-//                buttonVideoLike.setImageResource(R.drawable.ic_outline_thumb_up_alt_24);
-//            }
-//            if(disliked){
-//                buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
-//            }
-//            else
-//                buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
-//
-//        }
-//    };
-
     @Override
     public void onClick(View view) {
         if(view == binding.buttonVideoLike)
             binding.getViewModel().likeVideo(postVideo.getPostVideoID(), "liked");
+
         else if(view == binding.buttonVideoDislike)
             binding.getViewModel().likeVideo(postVideo.getPostVideoID(), "disliked");
+
         else if(view == binding.constraintLayoutVideoCommentBox){
             binding.constraintLayoutCommentsSection.setVisibility(View.VISIBLE);
             Animation slideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
             binding.constraintLayoutCommentsSection.startAnimation(slideUp);
         }
-        else if(view == binding.buttonUploadVideoComment)
-            binding.getViewModel().postComment(postVideo.getPostVideoID(), userPreferences.getString(UserConstants.KEY_USER_NAME));
+
         else if(view == binding.buttonUploadVideoCommentReply)
             binding.getViewModel().postReply(userPreferences.getString(UserConstants.KEY_USER_NAME));
+
+        else if(view == binding.buttonCloseCommentsSection){
+            binding.constraintLayoutCommentsSection.setVisibility(View.GONE);
+            Animation slideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+            binding.constraintLayoutCommentsSection.startAnimation(slideDown);
+        }
+
         else if(view==binding.buttonReplySectionBack){
             binding.constraintLayoutReplySection.setVisibility(View.GONE);
             Animation slideRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right);
             binding.constraintLayoutReplySection.startAnimation(slideRight);
         }
 
-//        switch (view.getId()){
-//            case R.id.bt_fullscreen:
-////                if(flag){
-////                    binding..setImageDrawable(getResources().getDrawable(R.drawable.ic_fullscreen));
-////                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-////                    flag = false;
-////                }else{
-////                    btFullScreen.setImageDrawable(getResources().getDrawable(R.drawable.ic_fullscreen_exit));
-////                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-////                    flag = true;
-////                }
-//                break;
-//            case R.id.constraintLayoutVideoCommentBox:
-//                constraintLayoutCommentsSection.setVisibility(View.VISIBLE);
-//                Animation slideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-//                constraintLayoutCommentsSection.startAnimation(slideUp);
-//                break;
-//            case R.id.buttonCloseCommentsSection:
-//                constraintLayoutCommentsSection.setVisibility(View.GONE);
-//                Animation slideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
-//                constraintLayoutCommentsSection.startAnimation(slideDown);
-//                break;
-//            case R.id.buttonUploadVideoComment:
-//                String comment = editTextWriteComment.getText().toString();
-//                String postVideoID = postVideo.getPostVideoID();
-//                VideoComment videoComment = new VideoComment
-//                        .VideoCommentBuilder(
-//                                FirebaseAuth.getInstance().getCurrentUser().getUid(),
-//                                userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME),
-//                                System.currentTimeMillis(),
-//                                comment,
-//                                "comment"
-//                            )
-//                        .initializeData()
-//                        .build();
-//                VideoCommentDAO.postComment(videoComment, postVideoID, "comment");
-//                break;
-//            case R.id.buttonVideoLike:
-//                PostVideoDAO.likeEventVideo(postVideo.getPostVideoID() ,FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-//                break;
-//            case R.id.buttonVideoDislike:
-//                PostVideoDAO.likeEventVideo(postVideo.getPostVideoID() ,FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
-//                break;
-//        }
+        else if(view == binding.editTextWriteComment1){
+            binding.constraintLayoutTypeVideoCommentBox.setVisibility(View.VISIBLE);
+            binding.editTextWriteComment.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            navigationHistory.add(VideoPlayerNavigation.COMMENT_INPUT);
+        }
+
+        else if(view == binding.constraintLayoutTypeVideoCommentBox){
+            hideCommentInput();
+        }
+
+        else if(view == binding.editTextVideoCommentReply1){
+            binding.constraintLayoutTypeVideoCommentReplyBox.setVisibility(View.VISIBLE);
+            binding.editTextVideoCommentReply.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            navigationHistory.add(VideoPlayerNavigation.REPLY_INPUT);
+        }
+        else if(view == binding.constraintLayoutTypeVideoCommentReplyBox){
+            hideReplyInput();
+        }
+    }
+
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent event) {
+
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if(navigationHistory.contains(VideoPlayerNavigation.COMMENT_INPUT)){
+            hideCommentInput();
+            navigationHistory.remove(VideoPlayerNavigation.COMMENT_INPUT);
+        }
+        else if(navigationHistory.contains(VideoPlayerNavigation.REPLY_INPUT)){
+            hideReplyInput();
+            navigationHistory.remove(VideoPlayerNavigation.REPLY_INPUT);
+        }
+        else
+            finish();
     }
 
     @Override
@@ -418,4 +372,21 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         simpleExoPlayer.setPlayWhenReady(true);
         simpleExoPlayer.getPlaybackState();
     }
+
+    void hideCommentInput(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.editTextWriteComment.getWindowToken(), 0);
+        binding.constraintLayoutTypeVideoCommentBox.setVisibility(View.GONE);
+        binding.editTextWriteComment.setText("");
+        navigationHistory.remove(VideoPlayerNavigation.COMMENT_INPUT);
+    }
+
+    private void hideReplyInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.editTextWriteComment.getWindowToken(), 0);
+        binding.constraintLayoutTypeVideoCommentReplyBox.setVisibility(View.GONE);
+        binding.editTextVideoCommentReply.setText("");
+        navigationHistory.remove(VideoPlayerNavigation.REPLY_INPUT);
+    }
+
 }
