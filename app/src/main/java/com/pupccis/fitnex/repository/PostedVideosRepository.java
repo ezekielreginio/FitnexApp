@@ -239,7 +239,11 @@ public class PostedVideosRepository {
     }
 
     public Query readVideoCommentsQuery(String videoID){
-        Query query = FirebaseFirestore.getInstance().collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(videoID).collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS).orderBy(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED);
+        Query query = FirebaseFirestore.getInstance().collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(videoID).collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS);
+        return query;
+    }
+    public Query readVideoCommentRepliesQuery(VideoComment comment){
+        Query query = FirebaseFirestore.getInstance().collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(comment.getVideoId()).collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS).document(comment.getCommentId()).collection(VideoCommentConstants.KEY_COLLECTION_REPLIES);
         return query;
     }
 
@@ -387,15 +391,48 @@ public class PostedVideosRepository {
         db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).document(comment.getVideoId()).collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS).document().set(comment.map());
     }
 
-    public void likeComment(VideoComment comment, LikeType likeType){
-        DocumentReference commentsDoc = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+    public void postReply(VideoComment comment) {
+        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
                 .document(comment.getVideoId())
                 .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
-                .document(comment.getCommentId());
+                .document(comment.getParentCommentId())
+                .collection(VideoCommentConstants.KEY_COLLECTION_REPLIES)
+                .document()
+                .set(comment.map());
+    }
+
+    public void likeComment(VideoComment comment, LikeType likeType){
+        DocumentReference commentsDoc = null;
+        if(comment.getType().equals(VideoCommentConstants.KEY_VIDEO_COMMENT))
+            commentsDoc = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .document(comment.getVideoId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .document(comment.getCommentId());
+        else
+            commentsDoc = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                    .document(comment.getVideoId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                    .document(comment.getParentCommentId())
+                    .collection(VideoCommentConstants.KEY_COLLECTION_REPLIES)
+                    .document(comment.getCommentId());
         commentsDoc.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                DocumentReference innerDoc = null;
+                if(comment.getType().equals(VideoCommentConstants.KEY_VIDEO_COMMENT))
+                    innerDoc = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                            .document(comment.getVideoId())
+                            .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                            .document(comment.getCommentId());
+                else
+                    innerDoc = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                            .document(comment.getVideoId())
+                            .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                            .document(comment.getParentCommentId())
+                            .collection(VideoCommentConstants.KEY_COLLECTION_REPLIES)
+                            .document(comment.getCommentId());
+
                 Log.d("Success", "query");
                 List<String> likes = new ArrayList<>();
                 List<String> dislikes = new ArrayList<>();
@@ -422,40 +459,32 @@ public class PostedVideosRepository {
                 switch (likeType){
                     case LIKE:
                         if(!isLiked)
-                            executeCommentLike(likes, comment);
-                        else{
+                            likes.add(FirebaseAuth.getInstance().getUid());
+                        else
                             likes.remove(comment.getUserID());
-                            commentsDoc.update(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, likes);
+                        innerDoc.update(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, likes);
+
+                        if(isDisliked){
+                            dislikes.remove(comment.getUserID());
+                            innerDoc.update(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES, dislikes);
                         }
                         break;
+
                     case DISLIKE:
                         if(!isDisliked)
-                            executeCommentDislike(dislikes, comment);
+                            dislikes.add(FirebaseAuth.getInstance().getUid());
+                        else
+                            dislikes.remove(comment.getUserID());
+                        innerDoc.update(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES, dislikes);
+
+                        if(isLiked){
+                            likes.remove(comment.getUserID());
+                            innerDoc.update(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, likes);
+                        }
                         break;
                 }
             }
         });
-    }
-
-
-
-    private void executeCommentLike(List<String> likes, VideoComment comment) {
-        Log.d("Comment Like", "Executed");
-        likes.add(FirebaseAuth.getInstance().getUid());
-        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
-                .document(comment.getVideoId())
-                .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
-                .document(comment.getCommentId())
-                .update(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, likes);
-    }
-
-    private void executeCommentDislike(List<String> dislikes, VideoComment comment) {
-        dislikes.add(FirebaseAuth.getInstance().getUid());
-        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
-                .document(comment.getVideoId())
-                .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
-                .document(comment.getCommentId())
-                .update(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES, dislikes);
     }
 
     public MutableLiveData<HashMap<String, Object>> getCommentLikesData(VideoComment comment) {
@@ -482,5 +511,26 @@ public class PostedVideosRepository {
         });
 
         return liveData;
+    }
+
+
+    public MutableLiveData<HashMap<String, Object>> getRepliesCounter(VideoComment comment) {
+        MutableLiveData<HashMap<String, Object>> replyData = new MutableLiveData<>();
+        db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
+                .document(comment.getVideoId())
+                .collection(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
+                .document(comment.getCommentId())
+                .collection(VideoCommentConstants.KEY_COLLECTION_REPLIES)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        HashMap<String, Object> data = new HashMap<>();
+                        Integer size = value.getDocuments().size();
+                        data.put("replyCount", size);
+                        data.put("commentID", comment.getCommentId());
+                        replyData.postValue(data);
+                    }
+                });
+        return replyData;
     }
 }

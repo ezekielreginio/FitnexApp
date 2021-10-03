@@ -51,7 +51,7 @@ public class VideoCommentDAO {
                     .child(postVideoID)
                     .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .child(videoComment.getCommentId())
-                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES);
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLY);
         commentReference.push().setValue(videoComment);
     }
 
@@ -63,12 +63,12 @@ public class VideoCommentDAO {
                     .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .child(commentId);
 
-        else if(videoComment.getType().equals(VideoCommentConstants.KEY_VIDEO_REPLIES))
+        else if(videoComment.getType().equals(VideoCommentConstants.KEY_VIDEO_REPLY))
             query = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO)
                     .child(videoComment.getVideoId())
                     .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .child(videoComment.getParentCommentId())
-                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES)
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLY)
                     .child(commentId);
 
         if(liked){
@@ -118,7 +118,7 @@ public class VideoCommentDAO {
                     .child(postVideoID)
                     .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .child(commentId)
-                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES);
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLY);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,8 +163,8 @@ public class VideoCommentDAO {
         Query queryLike = null;
         Query queryDislike = null;
         TextView commentReplyCounter = itemView.findViewById(R.id.commentReplyCounter);
-        TextView commentLikesCounter = itemView.findViewById(R.id.commentLikesCounter);
-        TextView commentDislikesCounter = itemView.findViewById(R.id.commentDislikesCounter);
+        TextView commentLikesCounter = itemView.findViewById(R.id.commentContainerLikesCounter);
+        TextView commentDislikesCounter = itemView.findViewById(R.id.commentContainerDislikesCounter);
         ImageView buttonCommentLike = itemView.findViewById(R.id.buttonCommentLike);
         ImageView buttonCommentDislike = itemView.findViewById(R.id.buttonCommentDislike);
 
@@ -173,7 +173,7 @@ public class VideoCommentDAO {
                 .child(videoComment.getVideoId())
                 .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                 .child(videoComment.getCommentId())
-                .child(VideoCommentConstants.KEY_VIDEO_REPLIES)
+                .child(VideoCommentConstants.KEY_VIDEO_REPLY)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
@@ -209,7 +209,7 @@ public class VideoCommentDAO {
                     .child(videoComment.getVideoId())
                     .child(VideoCommentConstants.KEY_COLLECTION_COMMENTS)
                     .child(videoComment.getParentCommentId())
-                    .child(VideoCommentConstants.KEY_VIDEO_REPLIES)
+                    .child(VideoCommentConstants.KEY_VIDEO_REPLY)
                     .child(videoComment.getCommentId());
             queryLike = commentReference.child(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES);
             queryDislike =commentReference.child(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES);

@@ -3,6 +3,7 @@ package com.pupccis.fitnex.activities.videoplayer;
 import static com.pupccis.fitnex.api.NumberFormatter.dateFormatter;
 import static com.pupccis.fitnex.api.NumberFormatter.numberFormatter;
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIVideoCommentOptions;
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIVideoCommentReplyOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -84,7 +85,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     private Calendar calendar = Calendar.getInstance();
     private PostVideo postVideo;
 
-    private VideoCommentAdapter adapter;
+    private VideoCommentAdapter adapter, replyAdapter;
     private ActivityVideoPlayerBinding binding;
     private PostVideoViewModel postVideoViewModel = new PostVideoViewModel();
     @Override
@@ -92,9 +93,9 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_video_player);
-        binding.setViewModel(postVideoViewModel);
         binding.setLifecycleOwner(this);
         binding.setPresenter(this);
+        binding.setViewModel(postVideoViewModel);
 
 //        //ViewModel Instantiation
 //        postVideoViewModel = new ViewModelProvider(TrainingVideoPlayer.this).get(PostVideoViewModel.class);
@@ -233,7 +234,7 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         binding.recyclerViewVideoComments.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new VideoCommentAdapter(options);
         adapter.setPostVideoViewModel(postVideoViewModel);
-        adapter.setLifecycleOwner(binding.getLifecycleOwner());
+        adapter.setLifecycleOwner(this);
         binding.recyclerViewVideoComments.setAdapter(adapter);
 
         //Observers
@@ -260,6 +261,26 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
                     binding.buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
                 else
                     binding.buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
+            }
+        });
+
+        binding.getViewModel().videoCommentReplyObserver().observe(binding.getLifecycleOwner(), new Observer<VideoComment>() {
+            @Override
+            public void onChanged(VideoComment comment) {
+                Log.d("Reply", "clicked");
+                binding.constraintLayoutReplySection.setVisibility(View.VISIBLE);
+                Animation slideLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_left);
+                binding.constraintLayoutReplySection.startAnimation(slideLeft);
+
+                binding.getViewModel().setVideoComment(comment);
+
+                FirestoreRecyclerOptions<VideoComment> replyOptions = getFirebaseUIVideoCommentReplyOptions(comment);
+                replyAdapter  = new VideoCommentAdapter(replyOptions);
+                replyAdapter.startListening();
+                replyAdapter.setPostVideoViewModel(postVideoViewModel);
+                replyAdapter.setLifecycleOwner(TrainingVideoPlayer.this);
+                binding.recyclerViewCommentReplies.setLayoutManager(new WrapContentLinearLayoutManager(TrainingVideoPlayer.this, LinearLayoutManager.VERTICAL, false));
+                binding.recyclerViewCommentReplies.setAdapter(replyAdapter);
             }
         });
 
@@ -320,6 +341,14 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
         }
         else if(view == binding.buttonUploadVideoComment)
             binding.getViewModel().postComment(postVideo.getPostVideoID(), userPreferences.getString(UserConstants.KEY_USER_NAME));
+        else if(view == binding.buttonUploadVideoCommentReply)
+            binding.getViewModel().postReply(userPreferences.getString(UserConstants.KEY_USER_NAME));
+        else if(view==binding.buttonReplySectionBack){
+            binding.constraintLayoutReplySection.setVisibility(View.GONE);
+            Animation slideRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right);
+            binding.constraintLayoutReplySection.startAnimation(slideRight);
+        }
+
 //        switch (view.getId()){
 //            case R.id.bt_fullscreen:
 ////                if(flag){

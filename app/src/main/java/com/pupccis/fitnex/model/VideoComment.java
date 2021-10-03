@@ -61,6 +61,10 @@ public class VideoComment implements Serializable {
         this.commentId = commentId;
     }
 
+    public void setParentCommentId(String parentCommentId) {
+        this.parentCommentId = parentCommentId;
+    }
+
     public List<String> getLikes() {
         return likes;
     }
@@ -77,6 +81,7 @@ public class VideoComment implements Serializable {
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_NAME, getUserName());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_TYPE, getType());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_VIDEO_ID, getVideoId());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_PARENT_COMMENT_ID, getParentCommentId());
         return map;
     }
 

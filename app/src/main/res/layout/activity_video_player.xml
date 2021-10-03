@@ -423,7 +423,7 @@
                     android:id="@+id/buttonCloseCommentsSection"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_close_button"
+                    app:srcCompat="@drawable/ic_close_blue"
                     tools:ignore="MissingConstraints"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="10dp"/>
@@ -544,6 +544,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+                            android:onClick="onClick"
                             />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -636,7 +637,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 >
                                 <TextView
-                                    android:id="@+id/commentUsername"
+                                    android:id="@+id/commentContainerUsername"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Juan Dela Cruz"
@@ -652,10 +653,10 @@
                                     android:textColor="#6b6b6b"
                                     android:textSize="10dp"
                                     android:layout_marginStart="5dp"
-                                    app:layout_constraintStart_toEndOf="@id/commentUsername"
+                                    app:layout_constraintStart_toEndOf="@id/commentContainerUsername"
                                     app:layout_constraintTop_toTopOf="parent"/>
                                 <TextView
-                                    android:id="@+id/commentDate"
+                                    android:id="@+id/commentContainerDate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="A Few Seconds Ago"
@@ -700,7 +701,7 @@
                                     app:srcCompat="@drawable/ic_outline_thumb_up_alt_24"
                                     />
                                 <TextView
-                                    android:id="@+id/commentLikesCounter"
+                                    android:id="@+id/commentContainerLikesCounter"
                                     android:layout_width="40dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
@@ -715,12 +716,12 @@
                                     android:layout_width="17dp"
                                     android:layout_height="17dp"
                                     app:srcCompat="@drawable/ic_outline_thumb_down_alt_24"
-                                    app:layout_constraintStart_toEndOf="@id/commentLikesCounter"
+                                    app:layout_constraintStart_toEndOf="@id/commentContainerLikesCounter"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     />
                                 <TextView
-                                    android:id="@+id/commentDislikesCounter"
+                                    android:id="@+id/commentContainerDislikesCounter"
                                     android:layout_width="40dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
@@ -773,7 +774,8 @@
                                 android:textSize="12dp"
                                 android:background="@drawable/background_textfield"
                                 app:layout_constraintStart_toEndOf="@id/textViewReplyUserProfile"
-                                app:layout_constraintEnd_toStartOf="@id/buttonUploadVideoCommentReply"/>
+                                app:layout_constraintEnd_toStartOf="@id/buttonUploadVideoCommentReply"
+                                android:text="@={viewModel.commentSectionReplyComment}"/>
                             <ImageView
                                 android:id="@+id/buttonUploadVideoCommentReply"
                                 android:layout_width="20dp"
@@ -786,6 +788,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
+                                android:onClick="onClick"
                                 />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>

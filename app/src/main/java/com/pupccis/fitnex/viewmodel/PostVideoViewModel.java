@@ -7,7 +7,6 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
@@ -54,10 +53,24 @@ public class PostVideoViewModel extends BaseObservable {
     //Bindable Attributes
     @Bindable
     private String commentSectionAddComment;
+    @Bindable
+    private String commentSectionReplyComment;
+
+    //Live Data
+    private MutableLiveData<PostVideo> itemPostVideoMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<VideoComment> videoCommentMutableLiveData = new MutableLiveData<>();
+
+    private VideoComment videoComment;
 
     //Getter Methods
     public String getCommentSectionAddComment() {
         return commentSectionAddComment;
+    }
+    public String getCommentSectionReplyComment() {
+        return commentSectionReplyComment;
+    }
+    public VideoComment getVideoComment() {
+        return videoComment;
     }
 
     //Setter Methods
@@ -66,9 +79,16 @@ public class PostVideoViewModel extends BaseObservable {
         notifyPropertyChanged(BR.commentSectionAddComment);
     }
 
-    private MutableLiveData<PostVideo> itemPostVideoMutableLiveData = new MutableLiveData<>();
+    public void setCommentSectionReplyComment(String commentSectionReplyComment) {
+        this.commentSectionReplyComment = commentSectionReplyComment;
+        notifyPropertyChanged(BR.commentSectionReplyComment);
+    }
 
+    public void setVideoComment(VideoComment videoComment) {
+        this.videoComment = videoComment;
+    }
 
+    //Mutable Live Data Getters
     public MutableLiveData<HashMap<String, Object>> getVideoLikesData(String videoID){
         return postedVideosRepository.getVideoLikesData(videoID);
     }
@@ -77,6 +97,28 @@ public class PostVideoViewModel extends BaseObservable {
         return postedVideosRepository.getUserLikeStatus(videoID);
     }
 
+    public MutableLiveData<VideoComment> videoCommentReplyObserver(){
+        return videoCommentMutableLiveData;
+    }
+
+    public MutableLiveData<PostVideo> itemContainerClickObserver(){
+        return itemPostVideoMutableLiveData;
+    }
+
+    public MutableLiveData<HashMap<String, Object>> videoCommentCounterObserver(VideoComment model) {
+        return PostedVideosRepository.getInstance().getRepliesCounter(model);
+    }
+
+    //Mutable Live Data Triggers
+    public void triggerContainerObserver(PostVideo postVideo){
+        itemPostVideoMutableLiveData.postValue(postVideo);
+    }
+
+    public void triggerReplyClickObserver(VideoComment comment){
+        videoCommentMutableLiveData.postValue(comment);
+    }
+
+    //Public Methods
     public void likeVideo(String videoID, String liked){
         postedVideosRepository.likeVideo(videoID, liked);
     }
@@ -99,16 +141,17 @@ public class PostVideoViewModel extends BaseObservable {
         postedVideosRepository.postComment(videoComment);
     }
 
-    public void triggerContainerObserver(PostVideo postVideo){
-        itemPostVideoMutableLiveData.postValue(postVideo);
-    }
-
-    public MutableLiveData<PostVideo> itemContainerClickObserver(){
-        return itemPostVideoMutableLiveData;
-    }
-
-    public MutableLiveData<HashMap<String, Object>> likesCounterObserver(VideoComment comment){
-        Log.d("ViewModel", "Observer is called");
-        return postedVideosRepository.getCommentLikesData(comment);
+    public void postReply(String userName) {
+        VideoComment videoComment = new VideoComment.VideoCommentBuilder(
+                FirebaseAuth.getInstance().getUid(),
+                userName,
+                System.currentTimeMillis(),
+                getCommentSectionReplyComment(),
+                VideoCommentConstants.KEY_VIDEO_REPLY
+        )
+                .videoId(this.videoComment.getVideoId())
+                .parentCommentId(this.videoComment.getCommentId())
+                .build();
+        postedVideosRepository.postReply(videoComment);
     }
 }

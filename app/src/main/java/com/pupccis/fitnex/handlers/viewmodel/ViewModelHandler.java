@@ -49,4 +49,9 @@ public class ViewModelHandler {
                 .setQuery(PostedVideosRepository.getInstance().readVideoCommentsQuery(videoID), VideoComment.class)
                 .build();
     }
+    public static FirestoreRecyclerOptions<VideoComment> getFirebaseUIVideoCommentReplyOptions(VideoComment comment){
+        return new FirestoreRecyclerOptions.Builder<VideoComment>()
+                .setQuery(PostedVideosRepository.getInstance().readVideoCommentRepliesQuery(comment), VideoComment.class)
+                .build();
+    }
 }
