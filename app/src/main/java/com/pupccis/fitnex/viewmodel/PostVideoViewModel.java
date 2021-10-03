@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.api.enums.LikeType;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
@@ -80,8 +81,12 @@ public class PostVideoViewModel extends BaseObservable {
         postedVideosRepository.likeVideo(videoID, liked);
     }
 
+    public void likeComment(VideoComment comment, LikeType likeType){
+        Log.d("Comment", comment.getCommentId());
+        postedVideosRepository.likeComment(comment, likeType);
+    }
+
     public void postComment(String videoID, String userName) {
-        Log.d("Comment", getCommentSectionAddComment());
         VideoComment videoComment = new VideoComment.VideoCommentBuilder(
                 FirebaseAuth.getInstance().getUid(),
                 userName,
@@ -89,7 +94,6 @@ public class PostVideoViewModel extends BaseObservable {
                 getCommentSectionAddComment(),
                 VideoCommentConstants.KEY_VIDEO_COMMENT
                 )
-                .initializeData()
                 .videoId(videoID)
                 .build();
         postedVideosRepository.postComment(videoComment);
@@ -101,5 +105,10 @@ public class PostVideoViewModel extends BaseObservable {
 
     public MutableLiveData<PostVideo> itemContainerClickObserver(){
         return itemPostVideoMutableLiveData;
+    }
+
+    public MutableLiveData<HashMap<String, Object>> likesCounterObserver(VideoComment comment){
+        Log.d("ViewModel", "Observer is called");
+        return postedVideosRepository.getCommentLikesData(comment);
     }
 }

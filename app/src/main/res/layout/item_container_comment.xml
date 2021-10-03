@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.PostVideoViewModel" />
+        <variable
+            name="liketype"
+            type="com.pupccis.fitnex.api.enums.LikeType" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -103,6 +106,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"
                     app:srcCompat="@drawable/ic_outline_thumb_up_alt_24"
+                    android:onClick="@{()->viewModel.likeComment(videoCommentInstance, liketype.LIKE)}"
                     />
                 <TextView
                     android:id="@+id/commentLikesCounter"
@@ -123,6 +127,7 @@
                     app:layout_constraintStart_toEndOf="@id/commentLikesCounter"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:onClick="@{()->viewModel.likeComment(videoCommentInstance, liketype.DISLIKE)}"
                     />
                 <TextView
                     android:id="@+id/commentDislikesCounter"

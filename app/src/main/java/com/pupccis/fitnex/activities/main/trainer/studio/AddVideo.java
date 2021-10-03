@@ -166,7 +166,8 @@ public class AddVideo extends AppCompatActivity implements View.OnClickListener,
                         .thumbnailFiletype(thumbnailFiletype)
                         .initializeData()
                         .build();
-                postVideoViewModel.uploadVideo(postVideo);
+                PostVideoViewModel postModel = new PostVideoViewModel();
+                postModel.uploadVideo(postVideo);
 //                PostVideoDAO postVideoDAO = new PostVideoDAO.PostVideoDAOBuilder(filetype, videoUri, thumbnailFiletype, imageUri, getApplicationContext()).build();
 //                PostVideo postVideo = new PostVideo.PostVideoBuilder(videoTitle,videoCategory, videoDescription, FirebaseAuth.getInstance().getCurrentUser().getUid(), System.currentTimeMillis()).initializeData().build();
 //                postVideoDAO.postVideo(postVideo);

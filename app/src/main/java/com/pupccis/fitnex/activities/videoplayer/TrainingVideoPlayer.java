@@ -83,16 +83,16 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
     boolean flag = false;
     private Calendar calendar = Calendar.getInstance();
     private PostVideo postVideo;
-    private PostVideoViewModel postVideoViewModel;
 
     private VideoCommentAdapter adapter;
     private ActivityVideoPlayerBinding binding;
+    private PostVideoViewModel postVideoViewModel = new PostVideoViewModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_video_player);
-        binding.setViewModel(new PostVideoViewModel());
+        binding.setViewModel(postVideoViewModel);
         binding.setLifecycleOwner(this);
         binding.setPresenter(this);
 
@@ -229,13 +229,12 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
 
         //Comment RecyclerView Firebase UI
         FirestoreRecyclerOptions<VideoComment> options = getFirebaseUIVideoCommentOptions(postVideo.getPostVideoID());
+        //binding.recyclerViewVideoComments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.recyclerViewVideoComments.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new VideoCommentAdapter(options);
+        adapter.setPostVideoViewModel(postVideoViewModel);
+        adapter.setLifecycleOwner(binding.getLifecycleOwner());
         binding.recyclerViewVideoComments.setAdapter(adapter);
-
-        //Set Lifecycle and ViewModel of Binding
-        binding.setLifecycleOwner(this);
-        binding.setViewModel(adapter.getPostVideoViewModel());
 
         //Observers
         binding.getViewModel().getVideoLikesData(postVideo.getPostVideoID()).observe(binding.getLifecycleOwner(), new Observer<HashMap<String, Object>>() {

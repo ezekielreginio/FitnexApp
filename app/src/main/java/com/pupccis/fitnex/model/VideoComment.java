@@ -4,13 +4,13 @@ import com.pupccis.fitnex.utilities.Constants.VideoCommentConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 public class VideoComment implements Serializable {
     private String userID, comment, userName, type;
     private long dateCreated;
     private String commentId, videoId, parentCommentId;
-    private int likes, dislikes;
-
+    private List<String> likes, dislikes;
     public VideoComment(){
 
     }
@@ -22,8 +22,6 @@ public class VideoComment implements Serializable {
         this.comment = builder.comment;
         this.type = builder.type;
 
-        this.likes = builder.likes;
-        this.dislikes = builder.dislikes;
         this.commentId = builder.commentId;
         this.videoId = builder.videoId;
         this.parentCommentId = builder.parentCommentId;
@@ -59,27 +57,26 @@ public class VideoComment implements Serializable {
         return parentCommentId;
     }
 
-    public int getLikes() {
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
+
+    public List<String> getLikes() {
         return likes;
     }
 
-    public int getDislikes() {
+    public List<String> getDislikes() {
         return dislikes;
-    }
-
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
     }
 
     public HashMap<String, Object> map(){
         HashMap<String, Object> map = new HashMap<>();
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT, getComment());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_DATE_CREATED, getDateCreated());
-        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_LIKES, getLikes());
-        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_DISLIKES, getDislikes());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_ID, getUserID());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_USER_NAME, getUserName());
         map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_TYPE, getType());
+        map.put(VideoCommentConstants.KEY_VIDEO_COMMENT_VIDEO_ID, getVideoId());
         return map;
     }
 
@@ -87,7 +84,6 @@ public class VideoComment implements Serializable {
         private final String userID, comment, userName, type;
         private final long dateCreated;
         private String commentId, videoId, parentCommentId;
-        private int likes, dislikes;
 
 
         public VideoCommentBuilder(String userID, String userName, long dateCreated, String comment, String type) {
@@ -98,11 +94,6 @@ public class VideoComment implements Serializable {
             this.type = type;
         }
 
-        public VideoCommentBuilder initializeData(){
-            this.likes =  0;
-            this.dislikes = 0;
-            return this;
-        }
 
         public VideoCommentBuilder commentId(String commentId){
             this.commentId = commentId;
@@ -116,16 +107,6 @@ public class VideoComment implements Serializable {
 
         public VideoCommentBuilder videoId(String videoId){
             this.videoId = videoId;
-            return this;
-        }
-
-        public VideoCommentBuilder likes(int likes){
-            this.likes = likes;
-            return this;
-        }
-
-        public VideoCommentBuilder dislikes(int dislikes){
-            this.dislikes = dislikes;
             return this;
         }
 

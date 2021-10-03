@@ -2,6 +2,7 @@ package com.pupccis.fitnex.utilities.Constants;
 
 public class VideoCommentConstants {
     public static final String KEY_COLLECTION_COMMENTS = "comments";
+    public static final String KEY_COLLECTION_COMMENT_DATA = "commentData";
 
     public static final String KEY_VIDEO_COMMENT_USER_ID = "userID";
     public static final String KEY_VIDEO_COMMENT_USER_NAME = "userName";
@@ -11,4 +12,5 @@ public class VideoCommentConstants {
     public static final String KEY_VIDEO_COMMENT_TYPE = "type";
     public static final String KEY_VIDEO_COMMENT_LIKES = "likes";
     public static final String KEY_VIDEO_COMMENT_DISLIKES = "dislikes";
+    public static final String KEY_VIDEO_COMMENT_VIDEO_ID = "videoId";
 }
