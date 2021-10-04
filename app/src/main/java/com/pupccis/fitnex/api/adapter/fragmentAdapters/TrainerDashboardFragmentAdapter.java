@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.api.adapter;
+package com.pupccis.fitnex.api.adapter.fragmentAdapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,9 +10,9 @@ import com.pupccis.fitnex.activities.main.trainer.fragment.ProgramsFragment;
 import com.pupccis.fitnex.activities.main.trainer.fragment.ScheduleFragment;
 import com.pupccis.fitnex.activities.main.trainer.fragment.ClassFragment;
 
-public class FragmentAdapter extends FragmentStateAdapter {
+public class TrainerDashboardFragmentAdapter extends FragmentStateAdapter {
 
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public TrainerDashboardFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 

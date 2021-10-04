@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pupccis.fitnex.api.adapter.SearchEngineAdapter.TrainerSEAdapter;
+import com.pupccis.fitnex.api.adapter.fragmentAdapters.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;

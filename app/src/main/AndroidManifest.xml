@@ -18,11 +18,17 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.routine.RoutineTracker"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".activities.routine.AddRoutine"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.routine.RoutinePage"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.searchengine.SearchEngine"
             android:exported="true"
@@ -34,7 +40,7 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.trainer.Studio.AddVideo"
+            android:name=".activities.main.trainer.studio.AddVideo"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -46,7 +52,7 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.main.trainer.Studio.TrainerStudio"
+            android:name=".activities.main.trainer.studio.TrainerStudio"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

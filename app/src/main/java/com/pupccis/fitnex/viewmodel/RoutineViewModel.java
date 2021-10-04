@@ -16,6 +16,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RoutineViewModel extends BaseObservable {
     //MutableLiveData attributes
@@ -172,5 +173,9 @@ public class RoutineViewModel extends BaseObservable {
         validationData.put("validationResult", result);
         validationData.put("field", field);
         setRoutineValidationData(validationData);
+    }
+
+    public MutableLiveData<List<Routine>> getRoutineData(String programID) {
+        return routinesRepository.getRoutineData(programID);
     }
 }

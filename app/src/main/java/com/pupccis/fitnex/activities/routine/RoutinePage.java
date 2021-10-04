@@ -2,22 +2,19 @@ package com.pupccis.fitnex.activities.routine;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIRoutineOptions;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,11 +25,12 @@ import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
 
 public class RoutinePage extends AppCompatActivity implements View.OnClickListener{
     private ImageView AddRoutineButton;
@@ -45,6 +43,15 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private RoutineViewModel routineViewModel;
     private static ActivityRoutinePageBinding binding;
 
+    private View routineTimer;
+
+    //Timer Attributes
+    private CountDownTimer countDownTimer;
+    private TextView textViewTimer;
+    private ProgressBar timerProgressBar;
+    private long millisLeftInMillis = 5096;
+    private boolean timerRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +59,10 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         program_intent = (Program) getIntent().getSerializableExtra("program");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
 
+        //Layout Binding
+        routineTimer = binding.routineCountdown;
+        textViewTimer = routineTimer.findViewById(R.id.textViewTimer);
+        timerProgressBar = routineTimer.findViewById(R.id.timerProgressBar);
 
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Routine> options = getFirebaseUIRoutineOptions(program_intent.getProgramID());
@@ -197,6 +208,10 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 //
 //        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        //Start Routine Counter
+        //startTimer();
+
     }
     public void getProgramID(){
         binding.getViewModel().setProgramID(program_intent.getProgramID());
@@ -242,5 +257,40 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
         }
+        else if(view == binding.buttonStartRoutineButton){
+            binding.constraintLayoutRoutineCountdown.setVisibility(View.VISIBLE);
+            startTimer();
+        }
+    }
+
+    //Private Methods
+    private void startTimer(){
+        countDownTimer = new CountDownTimer(millisLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                millisLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                timerRunning = false;
+                //binding.getViewModel().getRoutineData(program_intent.getProgramID());
+                Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
+                intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+            }
+        }.start();
+        timerRunning = true;
+    }
+
+    private void updateCountDownText() {
+        int seconds = (int) millisLeftInMillis/1000;
+        textViewTimer.setText(seconds+"");
+        Log.d("Seconds",""+seconds);
+        float progress = ((float)seconds/5) * 100;
+        Log.d("Progress", progress+"");
+        timerProgressBar.setProgress((int)progress);
     }
 }

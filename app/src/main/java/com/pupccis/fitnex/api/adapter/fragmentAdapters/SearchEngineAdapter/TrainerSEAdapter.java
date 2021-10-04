@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.api.adapter.SearchEngineAdapter;
+package com.pupccis.fitnex.api.adapter.fragmentAdapters.SearchEngineAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.activities.main.trainer.Studio.TrainerStudio;
+import com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;

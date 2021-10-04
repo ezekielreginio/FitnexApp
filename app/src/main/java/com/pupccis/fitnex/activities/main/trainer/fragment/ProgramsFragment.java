@@ -204,10 +204,6 @@ public class ProgramsFragment extends Fragment {
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
 
-        //FirestoreRecyclerOptions<Program> options = new FirestoreRecyclerOptions.Builder<Program>()
-//                .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
-//                .build();
-
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);

@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.trainer.Studio;
+package com.pupccis.fitnex.activities.main.trainer.studio;
 
 import static com.pupccis.fitnex.utilities.Globals.RotateAnimation.rotateAnimation;
 
