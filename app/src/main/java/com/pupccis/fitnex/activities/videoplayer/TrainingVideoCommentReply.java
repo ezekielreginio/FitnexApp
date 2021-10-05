@@ -76,7 +76,6 @@ public class TrainingVideoCommentReply {
                             "reply"
                     )
                     .commentId(videoComment.getCommentId())
-                    .initializeData()
                     .build();
             postComment(videoCommentReply, videoComment.getVideoId(), "reply");
         });

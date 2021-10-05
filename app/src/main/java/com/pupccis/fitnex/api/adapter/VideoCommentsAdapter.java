@@ -66,11 +66,11 @@ public class VideoCommentsAdapter extends RecyclerView.Adapter<VideoCommentsAdap
             this.itemView = itemView;
             buttonCommentLike = itemView.findViewById(R.id.buttonCommentLike);
             buttonCommentDislike = itemView.findViewById(R.id.buttonCommentDislike);
-            commentUsername = itemView.findViewById(R.id.commentUsername);
-            commentDate = itemView.findViewById(R.id.commentDate);
-            commentContent = itemView.findViewById(R.id.commentContent);
-            commentLikesCounter = itemView.findViewById(R.id.commentLikesCounter);
-            commentDislikesCounter = itemView.findViewById(R.id.commentDislikesCounter);
+            commentUsername = itemView.findViewById(R.id.commentContainerUsername);
+            commentDate = itemView.findViewById(R.id.commentContainerDate);
+            commentContent = itemView.findViewById(R.id.commentContainerContent);
+            commentLikesCounter = itemView.findViewById(R.id.commentContainerLikesCounter);
+            commentDislikesCounter = itemView.findViewById(R.id.commentContainerDislikesCounter);
             constraintLayoutCommentReplyLink = itemView.findViewById(R.id.constraintLayoutCommentReplyLink);
             buttonCommentReply = itemView.findViewById(R.id.buttonCommentReply);
 
@@ -86,7 +86,7 @@ public class VideoCommentsAdapter extends RecyclerView.Adapter<VideoCommentsAdap
 
         void setVideoCommentData(VideoComment videoComment){
             this.videoComment = videoComment;
-            commentUsername.setText(videoComment.getTrainerName());
+            commentUsername.setText(videoComment.getUserName());
             commentContent.setText(videoComment.getComment());
             commentId = videoComment.getCommentId();
 

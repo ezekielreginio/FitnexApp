@@ -204,7 +204,7 @@ public class ProgramsFragment extends Fragment {
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
 
-        //FirestoreRecyclerOptions<Program> options = new FirestoreRecyclerOptions.Builder<Program>()
+        //FirestoreRecyclerOptions<Program> optioPns = new FirestoreRecyclerOptions.Builder<Program>()
 //                .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
 //                .build();
 
@@ -217,9 +217,9 @@ public class ProgramsFragment extends Fragment {
         adapter = new ProgramAdapter(options);
         recyclerView.setAdapter(adapter);
 
-        //Set Lifecycle and ViewModel of Binding
+         //Get the View Model from Adapter
         fragmentProgramsBinding.setLifecycleOwner(this);
-        fragmentProgramsBinding.setViewModel(adapter.getViewModel()); //Get the View Model from Adapter
+        fragmentProgramsBinding.setViewModel(adapter.getViewModel());
 
         //ViewModel Observers
         fragmentProgramsBinding.getViewModel().routineObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {

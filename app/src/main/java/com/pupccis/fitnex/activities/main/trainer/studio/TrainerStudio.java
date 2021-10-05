@@ -1,9 +1,11 @@
-package com.pupccis.fitnex.activities.main.trainer.Studio;
+package com.pupccis.fitnex.activities.main.trainer.studio;
+
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIPostVideoOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +20,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.pupccis.fitnex.api.adapter.TrainerStudioVideosAdapter;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.pupccis.fitnex.activities.videoplayer.TrainingVideoPlayer;
+import com.pupccis.fitnex.adapters.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.databinding.ActivityTrainerStudioBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.VideoThumbnail;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 
 import java.util.ArrayList;
@@ -37,12 +47,17 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
     private User trainer_intent;
     private PostVideoViewModel postVideoViewModel;
 
-    private TrainerStudioVideosAdapter trainerStudioVideosAdapter;
+    private TrainerStudioVideosAdapter adapter;
 
+    private ActivityTrainerStudioBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainer_studio);
+        //setContentView(R.layout.activity_trainer_studio);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trainer_studio);
+        binding.setPresenter(this);
+        binding.setViewModel(new PostVideoViewModel());
+        binding.executePendingBindings();
 
         //Extra intent
         String access_type = getIntent().getSerializableExtra("access_type").toString();
@@ -54,44 +69,66 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         //EventBinding:
         btnAddVideo.setOnClickListener(this);
 
-        //ViewModel Instantiation
-        postVideoViewModel = new ViewModelProvider(TrainerStudio.this).get(PostVideoViewModel.class);
-        postVideoViewModel.init(TrainerStudio.this);
+        //RecyclerView Firebase UI
+        FirestoreRecyclerOptions<PostVideo> options = getFirebaseUIPostVideoOptions();
+        binding.recyclerViewTrainerStudioVideo.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //Instantiate Adapter and Bind to RecyclerView
+        adapter = new TrainerStudioVideosAdapter(options);
+        binding.recyclerViewTrainerStudioVideo.setAdapter(adapter);
 
-        //RecyclerView
-        trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
-        trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-        //RecyclerViewAdapter
-        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(postVideoViewModel.getLiveDataPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
-        trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
+        //Set Lifecycle and ViewModel of Binding
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(adapter.getPostVideoViewModel());
 
         //Observers
-        postVideoViewModel.getLiveDataPostVideos().observe(this, new Observer<ArrayList<PostVideo>>() {
+        binding.getViewModel().itemContainerClickObserver().observe(binding.getLifecycleOwner(), new Observer<PostVideo>() {
             @Override
-            public void onChanged(ArrayList<PostVideo> postVideos) {
-                trainerStudioVideosAdapter.notifyDataSetChanged();
-                postVideoViewModel.getLiveDataPostVideos().removeObserver(this::onChanged);
+            public void onChanged(PostVideo postVideo) {
+                Log.d("item", "clicked");
+                Intent intent= new Intent(getApplicationContext(), TrainingVideoPlayer.class);
+                intent.putExtra("PostVideo", postVideo);
+                startActivity(intent);
             }
         });
 
-        postVideoViewModel.getLiveDataPostVideoUpdate().observe(this, new Observer<HashMap<String, Object>>() {
-            @Override
-            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
-                Log.d("Observer Triggered", "triggered");
-
-                if(stringObjectHashMap.get("updateType").equals("insert")){
-                    Log.d("Update Registered", "Data Inserted");
-                    trainerStudioVideosAdapter.notifyItemInserted(trainerStudioVideosAdapter.getItemCount());
-                }
-
-                else if(stringObjectHashMap.get("updateType").equals("update")){
-                    Log.d("Update Registered", "Data Updated");
-                    trainerStudioVideosAdapter.notifyItemChanged((int)stringObjectHashMap.get("index"));
-                }
-
-            }
-        });
+        //ViewModel Instantiation
+//        postVideoViewModel = new ViewModelProvider(TrainerStudio.this).get(PostVideoViewModel.class);
+//        postVideoViewModel.init(TrainerStudio.this);
+//
+//        //RecyclerView
+//        trainerStudioVideos = (RecyclerView) findViewById(R.id.recyclerViewTrainerStudioVideo);
+//        trainerStudioVideos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//
+//        //RecyclerViewAdapter
+//        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(binding.getViewModel().getLiveDataPostVideos().getValue(), TrainerStudio.this, getIntent().getSerializableExtra("access_type").toString());
+//        trainerStudioVideos.setAdapter(trainerStudioVideosAdapter);
+//
+//        //Observers
+//        binding.getViewModel().getLiveDataPostVideos().observe(this, new Observer<ArrayList<PostVideo>>() {
+//            @Override
+//            public void onChanged(ArrayList<PostVideo> postVideos) {
+//                trainerStudioVideosAdapter.notifyDataSetChanged();
+//                binding.getViewModel().getLiveDataPostVideos().removeObserver(this::onChanged);
+//            }
+//        });
+//
+//        binding.getViewModel().getLiveDataPostVideoUpdate().observe(this, new Observer<HashMap<String, Object>>() {
+//            @Override
+//            public void onChanged(HashMap<String, Object> stringObjectHashMap) {
+//                Log.d("Observer Triggered", "triggered");
+//
+//                if(stringObjectHashMap.get("updateType").equals("insert")){
+//                    Log.d("Update Registered", "Data Inserted");
+//                    trainerStudioVideosAdapter.notifyItemInserted(trainerStudioVideosAdapter.getItemCount());
+//                }
+//
+//                else if(stringObjectHashMap.get("updateType").equals("update")){
+//                    Log.d("Update Registered", "Data Updated");
+//                    trainerStudioVideosAdapter.notifyItemChanged((int)stringObjectHashMap.get("index"));
+//                }
+//
+//            }
+//        });
 
 
 //        Query query = null;
@@ -166,10 +203,15 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onStart() {
+        Log.d("On Start", "Triggered");
         super.onStart();
-        //LocalBroadcast Receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(videoUploadMessageReceiver,
-                new IntentFilter("video-upload-response"));
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     @Override
@@ -183,15 +225,5 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private BroadcastReceiver videoUploadMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String uploadResponse = intent.getStringExtra("videoUploadedSuccessfully");
-            if(uploadResponse != null){
-                Log.d("Broadcast Received", "received");
-                Toast.makeText(getApplicationContext(), uploadResponse,Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
 }

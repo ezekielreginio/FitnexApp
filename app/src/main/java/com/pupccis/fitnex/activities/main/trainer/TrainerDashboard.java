@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.api.adapter.FragmentAdapter;
 import com.pupccis.fitnex.api.adapter.ProgramAdapter;
-import com.pupccis.fitnex.activities.main.trainer.Studio.TrainerStudio;
+import com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
