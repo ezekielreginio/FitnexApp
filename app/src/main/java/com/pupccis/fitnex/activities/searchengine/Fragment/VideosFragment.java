@@ -103,16 +103,16 @@ public class VideosFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
-                adapter = new ProgramAdapter(options);
-                binding.setViewModel(adapter.getViewModel());
-                recyclerView.setAdapter(adapter);
-                adapter.startListening();
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+//                FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
+////                adapter = new ProgramAdapter(options);
+////                binding.setViewModel(adapter.getViewModel());
+////                recyclerView.setAdapter(adapter);
+////                adapter.startListening();
             }
         });
         return binding.getRoot();
