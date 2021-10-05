@@ -5,13 +5,16 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
+import com.pupccis.fitnex.repository.PostedVideosRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.repository.RoutinesRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ViewModelHandler {
 
@@ -30,9 +33,24 @@ public class ViewModelHandler {
                 .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
                 .build();
     }
+    public static FirestoreRecyclerOptions<Program> getFirebaseUISearchProgramOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<Program>()
+                .setQuery(ProgramsRepository.getInstance().searchProgramsQuery(input), Program.class)
+                .build();
+    }
     public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
         return new FirestoreRecyclerOptions.Builder<FitnessClass>()
                 .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUISearchFitnessClassOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(FitnessClassesRepository.getInstance().searchFitnessClassesQuery(input), FitnessClass.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUISearchVideoOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(PostedVideosRepository.getInstance().searchVideosQuery(input), FitnessClass.class)
                 .build();
     }
     public static FirestoreRecyclerOptions<Routine> getFirebaseUIRoutineOptions(String program_id){

@@ -117,4 +117,8 @@ public class FitnessClassesRepository {
         Query query = db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).whereEqualTo(FitnessClassConstants.KEY_FITNESS_CLASSES_TRAINER_ID, FirebaseAuth.getInstance().getUid());
         return query;
     }
+    public Query searchFitnessClassesQuery(String input) {
+        Query query = db.collection(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES).orderBy("className").startAt(input).endAt(input+"\uf8ff");
+        return query;
+    }
 }

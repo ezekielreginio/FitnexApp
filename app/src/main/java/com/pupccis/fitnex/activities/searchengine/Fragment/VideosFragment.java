@@ -1,31 +1,32 @@
 package com.pupccis.fitnex.activities.searchengine.Fragment;
 
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchProgramOptions;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.api.adapter.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.databinding.FragmentVideosSeBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
 import java.util.ArrayList;
@@ -45,10 +46,11 @@ public class VideosFragment extends Fragment {
     private EditText searchBox;
     private UserPreferences userPreferences;
     private TrainerStudioVideosAdapter trainerStudioVideosAdapter;
-    private RecyclerView VideoSERecyclerView;
+    private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private View view;
     private ArrayList<PostVideo> videoList = new ArrayList<>();
+    private static FragmentVideosSeBinding binding;
 
     public VideosFragment(View view) {
         // Required empty public constructor
@@ -74,8 +76,23 @@ public class VideosFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
+    }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(PostVideoConstants.KEY_COLLECTION_POST_VIDEO);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_videos_se, container, false);
+        binding.setLifecycleOwner(this);
+
+        recyclerView = binding.recyclerViewSearchEngineVideos;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         searchBox = (EditText) view.findViewById(R.id.searchEngineSearchBox);
         searchBox.addTextChangedListener(new TextWatcher() {
@@ -86,42 +103,11 @@ public class VideosFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        videoList.clear();
-                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-
-                            if(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TITLE).getValue().toString().toLowerCase().contains(charSequence.toString())){
-
-                                PostVideo postVideo = new PostVideo.PostVideoBuilder(
-                                        dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TITLE).getValue().toString(),
-                                        dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_CATEGORY).getValue().toString(),
-                                        dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_DESCRIPTION).getValue().toString(),
-                                        dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_TRAINER_ID).getValue().toString(),
-                                        (long) dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_DATE_POSTED).getValue()
-                                )
-                                        .videoURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_URL).getValue().toString())
-                                        .thumbnailURL(dataSnapshot.child(PostVideoConstants.KEY_POST_VIDEO_THUMBNAIL_URL).getValue().toString())
-                                        .postVideoID(dataSnapshot.getKey())
-                                        .build();
-                                videoList.add(postVideo);
-                            }
-
-                        }
-
-                        trainerStudioVideosAdapter = new TrainerStudioVideosAdapter(videoList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
-                        trainerStudioVideosAdapter.notifyDataSetChanged();
-                        VideoSERecyclerView.setAdapter(trainerStudioVideosAdapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-                Log.d("Text change", charSequence.toString());
+                FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
+                adapter = new ProgramAdapter(options);
+                binding.setViewModel(adapter.getViewModel());
+                recyclerView.setAdapter(adapter);
+                adapter.startListening();
             }
 
             @Override
@@ -129,23 +115,6 @@ public class VideosFragment extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        VideoSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEngineVideos);
-        VideoSERecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_videos_se, container, false);
+        return binding.getRoot();
     }
 }

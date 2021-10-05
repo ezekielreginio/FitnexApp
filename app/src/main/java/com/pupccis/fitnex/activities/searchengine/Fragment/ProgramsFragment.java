@@ -1,9 +1,13 @@
 package com.pupccis.fitnex.activities.searchengine.Fragment;
 
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIFitnessClassOptions;
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchProgramOptions;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,17 +19,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pupccis.fitnex.api.adapter.ProgramAdapter;
+import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.databinding.FragmentProgramsSeBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
+import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class ProgramsFragment extends Fragment {
@@ -40,11 +51,12 @@ public class ProgramsFragment extends Fragment {
     private String mParam2;
 
     private EditText searchBox;
-    private ProgramAdapter programAdapter;
-    private RecyclerView ProgramSERecyclerView;
+    private ProgramAdapter adapter;
+    private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private View view;
     private List<Program> programList = new ArrayList<>();
+    private static FragmentProgramsSeBinding binding;
     public ProgramsFragment(View view) {
         this.view = view;
         // Required empty public constructor
@@ -68,8 +80,25 @@ public class ProgramsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mDatabase = FirebaseDatabase.getInstance().getReference("programs");
+        //mDatabase = FirebaseDatabase.getInstance().getReference("programs");
 
+
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs_se, container, false);
+        binding.setLifecycleOwner(this);
+
+        recyclerView = binding.recyclerViewSearchEnginePrograms;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        // Inflate the layout for this fragment
         searchBox = view.findViewById(R.id.searchEngineSearchBox);
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,51 +108,27 @@ public class ProgramsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        programList.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            //Program programListContainer = new Program();
 
-//                            if (dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
-//                                programListContainer.setName(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_NAME).getValue().toString());
-//                                programListContainer.setCategory(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_CATEGORY).getValue().toString());
-//                                programListContainer.setDescription(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DESCRIPTION).getValue().toString());
-//                                programListContainer.setSessionNumber(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_SESSION_NUMBER).getValue().toString());
-//                                programListContainer.setDuration(dataSnapshot.child(ProgramConstants.KEY_PROGRAM_DURATION).getValue().toString());
-//                                programList.add(programListContainer);
-//                            }
-                        }
-//                        programAdapter = new ProgramAdapter(programList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
-//                        programAdapter.notifyDataSetChanged();
-//                        ProgramSERecyclerView.setAdapter(programAdapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+//                ArrayList<String> searchInput = new ArrayList<>();
+//                searchInput.add(editable.toString().toLowerCase());
+                FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
+                adapter = new ProgramAdapter(options);
+                binding.setViewModel(adapter.getViewModel());
+                recyclerView.setAdapter(adapter);
+                adapter.startListening();
 
             }
         });
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        ProgramSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEnginePrograms);
-        ProgramSERecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return binding.getRoot();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_programs_se, container, false);
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
