@@ -43,11 +43,8 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private RoutineViewModel routineViewModel;
     private static ActivityRoutinePageBinding binding;
 
-    private View routineTimer;
-
     //Timer Attributes
     private CountDownTimer countDownTimer;
-    private TextView textViewTimer;
     private ProgressBar timerProgressBar;
     private long millisLeftInMillis = 5096;
     private boolean timerRunning;
@@ -60,9 +57,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
 
         //Layout Binding
-        routineTimer = binding.routineCountdown;
-        textViewTimer = routineTimer.findViewById(R.id.textViewTimer);
-        timerProgressBar = routineTimer.findViewById(R.id.timerProgressBar);
+        timerProgressBar = binding.timerProgressBar;
 
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Routine> options = getFirebaseUIRoutineOptions(program_intent.getProgramID());
@@ -244,8 +239,12 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onStop() {
+        Log.d("On Stop", "triggered");
         super.onStop();
         adapter.stopListening();
+        if(countDownTimer!=null)
+            countDownTimer.cancel();
+        millisLeftInMillis = 5096;
     }
 
     @Override
@@ -261,6 +260,8 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
             binding.constraintLayoutRoutineCountdown.setVisibility(View.VISIBLE);
             startTimer();
         }
+        else if(view == binding.buttonReady)
+            startRoutineTracker();
     }
 
     //Private Methods
@@ -275,19 +276,23 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onFinish() {
                 timerRunning = false;
-                //binding.getViewModel().getRoutineData(program_intent.getProgramID());
-                Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
-                intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+                startRoutineTracker();
             }
         }.start();
         timerRunning = true;
     }
 
+    private void startRoutineTracker() {
+        binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
+        Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
+        intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+    }
+
     private void updateCountDownText() {
         int seconds = (int) millisLeftInMillis/1000;
-        textViewTimer.setText(seconds+"");
+        binding.textViewTimer.setText(seconds+"");
         Log.d("Seconds",""+seconds);
         float progress = ((float)seconds/5) * 100;
         Log.d("Progress", progress+"");

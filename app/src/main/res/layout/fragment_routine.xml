@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
     <data>
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.routine.RoutineFragment" />
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
     </data>
     <FrameLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        tools:context=".activities.routine.RoutineFragment" >
+        bind:context=".activities.routine.RoutineFragment" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,22 +46,30 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     app:srcCompat="@drawable/ic_pause"
-                    tools:ignore="MissingConstraints"
+                    bind:ignore="MissingConstraints"
                     />
-                <TextView
+                <Chronometer
+                    android:id="@+id/chronometerRoutineTimer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_constraintStart_toEndOf="@id/buttonFragmentTimerButton"
-                    android:text="00:00"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
                     android:textColor="@color/blueTextColor"
-                    />
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintStart_toEndOf="@id/buttonFragmentTimerButton"-->
+<!--                    android:text="00:00"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@color/blueTextColor"-->
+<!--                    />-->
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     app:srcCompat="@drawable/ic_clock"
-                    tools:ignore="MissingConstraints"
+                    bind:ignore="MissingConstraints"
                     app:layout_constraintEnd_toEndOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -69,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:layout_editor_absoluteY="150dp"
+                bind:layout_editor_absoluteY="150dp"
                 app:layout_constraintTop_toBottomOf="@id/constraintLayoutRoutineHeader">
 
                 <LinearLayout
@@ -79,7 +89,7 @@
                     android:layout_marginStart="15dp"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="137dp">
+                    bind:layout_editor_absoluteY="137dp">
 
                     <TextView
                         android:id="@+id/textView11"
@@ -106,7 +116,7 @@
                     android:text="Weight"
                     android:textColor="#858585"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-                    tools:layout_editor_absoluteY="137dp" />
+                    bind:layout_editor_absoluteY="137dp" />
 
                 <TextView
                     android:id="@+id/textView13"
@@ -130,15 +140,29 @@
                     />
             </LinearLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRoutinePage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetails"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toTopOf="@id/buttonLogRest"/>
+            <Button
+                android:id="@+id/buttonLogRest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"
+                android:text="Log Set &amp; Rest"
+                android:textSize="20sp"
+                android:textColor="@color/whiteTextColor"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </FrameLayout>
 </layout>

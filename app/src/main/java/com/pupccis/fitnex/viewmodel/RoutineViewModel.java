@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.RoutineData;
 import com.pupccis.fitnex.repository.RoutinesRepository;
 import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
 import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields;
@@ -41,12 +42,22 @@ public class RoutineViewModel extends BaseObservable {
     @Bindable
     private String routineID = null;
 
+    @Bindable
+    private String routineReps = null;
+    @Bindable
+    private String routineWeight = null;
+
+    //Position Tracker
+    private String currentRoutineID = null;
+    private int currentRoutinePosition = -1;
+
     //Data Observer
     private DataObserver dataObserver = new DataObserver();
 
     //Private Attributes
     private RoutinesRepository routinesRepository = new RoutinesRepository();
     private String programID = null;
+    private HashMap<String, HashMap<Integer, RoutineData>> routineDataList = new HashMap<>();
 
     public String getAddRoutineName() {
         return addRoutineName;
@@ -76,6 +87,11 @@ public class RoutineViewModel extends BaseObservable {
         return routineID;
     }
 
+    public String getRoutineReps() { return routineReps; }
+    public String getRoutineWeight() { return routineWeight; }
+
+    public String getCurrentRoutineID() { return currentRoutineID; }
+    public int getCurrentRoutinePosition() { return currentRoutinePosition; }
 
     public void setAddRoutineName(String addRoutineName) {
         this.addRoutineName = addRoutineName;
@@ -111,6 +127,47 @@ public class RoutineViewModel extends BaseObservable {
     public void setRoutineID(String routineID) {
         this.routineID = routineID;
     }
+
+    public void setRoutineReps(String routineReps) {
+        this.routineReps = routineReps;
+    }
+    public void setRoutineWeight(String routineWeight) { this.routineWeight = routineWeight; }
+
+    public RoutineData setRoutineDataList(String routineID, int routinePosition) {
+        HashMap<Integer, RoutineData> routineDataMap = new HashMap<>();
+        int routineReps = -1;
+        double routineWeight = -1;
+        if(routineDataList.get(routineID)!= null)
+            routineDataMap = routineDataList.get(routineID);
+        else
+            routineDataList.put(routineID, routineDataMap);
+
+        if(getRoutineReps() != null)
+            routineReps = Integer.parseInt(getRoutineReps());
+        if(getRoutineWeight() != null)
+            routineWeight = Double.parseDouble(getRoutineWeight());
+
+        RoutineData routineData = new RoutineData.Builder()
+                .position(routinePosition)
+                .completed(true)
+                .reps(routineReps)
+                .weight(routineWeight)
+                .routineID(routineID)
+                .build();
+        routineDataMap.put(routinePosition, routineData);
+        Log.d("Routine Data Map", routineDataMap.toString());
+        return routineData;
+//        this.routineDataList = routineDataList;
+    }
+
+    public void setCurrentRoutineID(String currentRoutineID) {
+        this.currentRoutineID = currentRoutineID;
+    }
+
+    public void setCurrentRoutinePosition(int currentRoutinePosition) {
+        this.currentRoutinePosition = currentRoutinePosition;
+    }
+
     //    public void insertRoutine(Routine routine){
 //        routinesRepository.insertRoutine(routine);
 //    }

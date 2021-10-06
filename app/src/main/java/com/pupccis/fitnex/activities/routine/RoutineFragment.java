@@ -4,22 +4,33 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.adapters.RoutineTrackerAdapter;
+import com.pupccis.fitnex.databinding.FragmentRoutineBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Routine;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RoutineFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RoutineFragment extends Fragment {
+public class RoutineFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +42,14 @@ public class RoutineFragment extends Fragment {
     private String mParam2;
 
     private Routine routine;
+
+    private FragmentRoutineBinding binding;
+
+    private long pauseOffset;
+
+    private RoutineTrackerAdapter adapter;
+    private List<Routine> routineData;
+    int position = 0;
 
     public RoutineFragment() {
         // Required empty public constructor
@@ -72,13 +91,83 @@ public class RoutineFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        routineData = new ArrayList<>();
+        routine.setCompleted(false);
+        for(int i=0;i<routine.getSets();i++){
+            routineData.add(routine);
+        }
+
+        binding.recyclerViewRoutinePage.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter = new RoutineTrackerAdapter(routineData);
+        adapter.setRoutineViewModel(binding.getViewModel());
+        binding.recyclerViewRoutinePage.setAdapter(adapter);
+
+        binding.buttonLogRest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((RoutineTracker) getActivity()).showRoutineRestTimer();
+                routineData.get(position).setCompleted(true);
+                adapter.notifyItemChanged(position);
+                binding.getViewModel().setRoutineDataList(routine.getId(), position);
+                position=position+1;
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_routine, container, false);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_routine, container, false);
+        binding.setLifecycleOwner(this);
+        binding.setPresenter(this);
+        binding.setViewModel(((RoutineTracker) getActivity()).getViewModel());
+        binding.executePendingBindings();
+
+        //View view =  inflater.inflate(R.layout.fragment_routine, container, false);
+        return binding.getRoot();
     }
+
+    @Override
+    public void onClick(View view) {
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        startRoutineTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startRoutineTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        binding.chronometerRoutineTimer.stop();
+        pauseRoutineTimer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pauseRoutineTimer();
+    }
+
+    private void startRoutineTimer() {
+        binding.chronometerRoutineTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+        binding.chronometerRoutineTimer.start();
+    }
+
+    private void pauseRoutineTimer(){
+        binding.chronometerRoutineTimer.stop();
+        pauseOffset = SystemClock.elapsedRealtime() - binding.chronometerRoutineTimer.getBase();
+    }
+
+
 }

@@ -8,7 +8,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -17,26 +20,41 @@ import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
 import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.RoutineFragmentAdapter;
 import com.pupccis.fitnex.databinding.ActivityRoutineTrackerBinding;
+import com.pupccis.fitnex.handlers.view.TimerViewHandler;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class RoutineTracker extends AppCompatActivity {
+public class RoutineTracker extends AppCompatActivity implements View.OnClickListener{
     private ActivityRoutineTrackerBinding binding;
     private RoutineFragmentAdapter routineFragmentAdapter;
-    private Intent page_intent;
+
+    private TimerViewHandler timerViewHandler;
+    private RoutineViewModel routineViewModel = new RoutineViewModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Binding Instantiation
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_tracker);
-        binding.setViewModel(new RoutineViewModel());
+        binding.setViewModel(routineViewModel);
         binding.setPresenter(this);
         binding.setLifecycleOwner(this);
         binding.executePendingBindings();
-        //setContentView(R.layout.activity_routine_tracker);
+
+        //Extra Intents
         String programID = getIntent().getStringExtra(ProgramConstants.KEY_PROGRAM_ID);
+
+        //TimerViewHandler Instantiation
+        timerViewHandler = new TimerViewHandler(60000, binding.timerProgressBar, binding.textViewTimer, new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                executeOnFinish();
+                return null;
+            }
+        });
 
         //Observers
         binding.getViewModel().getRoutineData(programID).observe(this, new Observer<List<Routine>>() {
@@ -48,6 +66,15 @@ public class RoutineTracker extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonSkipRest){
+            hideRoutineRestTimer();
+        }
+
+    }
+
+    //Private Methods
     private void initializeFragments(List<Routine> routines) {
         for(Routine routine: routines)
             binding.tabLayoutRoutineTracker.addTab(binding.tabLayoutRoutineTracker.newTab().setText(routine.getName()));
@@ -81,6 +108,24 @@ public class RoutineTracker extends AppCompatActivity {
                 binding.tabLayoutRoutineTracker.selectTab(binding.tabLayoutRoutineTracker.getTabAt(position));
             }
         });
+    }
 
+    //Public Methods
+    public void showRoutineRestTimer(){
+        binding.constraintLayoutRoutineCountdown.setVisibility(View.VISIBLE);
+        timerViewHandler.startTimer(true);
+    }
+
+    public void hideRoutineRestTimer(){
+        binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
+        timerViewHandler.stopTimer();
+    }
+
+    public void executeOnFinish(){
+        hideRoutineRestTimer();
+    }
+
+    public RoutineViewModel getViewModel(){
+        return routineViewModel;
     }
 }

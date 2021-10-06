@@ -17,6 +17,7 @@ public class Routine implements Serializable, Observer {
     private int reps;
     private int duration;
     private double weight;
+    private boolean isCompleted;
     private Routine instance;
 
     public Routine(){
@@ -99,9 +100,18 @@ public class Routine implements Serializable, Observer {
         return programID;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
     public void setRoutineID(String routineID) {
         this.routineID = routineID;
     }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
 
     public static class Builder{
         private final String name;
