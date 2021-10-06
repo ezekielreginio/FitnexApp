@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.activities.searchengine.Fragment;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchProgramOptions;
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchVideoOptions;
 
 import android.os.Bundle;
 
@@ -21,7 +22,7 @@ import android.widget.EditText;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
-import com.pupccis.fitnex.api.adapter.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.adapters.TrainerStudioVideosAdapter;
 import com.pupccis.fitnex.databinding.FragmentVideosSeBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
@@ -45,7 +46,7 @@ public class VideosFragment extends Fragment {
 
     private EditText searchBox;
     private UserPreferences userPreferences;
-    private TrainerStudioVideosAdapter trainerStudioVideosAdapter;
+    private TrainerStudioVideosAdapter adapter;
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private View view;
@@ -108,11 +109,11 @@ public class VideosFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-//                FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
-////                adapter = new ProgramAdapter(options);
-////                binding.setViewModel(adapter.getViewModel());
-////                recyclerView.setAdapter(adapter);
-////                adapter.startListening();
+                FirestoreRecyclerOptions<PostVideo> options = getFirebaseUISearchVideoOptions(editable.toString());
+                adapter = new TrainerStudioVideosAdapter(options);
+                //binding.setViewModel(adapter.getViewModel());
+                recyclerView.setAdapter(adapter);
+                adapter.startListening();
             }
         });
         return binding.getRoot();

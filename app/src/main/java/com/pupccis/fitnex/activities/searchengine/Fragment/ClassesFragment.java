@@ -114,6 +114,8 @@ public class ClassesFragment extends Fragment {
                 binding.setViewModel(adapter.getViewModel());
                 recyclerView.setAdapter(adapter);
                 adapter.startListening();
+                if(editable.length()==0)
+                    adapter.stopListening();
             }
         });
         return binding.getRoot();
