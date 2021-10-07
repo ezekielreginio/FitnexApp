@@ -23,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.adapters.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentVideosSeBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
@@ -111,6 +112,7 @@ public class VideosFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 FirestoreRecyclerOptions<PostVideo> options = getFirebaseUISearchVideoOptions(editable.toString());
                 adapter = new TrainerStudioVideosAdapter(options);
+                adapter.setAccessType(AccessType.VIEW);
                 //binding.setViewModel(adapter.getViewModel());
                 recyclerView.setAdapter(adapter);
                 adapter.startListening();

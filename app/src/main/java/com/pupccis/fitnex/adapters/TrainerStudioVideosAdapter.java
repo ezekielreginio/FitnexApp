@@ -12,14 +12,15 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.ItemContainerStudioVideoBinding;
 import com.pupccis.fitnex.model.PostVideo;
-import com.pupccis.fitnex.model.VideoThumbnail;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
 
 public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVideo, TrainerStudioVideosAdapter.PostVideoHolder> {
     private ItemContainerStudioVideoBinding binding;
     private PostVideoViewModel postVideoViewModel = new PostVideoViewModel();
+    private AccessType accessType;
 
     public TrainerStudioVideosAdapter(@NonNull FirestoreRecyclerOptions<PostVideo> options) {
         super(options);
@@ -48,6 +49,10 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
         return postVideoViewModel;
     }
 
+    public void setAccessType(AccessType accessType) {
+        this.accessType = accessType;
+    }
+
     class PostVideoHolder extends RecyclerView.ViewHolder{
 
         public PostVideoHolder(@NonNull View itemView) {
@@ -59,7 +64,11 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
                     .load(model.getThumbnailURL())
                     .into(binding.imageViewVideoThumbnail);
             binding.setVariable(BR.thumbnailPostVideoInstance, model);
-
+            switch (accessType){
+                case VIEW:
+                    binding.constraintLayoutEditDelete.setVisibility(View.GONE);
+                    break;
+            }
         }
     }
 }
