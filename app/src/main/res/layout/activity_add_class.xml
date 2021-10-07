@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         bind:fitnessClassValidationData="@{viewModel.fitnessClassValidationData}"
-        tools:context=".activities.main.trainer.AddFitnessClass">
+        tools:context=".activities.trainingdashboard.AddFitnessClass">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutFitnessClassProgressBar"
