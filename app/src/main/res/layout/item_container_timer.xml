@@ -5,13 +5,11 @@
 <!--        <variable-->
 <!--            name="program"-->
 <!--            type="com.pupccis.fitnex.model.Program" />-->
+
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
-        <variable
-            name="position"
-            type="Integer"
-            />
+
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -69,7 +67,6 @@
                 android:textColor="@color/blueTextColor"
                 android:hint="10"
                 android:textAlignment="center"
-                android:text="@={viewModel.routineWeight}"
                 />
             <TextView
                 android:id="@+id/textView19"
@@ -88,7 +85,6 @@
                 android:textColor="@color/blueTextColor"
                 android:hint="10"
                 android:textAlignment="center"
-                android:text="@={viewModel.routineReps}"
                 />
 
             <TextView

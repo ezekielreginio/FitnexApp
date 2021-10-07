@@ -28,6 +28,10 @@ public class RoutineData implements Serializable {
         return reps;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
     public String getRoutineID() {
         return routineID;
     }
@@ -36,8 +40,16 @@ public class RoutineData implements Serializable {
         return isCompleted;
     }
 
-    public double getWeight() {
-        return weight;
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 
     public static class Builder{

@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.adapters;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.databinding.ItemContainerTimerBinding;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.RoutineData;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.List;
 
 public class RoutineTrackerAdapter extends RecyclerView.Adapter<RoutineTrackerAdapter.ViewHolder>{
 
-    private List<Routine> routineData;
+    private List<RoutineData> routineData;
+    private Routine initRoutine;
     private RoutineViewModel routineViewModel;
 
-    public RoutineTrackerAdapter(List<Routine> routine) {
-        this.routineData = routine;
+    public RoutineTrackerAdapter(List<RoutineData> routineData, Routine initRoutine) {
+        this.routineData = routineData;
+        this.initRoutine = initRoutine;
     }
 
     @NonNull
@@ -35,8 +40,8 @@ public class RoutineTrackerAdapter extends RecyclerView.Adapter<RoutineTrackerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Routine routine = routineData.get(position);
-        holder.bind(routine, position);
+        RoutineData routineData = this.routineData.get(position);
+        holder.bind(routineData, position);
     }
 
     @Override
@@ -58,32 +63,55 @@ public class RoutineTrackerAdapter extends RecyclerView.Adapter<RoutineTrackerAd
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(Routine routine, int position){
+        public void bind(RoutineData routineData, int position){
             int pos = position+1;
-            if(routine.isCompleted()){
+
+            if(routineData.isCompleted()){
                 binding.textViewSetNumber.setText("\u2713");
+                binding.textViewWeight.setText(routineData.getWeight()+"");
+                binding.textViewReps.setText(routineData.getReps()+"");
+
             }
             else{
+                Log.d("Not Completed", "Triggered");
                 binding.textViewSetNumber.setText(pos+"");
-                binding.textViewWeight.setHint(routine.getWeight()+"");
-                binding.textViewReps.setHint(routine.getReps()+"");
+                binding.textViewWeight.setHint(routineData.getWeight()+"");
+                binding.textViewReps.setHint(routineData.getReps()+"");
             }
 
-            binding.setVariable(BR.position, position);
+            Log.d("Weight from input", binding.textViewWeight.getText().toString());
 
-            binding.textViewReps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            binding.getViewModel().resetRoutineTracker();
+
+            binding.textViewWeight.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onFocusChange(View view, boolean b) {
-                    if(b){
-                        binding.getViewModel().setCurrentRoutineID(routine.getId());
-                        binding.getViewModel().setCurrentRoutinePosition(position);
-                        Log.d("Routine ID", routine.getId());
-                        Log.d("Current Position", position+"");
-                    }
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
 
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    binding.getViewModel().setRoutineWeight(charSequence.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
                 }
             });
 
+            binding.textViewReps.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    binding.getViewModel().setRoutineReps(charSequence.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                }
+            });
         }
     }
 }

@@ -133,39 +133,47 @@ public class RoutineViewModel extends BaseObservable {
     }
     public void setRoutineWeight(String routineWeight) { this.routineWeight = routineWeight; }
 
-    public RoutineData setRoutineDataList(String routineID, int routinePosition) {
+    public RoutineData setRoutineDataList(Routine routine, int routinePosition) {
         HashMap<Integer, RoutineData> routineDataMap = new HashMap<>();
-        int routineReps = -1;
-        double routineWeight = -1;
-        if(routineDataList.get(routineID)!= null)
-            routineDataMap = routineDataList.get(routineID);
-        else
-            routineDataList.put(routineID, routineDataMap);
+        int routineReps = routine.getReps();
+        double routineWeight = routineWeight = routine.getWeight();;
+        if(routineDataList.get(routine.getId())!= null)
+            routineDataMap = routineDataList.get(routine.getId());
 
         if(getRoutineReps() != null)
-            routineReps = Integer.parseInt(getRoutineReps());
+            if(!getRoutineReps().isEmpty())
+                routineReps = Integer.parseInt(getRoutineReps());
         if(getRoutineWeight() != null)
-            routineWeight = Double.parseDouble(getRoutineWeight());
+            if(!getRoutineWeight().isEmpty())
+                routineWeight = Double.parseDouble(getRoutineWeight());
 
         RoutineData routineData = new RoutineData.Builder()
                 .position(routinePosition)
                 .completed(true)
                 .reps(routineReps)
                 .weight(routineWeight)
-                .routineID(routineID)
+                .routineID(routine.getId())
                 .build();
+
         routineDataMap.put(routinePosition, routineData);
-        Log.d("Routine Data Map", routineDataMap.toString());
+        routineDataList.put(routine.getId(), routineDataMap);
+
         return routineData;
 //        this.routineDataList = routineDataList;
     }
 
-    public void setCurrentRoutineID(String currentRoutineID) {
-        this.currentRoutineID = currentRoutineID;
+    public RoutineData setRoutineData(Routine routine){
+        RoutineData routineData = new RoutineData.Builder()
+                .completed(false)
+                .weight(routine.getWeight())
+                .reps(routine.getReps())
+                .build();
+        return routineData;
     }
 
-    public void setCurrentRoutinePosition(int currentRoutinePosition) {
-        this.currentRoutinePosition = currentRoutinePosition;
+    public void resetRoutineTracker(){
+        setRoutineReps(null);
+        setRoutineWeight(null);
     }
 
     //    public void insertRoutine(Routine routine){

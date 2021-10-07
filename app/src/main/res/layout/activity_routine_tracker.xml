@@ -56,44 +56,71 @@
 
                     <LinearLayout
                         android:id="@+id/linearLayoutRest"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@id/timerProgressBar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="visible"
                         app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/textView68"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/linearLayoutRestTitle"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rest with"
-                            android:textColor="#000000"
-                            android:textSize="20dp"
-                            app:layout_constraintHorizontal_bias="0.503" />
+                            >
 
-                        <ImageView
-                            android:id="@+id/imageViewLogo"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            app:layout_constraintEnd_toStartOf="@id/textViewFitnex"
-                            app:layout_constraintStart_toEndOf="@id/textView68"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_fitnex_logo"
-                            bind:ignore="MissingConstraints" />
+                            <TextView
+                                android:id="@+id/textView68"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rest with"
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintHorizontal_bias="0.503" />
 
-                        <TextView
-                            android:id="@+id/textViewFitnex"
-                            android:layout_width="wrap_content"
+                            <ImageView
+                                android:id="@+id/imageViewLogo"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:layout_constraintEnd_toStartOf="@id/textViewFitnex"
+                                app:layout_constraintStart_toEndOf="@id/textView68"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_fitnex_logo"
+                                bind:ignore="MissingConstraints" />
+
+                            <TextView
+                                android:id="@+id/textViewFitnex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fitnex"
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/imageViewLogo"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/linearLayoutFinished"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Fitnex"
-                            android:textColor="#000000"
-                            android:textSize="20dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@id/timerProgressBar"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/imageViewLogo"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
+                            <TextView
+                                android:id="@+id/textViewFinished"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Workout Finished!\n You Deserve a Rest."
+
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintHorizontal_bias="0.503" />
+                        </LinearLayout>
+                    </LinearLayout>
                     <ProgressBar
                         android:id="@+id/timerProgressBar"
                         style="?android:attr/progressBarStyleHorizontal"

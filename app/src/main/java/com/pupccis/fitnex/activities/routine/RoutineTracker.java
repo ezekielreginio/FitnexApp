@@ -71,7 +71,6 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         if(view == binding.buttonSkipRest){
             hideRoutineRestTimer();
         }
-
     }
 
     //Private Methods
@@ -116,6 +115,13 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         timerViewHandler.startTimer(true);
     }
 
+    public void showRoutineFinishTimer(){
+        binding.linearLayoutRestTitle.setVisibility(View.GONE);
+        binding.linearLayoutFinished.setVisibility(View.VISIBLE);
+        binding.constraintLayoutRoutineCountdown.setVisibility(View.VISIBLE);
+        timerViewHandler.startTimer(true);
+    }
+
     public void hideRoutineRestTimer(){
         binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
         timerViewHandler.stopTimer();
@@ -123,6 +129,25 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
     public void executeOnFinish(){
         hideRoutineRestTimer();
+        int routineCount = getRoutineCount();
+        int currentRoutine = getSelectedRoutinePosition()+1;
+        if(routineCount == currentRoutine)
+            finish();
+    }
+
+    public int getRoutineCount(){
+        int routineCount = binding.tabLayoutRoutineTracker.getTabCount();
+        return routineCount;
+    }
+
+    public int getSelectedRoutinePosition(){
+        int routinePosition = binding.tabLayoutRoutineTracker.getSelectedTabPosition();
+        return routinePosition;
+    }
+
+    public void nextRoutine(){
+        binding.viewPager2Routine.setCurrentItem(binding.viewPager2Routine.getCurrentItem()+1);
+        binding.tabLayoutRoutineTracker.selectTab(binding.tabLayoutRoutineTracker.getTabAt(binding.viewPager2Routine.getCurrentItem()));
     }
 
     public RoutineViewModel getViewModel(){

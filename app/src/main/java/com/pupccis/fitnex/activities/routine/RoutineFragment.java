@@ -13,14 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.adapters.RoutineTrackerAdapter;
 import com.pupccis.fitnex.databinding.FragmentRoutineBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.RoutineData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
     private long pauseOffset;
 
     private RoutineTrackerAdapter adapter;
-    private List<Routine> routineData;
+    private List<RoutineData> routineDataList;
     int position = 0;
 
     public RoutineFragment() {
@@ -91,25 +90,42 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        routineData = new ArrayList<>();
-        routine.setCompleted(false);
+        routineDataList = new ArrayList<>();
+        RoutineData routineData = binding.getViewModel().setRoutineData(routine);
         for(int i=0;i<routine.getSets();i++){
-            routineData.add(routine);
+            routineDataList.add(routineData);
         }
 
         binding.recyclerViewRoutinePage.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adapter = new RoutineTrackerAdapter(routineData);
+        adapter = new RoutineTrackerAdapter(routineDataList, routine);
         adapter.setRoutineViewModel(binding.getViewModel());
         binding.recyclerViewRoutinePage.setAdapter(adapter);
 
         binding.buttonLogRest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((RoutineTracker) getActivity()).showRoutineRestTimer();
-                routineData.get(position).setCompleted(true);
-                adapter.notifyItemChanged(position);
-                binding.getViewModel().setRoutineDataList(routine.getId(), position);
-                position=position+1;
+                int routineCount = ((RoutineTracker) getActivity()).getRoutineCount();
+                int currentRoutine = ((RoutineTracker) getActivity()).getSelectedRoutinePosition()+1;
+
+                if(position<routine.getSets()){
+                    ((RoutineTracker) getActivity()).showRoutineRestTimer();
+                    RoutineData newRoutineData = binding.getViewModel().setRoutineDataList(routine, position);
+                    routineDataList.set(position, newRoutineData);
+                    Log.d("Reps", newRoutineData.getReps()+"");
+                    //routineDataList.get(position).setCompleted(true);
+                    adapter.notifyItemChanged(position);
+
+                    position=position+1;
+                }
+                else{
+                    if(currentRoutine == routineCount)
+                        ((RoutineTracker) getActivity()).showRoutineFinishTimer();
+
+                    else{
+                        ((RoutineTracker) getActivity()).showRoutineRestTimer();
+                        ((RoutineTracker) getActivity()).nextRoutine();
+                    }
+                }
             }
         });
     }
