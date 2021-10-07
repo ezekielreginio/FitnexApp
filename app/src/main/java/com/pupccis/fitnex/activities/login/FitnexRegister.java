@@ -115,7 +115,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
             if(isInvalid)
                 Toast.makeText(this, "Some Input Fields Are Invalid, Please Try Again.", Toast.LENGTH_SHORT).show();
             else{
-                binding.constraintLayoutRegisterProgressBar.setVisibility(View.VISIBLE);
+                binding.constraintLayoutProgramProgressBar.setVisibility(View.VISIBLE);
                 MutableLiveData<User> userMutableLiveData = binding.getViewModel().registerUser();
                 userMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<User>() {
                     @Override
@@ -130,7 +130,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
                             }
                         }
-                        binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);
+                        binding.constraintLayoutProgramProgressBar.setVisibility(View.GONE);
                         userMutableLiveData.removeObserver(this::onChanged);
                     }
                 });
