@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.R;
@@ -25,6 +25,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 
     private ItemContainerProgramBinding binding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
+    private AccessType accessType;
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
     }
@@ -50,6 +51,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         return programViewModel;
     }
 
+    public void setAccessType(AccessType accessType) {
+        this.accessType = accessType;
+    }
+
     class ProgramHolder extends RecyclerView.ViewHolder{
         public ProgramHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,7 +65,12 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramSessionCount.setText(model.getSessionNumber());
             binding.textProgramDuration.setText(model.getDuration());
             binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
-            Log.d("Program ID from model", model.getProgramID());
+            switch (accessType){
+                case VIEW:
+                    binding.layoutProgramButtonViewer.setVisibility(View.VISIBLE);
+                    binding.layoutProgramButtonOwner.setVisibility(View.GONE);
+                    break;
+            }
             binding.setVariable(BR.program, model);
         }
     }

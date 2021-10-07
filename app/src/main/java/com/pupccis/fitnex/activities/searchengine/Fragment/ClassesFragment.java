@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentClassesSeBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.FitnessClass;
@@ -111,6 +112,7 @@ public class ClassesFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUISearchFitnessClassOptions(editable.toString());
                 adapter = new FitnessClassAdapter(options);
+                adapter.setAccesstype(AccessType.VIEW);
                 binding.setViewModel(adapter.getViewModel());
                 recyclerView.setAdapter(adapter);
                 adapter.startListening();
@@ -119,5 +121,11 @@ public class ClassesFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

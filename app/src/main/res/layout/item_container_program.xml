@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -10,9 +12,7 @@
             type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
 
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutProgramContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                     android:textSize="15dp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textProgramCategory"
@@ -105,7 +105,7 @@
                     android:textSize="15dp"
                     app:layout_constraintStart_toEndOf="@id/textCategoryTitle"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +123,7 @@
                     android:textSize="15dp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textProgramDescription"
@@ -135,7 +135,7 @@
                     android:textSize="15dp"
                     app:layout_constraintStart_toEndOf="@id/textDescriptionTitle"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -153,7 +153,7 @@
                     android:textSize="15dp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textProgramSessionCount"
@@ -165,7 +165,7 @@
                     android:textSize="15dp"
                     app:layout_constraintStart_toEndOf="@id/textSessionTitle"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,7 +183,7 @@
                     android:textSize="15dp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textProgramDuration"
@@ -195,12 +195,12 @@
                     android:textSize="15dp"
                     app:layout_constraintStart_toEndOf="@id/textDurationTitle"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    bind:ignore="MissingConstraints" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutProgramUpdate"
+                android:id="@+id/layoutProgramButtonOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -212,10 +212,30 @@
                     android:layout_height="70px"
                     android:layout_marginStart="30dp"
                     android:background="@drawable/button_update"
-                    android:text="Update"
                     android:onClick="@{()-> viewModel.triggerUpdateObserver(program)}"
+                    android:text="Update"
                     android:textColor="@color/whiteTextColor"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonProgramDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70px"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/button_delete"
+                    android:onClick="@{()-> viewModel.triggerDeleteObserver(program)}"
+                    android:text="Delete"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutProgramButtonViewer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/buttonProgramView"
@@ -225,19 +245,8 @@
                     android:background="@drawable/button_view"
                     android:text="View"
                     android:textColor="@color/whiteTextColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"/>
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                <Button
-                    android:id="@+id/buttonProgramDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70px"
-                    android:layout_marginEnd="30dp"
-                    android:background="@drawable/button_delete"
-                    android:text="Delete"
-                    android:textColor="@color/whiteTextColor"
-                    android:onClick="@{()-> viewModel.triggerDeleteObserver(program)}"
-                    app:layout_constraintEnd_toEndOf="parent" />
                 <Button
                     android:id="@+id/buttonProgramJoin"
                     android:layout_width="wrap_content"
@@ -246,16 +255,9 @@
                     android:background="@drawable/button_join"
                     android:text="Join"
                     android:textColor="@color/whiteTextColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="gone"/>
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentProgramsSeBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.FitnessClass;
@@ -117,6 +118,7 @@ public class ProgramsFragment extends Fragment {
 //                searchInput.add(editable.toString().toLowerCase());
                 FirestoreRecyclerOptions<Program> options = getFirebaseUISearchProgramOptions(editable.toString());
                 adapter = new ProgramAdapter(options);
+                adapter.setAccessType(AccessType.VIEW);
                 binding.setViewModel(adapter.getViewModel());
                 recyclerView.setAdapter(adapter);
                 adapter.startListening();

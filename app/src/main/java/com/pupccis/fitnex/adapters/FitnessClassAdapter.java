@@ -18,11 +18,12 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
+import com.pupccis.fitnex.api.enums.AccessType;
 
 public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, FitnessClassAdapter.FitnessClassHolder> {
     private ItemContainerFitnessClassBinding binding;
     private FitnessClassViewModel fitnessClassViewModel = new FitnessClassViewModel();
-
+    private AccessType accessType;
 
 
     public FitnessClassAdapter(@NonNull FirestoreRecyclerOptions<FitnessClass> options) {
@@ -47,6 +48,10 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
 
     public FitnessClassViewModel getViewModel(){return fitnessClassViewModel;}
 
+    public void setAccesstype(AccessType accessType) {
+        this.accessType = accessType;
+    }
+
     class FitnessClassHolder extends RecyclerView.ViewHolder{
 
         public FitnessClassHolder(@NonNull View itemView) {
@@ -60,18 +65,14 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
             binding.textTimeEnd.setText(model.getTimeEnd());
             binding.textClassSessionCount.setText(model.getSessionNo());
             binding.textClassDuration.setText(model.getDuration());
+            switch (accessType){
+                case VIEW:
+                    binding.layoutClassButtonViewer.setVisibility(View.VISIBLE);
+                    binding.layoutClassButtonOwner.setVisibility(View.GONE);
+                    break;
+            }
             binding.setVariable(BR.fitnessClass, model);
 
-            binding.layoutClassInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("Layout", "Clicked");
-                    if(binding.layoutClassInfo.getVisibility() == View.VISIBLE)
-                        binding.layoutClassInfo.setVisibility(View.GONE);
-                    else
-                        binding.layoutClassInfo.setVisibility(View.VISIBLE);
-                }
-            });
         }
 
     }

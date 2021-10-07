@@ -245,7 +245,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutProgramUpdate"
+            android:id="@+id/layoutClassButtonOwner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -261,17 +261,6 @@
                 android:textColor="@color/whiteTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 android:onClick="@{()-> viewModel.triggerUpdateObserver(fitnessClass)}"/>
-
-            <Button
-                android:id="@+id/buttonClassView"
-                android:layout_width="wrap_content"
-                android:layout_height="70px"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/button_view"
-                android:text="View"
-                android:textColor="@color/whiteTextColor"
-                app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"/>
             <Button
                 android:id="@+id/buttonClassDelete"
                 android:layout_width="wrap_content"
@@ -282,6 +271,26 @@
                 android:textColor="@color/whiteTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{()-> viewModel.triggerDeleteObserver(fitnessClass)}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutClassButtonViewer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/buttonClassView"
+                android:layout_width="wrap_content"
+                android:layout_height="70px"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/button_view"
+                android:text="View"
+                android:textColor="@color/whiteTextColor"
+                app:layout_constraintStart_toStartOf="parent" />
             <Button
                 android:id="@+id/buttonClassJoin"
                 android:layout_width="wrap_content"
@@ -290,8 +299,7 @@
                 android:background="@drawable/button_join"
                 android:text="Join"
                 android:textColor="@color/whiteTextColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"/>
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

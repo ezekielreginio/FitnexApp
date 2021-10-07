@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.pupccis.fitnex.activities.trainingdashboard.AddProgram;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
@@ -211,6 +212,7 @@ public class ProgramsFragment extends Fragment {
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);
+        adapter.setAccessType(AccessType.OWNER);
         recyclerView.setAdapter(adapter);
 
         //Set Lifecycle and ViewModel of Binding
