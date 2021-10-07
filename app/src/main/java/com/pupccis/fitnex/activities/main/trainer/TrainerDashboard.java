@@ -14,7 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.pupccis.fitnex.api.adapter.FragmentAdapter;
+import com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio;
+import com.pupccis.fitnex.api.adapter.fragmentAdapters.TrainerDashboardFragmentAdapter;
 import com.pupccis.fitnex.api.adapter.ProgramAdapter;
 import com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio;
 import com.pupccis.fitnex.model.DAO.ProgramDAO;
@@ -33,7 +34,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
-    private FragmentAdapter fragmentAdapter;
+    private TrainerDashboardFragmentAdapter trainerDashboardFragmentAdapter;
     private Intent intent;
     private CardView cardViewCalls;
     private UserPreferences userPreferences;
@@ -62,8 +63,8 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
 
         FragmentManager fm = getSupportFragmentManager();
-        fragmentAdapter = new FragmentAdapter(fm, getLifecycle());
-        viewPager2.setAdapter(fragmentAdapter);
+        trainerDashboardFragmentAdapter = new TrainerDashboardFragmentAdapter(fm, getLifecycle());
+        viewPager2.setAdapter(trainerDashboardFragmentAdapter);
         intent = new Intent(TrainerDashboard.this, AddProgram.class);
         tabLayout.addTab(tabLayout.newTab().setText("Program"));
         tabLayout.addTab(tabLayout.newTab().setText("Classes"));

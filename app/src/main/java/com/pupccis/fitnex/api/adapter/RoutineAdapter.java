@@ -52,6 +52,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
     @Override
     public int getItemCount() {
+        Log.d("size routine", routines.size()+"");
         return routines.size();
     }
     public void setList(List<Object> routineList){
@@ -74,7 +75,13 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         void setRoutineData(Routine routine){
             textViewRoutineName.setText(routine.getName());
             Log.d("Routine ID", routine.getId());
-
+            if(program.getCategory() == 2){
+                textViewRoutineDescriptionFirst.setText(routine.getReps()+" Reps");
+                textViewRoutineDescriptionSecond.setText(routine.getSets()+ "Sets");
+            }else{
+                //textViewRoutineDescription1.setText(routine.getDuration());
+                textViewRoutineDescriptionSecond.setVisibility(View.INVISIBLE);
+            }
             constraintLayoutRoutineThumbnailEdit.setOnClickListener(view -> {
                 Intent intent = new Intent(context, AddRoutine.class);
                 intent.putExtra("program", program);
@@ -83,7 +90,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
             });
             constraintLayoutRoutineThumbnailDelete.setOnClickListener(view -> {
-                RoutineViewModel.deleteRoutine(routine, program.getProgramID());
+               // RoutineViewModel.deleteRoutine(routine, program.getProgramID());
             });
         }
 

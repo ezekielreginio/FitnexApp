@@ -6,6 +6,7 @@ import android.util.Patterns;
 import com.pupccis.fitnex.validation.InputType;
 import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
+import com.pupccis.fitnex.validation.validationFields.Categories;
 
 import java.util.regex.Pattern;
 
@@ -47,6 +48,14 @@ public class ValidationService {
             result = ValidationResult.invalid(errorMessage);
         }
 
+        return this;
+    }
+    public ValidationService validateCategory(){
+        if(result.isValid()){
+            if(!input.equals(Categories.values())){
+                result = ValidationResult.invalid("You have to choose a category");
+            }
+        }
         return this;
     }
     public ValidationService validateInt(){

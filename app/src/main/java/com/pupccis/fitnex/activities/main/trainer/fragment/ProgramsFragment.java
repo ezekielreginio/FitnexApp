@@ -24,6 +24,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
@@ -203,28 +204,33 @@ public class ProgramsFragment extends Fragment {
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
 
-        //FirestoreRecyclerOptions<Program> optioPns = new FirestoreRecyclerOptions.Builder<Program>()
-//                .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
-//                .build();
-
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+       recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);
         recyclerView.setAdapter(adapter);
 
-         //Get the View Model from Adapter
+        //Set Lifecycle and ViewModel of Binding
         fragmentProgramsBinding.setLifecycleOwner(this);
-        fragmentProgramsBinding.setViewModel(adapter.getViewModel());
+        fragmentProgramsBinding.setViewModel(adapter.getViewModel()); //Get the View Model from Adapter
 
         //ViewModel Observers
+        fragmentProgramsBinding.getViewModel().routineObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
+            @Override
+            public void onChanged(Program program) {
+                Intent intent = new Intent(getContext(), RoutinePage.class);
+                intent.putExtra("program", program);
+                Log.e("Program Fragment", program.getProgramID());
+                startActivity(intent);
+            }
+        });
         fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
             @Override
             public void onChanged(Program program) {
-                Log.d("Program Fragment", "Observer Triggered");
+
                 Intent intent= new Intent(getContext(), AddProgram.class);
                 intent.putExtra("program", program);
                 startActivity(intent);

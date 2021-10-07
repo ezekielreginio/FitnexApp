@@ -24,7 +24,6 @@ import com.pupccis.fitnex.databinding.ActivityAddProgramBinding;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
@@ -84,7 +83,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     public static void validateProgramData(View view, HashMap<String, Object> validationData) {
         if (validationData != null) {
             ValidationResult result = (ValidationResult) validationData.get("validationResult");
-            ProgramFitnessClassFields field = (ProgramFitnessClassFields) validationData.get("field");
+            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
             switch (field) {
                 case NAME:
                     errorHandler(binding.textInputProgramName, result);

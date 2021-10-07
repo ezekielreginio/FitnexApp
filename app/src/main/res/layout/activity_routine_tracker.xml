@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.routine.RoutineTracker" />
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        bind:context=".activities.routine.RoutineTracker"
+        android:background="#FFFFFF">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutRoutineTracker"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2Routine"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayoutRoutineTracker" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutRoutineCountdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/themetintColor"
+            android:visibility="gone"
+            android:translationZ="1dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardCornerRadius="15dp"
+                android:backgroundTint="@color/whiteTextColor">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:animateLayoutChanges="true"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutRest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@id/timerProgressBar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <LinearLayout
+                            android:id="@+id/linearLayoutRestTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <TextView
+                                android:id="@+id/textView68"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rest with"
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintHorizontal_bias="0.503" />
+
+                            <ImageView
+                                android:id="@+id/imageViewLogo"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:layout_constraintEnd_toStartOf="@id/textViewFitnex"
+                                app:layout_constraintStart_toEndOf="@id/textView68"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_fitnex_logo"
+                                bind:ignore="MissingConstraints" />
+
+                            <TextView
+                                android:id="@+id/textViewFitnex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fitnex"
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/imageViewLogo"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/linearLayoutFinished"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@id/timerProgressBar"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/textViewFinished"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Workout Finished!\n You Deserve a Rest."
+
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                app:layout_constraintHorizontal_bias="0.503" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/timerProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="65"
+                        android:progressDrawable="@drawable/circular_progress_bar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRest"
+                        />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estimated time"
+                        android:textColor="#757575"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        bind:layout_editor_absoluteY="186dp"
+                        app:layout_constraintTop_toBottomOf="@+id/timerProgressBar" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutEstimatedTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="20dp"
+                            bind:layout_editor_absoluteX="109dp"
+                            bind:layout_editor_absoluteY="219dp" />
+
+                        <TextView
+                            android:id="@+id/textView69"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" mins"
+                            android:textColor="#000000"
+                            android:textSize="20dp"
+                            bind:layout_editor_absoluteX="109dp"
+                            bind:layout_editor_absoluteY="219dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:dividerPadding="10dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEstimatedTime">
+
+                        <Button
+                            android:id="@+id/buttonSkipRest"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/secondaryBackgroundColor"
+                            android:onClick="onClick"
+                            android:text="Skip Rest" />
+
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#000000"
+                        android:text="0"
+                        android:textSize="40dp"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="@+id/timerProgressBar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/timerProgressBar" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

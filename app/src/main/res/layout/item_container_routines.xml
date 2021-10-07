@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="routine"
+            type="com.pupccis.fitnex.model.Routine" />
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -86,6 +96,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
+            android:onClick="@{()->viewModel.triggerUpdateObserver(routine)}"
             android:background="@drawable/background_thumbnail_btn"
             android:backgroundTint="#2c90bb"
             android:paddingBottom="5dp"
@@ -118,6 +129,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/background_thumbnail_btn"
             android:backgroundTint="#d20909"
+            android:onClick="@{()->viewModel.triggerDeleteObserver(routine)}"
             android:paddingBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -142,3 +154,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

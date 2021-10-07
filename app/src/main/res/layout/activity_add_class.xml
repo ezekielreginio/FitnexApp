@@ -14,7 +14,7 @@
 
         <variable
             name="fragmentFields"
-            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields" />
+            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

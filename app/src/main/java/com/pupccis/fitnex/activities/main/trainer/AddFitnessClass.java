@@ -12,46 +12,30 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
 import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.model.Program;
-import com.pupccis.fitnex.validation.Services.FitnessClassValidationService;
-import com.pupccis.fitnex.validation.Services.ValidationEventBinder;
-import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.validation.ValidationResult;
-import com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassFields;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
@@ -85,7 +69,6 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 
         //Fitness Intent Information for Update
         if(fitness_intent != null){
-            Log.d("Fitness INtent ID", fitness_intent.getClassID());
             binding.editTextAddClassName.setText(fitness_intent.getClassName());
             binding.editTextAddFitnessClassCategory.setSelection(fitness_intent.getCategory());
             binding.editTextAddClassSessionNumber.setText(fitness_intent.getSessionNo());
@@ -161,6 +144,8 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
             showTimeDialog(binding.editTextTimeStart, 1);
 
     }
+
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         binding.editTextAddFitnessClassCategory.setSelection(i);
@@ -178,7 +163,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     public static void validateFitnessClassData(View view, HashMap<String, Object> validationData){
         if (validationData != null) {
             ValidationResult result = (ValidationResult) validationData.get("validationResult");
-            ProgramFitnessClassFields field = (ProgramFitnessClassFields) validationData.get("field");
+            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
             switch (field) {
                 case NAME:
                     errorHandler(binding.textInputClassName, result);

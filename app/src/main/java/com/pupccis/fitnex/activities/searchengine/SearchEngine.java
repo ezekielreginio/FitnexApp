@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.google.android.material.tabs.TabLayout;
-import com.pupccis.fitnex.api.adapter.SearchEngineAdapter.SearchEngineFragmentAdapter;
-import com.pupccis.fitnex.api.adapter.SearchEngineAdapter.TrainerSEAdapter;
+import com.pupccis.fitnex.api.adapter.fragmentAdapters.SearchEngineAdapter.SearchEngineFragmentAdapter;
+import com.pupccis.fitnex.api.adapter.fragmentAdapters.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Globals.HideStatusBar;
 

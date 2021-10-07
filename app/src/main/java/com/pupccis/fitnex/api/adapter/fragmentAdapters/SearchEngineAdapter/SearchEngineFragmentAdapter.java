@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.api.adapter.SearchEngineAdapter;
+package com.pupccis.fitnex.api.adapter.fragmentAdapters.SearchEngineAdapter;
 
 import android.view.View;
 
