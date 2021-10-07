@@ -4,6 +4,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
@@ -50,9 +51,10 @@ public class ViewModelHandler {
                 .setQuery(PostedVideosRepository.getInstance().readVideoCommentsQuery(videoID), VideoComment.class)
                 .build();
     }
-    public static FirestoreRecyclerOptions<VideoComment> getFirebaseUIVideoCommentReplyOptions(VideoComment comment){
+    public static FirestoreRecyclerOptions<VideoComment> getFirebaseUIVideoCommentReplyOptions(VideoComment comment) {
         return new FirestoreRecyclerOptions.Builder<VideoComment>()
-                .setQuery(PostedVideosRepository.getInstance().readVideoCommentRepliesQuery(comment), VideoComment.class)
+                .setQuery(PostedVideosRepository.getInstance().readVideoCommentRepliesQuery(comment), VideoComment.class).build();
+    }
     public static FirestoreRecyclerOptions<Routine> getFirebaseUIRoutineOptions(String program_id){
         return new FirestoreRecyclerOptions.Builder<Routine>()
                 .setQuery(RoutinesRepository.getInstance().getRoutinesQuery(program_id), Routine.class)
