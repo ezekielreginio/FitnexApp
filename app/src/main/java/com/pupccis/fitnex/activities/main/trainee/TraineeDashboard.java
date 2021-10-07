@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.Trainee;
+package com.pupccis.fitnex.activities.main.trainee;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;

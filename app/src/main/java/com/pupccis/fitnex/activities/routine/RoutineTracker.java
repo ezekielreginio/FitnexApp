@@ -6,18 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
-import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.RoutineFragmentAdapter;
 import com.pupccis.fitnex.databinding.ActivityRoutineTrackerBinding;
 import com.pupccis.fitnex.handlers.view.TimerViewHandler;
@@ -34,6 +28,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
     private TimerViewHandler timerViewHandler;
     private RoutineViewModel routineViewModel = new RoutineViewModel();
+    private String programID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +40,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         binding.executePendingBindings();
 
         //Extra Intents
-        String programID = getIntent().getStringExtra(ProgramConstants.KEY_PROGRAM_ID);
+        programID = getIntent().getStringExtra(ProgramConstants.KEY_PROGRAM_ID);
 
         //TimerViewHandler Instantiation
         timerViewHandler = new TimerViewHandler(60000, binding.timerProgressBar, binding.textViewTimer, new Callable<Void>() {
@@ -133,6 +128,10 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         int currentRoutine = getSelectedRoutinePosition()+1;
         if(routineCount == currentRoutine)
             finish();
+    }
+
+    public String getProgramID(){
+        return programID;
     }
 
     public int getRoutineCount(){

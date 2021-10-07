@@ -16,7 +16,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.main.trainer.studio.TrainerStudio"
+        tools:context=".activities.trainingdashboard.studio.TrainerStudio"
         android:background="#FFFFFF"
 
         >

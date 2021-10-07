@@ -1,10 +1,7 @@
 package com.pupccis.fitnex.api.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
+import com.pupccis.fitnex.activities.trainingdashboard.AddFitnessClass;
 import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
-import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 import java.util.ArrayList;
 

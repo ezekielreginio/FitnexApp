@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.trainer;
+package com.pupccis.fitnex.activities.trainingdashboard;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;

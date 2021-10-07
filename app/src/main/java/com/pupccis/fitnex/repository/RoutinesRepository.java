@@ -7,11 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.RoutineData;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Constants.RoutineConstants;
 
@@ -105,5 +108,9 @@ public class RoutinesRepository {
             }
         });
         return routineMutableLiveData;
+    }
+
+    public void updateRealtimeRoutineTracker(RoutineData routineData, int routinePosition, String programID) {
+        FirebaseDatabase.getInstance().getReference(RoutineConstants.KEY_COLLECTION_ROUTINES).child(programID).child(FirebaseAuth.getInstance().getUid()).child(routineData.getRoutineID()).child(routinePosition+"").setValue(routineData);
     }
 }
