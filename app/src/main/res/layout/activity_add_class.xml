@@ -6,7 +6,7 @@
 
         <variable
             name="presenter"
-            type="com.pupccis.fitnex.activities.main.trainer.AddFitnessClass" />
+            type="com.pupccis.fitnex.activities.trainingdashboard.AddFitnessClass" />
 
         <variable
             name="viewModel"

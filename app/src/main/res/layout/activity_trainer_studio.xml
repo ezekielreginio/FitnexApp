@@ -5,7 +5,7 @@
     <data>
         <variable
             name="presenter"
-            type="com.pupccis.fitnex.activities.main.trainer.studio.TrainerStudio" />
+            type="com.pupccis.fitnex.activities.trainingdashboard.studio.TrainerStudio" />
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.PostVideoViewModel" />
