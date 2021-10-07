@@ -76,7 +76,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new TrainerStudioVideosAdapter(options);
         adapter.setAccessType(AccessType.OWNER);
-
+        adapter.setActivity(TrainerStudio.this);
         binding.recyclerViewTrainerStudioVideo.setAdapter(adapter);
 
         //Set Lifecycle and ViewModel of Binding

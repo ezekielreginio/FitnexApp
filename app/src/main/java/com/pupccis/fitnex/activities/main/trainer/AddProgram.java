@@ -99,6 +99,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
             }
         }
     }
+
     @Override
     public void onClick(View view) {
         if(view == binding.buttonAddProgramButton){

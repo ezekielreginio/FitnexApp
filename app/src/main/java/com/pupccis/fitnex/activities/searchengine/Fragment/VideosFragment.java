@@ -113,6 +113,7 @@ public class VideosFragment extends Fragment {
                 FirestoreRecyclerOptions<PostVideo> options = getFirebaseUISearchVideoOptions(editable.toString());
                 adapter = new TrainerStudioVideosAdapter(options);
                 adapter.setAccessType(AccessType.VIEW);
+                adapter.setActivity(getActivity());
                 //binding.setViewModel(adapter.getViewModel());
                 recyclerView.setAdapter(adapter);
                 adapter.startListening();
