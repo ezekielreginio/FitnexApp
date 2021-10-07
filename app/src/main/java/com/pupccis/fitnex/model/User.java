@@ -10,9 +10,12 @@ public class User implements Serializable {
 
     public enum UserFields{ NAME, EMAIL, AGE, PASSWORD }
 
-    private final String name, email, password, userType;
-    private final int age;
+    private String name, email, password, userType;
+    private int age;
     private String userID, token;
+
+    public User() {
+    }
 
     public User(Builder builder){
         this.name = builder.name;

@@ -110,5 +110,10 @@ public class UserRepository {
         });
         return emailValidationLiveData;
     }
+    public Query searchTrainersQuery(String input){
+        Query query = db.collection(UserConstants.KEY_COLLECTION_USERS).whereEqualTo("userType", "trainer").orderBy("name").startAt(input).endAt(input+"\uf8ff");
+
+        return query;
+    }
 
 }

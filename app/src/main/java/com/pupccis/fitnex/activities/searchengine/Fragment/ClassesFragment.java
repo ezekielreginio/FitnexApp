@@ -1,9 +1,13 @@
 package com.pupccis.fitnex.activities.searchengine.Fragment;
 
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchFitnessClassOptions;
+import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUISearchProgramOptions;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,14 +19,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.pupccis.fitnex.api.adapter.FitnessClassAdapter;
+import com.pupccis.fitnex.adapters.FitnessClassAdapter;
+import com.pupccis.fitnex.adapters.ProgramAdapter;
+import com.pupccis.fitnex.databinding.FragmentClassesSeBinding;
+import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.FitnessClassConstants;
 
 import java.util.ArrayList;
@@ -41,11 +47,12 @@ public class ClassesFragment extends Fragment {
     private String mParam2;
 
     private EditText searchBox;
-    private FitnessClassAdapter fitnessClassAdapter;
-    private RecyclerView fitnessClassSERecyclerView;
+    private FitnessClassAdapter adapter;
+    private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private View view;
     private List<FitnessClass> fitnessClassList = new ArrayList<>();
+    private static FragmentClassesSeBinding binding;
     public ClassesFragment(View view) {
         // Required empty public constructor
         this.view = view;
@@ -68,7 +75,25 @@ public class ClassesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
+       // mDatabase = FirebaseDatabase.getInstance().getReference(FitnessClassConstants.KEY_COLLECTION_FITNESS_CLASSES);
+
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_classes_se, container, false);
+        binding.setLifecycleOwner(this);
+
+        recyclerView = binding.recyclerViewSearchEngineClasses;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         searchBox = view.findViewById(R.id.searchEngineSearchBox);
         searchBox.addTextChangedListener(new TextWatcher() {
@@ -79,51 +104,20 @@ public class ClassesFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        fitnessClassList.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            //FitnessClass fitnessClassListContainer = new FitnessClass();
 
-                            if (dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString().toLowerCase().contains(charSequence.toString())){
-//                                fitnessClassListContainer.setClassName(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_NAME).getValue().toString());
-//                                fitnessClassListContainer.setCategory(Integer.parseInt(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_CATEGORY).getValue().toString()));
-//                                fitnessClassListContainer.setDescription(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DESCRIPTION).getValue().toString());
-//                                fitnessClassListContainer.setSessionNo(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_SESSION_NUMBER).getValue().toString());
-//                                fitnessClassListContainer.setDuration(dataSnapshot.child(FitnessClassConstants.KEY_FITNESS_CLASSES_DURATION).getValue().toString());
-                               // fitnessClassList.add(fitnessClassListContainer);
-                            }
-                        }
-//                        fitnessClassAdapter = new FitnessClassAdapter(fitnessClassList, getContext(), GlobalConstants.KEY_ACCESS_TYPE_VIEW);
-//                        fitnessClassAdapter.notifyDataSetChanged();
-//                        fitnessClassSERecyclerView.setAdapter(fitnessClassAdapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUISearchFitnessClassOptions(editable.toString());
+                adapter = new FitnessClassAdapter(options);
+                binding.setViewModel(adapter.getViewModel());
+                recyclerView.setAdapter(adapter);
+                adapter.startListening();
+                if(editable.length()==0)
+                    adapter.stopListening();
             }
         });
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        fitnessClassSERecyclerView = getView().findViewById(R.id.recyclerViewSearchEngineClasses);
-        fitnessClassSERecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_classes_se, container, false);
+        return binding.getRoot();
     }
 }

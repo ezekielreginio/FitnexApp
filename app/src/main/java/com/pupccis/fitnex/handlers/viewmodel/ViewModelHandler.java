@@ -5,11 +5,13 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.repository.RoutinesRepository;
+import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
@@ -34,9 +36,20 @@ public class ViewModelHandler {
                 .build();
     }
 
+    public static FirestoreRecyclerOptions<Program> getFirebaseUISearchProgramOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<Program>()
+                .setQuery(ProgramsRepository.getInstance().searchProgramsQuery(input), Program.class)
+                .build();
+    }
+
     public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
         return new FirestoreRecyclerOptions.Builder<FitnessClass>()
                 .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUISearchFitnessClassOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(FitnessClassesRepository.getInstance().searchFitnessClassesQuery(input), FitnessClass.class)
                 .build();
     }
 
@@ -53,7 +66,18 @@ public class ViewModelHandler {
     }
     public static FirestoreRecyclerOptions<VideoComment> getFirebaseUIVideoCommentReplyOptions(VideoComment comment) {
         return new FirestoreRecyclerOptions.Builder<VideoComment>()
-                .setQuery(PostedVideosRepository.getInstance().readVideoCommentRepliesQuery(comment), VideoComment.class).build();
+                .setQuery(PostedVideosRepository.getInstance().readVideoCommentRepliesQuery(comment), VideoComment.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<PostVideo> getFirebaseUISearchVideoOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<PostVideo>()
+                .setQuery(PostedVideosRepository.getInstance().searchVideosQuery(input), PostVideo.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<User> getFirebaseUISearchTrainerOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(UserRepository.getInstance().searchTrainersQuery(input), User.class)
+                .build();
     }
     public static FirestoreRecyclerOptions<Routine> getFirebaseUIRoutineOptions(String program_id){
         return new FirestoreRecyclerOptions.Builder<Routine>()
