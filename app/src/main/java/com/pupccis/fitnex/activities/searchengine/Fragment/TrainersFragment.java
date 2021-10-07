@@ -23,7 +23,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.adapters.TrainerAdapter;
-import com.pupccis.fitnex.api.adapter.SearchEngineAdapter.TrainerSEAdapter;
 import com.pupccis.fitnex.databinding.FragmentTrainersSeBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
