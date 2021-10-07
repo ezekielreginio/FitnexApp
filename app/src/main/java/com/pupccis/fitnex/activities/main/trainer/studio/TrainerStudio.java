@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.pupccis.fitnex.activities.videoplayer.TrainingVideoPlayer;
 import com.pupccis.fitnex.adapters.TrainerStudioVideosAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.ActivityTrainerStudioBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
@@ -74,6 +75,8 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         binding.recyclerViewTrainerStudioVideo.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new TrainerStudioVideosAdapter(options);
+        adapter.setAccessType(AccessType.OWNER);
+
         binding.recyclerViewTrainerStudioVideo.setAdapter(adapter);
 
         //Set Lifecycle and ViewModel of Binding
@@ -81,15 +84,15 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         binding.setViewModel(adapter.getPostVideoViewModel());
 
         //Observers
-        binding.getViewModel().itemContainerClickObserver().observe(binding.getLifecycleOwner(), new Observer<PostVideo>() {
-            @Override
-            public void onChanged(PostVideo postVideo) {
-                Log.d("item", "clicked");
-                Intent intent= new Intent(getApplicationContext(), TrainingVideoPlayer.class);
-                intent.putExtra("PostVideo", postVideo);
-                startActivity(intent);
-            }
-        });
+//        binding.getViewModel().itemContainerClickObserver().observe(binding.getLifecycleOwner(), new Observer<PostVideo>() {
+//            @Override
+//            public void onChanged(PostVideo postVideo) {
+//                Log.d("item", "clicked");
+//                Intent intent= new Intent(getApplicationContext(), TrainingVideoPlayer.class);
+//                intent.putExtra("PostVideo", postVideo);
+//                startActivity(intent);
+//            }
+//        });
 
         //ViewModel Instantiation
 //        postVideoViewModel = new ViewModelProvider(TrainerStudio.this).get(PostVideoViewModel.class);

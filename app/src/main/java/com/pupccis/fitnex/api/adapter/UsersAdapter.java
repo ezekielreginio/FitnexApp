@@ -34,7 +34,6 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHol
                         parent,
                         false
                 ));
-
     }
 
     @Override

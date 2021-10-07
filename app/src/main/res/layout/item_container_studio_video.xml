@@ -18,7 +18,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         android:animateLayoutChanges="true"
-        android:onClick="@{()-> viewModel.triggerContainerObserver(thumbnailPostVideoInstance)}">
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewVideoThumbnail"

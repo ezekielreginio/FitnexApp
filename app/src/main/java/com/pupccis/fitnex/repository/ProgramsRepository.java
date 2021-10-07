@@ -19,6 +19,7 @@ import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProgramsRepository {
     //Private Attributes
@@ -163,6 +164,10 @@ public class ProgramsRepository {
 
     public Query readProgramsQuery(){
         Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getUid());
+        return query;
+    }
+    public Query searchProgramsQuery(String input){
+        Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderBy("name").startAt(input).endAt(input+"\uf8ff");
         return query;
     }
 

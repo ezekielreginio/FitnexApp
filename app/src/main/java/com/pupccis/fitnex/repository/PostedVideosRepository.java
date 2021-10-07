@@ -62,6 +62,10 @@ public class PostedVideosRepository {
 
         return postVideo;
     }
+    public Query searchVideosQuery(String input){
+        Query query = db.collection(PostVideoConstants.KEY_COLLECTION_POST_VIDEO).orderBy("videoTitle").startAt(input).endAt(input+"\uf8ff");
+        return query;
+    }
 
     public MutableLiveData<HashMap<String, Object>> updateVideos(){
         bindDataObserver();
