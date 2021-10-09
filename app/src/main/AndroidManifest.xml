@@ -20,7 +20,7 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.patron.PatronMainActivity"
+            android:name=".activities.patron.PatronInitialActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

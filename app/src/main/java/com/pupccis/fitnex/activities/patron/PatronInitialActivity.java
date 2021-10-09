@@ -3,24 +3,35 @@ package com.pupccis.fitnex.activities.patron;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.databinding.ActivityPatronMainBinding;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
 
-public class PatronMainActivity extends AppCompatActivity {
+public class PatronInitialActivity extends AppCompatActivity {
     private PatronViewModel patronViewModel = new PatronViewModel();
+    private ActivityPatronMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patron_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_patron_main);
+        binding.setLifecycleOwner(this);
+        binding.executePendingBindings();
 
     }
 
     public PatronViewModel getPatronViewModel() {
         return patronViewModel;
     }
+
+    public void showProgressBar(int view){
+        binding.constraintLayoutPatronProgressBar.setVisibility(view);
+    }
+
 
 }

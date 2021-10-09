@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.pupccis.fitnex.activities.patron.PatronMainActivity;
+import com.pupccis.fitnex.activities.patron.PatronInitialActivity;
 import com.pupccis.fitnex.activities.trainingdashboard.studio.TrainerStudio;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.TrainerDashboardFragmentAdapter;
 import com.pupccis.fitnex.api.adapter.ProgramAdapter;
@@ -138,7 +138,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cardViewViewPatronPage:
-                intent = new Intent(getApplicationContext(), PatronMainActivity.class);
+                intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
                 startActivity(intent);
                 break;
 

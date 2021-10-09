@@ -6,13 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.FragmentInitialPatronPricingBinding;
@@ -72,7 +74,8 @@ public class InitialPatronPricingFragment extends Fragment implements View.OnCli
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_initial_patron_pricing, container, false);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(((PatronMainActivity) getActivity()).getPatronViewModel());
+        binding.setViewModel(((PatronInitialActivity) getActivity()).getPatronViewModel());
+        binding.setFragment(this);
         binding.executePendingBindings();
         return binding.getRoot();
     }
@@ -89,6 +92,19 @@ public class InitialPatronPricingFragment extends Fragment implements View.OnCli
         NavController navController = Navigation.findNavController(view);
         if(view == binding.imageViewPrevStep){
             navController.navigate(R.id.action_initialPatronPricingFragment_to_initialPatronPrivelegesFragment);
+        }
+        else if(view == binding.buttonFinishSetup){
+            Log.d("Finish", "Clicked");
+            ((PatronInitialActivity) getActivity()).showProgressBar(View.VISIBLE);
+            binding.getViewModel().finishPatronSetup().observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    if(aBoolean != null && aBoolean){
+                        Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        ((PatronInitialActivity) getActivity()).showProgressBar(View.GONE);
+                    }
+                }
+            });
         }
     }
 }

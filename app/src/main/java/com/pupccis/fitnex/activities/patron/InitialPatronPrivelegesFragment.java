@@ -1,6 +1,5 @@
 package com.pupccis.fitnex.activities.patron;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.setDropdown;
 
 import android.content.Context;
@@ -22,13 +21,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.routine.RoutineTracker;
 import com.pupccis.fitnex.api.BulletListUtil;
 import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.databinding.FragmentInitialPatronPrivilegesBinding;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,7 +86,7 @@ public class InitialPatronPrivelegesFragment extends Fragment implements View.On
         binding.executePendingBindings();
         binding.setLifecycleOwner(this);
         binding.setFragment(this);
-        binding.setViewModel(((PatronMainActivity) getActivity()).getPatronViewModel());
+        binding.setViewModel(((PatronInitialActivity) getActivity()).getPatronViewModel());
         return binding.getRoot();
     }
 

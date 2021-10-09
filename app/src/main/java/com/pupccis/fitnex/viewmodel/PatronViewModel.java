@@ -184,9 +184,9 @@ public class PatronViewModel extends BaseObservable {
         privilegeListLiveData.postValue(privilegeList);
     }
 
-    public void finishPatronSetup(){
+    public MutableLiveData<Boolean> finishPatronSetup(){
         Patron patron = new Patron(System.currentTimeMillis(), privilegeData);
-        patronRepository.insertPatronSetup(patron);
+        return patronRepository.insertPatronSetup(patron);
     }
 
     //Private Methods
