@@ -8,10 +8,12 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -53,7 +55,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
 
     public void onLoginClick(View View){
         startActivity(new Intent(this, FitnexRegister.class));
-        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+        overridePendingTransition(R.anim.from_right,R.anim.stay);
 
 
     }
@@ -61,7 +63,8 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if(view == binding.buttonLogin){
-            Log.d("Login", "clicked");
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             boolean isInvalid = false;
             ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>();
             textInputLayouts.add(binding.textInputLoginEmail);

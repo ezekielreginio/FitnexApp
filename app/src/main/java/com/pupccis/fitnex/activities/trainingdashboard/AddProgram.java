@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pupccis.fitnex.databinding.ActivityAddProgramBinding;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
@@ -48,7 +49,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         binding.setPresenter(this);
 
         rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
-        setDropdown(binding.editTextAddProgramCategory, this);
+        setDropdown(binding.editTextAddProgramCategory, this, GlobalConstants.spinner_category);
         binding.editTextAddProgramCategory.setOnItemSelectedListener(this);
 
         if(program_intent!=null){

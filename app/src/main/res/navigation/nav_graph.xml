@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/initialPatronPrivelegesFragment">
+    <fragment
+        android:id="@+id/initialPatronPrivelegesFragment"
+        android:name="com.pupccis.fitnex.activities.patron.InitialPatronPrivelegesFragment"
+        android:label="InitialPatronPrivelegesFragment"
+        tools:layout="@layout/fragment_initial_patron_privileges">
+        <action
+            android:id="@+id/action_initialPatronPrivelegesFragment_to_initialPatronPricingFragment"
+            app:destination="@id/initialPatronPricingFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/initialPatronPricingFragment"
+        android:name="com.pupccis.fitnex.activities.patron.InitialPatronPricingFragment"
+        android:label="fragment_initial_patron_pricing"
+        tools:layout="@layout/fragment_initial_patron_pricing" >
+        <action
+            android:id="@+id/action_initialPatronPricingFragment_to_initialPatronPrivelegesFragment"
+            app:destination="@id/initialPatronPrivelegesFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
+    </fragment>
+</navigation>

@@ -22,39 +22,18 @@
     android:alpha="100"
     tools:context=".activities.trainingdashboard.AddProgram"
     bind:programValidationData="@{viewModel.programValidationData}">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutProgramProgressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/themetintColor"
         android:translationZ="1dp"
-        android:visibility="gone">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ProgressBar
-                android:id="@+id/addProgramProgressBar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:indeterminateTint="@color/whiteTextColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Processing, Please Wait"
-                android:textColor="@color/whiteTextColor"
-                app:layout_constraintTop_toBottomOf="@id/addProgramProgressBar" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:visibility="gone"
+        >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/include_loading_layout"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

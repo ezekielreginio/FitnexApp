@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.pupccis.fitnex.activities.patron.PatronMainActivity;
 import com.pupccis.fitnex.activities.trainingdashboard.studio.TrainerStudio;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.TrainerDashboardFragmentAdapter;
 import com.pupccis.fitnex.api.adapter.ProgramAdapter;
@@ -30,6 +31,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
     private LinearLayout addButton;
     private ConstraintLayout trainerStudioButton, programPanel;
+    private CardView cardViewViewPatronPage;
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
@@ -47,17 +49,17 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_dashboard);
 
-
-
         userPreferences = new UserPreferences(getApplicationContext());
         tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
         viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
 
         addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
         trainerStudioButton = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerStudioButton);
+        cardViewViewPatronPage = findViewById(R.id.cardViewViewPatronPage);
 
         addButton.setOnClickListener(this);
         trainerStudioButton.setOnClickListener(this);
+        cardViewViewPatronPage.setOnClickListener(this);
 
         programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
 
@@ -134,6 +136,10 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("access_type", "owner");
                 startActivity(intent);
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.cardViewViewPatronPage:
+                intent = new Intent(getApplicationContext(), PatronMainActivity.class);
+                startActivity(intent);
                 break;
 
         }
