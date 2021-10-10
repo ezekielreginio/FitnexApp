@@ -22,10 +22,12 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.databinding.ActivityLoginFitnexBinding;
 import com.pupccis.fitnex.model.User;
+import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.LoginViewModel;
+import com.pupccis.fitnex.viewmodel.PatronViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,10 +83,17 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                         if(user == null)
                             Toast.makeText(FitnexLogin.this, "Invalid Username and/or Password, Please Try Again.", Toast.LENGTH_SHORT).show();
                         else{
-
                             userPreferences.setUserPreferences(user);
+
                             if(user.getUserType().equals("trainer")){
-                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                PatronViewModel patronViewModel = new PatronViewModel();
+                                patronViewModel.checkPatronData().observe(binding.getLifecycleOwner(), isSet -> {
+                                    if(isSet != null){
+                                        Log.d("Patron is Set", isSet.toString());
+                                        userPreferences.putBoolean(PatronConstants.KEY_PATRON_SET, isSet);
+                                        startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                    }
+                                });
                             }
                             else if(user.getUserType().equals("trainee")){
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));

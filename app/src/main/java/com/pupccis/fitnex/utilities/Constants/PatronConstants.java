@@ -11,6 +11,7 @@ public class PatronConstants {
     public static final String KEY_FITNESS_CLASS_SESSION_NO = "fitnessClassSessionNo";
     public static final String KEY_PERSONAL_COACHING_SESSION_NO = "personalCoachingSessionNo";
     public static final String KEY_CUSTOM_PRIVILEGE = "customPrivilege";
+    public static final String KEY_PATRON_SET = "patronSet";
 
     public static final String KEY_PRICING = "monthlyPrice";
 }
