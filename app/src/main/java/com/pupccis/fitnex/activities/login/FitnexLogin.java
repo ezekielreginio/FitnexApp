@@ -8,10 +8,12 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,10 +22,12 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.databinding.ActivityLoginFitnexBinding;
 import com.pupccis.fitnex.model.User;
+import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.LoginViewModel;
+import com.pupccis.fitnex.viewmodel.PatronViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,26 +46,18 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
         binding.executePendingBindings();
 
         userPreferences = new UserPreferences(getApplicationContext());
-//
-//        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        }
-//
-//        setContentView(R.layout.activity_login_fitnex);
-
     }
 
     public void onLoginClick(View View){
         startActivity(new Intent(this, FitnexRegister.class));
-        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
-
-
+        overridePendingTransition(R.anim.from_right,R.anim.stay);
     }
 
     @Override
     public void onClick(View view) {
         if(view == binding.buttonLogin){
-            Log.d("Login", "clicked");
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             boolean isInvalid = false;
             ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>();
             textInputLayouts.add(binding.textInputLoginEmail);
@@ -78,10 +74,17 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                         if(user == null)
                             Toast.makeText(FitnexLogin.this, "Invalid Username and/or Password, Please Try Again.", Toast.LENGTH_SHORT).show();
                         else{
-
                             userPreferences.setUserPreferences(user);
+
                             if(user.getUserType().equals("trainer")){
-                                startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                PatronViewModel patronViewModel = new PatronViewModel();
+                                patronViewModel.checkPatronData().observe(binding.getLifecycleOwner(), isSet -> {
+                                    if(isSet != null){
+                                        Log.d("Patron is Set", isSet.toString());
+                                        userPreferences.putBoolean(PatronConstants.KEY_PATRON_SET, isSet);
+                                        startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                    }
+                                });
                             }
                             else if(user.getUserType().equals("trainee")){
                                 startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));

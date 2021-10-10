@@ -14,4 +14,25 @@ public class GlobalConstants {
     public static final String KEY_UPDATE_TYPE_DELETE = "delete";
     public static final String KEY_UPDATE_TYPE_LOADED = "loaded";
 
+    public static final String [] spinner_category = new String[]{
+            "Select an Item",
+            "Cardio",
+            "Sports",
+            "Strength"
+    };
+
+    public static final String [] spinner_prestige = new String[]{
+            "Select a Prestige",
+            "Add Fitness Class Sessions",
+            "Add Personal Coaching Sessions",
+            "Add Custom Prestige"
+    };
+
+    public static final String [] spinner_patron = new String[]{
+            "Select a Patron Level",
+            "Free",
+            "Bronze",
+            "Silver",
+            "Gold"
+    };
 }

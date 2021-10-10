@@ -26,7 +26,6 @@ public class ViewHandler {
       "Sports",
       "Strength"
     };
-    static List<String> categoryList = new ArrayList<>(Arrays.asList(category));
 
     public static void errorHandler(TextInputLayout textInputLayout, ValidationResult result) {
         textInputLayout.setErrorEnabled(!result.isValid());
@@ -53,14 +52,16 @@ public class ViewHandler {
         return isInvalid;
     }
 
+
     public static void rotateAnimation(Animation rotateAnimation, ImageView button) {
         button.setImageResource(R.drawable.ic_close_button);
         button.startAnimation(rotateAnimation);
     }
 
-    public static void setDropdown(Spinner spinner, Context context){
+    public static void setDropdown(Spinner spinner, Context context, String [] stringArray){
+        List<String> spinnerList = new ArrayList<>(Arrays.asList(stringArray));
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.category, R.layout.spinner_item);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_item, categoryList){
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_item, spinnerList){
             @Override
             public boolean isEnabled(int position) {
                 if(position == 0)

@@ -6,6 +6,7 @@ import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
@@ -27,6 +28,8 @@ public class ProgramViewModel extends BaseObservable {
     @Bindable
     private int addProgramCategory = -1;
     @Bindable
+    private Privilege addProgramPatronLevel = null;
+    @Bindable
     private String addProgramSessionNumber = null;
     @Bindable
     private String addProgramDuration = null;
@@ -45,6 +48,7 @@ public class ProgramViewModel extends BaseObservable {
     public int getAddProgramCategory() {
         return addProgramCategory;
     }
+    public Privilege getAddProgramPatronLevel() { return addProgramPatronLevel; }
     public String getAddProgramSessionNumber() {
         return addProgramSessionNumber;
     }
@@ -67,6 +71,24 @@ public class ProgramViewModel extends BaseObservable {
     }
     public void setAddProgramCategory(int addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
+    }
+    public void setAddProgramPatronLevel(int addProgramPatronLevel) {
+        switch (addProgramPatronLevel){
+            case 1:
+                this.addProgramPatronLevel = Privilege.FREE;
+                break;
+            case 2:
+                this.addProgramPatronLevel = Privilege.BRONZE;
+                break;
+            case 3:
+                this.addProgramPatronLevel = Privilege.SILVER;
+                break;
+            case 4:
+                this.addProgramPatronLevel = Privilege.GOLD;
+                break;
+        }
+        if(this.addProgramPatronLevel != null)
+        Log.d("Privilege", this.addProgramPatronLevel.toString());
     }
     public void setAddProgramSessionNumber(String addProgramSessionNumber) {
         this.addProgramSessionNumber = addProgramSessionNumber;
@@ -144,6 +166,7 @@ public class ProgramViewModel extends BaseObservable {
         Program program = new Program.Builder(getAddProgramName()
                 ,getAddProgramDescription()
                 ,getAddProgramCategory()
+                ,getAddProgramPatronLevel().toString()
                 ,getAddProgramSessionNumber()
                 ,getAddProgramDuration())
                 .setTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid())

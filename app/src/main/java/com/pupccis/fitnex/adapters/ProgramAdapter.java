@@ -23,7 +23,6 @@ import timber.log.Timber;
 
 public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
-    private ItemContainerProgramBinding binding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
     private AccessType accessType;
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
@@ -39,12 +38,11 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     @NonNull
     @Override
     public ProgramHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        binding = ItemContainerProgramBinding.inflate(inflater, parent, false);
+        ItemContainerProgramBinding binding = ItemContainerProgramBinding.inflate(inflater, parent, false);
         binding.setViewModel(programViewModel);
 
-        return new ProgramHolder(binding.getRoot());
+        return new ProgramHolder(binding);
     }
 
     public ProgramViewModel getViewModel(){
@@ -56,8 +54,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     }
 
     class ProgramHolder extends RecyclerView.ViewHolder{
-        public ProgramHolder(@NonNull View itemView) {
-            super(itemView);
+        private ItemContainerProgramBinding binding;
+        public ProgramHolder(@NonNull ItemContainerProgramBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
         void setProgramData(Program model){
             binding.textProgramName.setText(model.getName());

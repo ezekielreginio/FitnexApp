@@ -47,11 +47,13 @@ public class ProgramFitnessClassRoutineValidationService {
                         //.regexValidation("[a-z]", "Invalid Time Input")
                         .regexValidation("((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))", "Invalid Time Input")
                         .validate();
+                break;
             case CATEGORY:
                 result = service
                         .requiredField()
                         .validateCategory()
                         .validate();
+                break;
         }
         return result;
     }

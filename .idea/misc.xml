@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable-v24/foreground_loading_tint.xml" value="0.3769230769230769" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/background_accept_invitation.xml" value="0.3769230769230769" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/background_meeting_invitation.xml" value="0.22135416666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/background_meeting_invitation_user_icon.xml" value="0.3769230769230769" />
@@ -15,17 +16,26 @@
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/button_update.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/foreground_thumbnail_tint.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_accept.xml" value="0.3769230769230769" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_add_img.xml" value="0.3828125" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_arrow_right.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_back_img.xml" value="0.2140625" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_baseline_forward_10_24.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_close_blue.xml" value="0.23958333333333334" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_dashboard.xml" value="0.2203125" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_message_icon.xml" value="0.2203125" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_next_img.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_reject.xml" value="0.22135416666666666" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_search_icon.xml" value="0.2203125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_submenu.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_video.xml" value="0.22135416666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/layout_bg.xml" value="0.22135416666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/layout_bg_program_cardio.xml" value="0.22135416666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/layout_bg_program_strength.xml" value="0.22135416666666666" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/tab_indicator.xml" value="0.3645833333333333" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/font/helvetica_heavy.xml" value="0.23541666666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_add_class.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_add_program.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_add_routine.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_add_video.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_fitnex_register.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_fitnex_trainer_application.xml" value="0.35733695652173914" />
@@ -33,36 +43,44 @@
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_login_fitnex.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_outgoing_invitation.xml" value="0.35733695652173914" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_patron_main.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_routine_page.xml" value="0.2234375" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_routine_tracker.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainee_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainee_workout_favorites.xml" value="0.36666666666666664" />
-        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_studio.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_demo.xml" value="0.19931271477663232" />
-        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_player.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_player.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/custom_controller.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_fitness_classes.xml" value="0.28894927536231885" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_pricing.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_privileges.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_step1.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_step2.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_programs.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_routine.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_routine_tracker.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/include_loading_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_comment.xml" value="0.4227467811158798" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.23489583333333333" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_routines.xml" value="0.3663949275362319" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.42168674698795183" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_timer.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/routine_timer_container.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/spinner_item.xml" value="0.15942028985507245" />
         <entry key="..\:/AndroidStudioProjects/FitnexApp/app/src/main/res/menu/comment_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_fitnex_register.xml" value="0.28940217391304346" />
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_login_fitnex.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_video_demo.xml" value="0.33" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable-v24/ic_vector_left_health_am.xml" value="0.2703125" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable-v24/ic_vector_right_health_am.xml" value="0.28229166666666666" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/background_healthassessment_header.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/background_thumbnail_btn.xml" value="0.2703125" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_background_blue.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_join.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_view.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/foreground_thumbnail_tint.xml" value="0.1421875" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_baseline_pause_circle_outline_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_cardview_rounded_corner.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_circle_imageview.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_edit_btn.xml" value="0.2703125" />
@@ -70,19 +88,16 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_fitnex_logo_outline.xml" value="0.1" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_message_icon.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_side_bg.xml" value="0.2703125" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_submenu.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_class.xml" value="0.176" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_program.xml" value="0.3255208333333333" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_routine.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_fitnex_register.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_fitnex_trainer_application.xml" value="0.4" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_health_assessment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_login_fitnex.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_routine_page.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_search_engine.xml" value="0.2" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_dashboard.xml" value="0.264" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_home.xml" value="0.20742753623188406" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_profile.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_studio.xml" value="0.2105978260869565" />
@@ -95,8 +110,6 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_programs.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_programs_se.xml" value="0.2105978260869565" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_schedule.xml" value="0.15625" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_step1.xml" value="0.264" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_step2.xml" value="0.36342592592592593" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_trainees.xml" value="0.15625" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_videos_se.xml" value="0.2105978260869565" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.4" />
@@ -104,11 +117,19 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_routines.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_trainer.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_videos.xml" value="0.20516304347826086" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.264" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="1.0" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_add_program.xml" value="0.33" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_routine_tracker.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_patron_page.xml" value="0.24048913043478262" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_privileges.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_routine.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/routine_timer_container.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

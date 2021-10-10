@@ -66,3 +66,5 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 .idea/deploymentTargetDropDown.xml
+.idea/misc.xml
+.idea/modules.xml

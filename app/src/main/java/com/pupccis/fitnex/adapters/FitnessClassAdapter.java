@@ -21,7 +21,6 @@ import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 import com.pupccis.fitnex.api.enums.AccessType;
 
 public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, FitnessClassAdapter.FitnessClassHolder> {
-    private ItemContainerFitnessClassBinding binding;
     private FitnessClassViewModel fitnessClassViewModel = new FitnessClassViewModel();
     private AccessType accessType;
 
@@ -41,9 +40,9 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
     @Override
     public FitnessClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        binding = ItemContainerFitnessClassBinding.inflate(inflater, parent, false);
+        ItemContainerFitnessClassBinding binding = ItemContainerFitnessClassBinding.inflate(inflater, parent, false);
         binding.setViewModel(fitnessClassViewModel);
-        return new FitnessClassHolder(binding.getRoot());
+        return new FitnessClassHolder(binding);
     }
 
     public FitnessClassViewModel getViewModel(){return fitnessClassViewModel;}
@@ -53,9 +52,11 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
     }
 
     class FitnessClassHolder extends RecyclerView.ViewHolder{
+        private ItemContainerFitnessClassBinding binding;
 
-        public FitnessClassHolder(@NonNull View itemView) {
-            super(itemView);
+        public FitnessClassHolder(@NonNull ItemContainerFitnessClassBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
         void setFitnessClassData(FitnessClass model){
             binding.textFitnessClassName.setText(model.getClassName());
