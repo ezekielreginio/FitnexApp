@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.api.BulletListUtil;
 import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.databinding.ActivityTrainerPatronPageBinding;
@@ -60,4 +62,10 @@ public class TrainerPatronPage extends AppCompatActivity {
         binding.textViewGoldPrivilages.setText(BulletListUtil.makeBulletList(binding.getViewModel().getPrivilegeList().get(Privilege.GOLD)));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(TrainerPatronPage.this, TrainerDashboard.class));
+        finish();
+    }
 }

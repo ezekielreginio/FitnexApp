@@ -135,6 +135,40 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputProgramPatronLevel"
+                        style="@style/parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        >
+
+                        <TextView
+                            style="@style/modifiedEditText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:text="Patron Level"
+                            android:textAlignment="center"
+                            android:textColor="#26355E"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/spinnerAddProgramPatronLevel"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:textColorHint="#C5B2B2"
+                            android:background="#FFFFFF"
+                            android:hint="-Select A Category-"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.502"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.498"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputProgramSessionNumber"
                         style="@style/AddProgram"
                         android:layout_marginTop="10dp"

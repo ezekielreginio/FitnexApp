@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.pupccis.fitnex.api.adapter.fragmentAdapters.TrainerDashboardFragmentA
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.login.FitnexRegister;
 import com.pupccis.fitnex.activities.videoconferencing.VideoActivityDemo;
+import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
@@ -30,7 +32,7 @@ import com.pupccis.fitnex.viewmodel.PatronViewModel;
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
     private LinearLayout addButton;
-    private ConstraintLayout trainerStudioButton, programPanel;
+    private ConstraintLayout trainerStudioButton, programPanel, constraintLayoutPatronNotSetModal;
     private CardView cardViewViewPatronPage;
 
     private TabLayout tabLayout;
@@ -40,6 +42,8 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     private CardView cardViewCalls;
     private UserPreferences userPreferences;
     private TextView textViewUserName;
+    private Button buttonSetPatronData;
+    private boolean patronSet;
 
     private PatronViewModel patronViewModel = new PatronViewModel();
 
@@ -49,19 +53,23 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_trainer_dashboard);
 
         userPreferences = new UserPreferences(getApplicationContext());
+        patronSet = userPreferences.getBoolean(PatronConstants.KEY_PATRON_SET);
         tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
         viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
         textViewUserName = findViewById(R.id.textViewUserName);
 
         addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
         trainerStudioButton = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerStudioButton);
+        constraintLayoutPatronNotSetModal = findViewById(R.id.constraintLayoutPatronNotSetModal);
         cardViewViewPatronPage = findViewById(R.id.cardViewViewPatronPage);
+        buttonSetPatronData = findViewById(R.id.buttonSetPatronData);
 
         textViewUserName.setText(userPreferences.getString(UserConstants.KEY_USER_NAME));
 
         addButton.setOnClickListener(this);
         trainerStudioButton.setOnClickListener(this);
         cardViewViewPatronPage.setOnClickListener(this);
+        buttonSetPatronData.setOnClickListener(this);
 
         programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
 
@@ -127,8 +135,13 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.linearLayoutAddProgramButton:
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                if(patronSet){
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                }
+                else{
+                    constraintLayoutPatronNotSetModal.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.cardViewCalls:
                 startActivity(new Intent(getApplicationContext(), VideoActivityDemo.class));
@@ -150,7 +163,6 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
                             else{
                                 intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
-
                             }
                             patronViewModel.checkPatronData().removeObserver(this);
                             startActivity(intent);
@@ -166,6 +178,11 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 //                            }
 //                        }
 //                    });
+                break;
+            case R.id.buttonSetPatronData:
+                    constraintLayoutPatronNotSetModal.setVisibility(View.GONE);
+                    intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
+                    startActivity(intent);
                 break;
 
         }

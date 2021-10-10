@@ -46,20 +46,11 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
         binding.executePendingBindings();
 
         userPreferences = new UserPreferences(getApplicationContext());
-//
-//        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        }
-//
-//        setContentView(R.layout.activity_login_fitnex);
-
     }
 
     public void onLoginClick(View View){
         startActivity(new Intent(this, FitnexRegister.class));
         overridePendingTransition(R.anim.from_right,R.anim.stay);
-
-
     }
 
     @Override

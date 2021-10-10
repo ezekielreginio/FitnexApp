@@ -2,15 +2,9 @@
 <layout xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-        <!--        <variable-->
-        <!--            name="program"-->
-        <!--            type="com.pupccis.fitnex.model.Program" />-->
-
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.RoutineViewModel" />
-
-
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -99,93 +93,6 @@
                 android:text="0.0"
                 android:textColor="#858585"
                 />
-
-
-        </LinearLayout>
-        <!--    <ImageView-->
-        <!--        android:id="@+id/imageView3"-->
-        <!--        android:layout_width="30dp"-->
-        <!--        android:layout_height="30dp"-->
-        <!--        android:layout_gravity="center_horizontal"-->
-        <!--        android:layout_marginStart="24dp"-->
-        <!--        android:layout_marginTop="12dp"-->
-        <!--        android:background="@drawable/ic_ring_icon"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/textView15"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="1"-->
-        <!--        android:textColor="#000000"-->
-        <!--        app:layout_constraintBottom_toBottomOf="@+id/imageView3"-->
-        <!--        app:layout_constraintEnd_toEndOf="@+id/imageView3"-->
-        <!--        app:layout_constraintStart_toStartOf="@+id/imageView3"-->
-        <!--        app:layout_constraintTop_toTopOf="@+id/imageView3" />-->
-
-        <!--    <EditText-->
-        <!--        android:id="@+id/textViewWeight"-->
-        <!--        android:layout_width="50dp"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:layout_marginStart="64dp"-->
-        <!--        android:textColor="@color/blueTextColor"-->
-        <!--        android:hint="10"-->
-        <!--        android:textAlignment="center"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintStart_toEndOf="@+id/imageView3"-->
-        <!--        app:layout_constraintTop_toTopOf="parent"-->
-        <!--        app:layout_constraintVertical_bias="0.0"-->
-        <!--        />-->
-        <!--&lt;!&ndash;    <TextView&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:id="@+id/textViewWeight"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:layout_marginStart="64dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:text="0"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:textColor="#6C6C6C"&ndash;&gt;-->
-        <!--&lt;!&ndash;        android:textSize="40dp"&ndash;&gt;-->
-
-        <!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;        app:layout_constraintStart_toEndOf="@+id/imageView3"&ndash;&gt;-->
-        <!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;        app:layout_constraintVertical_bias="0.0" />&ndash;&gt;-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/textViewReps"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="0"-->
-        <!--        android:textColor="#6C6C6C"-->
-        <!--        android:textSize="40dp"-->
-        <!--        android:layout_marginStart="64dp"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintStart_toEndOf="@+id/textView19"-->
-        <!--        app:layout_constraintTop_toTopOf="parent"-->
-        <!--        app:layout_constraintVertical_bias="0.0" />-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/textView17"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_marginEnd="16dp"-->
-        <!--        android:text="0.00"-->
-        <!--        android:layout_marginStart="64dp"-->
-        <!--        android:textColor="#858585"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toEndOf="@+id/textViewReps"-->
-        <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/textView19"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="x"-->
-        <!--        android:layout_marginStart="64dp"-->
-        <!--        android:textColor="#919191"-->
-        <!--        app:layout_constraintStart_toEndOf="@+id/textViewWeight"-->
-        <!--        tools:layout_editor_absoluteY="17dp" />-->
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

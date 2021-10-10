@@ -1,4 +1,4 @@
 package com.pupccis.fitnex.api.enums;
 
-public enum Privilege { BRONZE, SILVER, GOLD
+public enum Privilege { FREE, BRONZE, SILVER, GOLD
 }

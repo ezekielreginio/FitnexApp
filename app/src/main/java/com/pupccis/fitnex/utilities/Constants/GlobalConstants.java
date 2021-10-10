@@ -27,4 +27,12 @@ public class GlobalConstants {
             "Add Personal Coaching Sessions",
             "Add Custom Prestige"
     };
+
+    public static final String [] spinner_patron = new String[]{
+            "Select a Patron Level",
+            "Free",
+            "Bronze",
+            "Silver",
+            "Gold"
+    };
 }
