@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/health_navgraph"
+    app:startDestination="@id/step1">
+
+    <fragment
+        android:id="@+id/step1"
+        android:name="com.pupccis.fitnex.activities.healthassessment.step1"
+        android:label="fragment_step1"
+        tools:layout="@layout/fragment_step1" >
+        <action
+            android:id="@+id/action_step1_to_step2"
+            app:destination="@id/step2"
+            app:enterAnim="@anim/slide_in_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/step2"
+        android:name="com.pupccis.fitnex.activities.healthassessment.step2"
+        android:label="step2"
+        tools:layout="@layout/fragment_step2">
+        <action
+            android:id="@+id/action_step23_to_step1"
+            app:destination="@id/step1" />
+    </fragment>
+</navigation>

@@ -6,13 +6,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
+import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
 import com.pupccis.fitnex.activities.searchengine.SearchEngine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 
 public class TraineeDashboard extends AppCompatActivity {
     private ConstraintLayout buttonSearch, constraintLayoutDashboard;
+    private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,15 @@ public class TraineeDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+            }
+        });
+
+        button = findViewById(R.id.buttonQuickAssess);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TraineeDashboard.this, HealthAssessment.class);
+                startActivity(intent);
             }
         });
     }
