@@ -13,7 +13,8 @@
         <action
             android:id="@+id/action_step1_to_step2"
             app:destination="@id/step2"
-            app:enterAnim="@anim/slide_in_right"/>
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
     </fragment>
     <fragment
         android:id="@+id/step2"
@@ -21,7 +22,25 @@
         android:label="step2"
         tools:layout="@layout/fragment_step2">
         <action
-            android:id="@+id/action_step23_to_step1"
-            app:destination="@id/step1" />
+            android:id="@+id/action_step2_to_step1"
+            app:destination="@id/step1"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_step2_to_step3"
+            app:destination="@id/step3"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/step3"
+        android:name="com.pupccis.fitnex.activities.healthassessment.step3"
+        android:label="fragment_step3"
+        tools:layout="@layout/fragment_step3" >
+        <action
+            android:id="@+id/action_step3_to_step2"
+            app:destination="@id/step2"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
     </fragment>
 </navigation>
