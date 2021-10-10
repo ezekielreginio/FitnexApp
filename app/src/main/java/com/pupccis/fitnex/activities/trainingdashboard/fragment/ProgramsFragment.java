@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.trainer.fragment;
+package com.pupccis.fitnex.activities.trainingdashboard.fragment;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIProgramOptions;
 
@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.activities.trainingdashboard.AddProgram;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;

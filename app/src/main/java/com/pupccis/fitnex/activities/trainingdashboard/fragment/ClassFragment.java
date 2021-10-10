@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.trainer.fragment;
+package com.pupccis.fitnex.activities.trainingdashboard.fragment;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIFitnessClassOptions;
 
@@ -15,27 +15,18 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.pupccis.fitnex.activities.main.trainer.AddFitnessClass;
-import com.pupccis.fitnex.activities.main.trainer.AddProgram;
+import com.pupccis.fitnex.activities.trainingdashboard.AddFitnessClass;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
 import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
-import com.pupccis.fitnex.model.DAO.FitnessClassDAO;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClassFragment extends Fragment{
     //Fragment Variables

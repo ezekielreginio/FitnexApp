@@ -133,7 +133,7 @@ public class RoutineViewModel extends BaseObservable {
     }
     public void setRoutineWeight(String routineWeight) { this.routineWeight = routineWeight; }
 
-    public RoutineData setRoutineDataList(Routine routine, int routinePosition) {
+    public RoutineData setRoutineDataList(Routine routine, int routinePosition, String programID) {
         HashMap<Integer, RoutineData> routineDataMap = new HashMap<>();
         int routineReps = routine.getReps();
         double routineWeight = routineWeight = routine.getWeight();;
@@ -157,7 +157,7 @@ public class RoutineViewModel extends BaseObservable {
 
         routineDataMap.put(routinePosition, routineData);
         routineDataList.put(routine.getId(), routineDataMap);
-
+        routinesRepository.updateRealtimeRoutineTracker(routineData, routinePosition, programID);
         return routineData;
 //        this.routineDataList = routineDataList;
     }

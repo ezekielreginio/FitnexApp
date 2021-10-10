@@ -238,15 +238,17 @@ public class TrainingVideoPlayer extends AppCompatActivity implements View.OnCli
             @Override
             public void onChanged(HashMap<String, Boolean> stringBooleanHashMap) {
                 Log.d("Like Event", "Triggered");
-                if(stringBooleanHashMap.get("liked"))
-                    binding.buttonVideoLike.setImageResource(R.drawable.ic_baseline_thumb_up_24);
-                else
-                    binding.buttonVideoLike.setImageResource(R.drawable.ic_outline_thumb_up_alt_24);
+                if(stringBooleanHashMap != null){
+                    if(stringBooleanHashMap.get("liked"))
+                        binding.buttonVideoLike.setImageResource(R.drawable.ic_baseline_thumb_up_24);
+                    else
+                        binding.buttonVideoLike.setImageResource(R.drawable.ic_outline_thumb_up_alt_24);
 
-                if(stringBooleanHashMap.get("disliked"))
-                    binding.buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
-                else
-                    binding.buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
+                    if(stringBooleanHashMap.get("disliked"))
+                        binding.buttonVideoDislike.setImageResource(R.drawable.ic_baseline_thumb_down_24);
+                    else
+                        binding.buttonVideoDislike.setImageResource(R.drawable.ic_outline_thumb_down_alt_24);
+                }
             }
         });
 

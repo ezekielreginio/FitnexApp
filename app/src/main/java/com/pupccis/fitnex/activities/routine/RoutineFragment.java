@@ -48,7 +48,8 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
 
     private RoutineTrackerAdapter adapter;
     private List<RoutineData> routineDataList;
-    int position = 0;
+    private int position = 0;
+    private String programID;
 
     public RoutineFragment() {
         // Required empty public constructor
@@ -91,6 +92,7 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         routineDataList = new ArrayList<>();
+        programID = ((RoutineTracker) getActivity()).getProgramID();
         RoutineData routineData = binding.getViewModel().setRoutineData(routine);
         for(int i=0;i<routine.getSets();i++){
             routineDataList.add(routineData);
@@ -109,7 +111,7 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
 
                 if(position<routine.getSets()){
                     ((RoutineTracker) getActivity()).showRoutineRestTimer();
-                    RoutineData newRoutineData = binding.getViewModel().setRoutineDataList(routine, position);
+                    RoutineData newRoutineData = binding.getViewModel().setRoutineDataList(routine, position, programID);
                     routineDataList.set(position, newRoutineData);
                     Log.d("Reps", newRoutineData.getReps()+"");
                     //routineDataList.get(position).setCompleted(true);

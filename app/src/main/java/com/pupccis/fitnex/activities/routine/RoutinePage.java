@@ -30,7 +30,6 @@ import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 public class RoutinePage extends AppCompatActivity implements View.OnClickListener{
     private ImageView AddRoutineButton;
@@ -287,7 +286,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
         intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+        overridePendingTransition(R.anim.from_right,R.anim.stay);
     }
 
     private void updateCountDownText() {

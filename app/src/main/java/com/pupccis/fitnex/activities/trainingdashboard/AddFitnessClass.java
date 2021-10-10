@@ -1,4 +1,4 @@
-package com.pupccis.fitnex.activities.main.trainer;
+package com.pupccis.fitnex.activities.trainingdashboard;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
@@ -64,7 +65,7 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
 
 
         rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddClassButton);
-        setDropdown(binding.editTextAddFitnessClassCategory, this);
+        setDropdown(binding.editTextAddFitnessClassCategory, this, GlobalConstants.spinner_category);
         binding.editTextAddFitnessClassCategory.setOnItemSelectedListener(this);
 
         //Fitness Intent Information for Update

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".activities.main.Trainee.TraineeDashboard" >
+    tools:context=".activities.main.trainee.TraineeDashboard" >
 
     <TextView
         android:id="@+id/textView2"
@@ -204,7 +204,7 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/textView3"
+                                    android:id="@+id/textViewUserName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
@@ -305,7 +305,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/constraintLayoutDashboard"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="60dp"
@@ -317,7 +317,7 @@
                 android:id="@+id/buttonTraineeHome"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/ic_baseline_home_24"
+                app:srcCompat="@drawable/ic_dashboard"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

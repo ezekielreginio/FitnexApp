@@ -5,6 +5,7 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
+import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
@@ -44,6 +45,11 @@ public class ViewModelHandler {
     public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUIFitnessClassOptions(){
         return new FirestoreRecyclerOptions.Builder<FitnessClass>()
                 .setQuery(FitnessClassesRepository.getInstance().readFitnessClassesQuery(), FitnessClass.class)
+                .build();
+    }
+    public static FirestoreRecyclerOptions<FitnessClass> getFirebaseUISearchFitnessClassOptions(String input){
+        return new FirestoreRecyclerOptions.Builder<FitnessClass>()
+                .setQuery(FitnessClassesRepository.getInstance().searchFitnessClassesQuery(input), FitnessClass.class)
                 .build();
     }
 

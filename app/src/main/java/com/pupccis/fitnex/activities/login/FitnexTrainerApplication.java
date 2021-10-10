@@ -36,6 +36,6 @@ public class FitnexTrainerApplication extends AppCompatActivity {
     }
     public void onLoginClick (View view){
         startActivity(new Intent(this, FitnexLogin.class ));
-        overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
+        overridePendingTransition(R.anim.from_left, android.R.anim.slide_out_right);
     }
 }

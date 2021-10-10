@@ -11,24 +11,18 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 //import com.google.firebase.firestore.auth.User;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.main.Trainee.TraineeDashboard;
-import com.pupccis.fitnex.activities.main.trainer.TrainerDashboard;
+import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
+import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
-import com.pupccis.fitnex.validation.ValidationModel;
 import com.pupccis.fitnex.databinding.ActivityFitnexRegisterBinding;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
@@ -36,7 +30,6 @@ import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class FitnexRegister extends AppCompatActivity implements View.OnClickListener{
     private static ActivityFitnexRegisterBinding binding;
@@ -56,7 +49,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
 
     public void onLoginClick (View view){
         startActivity(new Intent(this, FitnexLogin.class ));
-        overridePendingTransition(R.anim.slide_in_left, android.R.anim.slide_out_right);
+        overridePendingTransition(R.anim.from_left, android.R.anim.slide_out_right);
     }
 
     @BindingAdapter({"validationData"})

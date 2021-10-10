@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.activities.videoplayer.TrainingVideoPlayer;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.ItemContainerStudioVideoBinding;
 import com.pupccis.fitnex.model.PostVideo;
@@ -21,6 +24,7 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
     private ItemContainerStudioVideoBinding binding;
     private PostVideoViewModel postVideoViewModel = new PostVideoViewModel();
     private AccessType accessType;
+    private Activity activity;
 
     public TrainerStudioVideosAdapter(@NonNull FirestoreRecyclerOptions<PostVideo> options) {
         super(options);
@@ -53,6 +57,11 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
         this.accessType = accessType;
     }
 
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
     class PostVideoHolder extends RecyclerView.ViewHolder{
 
         public PostVideoHolder(@NonNull View itemView) {
@@ -69,6 +78,15 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
                     binding.constraintLayoutEditDelete.setVisibility(View.GONE);
                     break;
             }
+
+            binding.cardViewVideoThumbnail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent= new Intent(activity.getApplicationContext(), TrainingVideoPlayer.class);
+                    intent.putExtra("PostVideo", model);
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 }

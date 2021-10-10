@@ -1,31 +1,21 @@
-package com.pupccis.fitnex.activities.main.trainer.studio;
+package com.pupccis.fitnex.activities.trainingdashboard.studio;
 
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIPostVideoOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.pupccis.fitnex.activities.videoplayer.TrainingVideoPlayer;
 import com.pupccis.fitnex.adapters.TrainerStudioVideosAdapter;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.ActivityTrainerStudioBinding;
@@ -33,11 +23,7 @@ import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.model.VideoThumbnail;
 import com.pupccis.fitnex.viewmodel.PostVideoViewModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TrainerStudio extends AppCompatActivity implements View.OnClickListener {
     //Private Layout Attributes
@@ -76,7 +62,7 @@ public class TrainerStudio extends AppCompatActivity implements View.OnClickList
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new TrainerStudioVideosAdapter(options);
         adapter.setAccessType(AccessType.OWNER);
-
+        adapter.setActivity(TrainerStudio.this);
         binding.recyclerViewTrainerStudioVideo.setAdapter(adapter);
 
         //Set Lifecycle and ViewModel of Binding
