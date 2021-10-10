@@ -9,6 +9,9 @@ public class Patron implements Serializable {
     private long dateUpdated;
     private HashMap<Privilege, HashMap<String, Object>> privilegeData;
 
+    public Patron() {
+    }
+
     public Patron(long dateUpdated, HashMap<Privilege, HashMap<String, Object>> privilegeData) {
         this.dateUpdated = dateUpdated;
         this.privilegeData = privilegeData;

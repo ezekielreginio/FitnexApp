@@ -20,9 +20,13 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.patron.PatronInitialActivity"
+            android:name=".activities.patron.TrainerPatronPage"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.patron.PatronInitialActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.routine.RoutineTracker"
             android:exported="true"

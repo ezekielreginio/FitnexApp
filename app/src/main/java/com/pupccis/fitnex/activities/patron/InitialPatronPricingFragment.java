@@ -102,6 +102,7 @@ public class InitialPatronPricingFragment extends Fragment implements View.OnCli
                     if(aBoolean != null && aBoolean){
                         Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
                         ((PatronInitialActivity) getActivity()).showProgressBar(View.GONE);
+                        ((PatronInitialActivity) getActivity()).showPatronPage();
                     }
                 }
             });

@@ -4,6 +4,7 @@ public class PatronConstants {
     //Object Name
     public static final String KEY_COLLECTION_PATRON = "patron";
     public static final String KEY_COLLECTION_PRIVILEGE = "privilege";
+    public static final String KEY_COLLECTION_PRIVILEGE_DATA = "privilegeData";
 
     //Object Attributes
     public static final String KEY_DATE_UPDATED = "dateUpdated";

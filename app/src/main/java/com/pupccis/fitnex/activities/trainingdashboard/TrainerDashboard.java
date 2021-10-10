@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -11,21 +12,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.pupccis.fitnex.activities.patron.PatronInitialActivity;
+import com.pupccis.fitnex.activities.patron.TrainerPatronPage;
 import com.pupccis.fitnex.activities.trainingdashboard.studio.TrainerStudio;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.TrainerDashboardFragmentAdapter;
-import com.pupccis.fitnex.api.adapter.ProgramAdapter;
-import com.pupccis.fitnex.model.DAO.ProgramDAO;
-import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.login.FitnexRegister;
 import com.pupccis.fitnex.activities.videoconferencing.VideoActivityDemo;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
-
-import java.util.List;
+import com.pupccis.fitnex.viewmodel.PatronViewModel;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,10 +39,9 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     private Intent intent;
     private CardView cardViewCalls;
     private UserPreferences userPreferences;
-    private ProgramDAO programDAO = new ProgramDAO();
+    private TextView textViewUserName;
 
-    private List<Program> programs;
-    private ProgramAdapter programAdapter;
+    private PatronViewModel patronViewModel = new PatronViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,13 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         userPreferences = new UserPreferences(getApplicationContext());
         tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
         viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
+        textViewUserName = findViewById(R.id.textViewUserName);
 
         addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
         trainerStudioButton = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerStudioButton);
         cardViewViewPatronPage = findViewById(R.id.cardViewViewPatronPage);
+
+        textViewUserName.setText(userPreferences.getString(UserConstants.KEY_USER_NAME));
 
         addButton.setOnClickListener(this);
         trainerStudioButton.setOnClickListener(this);
@@ -138,8 +140,32 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(TrainerDashboard.this, "Click working ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cardViewViewPatronPage:
-                intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
-                startActivity(intent);
+                    patronViewModel.checkPatronData().observe(this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean exist) {
+                            Intent intent;
+                            if(exist){
+                                intent = new Intent(TrainerDashboard.this, TrainerPatronPage.class);
+                            }
+
+                            else{
+                                intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
+
+                            }
+                            patronViewModel.checkPatronData().removeObserver(this);
+                            startActivity(intent);
+                        }
+                    });
+
+//                            .observe(this, new Observer<Patron>() {
+//                        @Override
+//                        public void onChanged(Patron patron) {
+//                            if(patron == null){
+//                                Intent intent = new Intent(getApplicationContext(), PatronInitialActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    });
                 break;
 
         }

@@ -6,7 +6,6 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.model.Patron;
 import com.pupccis.fitnex.repository.PatronRepository;
@@ -123,8 +122,19 @@ public class PatronViewModel extends BaseObservable {
         privilegeData.put(Privilege.GOLD, goldPricingData);
     }
 
+    public void setPatronData(HashMap<String, Object> patronDataMap){
+        HashMap<String, Object> privilegeMap = (HashMap<String, Object>) patronDataMap.get(PatronConstants.KEY_COLLECTION_PRIVILEGE);
+
+        setPrivilegeData((HashMap<String, Object>) privilegeMap.get(Privilege.BRONZE), bronzePrivileges);
+        setPrivilegeData((HashMap<String, Object>) privilegeMap.get(Privilege.SILVER), silverPrivileges);
+        setPrivilegeData((HashMap<String, Object>) privilegeMap.get(Privilege.GOLD), goldPrivileges);
+
+        privilegeListLiveData.postValue(privilegeList);
+    }
+
     //Public Methods
     public void initializePrivileges(){
+
         //Initialize Bronze Privileges
         bronzePrivileges.add("Paid Fitness Programs and Routines (Bronze Level)");
         bronzePrivileges.add("Paid Fitness Training Videos (Bronze Level)");
@@ -184,6 +194,15 @@ public class PatronViewModel extends BaseObservable {
         privilegeListLiveData.postValue(privilegeList);
     }
 
+    //MutableLiveData
+    public MutableLiveData<Boolean> checkPatronData(){
+        return patronRepository.checkPatronData();
+    }
+
+    public MutableLiveData<HashMap<String, Object>> getPatronData(){
+        return patronRepository.getPatronDataCheck();
+    }
+
     public MutableLiveData<Boolean> finishPatronSetup(){
         Patron patron = new Patron(System.currentTimeMillis(), privilegeData);
         return patronRepository.insertPatronSetup(patron);
@@ -200,5 +219,17 @@ public class PatronViewModel extends BaseObservable {
         privilegeData.put(Privilege.BRONZE, new HashMap<>());
         privilegeData.put(Privilege.SILVER, new HashMap<>());
         privilegeData.put(Privilege.GOLD, new HashMap<>());
+    }
+    private void setPrivilegeData(HashMap<String, Object> privilegeData, List<String> privileges) {
+        if(privilegeData.get(PatronConstants.KEY_PERSONAL_COACHING_SESSION_NO) != null)
+            privileges.add("Free Personal Coaching Sessions ("+privilegeData.get(PatronConstants.KEY_PERSONAL_COACHING_SESSION_NO)+" Sessions)");
+        if(privilegeData.get(PatronConstants.KEY_FITNESS_CLASS_SESSION_NO) != null)
+            privileges.add("Free Fitness Training Class Sessions ("+privilegeData.get(PatronConstants.KEY_FITNESS_CLASS_SESSION_NO)+" Sessions)");
+        if(privilegeData.get(PatronConstants.KEY_CUSTOM_PRIVILEGE) != null){
+            List<String> customPrivilagesList = (List<String>) privilegeData.get(PatronConstants.KEY_CUSTOM_PRIVILEGE);
+            for(String customPrivilege : customPrivilagesList)
+                privileges.add(customPrivilege);
+        }
+
     }
 }
