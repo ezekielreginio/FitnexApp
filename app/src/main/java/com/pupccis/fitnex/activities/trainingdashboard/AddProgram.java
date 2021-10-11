@@ -17,19 +17,21 @@ import android.view.View;
 
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.pupccis.fitnex.databinding.ActivityAddProgramBinding;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AddProgram extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class AddProgram extends AppCompatActivity implements View.OnClickListener {
     //Private Class Attributes
     private Program program_intent;
     private static ActivityAddProgramBinding binding;
@@ -48,8 +50,35 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         binding.setPresenter(this);
 
         rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
-        setDropdown(binding.editTextAddProgramCategory, this);
-        binding.editTextAddProgramCategory.setOnItemSelectedListener(this);
+        setDropdown(binding.editTextAddProgramCategory, this, GlobalConstants.spinner_category);
+        setDropdown(binding.spinnerAddProgramPatronLevel, this, GlobalConstants.spinner_patron);
+        binding.editTextAddProgramCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                binding.editTextAddProgramCategory.setSelection(i);
+                binding.getViewModel().setAddProgramCategory(i);
+                binding.textInputProgramCategory.setErrorEnabled(false);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.spinnerAddProgramPatronLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                binding.spinnerAddProgramPatronLevel.setSelection(i);
+                binding.getViewModel().setAddProgramPatronLevel(i);
+                binding.textInputProgramPatronLevel.setErrorEnabled(false);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         if(program_intent!=null){
             binding.editTextAddProgramName.setText(program_intent.getName());
@@ -65,18 +94,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     private void closeForm(){
         startActivity(new Intent(AddProgram.this, TrainerDashboard.class));
         overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        binding.editTextAddProgramCategory.setSelection(i);
-        binding.getViewModel().setAddProgramCategory(i);
-        binding.textInputProgramCategory.setErrorEnabled(false);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @BindingAdapter({"programValidationData"})
@@ -103,7 +120,7 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     public void onClick(View view) {
         if(view == binding.buttonAddProgramButton){
-            ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>() ;
+            ArrayList<TextInputLayout> textInputLayouts = new ArrayList<>();
             textInputLayouts.add(binding.textInputProgramName);
             textInputLayouts.add(binding.textInputProgramDescription);
             textInputLayouts.add(binding.textInputProgramSessionNumber);
@@ -114,7 +131,13 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
 
             if(binding.editTextAddProgramCategory.getSelectedItemPosition() < 1){
                 binding.textInputProgramCategory.setErrorEnabled(true);
-                binding.textInputProgramCategory.setError("Please Select a Category");
+                binding.textInputProgramCategory.setError("Please Select an Option");
+                isInvalid = true;
+            }
+
+            if(binding.spinnerAddProgramPatronLevel.getSelectedItemPosition() < 1){
+                binding.textInputProgramPatronLevel.setErrorEnabled(true);
+                binding.textInputProgramPatronLevel.setError("Please Select an Option");
                 isInvalid = true;
             }
 
@@ -154,4 +177,6 @@ public class AddProgram extends AppCompatActivity implements AdapterView.OnItemS
         else if(view == binding.relativeLayoutAddProgramCloseButton)
             closeForm();
     }
+
+
 }

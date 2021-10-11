@@ -80,7 +80,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:onClick="@{()->viewModel.likeComment(videoCommentInstance, liketype.DISLIKE)}"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

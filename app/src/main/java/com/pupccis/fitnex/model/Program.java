@@ -16,7 +16,7 @@ public class Program implements Serializable {
     private String sessionNumber;
     private String duration;
     private String trainerID;
-
+    private String privilege;
     private String trainees;
     private String programID;
 
@@ -30,6 +30,7 @@ public class Program implements Serializable {
         this.name = builder.name;
         this.description = builder.description;
         this.category = builder.category;
+        this.privilege = builder.privilege;
         this.sessionNumber = builder.sessionNumber;
         this.duration = builder.duration;
         this.trainerID = builder.trainerID;
@@ -45,6 +46,7 @@ public class Program implements Serializable {
         result.put("category", category);
         result.put("sessionNumber", sessionNumber);
         result.put("duration", duration);
+        result.put("privilege", privilege);
 
         result.put(ProgramConstants.KEY_PROGRAM_TRAINER_ID, trainerID);
         return result;
@@ -64,6 +66,8 @@ public class Program implements Serializable {
     public int getCategory() {
         return category;
     }
+
+    public String getPrivilege() { return privilege; }
 
     public String getSessionNumber() {
         return sessionNumber;
@@ -123,15 +127,17 @@ public class Program implements Serializable {
         private final int category;
         private final String sessionNumber;
         private final String duration;
+        private final String privilege;
         private String trainerID;
 
         private String trainees;
         private String programID;
 
-        public Builder(String name, String description, int category, String sessionNumber, String duration){
+        public Builder(String name, String description, int category, String privilege, String sessionNumber, String duration){
             this.name = name;
             this.description = description;
             this.category = category;
+            this.privilege = privilege;
             this.sessionNumber = sessionNumber;
             this.duration = duration;
             this.trainees = "0";
@@ -141,6 +147,7 @@ public class Program implements Serializable {
             this.name = program.getName();
             this.description = program.getDescription();
             this.category = program.getCategory();
+            this.privilege = program.getPrivilege();
             this.sessionNumber = program.getSessionNumber();
             this.duration = program.getDuration();
             this.trainerID = program.getTrainerID();

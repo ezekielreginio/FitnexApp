@@ -14,6 +14,7 @@ import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
@@ -23,7 +24,6 @@ import timber.log.Timber;
 
 public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
-    private ItemContainerProgramBinding binding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
     private AccessType accessType;
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
@@ -39,12 +39,11 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     @NonNull
     @Override
     public ProgramHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        binding = ItemContainerProgramBinding.inflate(inflater, parent, false);
+        ItemContainerProgramBinding binding = ItemContainerProgramBinding.inflate(inflater, parent, false);
         binding.setViewModel(programViewModel);
 
-        return new ProgramHolder(binding.getRoot());
+        return new ProgramHolder(binding);
     }
 
     public ProgramViewModel getViewModel(){
@@ -56,8 +55,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     }
 
     class ProgramHolder extends RecyclerView.ViewHolder{
-        public ProgramHolder(@NonNull View itemView) {
-            super(itemView);
+        private ItemContainerProgramBinding binding;
+        public ProgramHolder(@NonNull ItemContainerProgramBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
         void setProgramData(Program model){
             binding.textProgramName.setText(model.getName());
@@ -71,6 +72,22 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     binding.layoutProgramButtonOwner.setVisibility(View.GONE);
                     break;
             }
+
+            if(!model.getPrivilege().equals(Privilege.FREE.toString()))
+                binding.imageViewBadgeIcon.setVisibility(View.VISIBLE);
+
+            switch(Privilege.valueOf(model.getPrivilege())){
+                case BRONZE:
+                    binding.imageViewBadgeIcon.setImageResource(R.drawable.ic_badge_bronze);
+                    break;
+                case SILVER:
+                    binding.imageViewBadgeIcon.setImageResource(R.drawable.ic_badge_silver);
+                    break;
+                case GOLD:
+                    binding.imageViewBadgeIcon.setImageResource(R.drawable.ic_badge_gold);
+                    break;
+            }
+
             binding.setVariable(BR.program, model);
         }
     }
