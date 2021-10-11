@@ -23,38 +23,53 @@
         >
 
 
-        <TextView
-            android:id="@+id/textProgramName"
-            android:layout_width="295dp"
+        <LinearLayout
+            android:id="@+id/linearLayoutProgramName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cardio Workout Class"
-            android:textColor="@color/whiteTextColor"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <TextView
+                android:id="@+id/textProgramName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cardio Workout Class"
+                android:textColor="@color/whiteTextColor"
+                android:textStyle="bold"
+                 />
+            <ImageView
+                android:id="@+id/imageViewBadgeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_badge_bronze"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textProgramSeparator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
             android:text="||"
             android:textColor="@color/whiteTextColor"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/textProgramName"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/textProgramTrainees"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textProgramTrainees"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
             android:text="0 trainees"
             android:textColor="@color/whiteTextColor"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/textProgramSeparator"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/textViewRoutine"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -76,7 +91,7 @@
             android:orientation="vertical"
             android:visibility="visible"
             android:animateLayoutChanges="true"
-            app:layout_constraintTop_toBottomOf="@id/textProgramName">
+            app:layout_constraintTop_toBottomOf="@id/linearLayoutProgramName">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
