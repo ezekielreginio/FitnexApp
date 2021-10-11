@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.pupccis.fitnex.adapters.RoutineAdapter;
 import com.pupccis.fitnex.databinding.ActivityRoutinePageBinding;
@@ -57,7 +58,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private boolean timerRunning;
 
     private UserPreferences userPreferences;
-    private String userType, userName;
+    private String userType, userName, fcm_token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         userPreferences = new UserPreferences(getApplicationContext());
         userType = userPreferences.getString("usertype");
         userName = userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME);
+
         Log.d("Usertype", userType+"");
         program_intent = (Program) getIntent().getSerializableExtra("program");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
@@ -315,7 +317,9 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
             binding.buttonStartRoutineButton.setVisibility(View.VISIBLE);
         }
         else if(view == binding.buttonViewTrainees){
-
+            Intent intent = new Intent(RoutinePage.this, ActiveTrainees.class);
+            intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
+            startActivity(intent);
         }
     }
 
@@ -339,7 +343,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
     private void startRoutineTracker() {
         binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
-        binding.getViewModel().startRoutine(userName, program_intent.getProgramID());
+        binding.getViewModel().startRoutine(userName, program_intent.getProgramID(), userPreferences.getString(UserConstants.KEY_FCM_TOKEN), FirebaseAuth.getInstance().getCurrentUser().getEmail());
         Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
         intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
         startActivity(intent);

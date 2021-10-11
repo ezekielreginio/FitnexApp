@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.pupccis.fitnex.model.User;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 
 public class UserPreferences {
@@ -20,6 +21,7 @@ public class UserPreferences {
         this.putString(VideoConferencingConstants.KEY_EMAIL, user.getEmail());
         this.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
         this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
+        this.putString(UserConstants.KEY_FCM_TOKEN, user.getToken());
         this.putString("usertype", user.getUserType());
     }
 

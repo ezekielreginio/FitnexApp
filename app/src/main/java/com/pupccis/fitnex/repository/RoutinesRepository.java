@@ -64,6 +64,10 @@ public class RoutinesRepository {
         Query queryRoutines = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).collection(RoutineConstants.KEY_COLLECTION_ROUTINES);
         return queryRoutines;
     }
+
+    public com.google.firebase.database.Query getRealtimeRoutinesQuery(String programID) {
+       return FirebaseDatabase.getInstance().getReference(RoutineConstants.KEY_COLLECTION_ROUTINES).child(programID);
+    }
     public MutableLiveData<Routine> updateRoutine(Routine routine){
         MutableLiveData<Routine> routineMutableLiveData = new MutableLiveData<>();
         Log.d("ROutine ID", routine.getId());
@@ -129,4 +133,6 @@ public class RoutinesRepository {
                 .child(FirebaseAuth.getInstance().getUid())
                 .setValue(realtimeRoutine);
     }
+
+
 }

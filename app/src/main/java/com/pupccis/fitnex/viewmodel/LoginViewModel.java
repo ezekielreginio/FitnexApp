@@ -54,6 +54,6 @@ public class LoginViewModel extends BaseObservable {
 
     public MutableLiveData<User> loginUser(){
 
-        return UserRepository.loginUser(getLoginEmail(), getLoginPassword());
+        return UserRepository.getInstance().loginUser(getLoginEmail(), getLoginPassword());
     }
 }

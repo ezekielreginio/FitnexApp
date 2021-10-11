@@ -65,10 +65,6 @@ public class VideoActivityDemo extends AppCompatActivity implements View.OnClick
                 sendFCMTokenToDatabase(task.getResult());
                 getUsers();
             }
-//            @Override
-//            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
-//                sendFCMTokenToDatabase(task.getResult().getToken());
-//            }
         });
 
         RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);

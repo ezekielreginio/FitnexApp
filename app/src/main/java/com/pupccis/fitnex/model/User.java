@@ -17,6 +17,12 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String name, String email, String token){
+        this.name = name;
+        this.email = email;
+        this.token = token;
+    }
+
     public User(Builder builder){
         this.name = builder.name;
         this.email = builder.email;

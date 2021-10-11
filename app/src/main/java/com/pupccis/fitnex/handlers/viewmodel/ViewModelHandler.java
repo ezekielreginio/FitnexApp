@@ -1,9 +1,11 @@
 package com.pupccis.fitnex.handlers.viewmodel;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.model.VideoComment;
@@ -82,6 +84,12 @@ public class ViewModelHandler {
     public static FirestoreRecyclerOptions<Routine> getFirebaseUIRoutineOptions(String program_id){
         return new FirestoreRecyclerOptions.Builder<Routine>()
                 .setQuery(RoutinesRepository.getInstance().getRoutinesQuery(program_id), Routine.class)
+                .build();
+    }
+
+    public static FirebaseRecyclerOptions<RealtimeRoutine> getFirebaseUIRealtimeRoutineOptions(String programID){
+        return new FirebaseRecyclerOptions.Builder<RealtimeRoutine>()
+                .setQuery(RoutinesRepository.getInstance().getRealtimeRoutinesQuery(programID),RealtimeRoutine.class)
                 .build();
     }
 }

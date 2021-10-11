@@ -253,8 +253,8 @@ public class RoutineViewModel extends BaseObservable {
         programsRepository.saveProgram(program_intent);
     }
 
-    public void startRoutine(String traineeName, String programID) {
-        RealtimeRoutine realtimeRoutine = new RealtimeRoutine(traineeName, programID);
+    public void startRoutine(String traineeName, String programID, String fcm_token, String email) {
+        RealtimeRoutine realtimeRoutine = new RealtimeRoutine(traineeName, programID, fcm_token, email);
         routinesRepository.startRealtimeRoutine(realtimeRoutine);
     }
 }

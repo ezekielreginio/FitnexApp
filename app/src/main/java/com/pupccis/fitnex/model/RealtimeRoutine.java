@@ -3,13 +3,18 @@ package com.pupccis.fitnex.model;
 import java.io.Serializable;
 
 public class RealtimeRoutine implements Serializable {
-    private String traineeName, programID;
+    private String traineeName, programID, routineID, fcm_token, email;
     private long dateStarted;
 
-    public RealtimeRoutine(String traineeName, String programID) {
+    public RealtimeRoutine() {
+    }
+
+    public RealtimeRoutine(String traineeName, String programID, String fcm_token, String email) {
         this.traineeName = traineeName;
         this.dateStarted = System.currentTimeMillis();
         this.programID = programID;
+        this.fcm_token = fcm_token;
+        this.email = email;
     }
 
     public String getTraineeName() {
@@ -34,5 +39,29 @@ public class RealtimeRoutine implements Serializable {
 
     public void setProgramID(String programID) {
         this.programID = programID;
+    }
+
+    public String getRoutineID() {
+        return routineID;
+    }
+
+    public void setRoutineID(String routineID) {
+        this.routineID = routineID;
+    }
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
