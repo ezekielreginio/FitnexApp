@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.api.globals.DataObserver;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.RoutineData;
 import com.pupccis.fitnex.repository.ProgramsRepository;
@@ -250,5 +251,10 @@ public class RoutineViewModel extends BaseObservable {
         MutableLiveData<Boolean> isSaved = new MutableLiveData<>();
         ProgramsRepository programsRepository = new ProgramsRepository();
         programsRepository.saveProgram(program_intent);
+    }
+
+    public void startRoutine(String traineeName, String programID) {
+        RealtimeRoutine realtimeRoutine = new RealtimeRoutine(traineeName, programID);
+        routinesRepository.startRealtimeRoutine(realtimeRoutine);
     }
 }

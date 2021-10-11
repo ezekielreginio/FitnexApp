@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.RoutineData;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
@@ -119,5 +120,13 @@ public class RoutinesRepository {
                 .child(routineData.getRoutineID())
                 .child(routinePosition+"")
                 .setValue(routineData);
+    }
+
+    public void startRealtimeRoutine(RealtimeRoutine realtimeRoutine) {
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(realtimeRoutine.getProgramID())
+                .child(FirebaseAuth.getInstance().getUid())
+                .setValue(realtimeRoutine);
     }
 }

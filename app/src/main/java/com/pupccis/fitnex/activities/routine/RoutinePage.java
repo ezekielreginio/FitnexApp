@@ -31,6 +31,7 @@ import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
@@ -56,13 +57,14 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private boolean timerRunning;
 
     private UserPreferences userPreferences;
-    private String userType;
+    private String userType, userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Extra intents
         userPreferences = new UserPreferences(getApplicationContext());
         userType = userPreferences.getString("usertype");
+        userName = userPreferences.getString(VideoConferencingConstants.KEY_FULLNAME);
         Log.d("Usertype", userType+"");
         program_intent = (Program) getIntent().getSerializableExtra("program");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
@@ -337,6 +339,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
 
     private void startRoutineTracker() {
         binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
+        binding.getViewModel().startRoutine(userName, program_intent.getProgramID());
         Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
         intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
         startActivity(intent);
