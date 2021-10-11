@@ -35,6 +35,10 @@ public class HealthAssessmentViewModel extends BaseObservable {
         return allergies;
     }
 
+    public List<String> getComorbidities() {
+        return comorbidities;
+    }
+
     public String getHeight() {
         return height;
     }
@@ -84,7 +88,7 @@ public class HealthAssessmentViewModel extends BaseObservable {
 //        userRepository.addUserDetails(healthAssessment);
 //    }
     private HealthAssessment healthInstance(){
-        HealthAssessment healthAssessment = new HealthAssessment.Builder(getHeight(), getWeight(), getAllergies()).build();
+        HealthAssessment healthAssessment = new HealthAssessment.Builder(getHeight(), getWeight(), getAllergies(), getComorbidities()).build();
         return healthAssessment;
     }
 

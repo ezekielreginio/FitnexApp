@@ -104,7 +104,7 @@ public class Step2 extends Fragment implements View.OnClickListener{
             Log.e("Health assessment height", binding.getViewModel().getHeight());
             Log.e("Health assessment weight", binding.getViewModel().getWeight());
         }
-        if(view == binding.checkBoxAllergy1){
+        if(view == binding.checkBoxAllergy2){
             if(binding.checkBoxAllergy2.isChecked()){
                 Log.e("CHECKED", "CHECKED");
                 binding.checkBoxAllergy2.setChecked(true);
@@ -121,9 +121,6 @@ public class Step2 extends Fragment implements View.OnClickListener{
             Log.e("Health assessment allergy", binding.getViewModel().getAllergies()+"");
             Log.e("Health assessment height", binding.getViewModel().getHeight());
             Log.e("Health assessment weight", binding.getViewModel().getWeight());
-        }
-        if(view == binding.buttonSavesad){
-//            binding.getViewModel().submitHealthAssessment();
         }
     }
 

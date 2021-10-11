@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -66,19 +67,16 @@ public class Step3 extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_step3, container, false);
-
-
-        binding.imageViewThreeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_step3_to_step2);
-            }
-        });
+        binding.setViewModel(((HealthAssessment)getActivity()).getViewModel());
+        binding.setPresenter(this);
+        binding.executePendingBindings();
         return binding.getRoot();
     }
 
     @Override
     public void onClick(View view) {
+        if(view == binding.imageViewThreeBack)
+            Navigation.findNavController(view).navigate(R.id.action_step3_to_step2);
         if(view == binding.checkBoxComorbidity1){
             if(binding.checkBoxComorbidity1.isChecked()){
                 binding.checkBoxComorbidity1.setChecked(true);
@@ -120,6 +118,14 @@ public class Step3 extends Fragment implements View.OnClickListener{
                 binding.getViewModel().removeComorbidity("Comorbidity 3");
             }
 
+        }
+        if(view == binding.buttonSaveHealthAssessment){
+            binding.getViewModel().insertHealthAssessment().observe(getViewLifecycleOwner(), new Observer<com.pupccis.fitnex.model.HealthAssessment>() {
+                @Override
+                public void onChanged(com.pupccis.fitnex.model.HealthAssessment healthAssessment) {
+                    binding.getViewModel().insertHealthAssessment().removeObserver(this::onChanged);
+                }
+            });
         }
     }
 }
