@@ -24,8 +24,11 @@
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.patron.TrainerPatronPage"
             android:name=".activities.healthassessment.HealthAssessment"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.patron.TrainerPatronPage"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

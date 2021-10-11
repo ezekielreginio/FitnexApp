@@ -69,11 +69,6 @@ public class UserRepository {
         return userLiveData;
     }
 
-    public MutableLiveData<User> loginUser(String email, String password){
-//    public void addUserDetails(HealthAssessment healthAssessment){
-//        FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
-//                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(healthAssessment.toMap(), SetOptions.merge());
-//    }
     public MutableLiveData<HealthAssessment> insertHealthData(HealthAssessment healthAssessment){
         MutableLiveData<HealthAssessment> healthAssessmentLiveData = new MutableLiveData<>();
         FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
@@ -90,7 +85,7 @@ public class UserRepository {
         });
         return healthAssessmentLiveData;
     }
-    public static MutableLiveData<User> loginUser(String email, String password){
+    public MutableLiveData<User> loginUser(String email, String password){
         MutableLiveData<User> userLoggedIn = new MutableLiveData<>();
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
