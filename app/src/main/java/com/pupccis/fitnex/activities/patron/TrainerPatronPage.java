@@ -135,17 +135,17 @@ public class TrainerPatronPage extends AppCompatActivity implements View.OnClick
     private void setButton(Privilege privilege) {
         binding.buttonSubscribeToPatron.setVisibility(View.VISIBLE);
         binding.buttonSubscribeToPatron.setText("Subscribe to "+privilege.toString());
-        switch (privilege){
-            case BRONZE:
-                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.bronzeColor));
-                break;
-            case SILVER:
-                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.silverColor));
-                break;
-            case GOLD:
-                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.goldColor));
-                break;
-        }
+//        switch (privilege){
+//            case BRONZE:
+//                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.bronzeColor));
+//                break;
+//            case SILVER:
+//                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.silverColor));
+//                break;
+//            case GOLD:
+//                binding.buttonSubscribeToPatron.setBackgroundColor(getResources().getColor(R.color.goldColor));
+//                break;
+//        }
     }
 
     public void resetCardsSelected(){

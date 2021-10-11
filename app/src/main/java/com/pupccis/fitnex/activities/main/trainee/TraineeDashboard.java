@@ -6,20 +6,29 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.pupccis.fitnex.activities.searchengine.SearchEngine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
+import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
 public class TraineeDashboard extends AppCompatActivity {
     private ConstraintLayout buttonSearch, constraintLayoutDashboard;
+    private TextView textViewUserNameHeader;
+    private UserPreferences userPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainee_home);
 
+        userPreferences = new UserPreferences(getApplicationContext());
+
         buttonSearch = findViewById(R.id.layoutTraineeSearch);
         constraintLayoutDashboard = findViewById(R.id.constraintLayoutDashboard);
+        textViewUserNameHeader = findViewById(R.id.textViewUserNameHeader);
+        textViewUserNameHeader.setText("Welcome, \n"+userPreferences.getString(UserConstants.KEY_USER_NAME));
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override

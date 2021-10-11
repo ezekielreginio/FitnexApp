@@ -80,7 +80,10 @@ public class ProgramsFragment extends Fragment {
                     ((SearchEngine)getActivity()).showProgressBar();
                     Privilege privilege = Privilege.valueOf(program.getPrivilege());
                     if(privilege == Privilege.FREE){
-
+                        Intent intent = new Intent(getActivity(), RoutinePage.class);
+                        intent.putExtra("program", program);
+                        startActivity(intent);
+                        ((SearchEngine)getActivity()).hideProgressBar();
                     }
                     else{
                         new PatronViewModel().checkPatronStatus(program.getTrainerID()).observe(binding.getLifecycleOwner(), new Observer<Privilege>() {

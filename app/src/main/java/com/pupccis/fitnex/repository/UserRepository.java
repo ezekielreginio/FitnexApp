@@ -52,6 +52,7 @@ public class UserRepository {
                             User newUser = new User.Builder(user)
                                     .setUserID(FirebaseAuth.getInstance().getUid())
                                     .build();
+                            FirebaseDatabase.getInstance().getReference(UserConstants.KEY_COLLECTION_USERS).child(FirebaseAuth.getInstance().getUid()).setValue(newUser);
                             userLiveData.postValue(newUser);
                         }
                         else{

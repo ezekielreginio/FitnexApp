@@ -8,12 +8,12 @@
     tools:context=".activities.main.trainee.TraineeDashboard" >
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewUserNameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:text="JESEE\nCUASAY"
+        android:text="JESEE CUASAY"
         android:textColor="@color/themeColor"
         android:textSize="40dp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserNameHeader"
         tools:layout_editor_absoluteX="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -241,7 +241,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserNameHeader"
         tools:layout_editor_absoluteX="1dp">
 
     </LinearLayout>
@@ -327,7 +327,7 @@
             android:layout_height="match_parent"
             android:paddingTop="5dp"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTraineeStudioButton"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayoutDashboard"
             tools:layout_editor_absoluteY="8dp">
 
             <ImageView
