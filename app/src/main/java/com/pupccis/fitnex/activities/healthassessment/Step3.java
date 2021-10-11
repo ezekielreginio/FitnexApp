@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 
@@ -77,53 +78,54 @@ public class Step3 extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if(view == binding.imageViewThreeBack)
             Navigation.findNavController(view).navigate(R.id.action_step3_to_step2);
-        if(view == binding.checkBoxComorbidity1){
-            if(binding.checkBoxComorbidity1.isChecked()){
-                binding.checkBoxComorbidity1.setChecked(true);
-                binding.checkBoxComorbidity1.setButtonDrawable(R.drawable.checkbox_checked);
-                binding.getViewModel().addComorbidity("Comorbidity 1");
+        if(view == binding.checkBoxComorbidityAsthma){
+            if(binding.checkBoxComorbidityAsthma.isChecked()){
+                binding.checkBoxComorbidityAsthma.setChecked(true);
+                binding.checkBoxComorbidityAsthma.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addComorbidity("Asthma");
 
             }
-            else if(!binding.checkBoxComorbidity1.isChecked()){
-                binding.checkBoxComorbidity1.setChecked(false);
-                binding.checkBoxComorbidity1.setButtonDrawable(R.drawable.checkbox_unchecked);
-                binding.getViewModel().removeComorbidity("Comorbidity 1");
-            }
-
-        }
-        if(view == binding.checkBoxComorbidity2){
-            if(binding.checkBoxComorbidity2.isChecked()){
-                binding.checkBoxComorbidity2.setChecked(true);
-                binding.checkBoxComorbidity2.setButtonDrawable(R.drawable.checkbox_checked);
-                binding.getViewModel().addComorbidity("Comorbidity 2");
-
-            }
-            else if(!binding.checkBoxComorbidity2.isChecked()){
-                binding.checkBoxComorbidity2.setChecked(false);
-                binding.checkBoxComorbidity2.setButtonDrawable(R.drawable.checkbox_unchecked);
-                binding.getViewModel().removeComorbidity("Comorbidity 2");
+            else if(!binding.checkBoxComorbidityAsthma.isChecked()){
+                binding.checkBoxComorbidityAsthma.setChecked(false);
+                binding.checkBoxComorbidityAsthma.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeComorbidity("Asthma");
             }
 
         }
-        if(view == binding.checkBoxComorbidity3){
-            if(binding.checkBoxComorbidity3.isChecked()){
-                binding.checkBoxComorbidity3.setChecked(true);
-                binding.checkBoxComorbidity3.setButtonDrawable(R.drawable.checkbox_checked);
-                binding.getViewModel().addComorbidity("Comorbidity 3");
+        if(view == binding.checkBoxComorbidityDiabetes){
+            if(binding.checkBoxComorbidityDiabetes.isChecked()){
+                binding.checkBoxComorbidityDiabetes.setChecked(true);
+                binding.checkBoxComorbidityDiabetes.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addComorbidity("Diabetes");
 
             }
-            else if(!binding.checkBoxComorbidity3.isChecked()){
-                binding.checkBoxComorbidity3.setChecked(false);
-                binding.checkBoxComorbidity3.setButtonDrawable(R.drawable.checkbox_unchecked);
-                binding.getViewModel().removeComorbidity("Comorbidity 3");
+            else if(!binding.checkBoxComorbidityDiabetes.isChecked()){
+                binding.checkBoxComorbidityDiabetes.setChecked(false);
+                binding.checkBoxComorbidityDiabetes.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeComorbidity("Diabetes");
+            }
+
+        }
+        if(view == binding.checkBoxComorbidityHypertension){
+            if(binding.checkBoxComorbidityHypertension.isChecked()){
+                binding.checkBoxComorbidityHypertension.setChecked(true);
+                binding.checkBoxComorbidityHypertension.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addComorbidity("Hypertension");
+
+            }
+            else if(!binding.checkBoxComorbidityHypertension.isChecked()){
+                binding.checkBoxComorbidityHypertension.setChecked(false);
+                binding.checkBoxComorbidityHypertension.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeComorbidity("Hypertension");
             }
 
         }
         if(view == binding.buttonSaveHealthAssessment){
-            binding.getViewModel().insertHealthAssessment().observe(getViewLifecycleOwner(), new Observer<com.pupccis.fitnex.model.HealthAssessment>() {
+            MutableLiveData<com.pupccis.fitnex.model.HealthAssessment> insertHealth = binding.getViewModel().insertHealthAssessment();
+            insertHealth.observe(getViewLifecycleOwner(), new Observer<com.pupccis.fitnex.model.HealthAssessment>() {
                 @Override
                 public void onChanged(com.pupccis.fitnex.model.HealthAssessment healthAssessment) {
-                    binding.getViewModel().insertHealthAssessment().removeObserver(this::onChanged);
+                    insertHealth.removeObserver(this::onChanged);
                 }
             });
         }

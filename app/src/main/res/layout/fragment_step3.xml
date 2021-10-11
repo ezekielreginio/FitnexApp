@@ -89,33 +89,33 @@
 
 
                     <CheckBox
-                        android:id="@+id/checkBoxComorbidity1"
+                        android:id="@+id/checkBoxComorbidityAsthma"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@drawable/checkbox_unchecked"
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
-                        android:text="Comorbidity 1"
+                        android:text="Asthma"
                         android:textColor="#000000" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxComorbidity2"
+                        android:id="@+id/checkBoxComorbidityDiabetes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@drawable/checkbox_unchecked"
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
-                        android:text="Comorbidity 2"
+                        android:text="Diabetes"
                         android:textColor="#000000" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxComorbidity3"
+                        android:id="@+id/checkBoxComorbidityHypertension"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@drawable/checkbox_unchecked"
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
-                        android:text="Comorbidity 3"
+                        android:text="Hypertension"
                         android:textColor="#000000" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

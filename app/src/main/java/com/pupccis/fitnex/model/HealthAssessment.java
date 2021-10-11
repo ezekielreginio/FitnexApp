@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.model;
 
+import com.pupccis.fitnex.utilities.Constants.HealthAssessmentConstants;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +22,10 @@ public class HealthAssessment {
 
     public HashMap<String, Object> toMap(){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("height", height);
-        map.put("weight", weight);
-        map.put("allergies", allergies);
-        map.put("comorbidities", comorbidities);
+        map.put(HealthAssessmentConstants.KEY_HEALTH_DATA_HEIGHT, height);
+        map.put(HealthAssessmentConstants.KEY_HEALTH_DATA_WEIGHT, weight);
+        map.put(HealthAssessmentConstants.KEY_HEALTH_DATA_ALLERGIES, allergies);
+        map.put(HealthAssessmentConstants.KEY_HEALTH_DATA_COMORBIDITIES, comorbidities);
         return map;
     }
 

@@ -1,7 +1,6 @@
 package com.pupccis.fitnex.viewmodel;
 
 import android.util.Log;
-import android.widget.CheckBox;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -9,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.pupccis.fitnex.BR;
 import com.pupccis.fitnex.model.HealthAssessment;
-import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.Services.ProgramFitnessClassRoutineValidationService;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -81,7 +79,7 @@ public class HealthAssessmentViewModel extends BaseObservable {
     }
     public MutableLiveData<HealthAssessment> insertHealthAssessment(){
         HealthAssessment healthAssessment = healthInstance();
-        return userRepository.insertHealthAssessment(healthAssessment);
+        return userRepository.insertHealthData(healthAssessment);
     }
 //    public void submitHealthAssessment(){
 //        HealthAssessment healthAssessment = healthInstance();

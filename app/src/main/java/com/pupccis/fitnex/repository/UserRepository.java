@@ -23,6 +23,7 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.HealthAssessment;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.utilities.Constants.HealthAssessmentConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.validation.ValidationResult;
 
@@ -65,10 +66,10 @@ public class UserRepository {
 //        FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
 //                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(healthAssessment.toMap(), SetOptions.merge());
 //    }
-    public MutableLiveData<HealthAssessment> insertHealthAssessment(HealthAssessment healthAssessment){
+    public MutableLiveData<HealthAssessment> insertHealthData(HealthAssessment healthAssessment){
         MutableLiveData<HealthAssessment> healthAssessmentLiveData = new MutableLiveData<>();
         FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(healthAssessment.toMap(), SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_DATA).document(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_ASSESSMENT).set(healthAssessment.toMap(), SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

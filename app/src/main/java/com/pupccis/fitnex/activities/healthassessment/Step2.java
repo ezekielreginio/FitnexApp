@@ -86,41 +86,61 @@ public class Step2 extends Fragment implements View.OnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_step2_to_step1);
         if(view == binding.imageViewTwoNext)
             Navigation.findNavController(view).navigate(R.id.action_step2_to_step3);
-        if(view == binding.checkBoxAllergy1){
-            if(binding.checkBoxAllergy1.isChecked()){
-                Log.e("CHECKED", "CHECKED");
-                binding.checkBoxAllergy1.setChecked(true);
-                binding.checkBoxAllergy1.setButtonDrawable(R.drawable.checkbox_checked);
-                binding.getViewModel().addAllergy("Allergy 1");
+        if(view == binding.checkBoxAllergyNuts){
+            if(binding.checkBoxAllergyNuts.isChecked()){
+                binding.checkBoxAllergyNuts.setChecked(true);
+                binding.checkBoxAllergyNuts.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addAllergy("Nuts");
 
             }
-            else if(!binding.checkBoxAllergy1.isChecked()){
-                Log.e("unCHECKED", "CHECKED");
-                binding.checkBoxAllergy1.setChecked(false);
-                binding.checkBoxAllergy1.setButtonDrawable(R.drawable.checkbox_unchecked);
-                binding.getViewModel().removeAllergy("Allergy 1");
+            else if(!binding.checkBoxAllergyNuts.isChecked()){
+                binding.checkBoxAllergyNuts.setChecked(false);
+                binding.checkBoxAllergyNuts.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeAllergy("Nuts");
             }
-            Log.e("Health assessment allergy", binding.getViewModel().getAllergies()+"");
-            Log.e("Health assessment height", binding.getViewModel().getHeight());
-            Log.e("Health assessment weight", binding.getViewModel().getWeight());
+
         }
-        if(view == binding.checkBoxAllergy2){
-            if(binding.checkBoxAllergy2.isChecked()){
-                Log.e("CHECKED", "CHECKED");
-                binding.checkBoxAllergy2.setChecked(true);
-                binding.checkBoxAllergy2.setButtonDrawable(R.drawable.checkbox_checked);
-                binding.getViewModel().addAllergy("Allergy 2");
+        if(view == binding.checkBoxAllergyFish){
+            if(binding.checkBoxAllergyFish.isChecked()){
+                binding.checkBoxAllergyFish.setChecked(true);
+                binding.checkBoxAllergyFish.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addAllergy("Fish");
 
             }
-            else if(!binding.checkBoxAllergy2.isChecked()){
-                Log.e("unCHECKED", "CHECKED");
-                binding.checkBoxAllergy2.setChecked(false);
-                binding.checkBoxAllergy2.setButtonDrawable(R.drawable.checkbox_unchecked);
-                binding.getViewModel().removeAllergy("Allergy 2");
+            else if(!binding.checkBoxAllergyFish.isChecked()){
+                binding.checkBoxAllergyFish.setChecked(false);
+                binding.checkBoxAllergyFish.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeAllergy("Fish");
             }
-            Log.e("Health assessment allergy", binding.getViewModel().getAllergies()+"");
-            Log.e("Health assessment height", binding.getViewModel().getHeight());
-            Log.e("Health assessment weight", binding.getViewModel().getWeight());
+
+        }
+        if(view == binding.checkBoxAllergyShellfish){
+            if(binding.checkBoxAllergyShellfish.isChecked()){
+                binding.checkBoxAllergyShellfish.setChecked(true);
+                binding.checkBoxAllergyShellfish.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addAllergy("Shellfish");
+
+            }
+            else if(!binding.checkBoxAllergyShellfish.isChecked()){
+                binding.checkBoxAllergyShellfish.setChecked(false);
+                binding.checkBoxAllergyShellfish.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeAllergy("Shellfish");
+            }
+
+        }
+        if(view == binding.checkBoxAllergyMilk){
+            if(binding.checkBoxAllergyMilk.isChecked()){
+                binding.checkBoxAllergyMilk.setChecked(true);
+                binding.checkBoxAllergyMilk.setButtonDrawable(R.drawable.checkbox_checked);
+                binding.getViewModel().addAllergy("Milk");
+
+            }
+            else if(!binding.checkBoxAllergyMilk.isChecked()){
+                binding.checkBoxAllergyMilk.setChecked(false);
+                binding.checkBoxAllergyMilk.setButtonDrawable(R.drawable.checkbox_unchecked);
+                binding.getViewModel().removeAllergy("Milk");
+            }
+
         }
     }
 
