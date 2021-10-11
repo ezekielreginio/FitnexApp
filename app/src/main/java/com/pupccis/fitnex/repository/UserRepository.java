@@ -21,8 +21,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.firestore.SetOptions;
+import com.pupccis.fitnex.model.FitnessClass;
+import com.pupccis.fitnex.model.HealthAssessment;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.utilities.Constants.HealthAssessmentConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.validation.ValidationResult;
@@ -66,6 +70,27 @@ public class UserRepository {
     }
 
     public MutableLiveData<User> loginUser(String email, String password){
+//    public void addUserDetails(HealthAssessment healthAssessment){
+//        FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
+//                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(healthAssessment.toMap(), SetOptions.merge());
+//    }
+    public MutableLiveData<HealthAssessment> insertHealthData(HealthAssessment healthAssessment){
+        MutableLiveData<HealthAssessment> healthAssessmentLiveData = new MutableLiveData<>();
+        FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_DATA).document(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_ASSESSMENT).set(healthAssessment.toMap(), SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    healthAssessmentLiveData.postValue(healthAssessment);
+                }
+                else{
+                    healthAssessmentLiveData.postValue(null);
+                }
+            }
+        });
+        return healthAssessmentLiveData;
+    }
+    public static MutableLiveData<User> loginUser(String email, String password){
         MutableLiveData<User> userLoggedIn = new MutableLiveData<>();
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

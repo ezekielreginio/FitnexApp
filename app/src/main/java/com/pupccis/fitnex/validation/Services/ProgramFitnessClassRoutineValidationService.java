@@ -35,6 +35,7 @@ public class ProgramFitnessClassRoutineValidationService {
             case REPS:
             case SETS:
             case WEIGHT:
+            case HEIGHT:
                 result = service
                         .requiredField()
                         .validateInt()

@@ -29,13 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:translationZ="1dp"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <include
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 layout="@layout/include_loading_layout"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -240,8 +239,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="7.5dp"
-                    android:layout_marginTop="7.5dp"
-                    />
+                    android:layout_marginTop="7.5dp" />
 
             </RelativeLayout>
         </LinearLayout>

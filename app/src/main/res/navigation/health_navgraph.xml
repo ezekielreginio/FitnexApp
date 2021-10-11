@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/health_navgraph"
+    app:startDestination="@id/step1">
+
+    <fragment
+        android:id="@+id/step1"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step1"
+        android:label="fragment_step1"
+        tools:layout="@layout/fragment_step1" >
+        <action
+            android:id="@+id/action_step1_to_step2"
+            app:destination="@id/step2"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/step2"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step2"
+        android:label="step2"
+        tools:layout="@layout/fragment_step2">
+        <action
+            android:id="@+id/action_step2_to_step1"
+            app:destination="@id/step1"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_step2_to_step3"
+            app:destination="@id/step3"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/step3"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step3"
+        android:label="fragment_step3"
+        tools:layout="@layout/fragment_step3" >
+        <action
+            android:id="@+id/action_step3_to_step2"
+            app:destination="@id/step2"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
+    </fragment>
+</navigation>
