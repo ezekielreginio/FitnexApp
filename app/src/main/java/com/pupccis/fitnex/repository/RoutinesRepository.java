@@ -111,6 +111,13 @@ public class RoutinesRepository {
     }
 
     public void updateRealtimeRoutineTracker(RoutineData routineData, int routinePosition, String programID) {
-        FirebaseDatabase.getInstance().getReference(RoutineConstants.KEY_COLLECTION_ROUTINES).child(programID).child(FirebaseAuth.getInstance().getUid()).child(routineData.getRoutineID()).child(routinePosition+"").setValue(routineData);
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(programID)
+                .child(FirebaseAuth.getInstance().getUid())
+                .child(RoutineConstants.KEY_COLLECTION_ROUTINE)
+                .child(routineData.getRoutineID())
+                .child(routinePosition+"")
+                .setValue(routineData);
     }
 }

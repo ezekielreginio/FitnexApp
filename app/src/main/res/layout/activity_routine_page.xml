@@ -116,29 +116,67 @@
         android:id="@+id/recyclerViewRoutinePage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonStartRoutineButton"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutRoutineButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-        android:id="@+id/buttonStartRoutineButton"
-        style="@style/loginButton"
+    <LinearLayout
+        android:id="@+id/linearLayoutRoutineButton"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/loginViewsMargin"
-        android:text="Start Workout"
-        app:initialCornerAngle="27dp"
-        app:spinning_bar_color="#FFF"
-        app:spinning_bar_padding="6dp"
-        android:layout_marginBottom="100dp"
-        android:layout_marginHorizontal="20dp"
-        app:spinning_bar_width="4dp"
-        android:onClick="onClick"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewRoutinePage"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:orientation="vertical">
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/buttonStartRoutineButton"
+            style="@style/loginButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="Start Workout"
+            app:initialCornerAngle="27dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="100dp"
+            app:spinning_bar_width="4dp"
+            android:onClick="onClick"
+            />
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/buttonSaveProgramButton"
+            style="@style/loginButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="Save Program"
+            app:initialCornerAngle="27dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginHorizontal="20dp"
+            app:spinning_bar_width="4dp"
+            android:visibility="gone"
+            android:onClick="onClick"
+            />
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/buttonViewTrainees"
+            style="@style/loginButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="view trainees"
+            app:initialCornerAngle="27dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginHorizontal="20dp"
+            app:spinning_bar_width="4dp"
+            android:visibility="gone"
+            android:onClick="onClick"
+            />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutRoutineCountdown"

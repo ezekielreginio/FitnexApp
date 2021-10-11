@@ -16,6 +16,7 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -190,5 +191,29 @@ public class ProgramsRepository {
 
     public void deleteProgram(String programID){
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(programID).delete();
+    }
+
+    public MutableLiveData<Boolean> checkProgramSaved(String programID) {
+        MutableLiveData<Boolean> isSaved = new MutableLiveData<>();
+        db.collection(UserConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection(ProgramConstants.KEY_COLLECTION_SAVED_PROGRAMS)
+                .document(programID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists())
+                    isSaved.postValue(true);
+                else
+                    isSaved.postValue(false);
+            }
+        });
+        return isSaved;
+    }
+
+    public void saveProgram(Program program_intent) {
+        db.collection(UserConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection(ProgramConstants.KEY_COLLECTION_SAVED_PROGRAMS)
+                .document(program_intent.getProgramID()).set(program_intent.toMap());
     }
 }

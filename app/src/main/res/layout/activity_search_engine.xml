@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
         <FrameLayout
             android:id="@+id/linearLayoutTrainerDashboardNavbar"
             android:layout_width="match_parent"
@@ -23,6 +22,103 @@
             android:transitionName="addProgramTransition"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="671dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutUserNotSubscribedModal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/themetintColor"
+                android:visibility="gone"
+                android:translationZ="3dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardCornerRadius="15dp"
+                    android:backgroundTint="@color/whiteTextColor">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:dividerPadding="10dp"
+                        android:orientation="vertical"
+                        android:padding="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        >
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            >
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="36dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                app:srcCompat="@drawable/ic_notification_important"
+                                />
+                            <TextView
+                                android:id="@+id/textViewSubscriptionModalTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="User Not Subscribed"
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                android:layout_marginBottom="20dp"
+                                app:layout_constraintHorizontal_bias="0.503" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textViewSubscriptionModalInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="The program that you are trying to view is exclusive for patron subscribers"
+                            android:textColor="#000000"
+                            android:textSize="16dp"
+                            android:layout_marginBottom="20dp"
+                            app:layout_constraintHorizontal_bias="0.503"/>
+
+                        <Button
+                            android:id="@+id/buttonSubscribeToPatron"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/blueTextColor"
+                            android:textColor="@color/whiteTextColor"
+                            android:text="Subscribe to View" />
+
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutSearchEngineProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:translationZ="1dp"
+                android:visibility="gone"
+                >
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    layout="@layout/include_loading_layout"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

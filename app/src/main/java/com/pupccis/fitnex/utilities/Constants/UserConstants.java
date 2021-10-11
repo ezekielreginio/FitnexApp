@@ -5,8 +5,11 @@ public class UserConstants {
     public static final String KEY_USER_AGE = "age";
     public static final String KEY_USER_EMAIL = "email";
     public static final String KEY_USER_TYPE = "userType";
+    public static final String KEY_TRAINER = "trainer";
+    public static final String KEY_TRAINEE = "trainee";
 
     public static final String KEY_COLLECTION_USERS= "users";
     public static final String KEY_COLLECTION_USER_LIKED_VIDEOS = "liked_videos";
     public static final String KEY_COLLECTION_USER_DISLIKED_VIDEOS = "disliked_videos";
+    public static final String KEY_COLLECTION_SUBSCRIPTIONS = "subscriptions";
 }

@@ -5,6 +5,7 @@
     <color name="colorAccent">#26355E</color>
     <color name="themeColor">#26355E</color>
     <color name="themetintColor">#CB26355E</color>
+    <color name="selectedTintColor">#40233D83</color>
 <!--    <color name="themetintColor">#B926355E</color>-->
     <color name="RedColor">#BD1919</color>
     <color name="darkTextColor">#26355E</color>

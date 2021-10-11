@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.activities.trainingdashboard.AddFitnessClass;
 import com.pupccis.fitnex.adapters.FitnessClassAdapter;
+import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.FitnessClass;
@@ -81,6 +82,7 @@ public class ClassFragment extends Fragment{
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapter = new FitnessClassAdapter(options);
+        adapter.setAccesstype(AccessType.OWNER);
         recyclerView.setAdapter(adapter);
 
         binding.setLifecycleOwner(this);

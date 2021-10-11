@@ -27,7 +27,11 @@ import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
+import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.ArrayList;
@@ -51,10 +55,15 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
     private long millisLeftInMillis = 5096;
     private boolean timerRunning;
 
+    private UserPreferences userPreferences;
+    private String userType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Extra intents
+        userPreferences = new UserPreferences(getApplicationContext());
+        userType = userPreferences.getString("usertype");
+        Log.d("Usertype", userType+"");
         program_intent = (Program) getIntent().getSerializableExtra("program");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_routine_page);
 
@@ -77,6 +86,24 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         binding.setViewModel(adapter.getViewModel());
         binding.setPresenter(this);
 
+        if(userType.equals(UserConstants.KEY_TRAINEE)){
+            ProgramViewModel programViewModel = new ProgramViewModel();
+            programViewModel.checkProgramSaved(program_intent.getProgramID()).observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isSaved) {
+                    if(isSaved != null){
+                        if(!isSaved){
+                            hideButtons();
+                            binding.buttonSaveProgramButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            });
+        }
+        else{
+            hideButtons();
+            binding.buttonViewTrainees.setVisibility(View.VISIBLE);
+        }
 
         binding.getViewModel().updateObserver().observe(binding.getLifecycleOwner(), new Observer<Routine>() {
             @Override
@@ -280,6 +307,14 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view == binding.buttonReady)
             startRoutineTracker();
+        else if(view == binding.buttonSaveProgramButton){
+            binding.getViewModel().saveProgram(program_intent);
+            hideButtons();
+            binding.buttonStartRoutineButton.setVisibility(View.VISIBLE);
+        }
+        else if(view == binding.buttonViewTrainees){
+
+        }
     }
 
     //Private Methods
@@ -315,5 +350,11 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         float progress = ((float)seconds/5) * 100;
         Log.d("Progress", progress+"");
         timerProgressBar.setProgress((int)progress);
+    }
+
+    private void hideButtons(){
+        binding.buttonStartRoutineButton.setVisibility(View.GONE);
+        binding.buttonSaveProgramButton.setVisibility(View.GONE);
+        binding.buttonViewTrainees.setVisibility(View.GONE);
     }
 }

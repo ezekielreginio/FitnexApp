@@ -33,6 +33,7 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,9 +54,7 @@ public class ProgramsFragment extends Fragment {
     private UserPreferences userPreferences;
 
     private static FragmentProgramsBinding fragmentProgramsBinding;
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference programRef = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS);
+    private ProgramViewModel programViewModel = new ProgramViewModel();
     private ProgramAdapter adapter;
     private RecyclerView recyclerView;
     public ProgramsFragment() {
@@ -201,6 +200,8 @@ public class ProgramsFragment extends Fragment {
         Log.d("OnCreateView", "executed");
         // Inflate the layout for this fragment
         fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
+        fragmentProgramsBinding.setLifecycleOwner(this);
+        fragmentProgramsBinding.setViewModel(programViewModel);
 
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
@@ -208,16 +209,15 @@ public class ProgramsFragment extends Fragment {
         //Instantiate and Set RecyclerView Settings
         recyclerView = fragmentProgramsBinding.programsRecyclerView;
         recyclerView.setHasFixedSize(true);
-       recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new ProgramAdapter(options);
         adapter.setAccessType(AccessType.OWNER);
+        adapter.setProgramViewModel(programViewModel);
         recyclerView.setAdapter(adapter);
 
-        //Set Lifecycle and ViewModel of Binding
-        fragmentProgramsBinding.setLifecycleOwner(this);
-        fragmentProgramsBinding.setViewModel(adapter.getViewModel()); //Get the View Model from Adapter
+
 
         //ViewModel Observers
         fragmentProgramsBinding.getViewModel().routineObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
@@ -225,7 +225,6 @@ public class ProgramsFragment extends Fragment {
             public void onChanged(Program program) {
                 Intent intent = new Intent(getContext(), RoutinePage.class);
                 intent.putExtra("program", program);
-                Log.e("Program Fragment", program.getProgramID());
                 startActivity(intent);
             }
         });

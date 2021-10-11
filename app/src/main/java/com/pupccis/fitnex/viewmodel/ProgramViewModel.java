@@ -20,6 +20,8 @@ public class ProgramViewModel extends BaseObservable {
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> routineProgramID = new MutableLiveData<>();
+    private MutableLiveData<Program> containerIsClicked = new MutableLiveData<>();
+
     //Bindable Attributes
     @Bindable
     private String addProgramName = null;
@@ -125,6 +127,8 @@ public class ProgramViewModel extends BaseObservable {
         return programsRepository.insertProgram(program);
     }
 
+
+    //Trigger Methods
     public void triggerUpdateObserver(Program program) {
         setProgramID(program.getProgramID());
         updateProgramLivedata.postValue(program);
@@ -137,9 +141,15 @@ public class ProgramViewModel extends BaseObservable {
 
     public void triggerRoutineObserver(Program program){
         setProgramID(program.getProgramID());
-        Log.e("Why u not work my fremnd", program.getProgramID());
         routineProgramID.postValue(program);
     }
+
+    public void triggerContainerClicked(Program program){
+        setProgramID(program.getProgramID());
+        containerIsClicked.postValue(program);
+    }
+
+    //Mutable Live Data Getters
     public MutableLiveData<Program> routineObserver(){
         return routineProgramID;
     }
@@ -151,6 +161,12 @@ public class ProgramViewModel extends BaseObservable {
     public MutableLiveData<Program> deleteObserver(){
         return deleteProgramLivedata;
     }
+
+    public MutableLiveData<Program> checkContainerClicked(){ return containerIsClicked;}
+
+    public MutableLiveData<Boolean> checkProgramSaved(String programID){return programsRepository.checkProgramSaved(programID); }
+
+
 
     public void deleteProgram(String programID){
         programsRepository.deleteProgram(programID);

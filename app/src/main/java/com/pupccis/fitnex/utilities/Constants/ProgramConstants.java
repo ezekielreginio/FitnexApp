@@ -5,7 +5,10 @@ package com.pupccis.fitnex.utilities.Constants;
 public class ProgramConstants {
     //Object Name
     public static final String KEY_COLLECTION_PROGRAMS = "programs";
+    public static final String KEY_COLLECTION_SAVED_PROGRAMS = "saved_programs";
     public static final String KEY_COLLECTION_PROGRAMS_LIST = "programs_list";
+
+    public static final String KEY_MODEL_PROGRAM = "program";
 
     //Object Attributes
     public static final String KEY_PROGRAM_NAME = "name";

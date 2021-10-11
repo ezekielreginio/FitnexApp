@@ -194,13 +194,19 @@ public class PatronViewModel extends BaseObservable {
         privilegeListLiveData.postValue(privilegeList);
     }
 
+    public MutableLiveData<Privilege> subscribe(String userID) {
+        return patronRepository.subscribe(userID, currentPrivilege);
+    }
+
     //MutableLiveData
     public MutableLiveData<Boolean> checkPatronData(){
         return patronRepository.checkPatronData();
     }
 
-    public MutableLiveData<HashMap<String, Object>> getPatronData(){
-        return patronRepository.getPatronDataCheck();
+    public MutableLiveData<Privilege> checkPatronStatus(String trainerID){ return patronRepository.checkPatronStatus(trainerID); }
+
+    public MutableLiveData<HashMap<String, Object>> getPatronData(String userID){
+        return patronRepository.getPatronDataCheck(userID);
     }
 
     public MutableLiveData<Boolean> finishPatronSetup(){
@@ -232,4 +238,5 @@ public class PatronViewModel extends BaseObservable {
         }
 
     }
+
 }

@@ -20,9 +20,12 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.routine.ActiveTrainees"
+            android:exported="true" />
+        <activity
             android:name=".activities.patron.TrainerPatronPage"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.patron.PatronInitialActivity"
             android:exported="true"

@@ -24,7 +24,7 @@ import timber.log.Timber;
 
 public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
-    private ProgramViewModel programViewModel = new ProgramViewModel();
+    private ProgramViewModel programViewModel;
     private AccessType accessType;
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
@@ -50,6 +50,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         return programViewModel;
     }
 
+    public void setProgramViewModel(ProgramViewModel programViewModel) {
+        this.programViewModel = programViewModel;
+    }
+
     public void setAccessType(AccessType accessType) {
         this.accessType = accessType;
     }
@@ -68,8 +72,13 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
             switch (accessType){
                 case VIEW:
-                    binding.layoutProgramButtonViewer.setVisibility(View.VISIBLE);
                     binding.layoutProgramButtonOwner.setVisibility(View.GONE);
+                    binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            binding.getViewModel().triggerContainerClicked(model);
+                        }
+                    });
                     break;
             }
 
