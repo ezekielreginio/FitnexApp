@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/step1"
-        android:name="com.pupccis.fitnex.activities.healthassessment.step1"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step1"
         android:label="fragment_step1"
         tools:layout="@layout/fragment_step1" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/step2"
-        android:name="com.pupccis.fitnex.activities.healthassessment.step2"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step2"
         android:label="step2"
         tools:layout="@layout/fragment_step2">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/step3"
-        android:name="com.pupccis.fitnex.activities.healthassessment.step3"
+        android:name="com.pupccis.fitnex.activities.healthassessment.Step3"
         android:label="fragment_step3"
         tools:layout="@layout/fragment_step3" >
         <action

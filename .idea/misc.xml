@@ -61,6 +61,8 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_background_blue.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_join.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_view.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/checkbox_checked.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/checkbox_unchecked.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/foreground_thumbnail_tint.xml" value="0.1421875" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_baseline_pause_circle_outline_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_cardview_rounded_corner.xml" value="0.14635416666666667" />
@@ -69,6 +71,7 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_fitnex_logo.xml" value="0.1" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_fitnex_logo_outline.xml" value="0.1" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_message_icon.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_ring_icon.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_side_bg.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_submenu.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_add_class.xml" value="0.176" />
