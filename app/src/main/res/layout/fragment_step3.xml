@@ -99,7 +99,9 @@
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
                         android:text="Asthma"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:layout_marginBottom="10dp"/>
 
                     <CheckBox
                         android:id="@+id/checkBoxComorbidityDiabetes"
@@ -109,7 +111,9 @@
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
                         android:text="Diabetes"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:layout_marginBottom="10dp"/>
 
                     <CheckBox
                         android:id="@+id/checkBoxComorbidityHypertension"
@@ -119,7 +123,9 @@
                         android:checked="false"
                         android:onClick="@{(v)->presenter.onClick(v)}"
                         android:text="Hypertension"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:layout_marginBottom="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -142,6 +148,7 @@
             android:background="@drawable/button_background_blue"
             android:onClick="@{(v)->presenter.onClick(v)}"
             android:text="Done"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
