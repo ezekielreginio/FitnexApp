@@ -12,7 +12,7 @@
 
         <variable
             name="presenter"
-            type="com.pupccis.fitnex.activities.healthassessment.Step1" />
+            type="com.pupccis.fitnex.activities.healthassessment.PrivacyTerms" />
     </data>
 
     <FrameLayout
@@ -36,12 +36,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textViewStep1"
+                    android:id="@+id/textViewDataPrivacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="STEP 1"
+                    android:text="DATA PRIVACY"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,11 +52,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="HEIGHT AND WEIGHT"
+                    android:text="TERMS AND CONDITIONS"
                     android:textColor="#F3F3F3"
                     android:textSize="25dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewStep1" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDataPrivacy" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -94,59 +94,63 @@
                         android:layout_margin="10dp"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputHAHeight"
-                            style="@style/parent"
-                            android:layout_marginTop="@dimen/loginViewsMargin">
 
-                            <EditText
-                                style="@style/modifiedEditText"
-                                android:hint="Height"
-                                android:inputType="number"
-                                android:maxLines="1"
-                                android:text="@={viewModel.height}"
+                        <ScrollView
+                            android:id="@+id/scrolLViewPrivacyTerms"
+                            android:layout_width="match_parent"
+                            android:layout_height="370dp"
+                            android:padding="10dp"
+                            android:background="@drawable/background_scrollview">
+
+                            <TextView
+                                android:id="@+id/textViewPrivacyTerms"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+
+                                android:text="Fitness Client’s Consent and Privacy Notice
+\n\nFitnex is a fitness application that aims to provide convenient health and fitness solutions for its fitness clients. The system is required to follow section 2 of R.A. 10173: Data Privacy Act of 2012 which states that: enforce the Data Privacy Act and adopt generally accepted international principles and standards for personal data protection. Safeguard the fundamental human right of every individual to privacy while ensuring free flow of information for innovation, growth, and national development.
+\n\nThese Rules also recognize the vital role of information and communications technology in nation-building and enforce the State’s inherent obligation to ensure that personal data in information and communications systems in the government and in the private sector are secured and protected.
+\n\nFitnex is committed to uphold Data Privacy Act of 2012 and is expected to adapt reasonable administrative, physical and technical measures to prevent loss, misuse and alteration of the information under our control since no method of transmission over the internet or method of electronic storage is 100% secure.
+
+By tapping the button below, you are consenting to the collection, processing and use of the information in accordance to this privacy notice. The following information that are collected and processed are:
+\n(1) Client’s Height and Weight
+\n(2) Client’s Food Allergies
+\n(3) Client’s Health Comorbidities
+\n(4) Client’s Food Preferences.
+\n
+\nThe information you have provided is used for any or all of the following:
+\n(1)access provision
+\n(2)monitoring, (3)evaluation
+\n(4)documentation
+\n(5) communication purposes."
                                 android:textColor="#000000"
-                                android:textColorHint="#818181" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                android:textSize="17dp" />
 
+                        </ScrollView>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputHAWeight"
-                            style="@style/parent"
-                            android:layout_marginTop="@dimen/loginViewsMargin">
-
-                            <EditText
-                                style="@style/modifiedEditText"
-                                android:hint="Weight"
-                                android:inputType="number"
-                                android:maxLines="1"
-                                android:text="@={viewModel.weight}"
-                                android:textColor="#000000"
-                                android:textColorHint="#818181" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
+                        <CheckBox
+                            android:layout_marginTop="20dp"
+                            android:id="@+id/checkBoxAgree"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:button="@drawable/checkbox_unchecked"
+                            android:checked="false"
+                            android:onClick="@{(v)->presenter.onClick(v)}"
+                            android:text="I consent to the privacy terms"
+                            android:textColor="#000000"
+                            android:textSize="20dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <ImageView
-                android:id="@+id/imageViewOneBack"
+                android:id="@+id/imageViewPrivacyNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{(v)->presenter.onClick(v)}"
-                android:src="@drawable/ic_vector_left_health_am"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.943" />
-            <ImageView
-                android:id="@+id/imageViewOneNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@drawable/ic_vector_right_health_am"
-                android:onClick="@{(v)->presenter.onClick(v)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
