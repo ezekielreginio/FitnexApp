@@ -50,13 +50,13 @@ public class TraineeDashboard extends AppCompatActivity {
             }
         });
 
-        button = findViewById(R.id.buttonQuickAssess);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TraineeDashboard.this, HealthAssessment.class);
-                startActivity(intent);
-            }
-        });
+//        button = findViewById(R.id.buttonQuickAssess);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(TraineeDashboard.this, HealthAssessment.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
