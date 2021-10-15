@@ -75,37 +75,48 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
         binding.getViewModel().observeRoutineRealtime(routine).observe(binding.getLifecycleOwner(), new Observer<List<RoutineData>>() {
             @Override
             public void onChanged(List<RoutineData> routineDataList) {
-                for(RoutineData routineData1: routineDataList){
-                    RoutineFragment.this.routineDataList.set(routineData1.getPosition(), routineData1);
-                    adapter.notifyItemChanged(routineData1.getPosition());
+                if(!routineDataList.isEmpty()){
+                    Log.d("Listener", "Triggered");
+                    for(RoutineData routineData1: routineDataList){
+                        RoutineFragment.this.routineDataList.set(routineData1.getPosition(), routineData1);
+                        adapter.notifyItemChanged(routineData1.getPosition());
+                    }
+                    position=position+1;
+                    if(position<routine.getSets()){
+                        ((RoutineTracker) getActivity()).showRoutineRestTimer();
+                    }
+                    else{
+                        int routineCount = ((RoutineTracker) getActivity()).getRoutineCount();
+                        int currentRoutine = ((RoutineTracker) getActivity()).getSelectedRoutinePosition()+1;
+                        if(currentRoutine == routineCount)
+                            ((RoutineTracker) getActivity()).showRoutineFinishTimer();
 
+                        else{
+                            ((RoutineTracker) getActivity()).showRoutineRestTimer();
+                            ((RoutineTracker) getActivity()).nextRoutine();
+                        }
+                    }
                 }
             }
         });
 
-        binding.buttonLogRest.setOnClickListener(new View.OnClickListener() {
+        binding.getViewModel().observeRestingStatus(routine).observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isResting) {
+                if(isResting != null){
+                    if(!isResting){
+                        ((RoutineTracker) getActivity()).hideRoutineRestTimer();
+                    }
+                }
+            }
+        });
+
+        binding.buttonLogRest.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                int routineCount = ((RoutineTracker) getActivity()).getRoutineCount();
-                int currentRoutine = ((RoutineTracker) getActivity()).getSelectedRoutinePosition()+1;
-
                 if(position<routine.getSets()){
-                    ((RoutineTracker) getActivity()).showRoutineRestTimer();
-                    RoutineData newRoutineData = binding.getViewModel().setRoutineDataList(routine, position, programID);
-                    routineDataList.set(position, newRoutineData);
-                    //routineDataList.get(position).setCompleted(true);
-                    adapter.notifyItemChanged(position);
-
-                    position=position+1;
-                }
-                else{
-                    if(currentRoutine == routineCount)
-                        ((RoutineTracker) getActivity()).showRoutineFinishTimer();
-
-                    else{
-                        ((RoutineTracker) getActivity()).showRoutineRestTimer();
-                        ((RoutineTracker) getActivity()).nextRoutine();
-                    }
+                    binding.getViewModel().setRoutineDataList(routine, position, programID);
+                    binding.getViewModel().setResting(routine.getProgramID(), routine.getUserID(), true);
                 }
             }
         });

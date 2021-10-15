@@ -122,7 +122,7 @@ public class RoutinesRepository {
         FirebaseDatabase.getInstance()
                 .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
                 .child(programID)
-                .child(FirebaseAuth.getInstance().getUid())
+                .child(routineData.getUserID())
                 .child(RoutineConstants.KEY_COLLECTION_ROUTINE)
                 .child(routineData.getRoutineSetID())
                 .child(routinePosition+"")
@@ -168,5 +168,38 @@ public class RoutinesRepository {
             }
         });
         return routineDataLiveData;
+    }
+
+    public void setResting(String programID, String userID, boolean isResting) {
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(programID)
+                .child(userID)
+                .child(RoutineConstants.KEY_ROUTINE_IS_RESTING)
+                .setValue(isResting);
+//
+//        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+//                .document(routine.getProgramID())
+//                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routine.getId())..update(RoutineConstants.KEY_ROUTINE_IS_RESTING, isResting);
+    }
+
+    public MutableLiveData<Boolean> observeRestingStatus(Routine routine) {
+        MutableLiveData<Boolean> isResting = new MutableLiveData<>();
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(routine.getProgramID())
+                .child(routine.getUserID())
+                .child(RoutineConstants.KEY_ROUTINE_IS_RESTING).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isResting.postValue((Boolean) snapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return isResting;
     }
 }

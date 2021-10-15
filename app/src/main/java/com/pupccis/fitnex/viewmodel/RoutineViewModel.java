@@ -262,4 +262,12 @@ public class RoutineViewModel extends BaseObservable {
     public MutableLiveData<List<RoutineData>> observeRoutineRealtime(Routine routine) {
         return routinesRepository.observeRoutineRealtime(routine);
     }
+
+    public void setResting(String programID, String userID,  boolean isResting) {
+        routinesRepository.setResting(programID, userID, isResting);
+    }
+
+    public MutableLiveData<Boolean> observeRestingStatus(Routine routine) {
+        return routinesRepository.observeRestingStatus(routine);
+    }
 }

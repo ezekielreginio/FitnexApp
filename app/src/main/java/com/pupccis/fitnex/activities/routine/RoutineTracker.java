@@ -126,6 +126,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
     public void hideRoutineRestTimer(){
         binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
         timerViewHandler.stopTimer();
+        binding.getViewModel().setResting(programID, userID, false);
     }
 
     public void executeOnFinish(){

@@ -61,9 +61,7 @@ public class TimerViewHandler {
     private void updateCountDownText() {
         int seconds = (int) millisLeftInMillis/1000;
         textViewTimer.setText(seconds+"");
-        Log.d("Seconds",""+seconds);
         float progress = ((float)seconds/initialTime) * 100;
-        Log.d("Progress", progress+"");
         timerProgressBar.setProgress((int)progress);
     }
 }

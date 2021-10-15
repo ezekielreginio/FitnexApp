@@ -11,4 +11,5 @@ public class RoutineConstants {
     public static final String KEY_ROUTINE_COMPLETED = "completed";
     public static final String KEY_ROUTINE_DURATION = "duration";
     public static final String KEY_ROUTINE_WEIGHT = "weight";
+    public static final String KEY_ROUTINE_IS_RESTING = "isResting";
 }
