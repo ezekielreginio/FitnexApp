@@ -105,4 +105,8 @@ public class UserViewModel extends BaseObservable{
                 .build();
         return UserRepository.registerUser(user);
     }
+
+    public MutableLiveData<Boolean> checkHealthData() {
+        return UserRepository.getInstance().checkHealthData();
+    }
 }

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
 import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
@@ -28,6 +29,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.LoginViewModel;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
+import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +89,17 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                 });
                             }
                             else if(user.getUserType().equals("trainee")){
-                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                UserViewModel userViewModel = new UserViewModel();
+                                userViewModel.checkHealthData().observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+                                    @Override
+                                    public void onChanged(Boolean isSet) {
+                                        if(isSet)
+                                            startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                        else
+                                            startActivity(new Intent(getApplicationContext(), HealthAssessment.class));
+                                    }
+                                });
+
                             }
                         }
                         binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);

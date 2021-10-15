@@ -71,8 +71,8 @@ public class UserRepository {
 
     public MutableLiveData<HealthAssessment> insertHealthData(HealthAssessment healthAssessment){
         MutableLiveData<HealthAssessment> healthAssessmentLiveData = new MutableLiveData<>();
-        FirebaseFirestore.getInstance().collection(GlobalConstants.KEY_COLLECTION_USERS)
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_DATA).document(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_ASSESSMENT).set(healthAssessment.toMap(), SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseFirestore.getInstance().collection(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_ASSESSMENT)
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(healthAssessment.toMap(), SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -162,4 +162,17 @@ public class UserRepository {
         //mDatabase.update
     }
 
+    public MutableLiveData<Boolean> checkHealthData() {
+        MutableLiveData<Boolean> healthLiveData = new MutableLiveData<>();
+        db.collection(HealthAssessmentConstants.KEY_COLLECTION_HEALTH_ASSESSMENT).document(FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists())
+                    healthLiveData.postValue(true);
+                else
+                    healthLiveData.postValue(false);
+            }
+        });
+        return healthLiveData;
+    }
 }
