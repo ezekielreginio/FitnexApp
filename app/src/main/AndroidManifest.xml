@@ -20,6 +20,9 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.nutritiontracking.DietPage"
+            android:exported="true" />
+        <activity
             android:name=".activities.routine.ActiveTrainees"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
