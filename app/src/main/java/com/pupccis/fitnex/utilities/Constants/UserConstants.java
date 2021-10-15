@@ -8,6 +8,7 @@ public class UserConstants {
     public static final String KEY_TRAINER = "trainer";
     public static final String KEY_TRAINEE = "trainee";
     public static final String KEY_FCM_TOKEN = "fcm_token";
+    public static final String KEY_USER_ID= "userID";
 
     public static final String KEY_COLLECTION_USERS= "users";
     public static final String KEY_COLLECTION_USER_LIKED_VIDEOS = "liked_videos";

@@ -64,7 +64,6 @@ public class RoutineTrackerAdapter extends RecyclerView.Adapter<RoutineTrackerAd
             this.binding = binding;
         }
         public void bind(RoutineData routineData, int position){
-            int pos = position+1;
 
             if(routineData.isCompleted()){
                 binding.textViewSetNumber.setText("\u2713");
@@ -73,13 +72,11 @@ public class RoutineTrackerAdapter extends RecyclerView.Adapter<RoutineTrackerAd
 
             }
             else{
-                Log.d("Not Completed", "Triggered");
+                int pos = position+1;
                 binding.textViewSetNumber.setText(pos+"");
                 binding.textViewWeight.setHint(routineData.getWeight()+"");
                 binding.textViewReps.setHint(routineData.getReps()+"");
             }
-
-            Log.d("Weight from input", binding.textViewWeight.getText().toString());
 
             binding.getViewModel().resetRoutineTracker();
 

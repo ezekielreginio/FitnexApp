@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.RoutineFragmentAdapter;
 import com.pupccis.fitnex.databinding.ActivityRoutineTrackerBinding;
 import com.pupccis.fitnex.handlers.view.TimerViewHandler;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
     private TimerViewHandler timerViewHandler;
     private RoutineViewModel routineViewModel = new RoutineViewModel();
-    private String programID;
+    private String programID, userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,10 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
         //Extra Intents
         programID = getIntent().getStringExtra(ProgramConstants.KEY_PROGRAM_ID);
+        userID = getIntent().getStringExtra(UserConstants.KEY_USER_ID);
+
+        if(userID == null)
+            userID = FirebaseAuth.getInstance().getUid();
 
         //TimerViewHandler Instantiation
         timerViewHandler = new TimerViewHandler(60000, binding.timerProgressBar, binding.textViewTimer, new Callable<Void>() {
@@ -151,5 +157,13 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
     public RoutineViewModel getViewModel(){
         return routineViewModel;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

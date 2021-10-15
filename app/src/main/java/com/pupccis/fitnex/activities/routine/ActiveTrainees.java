@@ -13,17 +13,18 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.videoconferencing.OutgoingInvitationActivity;
-import com.pupccis.fitnex.activities.videoconferencing.VideoActivityDemo;
 import com.pupccis.fitnex.activities.videoconferencing.listeners.UsersListener;
 import com.pupccis.fitnex.adapters.RealtimeRoutineAdapter;
+import com.pupccis.fitnex.api.interfaces.RealtimeRoutineListener;
 import com.pupccis.fitnex.databinding.ActivityActiveTraineesBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.viewmodel.RoutineViewModel;
 
-public class ActiveTrainees extends AppCompatActivity implements UsersListener {
+public class ActiveTrainees extends AppCompatActivity implements UsersListener, RealtimeRoutineListener {
     private ActivityActiveTraineesBinding binding;
     private RealtimeRoutineAdapter adapter;
     @Override
@@ -42,6 +43,7 @@ public class ActiveTrainees extends AppCompatActivity implements UsersListener {
         //Instantiate Adapter and Bind to RecyclerView
         adapter = new RealtimeRoutineAdapter(options);
         adapter.setUsersListener(this);
+        adapter.setRealtimeRoutineListener(this);
         binding.recyclerViewActiveTrainees.setAdapter(adapter);
     }
 
@@ -73,5 +75,14 @@ public class ActiveTrainees extends AppCompatActivity implements UsersListener {
     @Override
     public void initiateAudioMeeting(User user) {
 
+    }
+
+    @Override
+    public void startRealtimeRoutineActivity(String programID, String userID) {
+        Intent intent = new Intent(ActiveTrainees.this, RoutineTracker.class);
+        intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, programID);
+        intent.putExtra(UserConstants.KEY_USER_ID, userID);
+        startActivity(intent);
+        overridePendingTransition(R.anim.from_right,R.anim.stay);
     }
 }

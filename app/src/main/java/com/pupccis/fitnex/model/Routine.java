@@ -12,6 +12,7 @@ public class Routine implements Serializable, Observer {
     private String name;
     private String routineID;
     private String programID;
+    private String userID;
     private int category;
     private int sets;
     private int reps;
@@ -100,6 +101,10 @@ public class Routine implements Serializable, Observer {
         return programID;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
     public boolean isCompleted() {
         return isCompleted;
     }
@@ -112,6 +117,9 @@ public class Routine implements Serializable, Observer {
         isCompleted = completed;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public static class Builder{
         private final String name;

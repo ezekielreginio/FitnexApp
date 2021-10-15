@@ -1,7 +1,6 @@
 package com.pupccis.fitnex.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,19 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.pupccis.fitnex.activities.videoconferencing.listeners.UsersListener;
+import com.pupccis.fitnex.api.interfaces.RealtimeRoutineListener;
 import com.pupccis.fitnex.databinding.ItemContainerActiveTraineeBinding;
 import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.User;
 
 public class RealtimeRoutineAdapter extends FirebaseRecyclerAdapter<RealtimeRoutine, RealtimeRoutineAdapter.RealtimeRoutineHolder> {
     private UsersListener usersListener;
+    private RealtimeRoutineListener realtimeRoutineListener;
     public RealtimeRoutineAdapter(@NonNull FirebaseRecyclerOptions<RealtimeRoutine> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull RealtimeRoutineHolder holder, int position, @NonNull RealtimeRoutine model) {
-        model.setRoutineID(this.getSnapshots().getSnapshot(position).getKey());
+        model.setUserID(this.getSnapshots().getSnapshot(position).getKey());
         holder.bind(model);
     }
 
@@ -39,6 +40,10 @@ public class RealtimeRoutineAdapter extends FirebaseRecyclerAdapter<RealtimeRout
         this.usersListener = usersListener;
     }
 
+    public void setRealtimeRoutineListener(RealtimeRoutineListener realtimeRoutineListener) {
+        this.realtimeRoutineListener = realtimeRoutineListener;
+    }
+
     class RealtimeRoutineHolder extends RecyclerView.ViewHolder{
         private ItemContainerActiveTraineeBinding binding;
 
@@ -51,6 +56,7 @@ public class RealtimeRoutineAdapter extends FirebaseRecyclerAdapter<RealtimeRout
             User user = new User(model.getTraineeName(), model.getEmail(), model.getFcm_token());
             binding.textUsername.setText(model.getTraineeName());
             binding.imageAudioMeeting.setOnClickListener(v -> usersListener.initiateVideoMeeting(user));
+            binding.imageViewRoutineTracker.setOnClickListener(v-> realtimeRoutineListener.startRealtimeRoutineActivity(model.getProgramID(), model.getUserID()));
         }
     }
 }

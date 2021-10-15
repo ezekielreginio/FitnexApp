@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class RoutineData implements Serializable {
     private int position, reps;
-    private String routineID;
+    private String routineSetID, userID;
     private boolean isCompleted;
     private double weight;
 
@@ -15,9 +15,10 @@ public class RoutineData implements Serializable {
     public RoutineData(Builder builder) {
         this.position = builder.position;
         this.reps = builder.reps;
-        this.routineID = builder.routineID;
+        this.routineSetID = builder.routineID;
         this.isCompleted = builder.isCompleted;
         this.weight = builder.weight;
+        this.userID = builder.userID;
     }
 
     public int getPosition() {
@@ -32,8 +33,12 @@ public class RoutineData implements Serializable {
         return weight;
     }
 
-    public String getRoutineID() {
-        return routineID;
+    public String getRoutineSetID() {
+        return routineSetID;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public boolean isCompleted() {
@@ -54,7 +59,7 @@ public class RoutineData implements Serializable {
 
     public static class Builder{
         private int position, reps;
-        private String routineID;
+        private String routineID, userID;
         private boolean isCompleted;
         private double weight;
 
@@ -78,6 +83,11 @@ public class RoutineData implements Serializable {
 
         public Builder completed(boolean completed) {
             isCompleted = completed;
+            return this;
+        }
+
+        public Builder userID(String userID) {
+            this.userID = userID;
             return this;
         }
 

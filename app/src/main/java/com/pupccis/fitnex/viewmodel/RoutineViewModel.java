@@ -156,6 +156,7 @@ public class RoutineViewModel extends BaseObservable {
                 .reps(routineReps)
                 .weight(routineWeight)
                 .routineID(routine.getId())
+                .userID(routine.getUserID())
                 .build();
 
         routineDataMap.put(routinePosition, routineData);
@@ -256,5 +257,9 @@ public class RoutineViewModel extends BaseObservable {
     public void startRoutine(String traineeName, String programID, String fcm_token, String email) {
         RealtimeRoutine realtimeRoutine = new RealtimeRoutine(traineeName, programID, fcm_token, email);
         routinesRepository.startRealtimeRoutine(realtimeRoutine);
+    }
+
+    public MutableLiveData<List<RoutineData>> observeRoutineRealtime(Routine routine) {
+        return routinesRepository.observeRoutineRealtime(routine);
     }
 }

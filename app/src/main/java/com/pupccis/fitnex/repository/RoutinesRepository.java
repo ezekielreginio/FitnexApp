@@ -8,7 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -20,7 +23,6 @@ import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Constants.RoutineConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RoutinesRepository {
@@ -106,6 +108,7 @@ public class RoutinesRepository {
                             .weight(Double.parseDouble(snapshot.get(RoutineConstants.KEY_ROUTINE_WEIGHT).toString()))
                             .duration(Integer.parseInt(snapshot.get(RoutineConstants.KEY_ROUTINE_DURATION).toString()))
                             .routineID(snapshot.getId())
+                            .programID(programID)
                             .build();
                     routineData.add(routine);
                 }
@@ -121,7 +124,7 @@ public class RoutinesRepository {
                 .child(programID)
                 .child(FirebaseAuth.getInstance().getUid())
                 .child(RoutineConstants.KEY_COLLECTION_ROUTINE)
-                .child(routineData.getRoutineID())
+                .child(routineData.getRoutineSetID())
                 .child(routinePosition+"")
                 .setValue(routineData);
     }
@@ -135,4 +138,35 @@ public class RoutinesRepository {
     }
 
 
+    public MutableLiveData<List<RoutineData>> observeRoutineRealtime(Routine routine) {
+        MutableLiveData<List<RoutineData>> routineDataLiveData = new MutableLiveData<>();
+        List<RoutineData> routineDataList = new ArrayList<>();
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(routine.getProgramID())
+                .child(routine.getUserID())
+                .child(RoutineConstants.KEY_COLLECTION_ROUTINE)
+                .child(routine.getId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot data : snapshot.getChildren()){
+                    RoutineData routineData = new RoutineData.Builder()
+                            .completed((boolean) data.child(RoutineConstants.KEY_ROUTINE_COMPLETED).getValue())
+                            .position(Integer.parseInt(data.getKey()))
+                            .reps(Integer.parseInt(data.child(RoutineConstants.KEY_ROUTINE_REPS).getValue().toString()))
+                            .weight(Integer.parseInt(data.child(RoutineConstants.KEY_ROUTINE_WEIGHT).getValue().toString()))
+                            .routineID(data.child(RoutineConstants.KEY_ROUTINE_ID).getValue().toString())
+                            .build();
+                    routineDataList.add(routineData);
+                }
+                routineDataLiveData.postValue(routineDataList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return routineDataLiveData;
+    }
 }
