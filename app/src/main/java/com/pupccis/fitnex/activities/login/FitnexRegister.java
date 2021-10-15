@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.activities.login;
 
 
+import static com.pupccis.fitnex.handlers.view.UserPortalHandler.checkHealthData;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
@@ -120,7 +121,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
                                 startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
                             }
                             else if(user.getUserType().equals("trainee")){
-                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                checkHealthData(binding.getLifecycleOwner(), FitnexRegister.this);
                             }
                         }
                         binding.constraintLayoutRegisterProgressBar.setVisibility(View.GONE);

@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.activities.login;
 
+import static com.pupccis.fitnex.handlers.view.UserPortalHandler.checkHealthData;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
@@ -85,21 +86,12 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                         Log.d("Patron is Set", isSet.toString());
                                         userPreferences.putBoolean(PatronConstants.KEY_PATRON_SET, isSet);
                                         startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                        finish();
                                     }
                                 });
                             }
                             else if(user.getUserType().equals("trainee")){
-                                UserViewModel userViewModel = new UserViewModel();
-                                userViewModel.checkHealthData().observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
-                                    @Override
-                                    public void onChanged(Boolean isSet) {
-                                        if(isSet)
-                                            startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
-                                        else
-                                            startActivity(new Intent(getApplicationContext(), HealthAssessment.class));
-                                    }
-                                });
-
+                                checkHealthData(binding.getLifecycleOwner(), FitnexLogin.this);
                             }
                         }
                         binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);
