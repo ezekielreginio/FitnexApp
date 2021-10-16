@@ -1,6 +1,7 @@
 package com.pupccis.fitnex.activities.routine;
 
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
+import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -66,6 +68,7 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
         program = (Program) getIntent().getSerializableExtra("program");
         //Spinner binding
         Spinner spinner=findViewById(R.id.editTextAddRoutineCategory);
+        rotateAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate), binding.closeAddProgramButton);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -120,7 +123,9 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                         @Override
                         public void onChanged(Routine routine) {
                             Toast.makeText(AddRoutine.this, "Routine Successfully Updated", Toast.LENGTH_SHORT).show();
+                            binding.constraintLayoutRoutineProgressBar.setVisibility(View.GONE);
                             routineMutableLiveData.removeObserver(this::onChanged);
+                            finish();
                         }
                     });
                }
@@ -132,11 +137,13 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                        @Override
                        public void onChanged(Routine routine) {
                            Toast.makeText(AddRoutine.this, "Routine Successfully Registered", Toast.LENGTH_SHORT).show();
+                           binding.constraintLayoutRoutineProgressBar.setVisibility(View.GONE);
                            routineMutableLiveData.removeObserver(this::onChanged);
+                           finish();
                        }
                    });
                }
-               binding.constraintLayoutRoutineProgressBar.setVisibility(View.GONE);
+
            }
 
        }

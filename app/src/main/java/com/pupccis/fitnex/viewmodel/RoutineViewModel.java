@@ -190,7 +190,7 @@ public class RoutineViewModel extends BaseObservable {
                 .category(0)
                 .sets(Integer.parseInt(getAddRoutineSetCount()))
                 .reps(Integer.parseInt(getAddRoutineRepCount()))
-                .weight(Integer.parseInt(getAddRoutineWeight()))
+                .weight(Double.parseDouble(getAddRoutineWeight()))
                 .duration(Integer.parseInt(getAddRoutineDuration()))
                 .programID(getProgramID())
                 .routineID(getRoutineID())

@@ -23,6 +23,8 @@
     bind:routineValidationData="@{viewModel.routineValidationData}"
     tools:context=".activities.routine.AddRoutine">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutRoutineProgressBar"
         android:layout_width="match_parent"

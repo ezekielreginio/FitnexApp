@@ -90,6 +90,8 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         binding.setViewModel(adapter.getViewModel());
         binding.setPresenter(this);
 
+        binding.textViewRoutinePageProgramName.setText(program_intent.getName());
+
         if(userType.equals(UserConstants.KEY_TRAINEE)){
             ProgramViewModel programViewModel = new ProgramViewModel();
             programViewModel.checkProgramSaved(program_intent.getProgramID()).observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
