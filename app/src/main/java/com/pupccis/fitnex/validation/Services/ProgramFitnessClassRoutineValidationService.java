@@ -34,11 +34,16 @@ public class ProgramFitnessClassRoutineValidationService {
             case DURATION:
             case REPS:
             case SETS:
-            case WEIGHT:
             case HEIGHT:
                 result = service
                         .requiredField()
                         .validateInt()
+                        .validate();
+                break;
+            case WEIGHT:
+                result = service
+                        .requiredField()
+                        .validateDouble()
                         .validate();
                 break;
             case TIME_END:

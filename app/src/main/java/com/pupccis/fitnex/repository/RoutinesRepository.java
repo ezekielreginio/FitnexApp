@@ -202,4 +202,11 @@ public class RoutinesRepository {
         });
         return isResting;
     }
+
+    public void deleteRealtimeRoutine(String programID, String userID) {
+        FirebaseDatabase.getInstance()
+                .getReference(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                .child(programID)
+                .child(userID).removeValue();
+    }
 }

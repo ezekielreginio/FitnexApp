@@ -52,7 +52,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         timerViewHandler = new TimerViewHandler(60000, binding.timerProgressBar, binding.textViewTimer, new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                executeOnFinish();
+                hideRoutineRestTimer();
                 return null;
             }
         });
@@ -120,6 +120,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         binding.linearLayoutRestTitle.setVisibility(View.GONE);
         binding.linearLayoutFinished.setVisibility(View.VISIBLE);
         binding.constraintLayoutRoutineCountdown.setVisibility(View.VISIBLE);
+        binding.buttonSkipRest.setText("finish workout");
         timerViewHandler.startTimer(true);
     }
 
@@ -127,14 +128,11 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         binding.constraintLayoutRoutineCountdown.setVisibility(View.GONE);
         timerViewHandler.stopTimer();
         binding.getViewModel().setResting(programID, userID, false);
-    }
-
-    public void executeOnFinish(){
-        hideRoutineRestTimer();
-        int routineCount = getRoutineCount();
-        int currentRoutine = getSelectedRoutinePosition()+1;
-        if(routineCount == currentRoutine)
+        if(binding.buttonSkipRest.getText().equals("finish workout")){
+            binding.getViewModel().deleteRealtimeRoutine(programID, userID);
             finish();
+        }
+
     }
 
     public String getProgramID(){

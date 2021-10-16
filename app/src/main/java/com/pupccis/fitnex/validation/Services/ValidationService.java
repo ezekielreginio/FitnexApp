@@ -40,11 +40,8 @@ public class ValidationService {
     }
     public ValidationService regexValidation(String pattern, String errorMessage){
         boolean isMatch = input.matches(pattern);
-       // boolean isMatch = Pattern.compile(pattern).matcher(input).matches();
 
-        Log.e("Pumasok sa RegEx", "Pumasok: "+input);
         if(!isMatch){
-            Log.e("Pumasok sa if", "pasok1");
             result = ValidationResult.invalid(errorMessage);
         }
 
@@ -71,6 +68,22 @@ public class ValidationService {
         }
         return this;
     }
+
+    public ValidationService validateDouble() {
+        if(result.isValid()){
+            try{
+                Double number = Double.parseDouble(input);
+                if(number<0){
+                    result = ValidationResult.invalid("This must be higher than 0");
+                }
+            }
+            catch (NumberFormatException ex){
+                result = ValidationResult.invalid("Invalid input, this must be a Number");
+            }
+        }
+        return this;
+    }
+
     public ValidationService notZero(){
         if(result.isValid()){
             int number = Integer.parseInt(input);
@@ -109,6 +122,7 @@ public class ValidationService {
         return this;
     }
 
+
     public ValidationService requiredField(){
 
         if(result.isValid()){
@@ -128,4 +142,5 @@ public class ValidationService {
     protected ValidationResult getValidationResult() {
         return validationResult;
     }
+
 }

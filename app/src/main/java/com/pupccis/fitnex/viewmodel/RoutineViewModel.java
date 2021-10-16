@@ -270,4 +270,8 @@ public class RoutineViewModel extends BaseObservable {
     public MutableLiveData<Boolean> observeRestingStatus(Routine routine) {
         return routinesRepository.observeRestingStatus(routine);
     }
+
+    public void deleteRealtimeRoutine(String programID, String userID) {
+        routinesRepository.deleteRealtimeRoutine(programID, userID);
+    }
 }
