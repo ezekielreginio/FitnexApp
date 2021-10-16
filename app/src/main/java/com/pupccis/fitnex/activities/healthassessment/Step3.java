@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.activities.healthassessment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
 import com.pupccis.fitnex.databinding.FragmentStep3Binding;
 
 /**
@@ -125,6 +127,12 @@ public class Step3 extends Fragment implements View.OnClickListener{
             insertHealth.observe(getViewLifecycleOwner(), new Observer<com.pupccis.fitnex.model.HealthAssessment>() {
                 @Override
                 public void onChanged(com.pupccis.fitnex.model.HealthAssessment healthAssessment) {
+                    if(healthAssessment != null){
+                        startActivity(new Intent(getActivity(), TraineeDashboard.class));
+                        ((HealthAssessment) getActivity()).finishActivity();
+                    }
+
+
                     insertHealth.removeObserver(this::onChanged);
                 }
             });

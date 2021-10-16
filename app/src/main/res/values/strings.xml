@@ -5,6 +5,10 @@
     <string name="login_password_hint">Password</string>
     <string name="sign_out">Sign Out</string>
 
+    <string name="privacyTerms">
+
+    </string>
+
     <string-array name="category">
         <item>Select a Category</item>
         <item>Cardio</item>

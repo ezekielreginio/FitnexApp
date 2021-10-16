@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.activities.login;
 
+import static com.pupccis.fitnex.handlers.view.UserPortalHandler.checkHealthData;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
@@ -17,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
 import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
@@ -28,6 +30,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.LoginViewModel;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
+import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,11 +86,12 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                                         Log.d("Patron is Set", isSet.toString());
                                         userPreferences.putBoolean(PatronConstants.KEY_PATRON_SET, isSet);
                                         startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+                                        finish();
                                     }
                                 });
                             }
                             else if(user.getUserType().equals("trainee")){
-                                startActivity(new Intent(getApplicationContext(), TraineeDashboard.class));
+                                checkHealthData(binding.getLifecycleOwner(), FitnexLogin.this);
                             }
                         }
                         binding.constraintLayoutLoginProgressBar.setVisibility(View.GONE);

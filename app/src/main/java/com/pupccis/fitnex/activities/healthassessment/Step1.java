@@ -101,6 +101,9 @@ public class Step1 extends Fragment implements View.OnClickListener{
             binding.getViewModel();
 
         }
+        if (view == binding.imageViewOneBack){
+            Navigation.findNavController(view).navigate(R.id.action_step1_to_privacyTerms);
+        }
     }
     @BindingAdapter({"healthAssessmentValidationData"})
     public static void validateHealthAssessmentData(View view, HashMap<String, Object> validationData){

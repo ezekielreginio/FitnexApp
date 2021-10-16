@@ -25,4 +25,8 @@ public class HealthAssessment extends AppCompatActivity {
     public HealthAssessmentViewModel getViewModel(){
         return binding.getViewModel();
     }
+
+    public void finishActivity(){
+        finish();
+    }
 }
