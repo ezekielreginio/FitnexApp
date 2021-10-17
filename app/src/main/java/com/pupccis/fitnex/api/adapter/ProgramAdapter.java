@@ -81,11 +81,11 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             programContainer = itemView.findViewById(R.id.layoutProgramContainer);
             layoutProgramInfo = itemView.findViewById(R.id.layoutProgramInfo);
 
-            programUpdate = itemView.findViewById(R.id.buttonProgramUpdate);
-            programDelete = itemView.findViewById(R.id.buttonProgramDelete);
+//            programUpdate = itemView.findViewById(R.id.buttonProgramUpdate);
+//            programDelete = itemView.findViewById(R.id.buttonProgramDelete);
             programJoin = itemView.findViewById(R.id.buttonProgramJoin);
             programView = itemView.findViewById(R.id.buttonProgramView);
-            textViewRoutine = itemView.findViewById(R.id.textViewRoutine);
+//            textViewRoutine = itemView.findViewById(R.id.textViewRoutine);
         }
 
         void setProgramData(Program program){

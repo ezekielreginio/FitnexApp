@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.model;
 
+import com.google.android.material.expandable.ExpandableWidget;
 import com.pupccis.fitnex.api.globals.Observer;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Program implements Serializable {
+public class Program implements Serializable, ExpandableWidget {
 
     private String name;
     private String description;
@@ -119,6 +120,16 @@ public class Program implements Serializable {
 
     public void setProgramID(String programID) {
         this.programID = programID;
+    }
+
+    @Override
+    public boolean isExpanded() {
+        return false;
+    }
+
+    @Override
+    public boolean setExpanded(boolean expanded) {
+        return false;
     }
 
     public static class Builder{

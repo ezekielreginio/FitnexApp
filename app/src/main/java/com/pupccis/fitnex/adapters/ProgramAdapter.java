@@ -34,6 +34,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
         model.setProgramID(this.getSnapshots().getSnapshot(position).getId());
         holder.setProgramData(model);
+        boolean isExpanded = model.isExpanded();
     }
 
     @NonNull
@@ -63,6 +64,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         public ProgramHolder(@NonNull ItemContainerProgramBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
         }
         void setProgramData(Program model){
             binding.textProgramName.setText(model.getName());
@@ -72,11 +74,15 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
             switch (accessType){
                 case VIEW:
-                    binding.layoutProgramButtonOwner.setVisibility(View.GONE);
+                   // binding.layoutProgramButtonOwner.setVisibility(View.GONE);
                     binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             binding.getViewModel().triggerContainerClicked(model);
+                            if(binding.layoutProgramInfo.getVisibility() == View.VISIBLE)
+                                binding.programExpand.setImageResource(R.drawable.ic_expand_less);
+                            else
+                                binding.programExpand.setImageResource(R.drawable.ic_expand_more);
                         }
                     });
                     break;
@@ -97,6 +103,33 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
+            binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (binding.layoutProgramInfo.getVisibility()){
+                        case View.GONE:
+                            binding.layoutProgramInfo.setVisibility(View.VISIBLE);
+//                            notifyItemChanged(getAbsoluteAdapterPosition());
+                            break;
+                        case View.VISIBLE:
+                            binding.layoutProgramInfo.setVisibility(View.GONE);
+                            notifyItemChanged(getAbsoluteAdapterPosition());
+                    }
+//                    if(binding.layoutProgramInfo.getVisibility() == View.GONE) {
+//                        binding.layoutProgramInfo.setVisibility(View.VISIBLE);
+//                        Log.e("change visibility", "Changed");
+//                        notifyItemChanged(getAbsoluteAdapterPosition());
+//                        Log.e("Nog notify", "Notified");
+//
+//                    }
+//                    else if(binding.layoutProgramInfo.getVisibility() == View.VISIBLE){
+//                        binding.layoutProgramInfo.setVisibility(View.GONE);
+//                        Log.e("change visibility", "Changed");
+//                        notifyItemChanged(getAbsoluteAdapterPosition());
+//                        Log.e("Nog notify", "Notified");
+//                    }
+                }
+            });
             binding.setVariable(BR.program, model);
         }
     }
