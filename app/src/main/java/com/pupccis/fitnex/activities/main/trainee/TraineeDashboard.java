@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Button;
 
 import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
+import com.pupccis.fitnex.activities.nutritiontracking.NutritionTrackingMain;
 import com.pupccis.fitnex.activities.searchengine.SearchEngine;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
@@ -17,7 +18,7 @@ import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
 public class TraineeDashboard extends AppCompatActivity {
-    private ConstraintLayout buttonSearch, constraintLayoutDashboard;
+    private ConstraintLayout buttonSearch, constraintLayoutDashboard, constraintLayoutTraineeStudioNutritionTracker;
     private TextView textViewUserNameHeader;
     private UserPreferences userPreferences;
     private Button button;
@@ -30,6 +31,7 @@ public class TraineeDashboard extends AppCompatActivity {
 
         buttonSearch = findViewById(R.id.layoutTraineeSearch);
         constraintLayoutDashboard = findViewById(R.id.constraintLayoutDashboard);
+        constraintLayoutTraineeStudioNutritionTracker = findViewById(R.id.constraintLayoutTraineeStudioNutritionTracker);
         textViewUserNameHeader = findViewById(R.id.textViewUserNameHeader);
         textViewUserNameHeader.setText("Welcome, \n"+userPreferences.getString(UserConstants.KEY_USER_NAME));
 
@@ -47,6 +49,12 @@ public class TraineeDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), TrainerDashboard.class));
+            }
+        });
+        constraintLayoutTraineeStudioNutritionTracker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NutritionTrackingMain.class));
             }
         });
 

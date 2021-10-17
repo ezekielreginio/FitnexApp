@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nutrition_tracking_navgraph"
+    app:startDestination="@id/fragmentNutritionTracker">
+
+    <fragment
+        android:id="@+id/fragmentNutritionTracker"
+        android:name="com.pupccis.fitnex.activities.nutritiontracking.FragmentNutritionTracking"
+        android:label="fragment_nutrition_tracker"
+        tools:layout="@layout/fragment_nutrition_tracking" >
+        <action
+            android:id="@+id/action_fragmentNutritionTracker_to_fragmentAddFood"
+            app:destination="@id/fragmentAddFood"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddFood"
+        android:name="com.pupccis.fitnex.activities.nutritiontracking.FragmentAddFood"
+        android:label="fragment_add_food"
+        tools:layout="@layout/fragment_add_food" />
+</navigation>

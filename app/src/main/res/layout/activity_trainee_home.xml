@@ -326,7 +326,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingTop="5dp"
-            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTraineeStudioButton"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutTraineeStudioNutritionTracker"
             app:layout_constraintStart_toEndOf="@+id/constraintLayoutDashboard"
             tools:layout_editor_absoluteY="8dp">
 
@@ -339,7 +339,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutTraineeStudioButton"
+            android:id="@+id/constraintLayoutTraineeStudioNutritionTracker"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
@@ -347,10 +347,10 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/buttonTraineeStudio"
+                android:id="@+id/buttonNutritionTracker"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@drawable/ic_trainer_studio"
+                app:srcCompat="@drawable/ic_nutrition_tracker"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
