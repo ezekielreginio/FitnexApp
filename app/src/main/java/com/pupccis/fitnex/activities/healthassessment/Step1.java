@@ -107,7 +107,6 @@ public class Step1 extends Fragment implements View.OnClickListener{
     }
     @BindingAdapter({"healthAssessmentValidationData"})
     public static void validateHealthAssessmentData(View view, HashMap<String, Object> validationData){
-        Log.e("Pumaskop", "pumasok");
         if (validationData != null) {
             ValidationResult result = (ValidationResult) validationData.get("validationResult");
             com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
