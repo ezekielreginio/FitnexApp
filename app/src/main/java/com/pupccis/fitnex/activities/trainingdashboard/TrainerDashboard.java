@@ -66,12 +66,12 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
         textViewUserName.setText(userPreferences.getString(UserConstants.KEY_USER_NAME));
 
-        addButton.setOnClickListener(this);
-        trainerStudioButton.setOnClickListener(this);
-        cardViewViewPatronPage.setOnClickListener(this);
-        buttonSetPatronData.setOnClickListener(this);
+//        addButton.setOnClickListener(this);
+//        trainerStudioButton.setOnClickListener(this);
+//        cardViewViewPatronPage.setOnClickListener(this);
+//        buttonSetPatronData.setOnClickListener(this);
 
-        programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
+//        programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
 
         FragmentManager fm = getSupportFragmentManager();
         trainerDashboardFragmentAdapter = new TrainerDashboardFragmentAdapter(fm, getLifecycle());

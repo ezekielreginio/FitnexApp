@@ -79,10 +79,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                         @Override
                         public void onClick(View view) {
                             binding.getViewModel().triggerContainerClicked(model);
-                            if(binding.layoutProgramInfo.getVisibility() == View.VISIBLE)
-                                binding.programExpand.setImageResource(R.drawable.ic_expand_less);
-                            else
-                                binding.programExpand.setImageResource(R.drawable.ic_expand_more);
+//                            if(binding.layoutProgramInfo.getVisibility() == View.VISIBLE)
+//                                binding.programExpand.setImageResource(R.drawable.ic_expand_less);
+//                            else
+//                                binding.programExpand.setImageResource(R.drawable.ic_expand_more);
                         }
                     });
                     break;

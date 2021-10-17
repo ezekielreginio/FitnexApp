@@ -5,9 +5,11 @@
     <string name="login_password_hint">Password</string>
     <string name="sign_out">Sign Out</string>
 
-    <string name="privacyTerms">
-
-    </string>
+    <string name="trainerDashboardPrograms">Programs</string>
+    <string name="trainerDashboardClasses">Classes</string>
+    <string name="trainerDashboardHome">Home</string>
+    <string name="trainerDashboardDiet">Diet</string>
+    <string name="trainerDashboardStudio">Studio</string>
 
     <string-array name="category">
         <item>Select a Category</item>

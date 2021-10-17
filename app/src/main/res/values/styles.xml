@@ -73,5 +73,12 @@
         <item name="android:textColor">@color/addProgramText</item>
     </style>
 
+    <style name="BottomNavStyle" parent="parent">
+        <item name="bottomNavigationStyle">
+            @style/Widget.MaterialComponents.BottomNavigationView.Colored
+        </item>
+        <item name="colorPrimary">@color/themeColor</item>
+        <item name="colorOnPrimary">@color/secondaryBackgroundColor</item>
+    </style>
 
 </resources>
