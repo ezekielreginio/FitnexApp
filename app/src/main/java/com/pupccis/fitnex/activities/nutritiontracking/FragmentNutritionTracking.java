@@ -39,7 +39,6 @@ public class FragmentNutritionTracking extends Fragment implements View.OnClickL
     public void onClick(View view) {
         if(view == binding.imageViewAddBreakfast){
             Navigation.findNavController(view).navigate(R.id.action_fragmentNutritionTracker_to_fragmentAddFood);
-            Log.d("Breakfast", "Clicked");
         }
     }
 }
