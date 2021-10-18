@@ -126,6 +126,7 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="1.0" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/background_healthassessment_header.xml" value="0.23125" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/background_top_botttom_border.xml" value="0.3828125" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_audio.xml" value="0.3828125" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_badge_bronze.xml" value="0.3828125" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/drawable/ic_badge_gold.xml" value="0.3828125" />
@@ -153,6 +154,7 @@
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_player.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/blank.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_add_food.xml" value="0.15" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_food_info.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_pricing.xml" value="0.1" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_initial_patron_privileges.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_nutrition_monitoring.xml" value="0.20520833333333333" />
@@ -166,6 +168,7 @@
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_comment.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.75" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/routine_timer_container.xml" value="0.20520833333333333" />
       </map>
     </option>

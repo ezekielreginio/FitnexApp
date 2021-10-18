@@ -25,7 +25,7 @@ public class NutritionTrackingRepository {
     public MutableLiveData<List<FoodData>> getFoodResults(RequestQueue queue, String queryFood){
         MutableLiveData<List<FoodData>> result = new MutableLiveData<>();
         List<FoodData> foodDataList = new ArrayList<>();
-        String url ="https://api.nal.usda.gov/fdc/v1/foods/search?query="+queryFood+"&pageSize=2&api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
+        String url ="https://api.nal.usda.gov/fdc/v1/foods/search?query="+queryFood+"&pageSize=10&api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

@@ -15,6 +15,7 @@
     <color name="whiteTextColor">#fff</color>
     <color name="lesserBlack">#424141</color>
     <color name="secondaryTextColor">#817F7F</color>
+    <color name="lightGray">#D5D5D5</color>
     <color name="primaryTextColor">#26355E</color>
 
     <color name="bronzeColor">#B1907F</color>
