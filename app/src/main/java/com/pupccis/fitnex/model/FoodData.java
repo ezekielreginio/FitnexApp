@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FoodData implements Serializable {
     private String name, datatype, brand;
-    private Double calories;
+    private Double calories,servingSize, protein, fats, carbs;
 
     private int fcdID;
 
@@ -17,6 +17,10 @@ public class FoodData implements Serializable {
         this.datatype = builder.datatype;
         this.brand = builder.brand;
         this.calories = builder.calories;
+        this.servingSize = builder.servingSize;
+        this.protein = builder.protein;
+        this.fats = builder.fats;
+        this.carbs = builder.carbs;
     }
 
     //Getter Methods
@@ -40,9 +44,25 @@ public class FoodData implements Serializable {
         return calories;
     }
 
+    public Double getServingSize() {
+        return servingSize;
+    }
+
+    public Double getProtein() {
+        return protein;
+    }
+
+    public Double getFats() {
+        return fats;
+    }
+
+    public Double getCarbs() {
+        return carbs;
+    }
+
     public static class Builder{
         private String name, datatype, brand;
-        private Double calories;
+        private Double calories, servingSize, protein, fats, carbs;
         private int fcdID;
 
         public Builder() {
@@ -73,6 +93,23 @@ public class FoodData implements Serializable {
             return this;
         }
 
+        public Builder servingSize(Double servingSize) {
+            this.servingSize = servingSize;
+            return this;
+        }
+
+        public Builder protein(Double protein) {
+            this.protein = protein;
+            return this;
+        }
+        public Builder fats(Double fats) {
+            this.fats = fats;
+            return this;
+        }
+        public Builder carbs(Double carbs) {
+            this.carbs = carbs;
+            return this;
+        }
         public FoodData build(){
             FoodData foodData = new FoodData(this);
             return foodData;

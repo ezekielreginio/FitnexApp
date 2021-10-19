@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.activities.nutritiontracking;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.android.volley.RequestQueue;
@@ -25,13 +27,15 @@ import com.pupccis.fitnex.model.FoodData;
 import com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 
-public class FragmentAddFood extends Fragment{
+public class FragmentAddFood extends Fragment {
     private static FragmentAddFoodBinding binding;
     private static RequestQueue queue;
 
     private static Context context;
+    private static View appView;
 
     public FragmentAddFood() {
     }
@@ -44,22 +48,23 @@ public class FragmentAddFood extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        NutritionTrackingViewModel nutritionTrackingViewModel = ((NutritionTrackingMain)getActivity()).getNutritionTrackingViewModel();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_food, container, false);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(nutritionTrackingViewModel);
+        binding.setViewModel(((NutritionTrackingMain)getActivity()).getNutritionTrackingViewModel());
         binding.executePendingBindings();
         binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         queue = Volley.newRequestQueue(getActivity());
 
         context = getContext();
 
+        appView = binding.getRoot();
         return binding.getRoot();
     }
 
@@ -75,6 +80,8 @@ public class FragmentAddFood extends Fragment{
                         Log.d("Calories", data.getCalories()+"");
                     }
                     FoodDataAdapter adapter = new FoodDataAdapter(foodDataList);
+                    adapter.setViewModel(binding.getViewModel());
+                    adapter.setNavigation(Navigation.findNavController(view));
                     binding.recyclerViewFoodQuery.setAdapter(adapter);
                     binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getAppContext(), LinearLayoutManager.VERTICAL, false));
                 }
@@ -85,4 +92,12 @@ public class FragmentAddFood extends Fragment{
     public static Context getAppContext() {
         return FragmentAddFood.context;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        binding.getViewModel().setCurrentFoodData(null);
+    }
+
+
 }

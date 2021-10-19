@@ -20,5 +20,18 @@
         android:id="@+id/fragmentAddFood"
         android:name="com.pupccis.fitnex.activities.nutritiontracking.FragmentAddFood"
         android:label="fragment_add_food"
-        tools:layout="@layout/fragment_add_food" />
+        tools:layout="@layout/fragment_add_food" >
+        <action
+            android:id="@+id/action_fragmentAddFood_to_fragmentFoodInfo"
+            app:destination="@id/fragmentFoodInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFoodInfo"
+        android:name="com.pupccis.fitnex.activities.nutritiontracking.FragmentFoodInfo"
+        android:label="fragment_food_info"
+        tools:layout="@layout/fragment_food_info" >
+        <action
+            android:id="@+id/action_fragmentFoodInfo_to_fragmentAddFood"
+            app:destination="@id/fragmentAddFood" />
+    </fragment>
 </navigation>

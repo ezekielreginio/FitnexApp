@@ -25,6 +25,7 @@
     <color name="magenta">#a08bb2</color>
     <color name="primaryBackgroundColor">#26355E</color>
     <color name="secondaryBackgroundColor">#ADCEE6</color>
+    <color name="grayBackgroundColor">#f0efe7</color>
     <color name="blueTextColor">#092f62</color>
 
 

@@ -33,7 +33,6 @@ public class NutritionTrackingRepository {
                         try{
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("foods");
-
                             for(int i=0; i<jsonArray.length(); i++){
                                 JSONObject foodData = jsonArray.getJSONObject(i);
                                 FoodData.Builder builder = new FoodData.Builder()
@@ -63,5 +62,44 @@ public class NutritionTrackingRepository {
         });
         queue.add(stringRequest);
         return result;
+    }
+
+    public MutableLiveData<FoodData> getFoodInfo(RequestQueue queue, FoodData foodData) {
+        MutableLiveData<FoodData> liveFoodInfo = new MutableLiveData<>();
+        int fcdID = foodData.getFcdID();
+        String url = "https://api.nal.usda.gov/fdc/v1/food/"+fcdID+"?api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            FoodData foodDataInfo = null;
+                            if(jsonObject.getString("dataType").equals("Branded")){
+                                JSONObject nutrients = jsonObject.getJSONObject("labelNutrients");
+                                foodDataInfo = new FoodData.Builder()
+                                        .name(jsonObject.getString("description"))
+                                        .fcdID(jsonObject.getInt("fdcId"))
+                                        .calories(foodData.getCalories())
+                                        .servingSize(jsonObject.getDouble("servingSize"))
+                                        .protein(nutrients.getJSONObject("protein").getDouble("value"))
+                                        .fats(nutrients.getJSONObject("fat").getDouble("value"))
+                                        .carbs(nutrients.getJSONObject("carbohydrates").getDouble("value"))
+                                        .build();
+                            }
+
+                            liveFoodInfo.postValue(foodDataInfo);
+                        }
+                        catch (JSONException e){
+                            Log.d("JSON Error", e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        queue.add(stringRequest);
+        return liveFoodInfo;
     }
 }

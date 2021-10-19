@@ -131,6 +131,8 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.498"
+                            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                            android:theme="@style/ThemeSpinner"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
