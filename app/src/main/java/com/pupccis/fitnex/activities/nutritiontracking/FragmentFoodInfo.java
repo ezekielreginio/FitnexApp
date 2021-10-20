@@ -5,38 +5,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.progressindicator.BaseProgressIndicator;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.FragmentFoodInfoBinding;
 import com.pupccis.fitnex.model.FoodData;
+import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.MacroNutrients;
 import com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel;
 
-public class FragmentFoodInfo extends Fragment {
-    private FragmentFoodInfoBinding binding;
+import java.util.HashMap;
+
+public class FragmentFoodInfo extends Fragment implements View.OnClickListener {
+    private static FragmentFoodInfoBinding binding;
 
     public FragmentFoodInfo() {
         // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        FoodData foodData = binding.getViewModel().getCurrentFoodData();
-        binding.textViewFoodInfoTitle.setText(foodData.getName());
-        binding.textViewCalories.setText(foodData.getCalories()+"");
     }
 
     @Override
@@ -45,24 +35,36 @@ public class FragmentFoodInfo extends Fragment {
         NutritionTrackingViewModel nutritionTrackingViewModel = ((NutritionTrackingMain)getActivity()).getNutritionTrackingViewModel();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_food_info, container, false);
         binding.setViewModel(nutritionTrackingViewModel);
-        binding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setPresenter(this);
         binding.executePendingBindings();
+
+        binding.getViewModel().initializeFoodData();
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        binding.getViewModel().setCurrentFoodData(null);
 
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonAddFavorite){
+
+        }
+    }
+
+    //Binding Adapters
+    @BindingAdapter({"macroNutrients"})
+    public static void setMacroProgressBars(View view, HashMap<MacroNutrients, Integer> macroNutrients){
+        if(macroNutrients != null){
+            binding.circularProgressIndicatorCarbs.setProgress(macroNutrients.get(MacroNutrients.CARBS), true);
+            binding.circularProgressIndicatorProtein.setProgress(macroNutrients.get(MacroNutrients.PROTEIN), true);
+            binding.circularProgressIndicatorFats.setProgress(macroNutrients.get(MacroNutrients.FATS), true);
+        }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("On Pause", "Invoked");
-        binding.getViewModel().setCurrentFoodData(null);
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

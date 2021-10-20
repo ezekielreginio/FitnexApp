@@ -9,10 +9,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 import com.pupccis.fitnex.model.FoodData;
-import com.pupccis.fitnex.utilities.Constants.NutritionTrackingConstants;
+import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.NutritionTrackingConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,9 +40,23 @@ public class NutritionTrackingRepository {
                                 JSONArray foodNutrients = foodData.getJSONArray("foodNutrients");
                                 for(int j=0; j<foodNutrients.length(); j++){
                                     JSONObject foodNutrient = foodNutrients.getJSONObject(j);
-                                    if(foodNutrient.getInt("nutrientId") == NutritionTrackingConstants.NutrientID.ENERGY)
-                                        builder.calories(foodNutrient.getDouble("value"));
+                                    switch (foodNutrient.getInt("nutrientId")){
+                                        case NutritionTrackingConstants.NutrientID.ENERGY:
+                                            builder.calories(foodNutrient.getDouble("value"));
+                                            break;
 
+                                        case NutritionTrackingConstants.NutrientID.PROTEIN:
+                                            builder.protein(foodNutrient.getDouble("value"));
+                                            break;
+
+                                        case NutritionTrackingConstants.NutrientID.CARBS:
+                                            builder.carbs(foodNutrient.getDouble("value"));
+                                            break;
+
+                                        case NutritionTrackingConstants.NutrientID.FAT:
+                                            builder.fats(foodNutrient.getDouble("value"));
+                                            break;
+                                    }
                                 }
                                 foodDataList.add(builder.build());
                             }
@@ -75,13 +87,14 @@ public class NutritionTrackingRepository {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             FoodData foodDataInfo = null;
+
                             if(jsonObject.getString("dataType").equals("Branded")){
                                 JSONObject nutrients = jsonObject.getJSONObject("labelNutrients");
                                 foodDataInfo = new FoodData.Builder()
                                         .name(jsonObject.getString("description"))
                                         .fcdID(jsonObject.getInt("fdcId"))
                                         .calories(foodData.getCalories())
-                                        .servingSize(jsonObject.getDouble("servingSize"))
+                                        .servingSize(jsonObject.getInt("servingSize"))
                                         .protein(nutrients.getJSONObject("protein").getDouble("value"))
                                         .fats(nutrients.getJSONObject("fat").getDouble("value"))
                                         .carbs(nutrients.getJSONObject("carbohydrates").getDouble("value"))
@@ -101,5 +114,36 @@ public class NutritionTrackingRepository {
         });
         queue.add(stringRequest);
         return liveFoodInfo;
+    }
+
+    public MutableLiveData<Integer> getServingInfo(RequestQueue queue, int fcdID) {
+        MutableLiveData<Integer> servingInfo = new MutableLiveData<>();
+        String url = "https://api.nal.usda.gov/fdc/v1/food/"+fcdID+"?api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            FoodData foodDataInfo = null;
+                            int serving = 0;
+                            Log.d("DataType",jsonObject.getString("dataType"));
+                            if(jsonObject.getString("dataType").equals("Branded")){
+                                serving = jsonObject.getInt("servingSize");
+                            }
+
+                            servingInfo.postValue(serving);
+                        }
+                        catch (JSONException e){
+                            Log.d("JSON Error", e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        queue.add(stringRequest);
+        return servingInfo;
     }
 }

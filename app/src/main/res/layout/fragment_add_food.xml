@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel" />
     </data>
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.nutritiontracking.FragmentAddFood">
+        bind:context=".activities.nutritiontracking.FragmentAddFood">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutViewFoodProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:translationZ="1dp"
+            android:visibility="gone"
+            >
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/include_loading_layout"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/whiteTextColor">
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/circularProgressSearchFood"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:indeterminate="true"
+                android:layout_marginTop="100dp"
+                app:indicatorColor="@color/blueTextColor"
+                app:indicatorSize="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:trackThickness="8dp"
+                android:visibility="gone"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutSearchFood"
                 android:layout_width="match_parent"

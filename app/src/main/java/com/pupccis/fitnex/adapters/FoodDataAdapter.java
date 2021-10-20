@@ -6,9 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.ItemContainerAddFoodBinding;
 import com.pupccis.fitnex.model.FoodData;
@@ -20,6 +24,9 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
     private List<FoodData> foodDataList;
     private NutritionTrackingViewModel viewModel;
     private NavController navController;
+    private LifecycleOwner lifecycleOwner;
+    private RequestQueue queue;
+    private ConstraintLayout loadingScreen;
 
     public FoodDataAdapter(List<FoodData> foodDataList) {
         this.foodDataList = foodDataList;
@@ -32,6 +39,10 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
     public void setNavigation(NavController navController) {
         this.navController = navController;
     }
+
+    public void setLifecycleOwner(LifecycleOwner lifecycleOwner) { this.lifecycleOwner = lifecycleOwner; }
+
+    public void setQueue(RequestQueue queue) { this.queue = queue; }
 
     @NonNull
     @Override
@@ -53,6 +64,10 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
     @Override
     public int getItemCount() {return foodDataList.size(); }
 
+    public void setLoadingScreen(ConstraintLayout constraintLayoutViewFoodProgressBar) {
+        this.loadingScreen = constraintLayoutViewFoodProgressBar;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         ItemContainerAddFoodBinding binding;
         public ViewHolder(@NonNull ItemContainerAddFoodBinding binding) {
@@ -66,8 +81,18 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
             binding.buttonAddFood.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    binding.getViewModel().setCurrentFoodData(foodData);
-                    navController.navigate(R.id.action_fragmentAddFood_to_fragmentFoodInfo);
+                    loadingScreen.setVisibility(View.VISIBLE);
+                    binding.getViewModel().getServingInfo(queue, foodData.getFcdID()).observe(lifecycleOwner, new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer serving) {
+                            Log.d("Serving Size", serving+"");
+                            loadingScreen.setVisibility(View.GONE);
+                            FoodData newFoodData = new FoodData.Builder(foodData).servingSize(serving).build();
+                            binding.getViewModel().setCurrentFoodData(foodData);
+                            navController.navigate(R.id.action_fragmentAddFood_to_fragmentFoodInfo);
+                        }
+                    });
+
                 }
             });
         }

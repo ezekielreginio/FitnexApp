@@ -36,8 +36,31 @@ public class FragmentAddFood extends Fragment {
 
     private static Context context;
     private static View appView;
+    private static Observer foodDataObserver;
 
     public FragmentAddFood() {
+    }
+
+    public static void setFoodDataObserver(View view, String queryFood) {
+        FragmentAddFood.foodDataObserver = new Observer<List<FoodData>>() {
+            @Override
+            public void onChanged(List<FoodData> foodDataList) {
+                binding.circularProgressSearchFood.setVisibility(View.GONE);
+                for(FoodData data : foodDataList){
+                    Log.d("Food Data", data.getName());
+                    Log.d("Calories", data.getCalories()+"");
+                }
+                FoodDataAdapter adapter = new FoodDataAdapter(foodDataList);
+                adapter.setViewModel(binding.getViewModel());
+                adapter.setNavigation(Navigation.findNavController(view));
+                adapter.setLifecycleOwner(binding.getLifecycleOwner());
+                adapter.setLoadingScreen(binding.constraintLayoutViewFoodProgressBar);
+                adapter.setQueue(queue);
+                binding.recyclerViewFoodQuery.setAdapter(adapter);
+                binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getAppContext(), LinearLayoutManager.VERTICAL, false));
+                binding.getViewModel().getFoodResults(queue, queryFood).removeObserver(this);
+            }
+        };
     }
 
     @Override
@@ -56,7 +79,7 @@ public class FragmentAddFood extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_food, container, false);
-        binding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setViewModel(((NutritionTrackingMain)getActivity()).getNutritionTrackingViewModel());
         binding.executePendingBindings();
         binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -71,21 +94,11 @@ public class FragmentAddFood extends Fragment {
     @BindingAdapter({"foodSearch"})
     public static void searchFood(View view, String queryFood){
         if(queryFood != null){
-            Log.d("Food Query", queryFood);
-            binding.getViewModel().getFoodResults(queue, queryFood).observe(binding.getLifecycleOwner(), new Observer<List<FoodData>>() {
-                @Override
-                public void onChanged(List<FoodData> foodDataList) {
-                    for(FoodData data : foodDataList){
-                        Log.d("Food Data", data.getName());
-                        Log.d("Calories", data.getCalories()+"");
-                    }
-                    FoodDataAdapter adapter = new FoodDataAdapter(foodDataList);
-                    adapter.setViewModel(binding.getViewModel());
-                    adapter.setNavigation(Navigation.findNavController(view));
-                    binding.recyclerViewFoodQuery.setAdapter(adapter);
-                    binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getAppContext(), LinearLayoutManager.VERTICAL, false));
-                }
-            });
+            binding.circularProgressSearchFood.setVisibility(View.VISIBLE);
+            if(foodDataObserver != null)
+                binding.getViewModel().getFoodResults(queue, queryFood).removeObserver(foodDataObserver);
+            setFoodDataObserver(view, queryFood);
+            binding.getViewModel().getFoodResults(queue, queryFood).observe(binding.getLifecycleOwner(), foodDataObserver);
         }
     }
 
@@ -99,5 +112,9 @@ public class FragmentAddFood extends Fragment {
         binding.getViewModel().setCurrentFoodData(null);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 }
