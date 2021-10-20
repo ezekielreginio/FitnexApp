@@ -1,280 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/activityTrainerDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".activities.trainingdashboard.TrainerDashboard">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutPatronNotSetModal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/themetintColor"
-        android:visibility="gone"
-        android:translationZ="3dp">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            app:cardCornerRadius="15dp"
-            android:backgroundTint="@color/whiteTextColor">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:dividerPadding="10dp"
-                    android:orientation="vertical"
-                    android:padding="30dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    >
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
-                        >
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="5dp"
-                            app:srcCompat="@drawable/ic_notification_important"
-                            />
-                        <TextView
-                            android:id="@+id/textView68"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Patron Data Not Set"
-                            android:textColor="#000000"
-                            android:textSize="20dp"
-                            android:layout_marginBottom="20dp"
-                            app:layout_constraintHorizontal_bias="0.503" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/textView69"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Kindly Create Your Patron System Before Adding a Program"
-                        android:textColor="#000000"
-                        android:textSize="16dp"
-                        android:layout_marginBottom="20dp"
-                        app:layout_constraintHorizontal_bias="0.503" />
-
-                    <Button
-                        android:id="@+id/buttonSetPatronData"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/blueTextColor"
-                        android:onClick="onClick"
-                        android:textColor="@color/whiteTextColor"
-                        android:text="Set Patron Data" />
-
-
-
-                </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textViewTrainerProfileDisplay"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/ic_circle_imageview"
+    bind:context=".activities.trainingdashboard.TrainerDashboard">
+    <fragment
+        android:id="@+id/navHostFragmentTrainerDashboard"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/trainer_dashboard_navgraph"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutTrainerDashboardNavbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewUserName"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:gravity="center"
-        android:text="John Perez"
-        android:textColor="#0C0909"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTrainerProfileDisplay" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewViewPatronPage"
-        android:layout_width="80dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/cardViewCalendar"
-        app:layout_constraintHorizontal_bias="0.017"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
-
-        <ImageView
-            android:id="@+id/imageViewChatIcon"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_patron"
-            app:srcCompat="@drawable/ic_cardview_rounded_corner" />
-
-        <TextView
-            android:id="@+id/textViewChatText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:text="Patron"
-            android:textColor="#000000"
-            android:textSize="8sp" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-
-        android:id="@+id/cardViewCalendar"
-        android:layout_width="80dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
-
-        <ImageView
-            android:id="@+id/imageViewCalendarIcon"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_calendar_icon"
-            app:srcCompat="@drawable/ic_cardview_rounded_corner" />
-
-        <TextView
-            android:id="@+id/textViewCalendarText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:text="Calendar"
-            android:textColor="#000000"
-            android:textSize="8sp" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-
-        android:id="@+id/cardViewCalls"
-        android:layout_width="80dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="30dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/cardViewCalendar"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
-
-        <ImageView
-            android:id="@+id/imageViewCallIcon"
-            android:layout_width="38dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_call_icon"
-            app:srcCompat="@drawable/ic_cardview_rounded_corner" />
-
-        <TextView
-            android:id="@+id/textViewCallText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:text="Calls"
-            android:textColor="#000000"
-            android:textSize="8sp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutForTabLayoutTrainerDashboard"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewCalendar"
-        tools:layout_editor_absoluteX="2dp">
-
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutTrainerDashboard"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="8dp"
-            app:tabGravity="center"
-            app:tabIndicator="@drawable/tab_indicator"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorGravity="stretch"
-            app:tabMode="fixed"
-            app:tabPaddingEnd="30dp"
-            app:tabPaddingStart="30dp"
-            app:tabSelectedTextColor="@color/whiteTextColor">
-
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager2TrainerDashboard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayoutTrainerDashboard"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="332dp">
-
-        </androidx.viewpager2.widget.ViewPager2>
-
-    </LinearLayout>
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayoutAddProgramButton"-->
-<!--        android:layout_width="75dp"-->
-<!--        android:layout_height="75dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:background="@drawable/ic_circle_add_button"-->
-<!--        android:orientation="vertical"-->
-<!--        android:translationZ="1dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/constraintLayoutTrainerDashboardNavbar"-->
-<!--        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
-<!--        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"-->
-<!--        app:layout_constraintTop_toTopOf="@id/constraintLayoutTrainerDashboardNavbar">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/AddProgramButton"-->
-<!--            android:layout_width="75dp"-->
-<!--            android:layout_height="75dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            app:srcCompat="@drawable/ic__add_icon" />-->
-
-<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/constraintLayoutTrainerDashboardNavbar"
@@ -283,6 +27,7 @@
         android:transitionName="addProgramTransition"
         app:layout_constraintBottom_toBottomOf="parent">
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationTrainerDashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_trainer_menubar"
@@ -293,6 +38,10 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
+
+
+
+
 
     <!--    <RelativeLayout-->
     <!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->
@@ -327,3 +76,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

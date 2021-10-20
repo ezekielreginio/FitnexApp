@@ -12,9 +12,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/ic_trainer_bg"
+    android:background="@color/themeColor"
     tools:context=".activities.trainingdashboard.fragment.ProgramsFragment"
-    android:padding="5dp">
+    android:padding="15dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/programsRecyclerView"

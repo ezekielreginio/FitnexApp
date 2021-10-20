@@ -2,33 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/Programs"
-        android:enabled="true"
-        android:title="@string/trainerDashboardPrograms"
-        android:icon="@drawable/ic_program_icon"
-        />
-    <item
-        android:id="@+id/classes"
-        android:enabled="true"
-        android:title="@string/trainerDashboardClasses"
-        android:icon="@drawable/ic_class_icon"
-        />
-    <item
-        android:id="@+id/home"
-        android:enabled="true"
+        android:id="@+id/trainerHome"
         android:title="@string/trainerDashboardHome"
         android:icon="@drawable/ic_baseline_home_24"
         />
     <item
-        android:id="@+id/diet"
-        android:enabled="true"
+        android:id="@+id/programsFragment"
+        android:title="@string/trainerDashboardPrograms"
+        android:icon="@drawable/ic_program_icon"
+        />
+    <item
+        android:id="@+id/classFragment"
+        android:title="@string/trainerDashboardClasses"
+        android:icon="@drawable/ic_class_icon"
+        />
+
+    <item
         android:title="@string/trainerDashboardDiet"
         android:icon="@drawable/ic_nutrition_tracker"
         />
     <item
-        android:id="@+id/studio"
-        android:enabled="true"
+        android:id="@+id/privacyTerms2"
         android:title="@string/trainerDashboardStudio"
+        android:icon="@drawable/ic_trainer_studio"
         />
 
 </menu>

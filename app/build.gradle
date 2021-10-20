@@ -119,4 +119,8 @@ dependencies {
 
     //Volley
     implementation 'com.android.volley:volley:1.2.1'
+
+    //Sticky scrollview
+    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+
 }

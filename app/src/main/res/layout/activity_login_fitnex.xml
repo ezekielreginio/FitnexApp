@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="presenter"
@@ -10,12 +12,9 @@
             type="com.pupccis.fitnex.viewmodel.LoginViewModel" />
     </data>
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.login.FitnexLogin"
+        bind:context=".activities.login.FitnexLogin"
         android:background="@color/login_bk_color"
         android:focusableInTouchMode="true"
         android:gravity="center"
@@ -207,6 +206,17 @@
             android:layout_marginBottom="30dp"
             android:onClick="onLoginClick"
             android:src="@drawable/ic_add_img" />
+
+        <Button
+            android:id="@+id/buttonQuickly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="9dp"
+            android:onClick="onClick"
+            android:layout_marginBottom="48dp"
+            android:text="Button" />
 
     </RelativeLayout>
 </layout>

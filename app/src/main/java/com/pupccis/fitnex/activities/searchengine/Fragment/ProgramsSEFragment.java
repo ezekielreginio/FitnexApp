@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 
-public class ProgramsFragment extends Fragment {
+public class ProgramsSEFragment extends Fragment {
 
     private EditText searchBox;
     private ProgramAdapter adapter;
@@ -61,7 +61,7 @@ public class ProgramsFragment extends Fragment {
     private static FragmentProgramsSeBinding binding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
 
-    public ProgramsFragment(View view) {
+    public ProgramsSEFragment(View view) {
         this.view = view;
     }
 

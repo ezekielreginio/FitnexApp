@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.pupccis.fitnex.activities.searchengine.Fragment.ClassesFragment;
-import com.pupccis.fitnex.activities.searchengine.Fragment.ProgramsFragment;
+import com.pupccis.fitnex.activities.searchengine.Fragment.ProgramsSEFragment;
 import com.pupccis.fitnex.activities.searchengine.Fragment.TrainersFragment;
 import com.pupccis.fitnex.activities.searchengine.Fragment.VideosFragment;
 
@@ -28,7 +28,7 @@ public class SearchEngineFragmentAdapter extends FragmentStateAdapter {
             case 1:
                 return new VideosFragment(view);
             case 2:
-                return new ProgramsFragment(view);
+                return new ProgramsSEFragment(view);
             case 3:
                 return new ClassesFragment(view);
         }

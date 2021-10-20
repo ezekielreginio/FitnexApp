@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
 import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.activities.trainingdashboard.TempTrainerDashboard;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.databinding.ActivityLoginFitnexBinding;
 import com.pupccis.fitnex.model.User;
@@ -98,6 +99,9 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                     }
                 });
             }
+        }
+        if(view == binding.buttonQuickly){
+            startActivity(new Intent(getApplicationContext(), TempTrainerDashboard.class));
         }
     }
 

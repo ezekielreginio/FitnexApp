@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trainer_dashboard_navgraph"
+    app:startDestination="@id/trainerHome">
+    <fragment
+        tools:layout="@layout/fragment_trainer_home"
+        android:id="@+id/trainerHome"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.TrainerHome"
+        android:label="TrainerHome" />
+    <fragment
+        tools:layout="@layout/fragment_programs"
+        android:id="@+id/programsFragment"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.ProgramsFragment"
+        android:label="ProgramsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_fitness_classes"
+        android:id="@+id/classFragment"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.ClassFragment"
+        android:label="ClassFragment" />
+</navigation>
