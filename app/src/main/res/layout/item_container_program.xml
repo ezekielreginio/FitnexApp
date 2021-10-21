@@ -419,6 +419,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
+                    android:paddingHorizontal="8dp"
                     android:background="@color/whiteTextColor"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -437,17 +438,18 @@
                     <TextView
 
                         android:id="@+id/textProgramCategory"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="5dp"
                         android:text="Sample Category"
 
                         android:textColor="@color/black"
                         android:textSize="15dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        bind:ignore="MissingConstraints" />
+                        bind:ignore="MissingConstraints"
+                        bind:layout_editor_absoluteY="5dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -464,6 +466,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="54dp"
+                        app:layout_constraintEnd_toStartOf="@+id/textProgramSessionCount"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/textProgramCategory"
                         app:layout_constraintTop_toTopOf="@+id/textProgramCategory"
                         app:srcCompat="@drawable/ic_calendar" />
@@ -476,6 +480,8 @@
                         android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/imageView8"
                         app:layout_constraintTop_toTopOf="@+id/imageView8"
                         bind:ignore="MissingConstraints" />
@@ -497,19 +503,22 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="50dp"
 
+                        app:layout_constraintEnd_toStartOf="@+id/textProgramDuration"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/textProgramSessionCount"
                         app:layout_constraintTop_toTopOf="@+id/textProgramSessionCount"
                         app:srcCompat="@drawable/ic_duration" />
 
                     <TextView
                         android:id="@+id/textProgramDuration"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="0 minutes"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/imageView9"
                         app:layout_constraintTop_toTopOf="@+id/imageView9"
                         bind:ignore="MissingConstraints" />
@@ -577,7 +586,6 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view3">
@@ -587,12 +595,11 @@
                             android:id="@+id/textProgramDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
                             android:text="Description"
                             android:textColor="#000000"
                             android:textSize="15dp"
-                            android:maxLines="3"
-                            android:ellipsize="end"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             bind:ignore="MissingConstraints" />
@@ -602,7 +609,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="#676767"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

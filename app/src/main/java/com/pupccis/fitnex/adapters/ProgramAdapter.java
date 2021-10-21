@@ -70,7 +70,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.textProgramName.setText(model.getName());
             binding.textProgramDescription.setText(model.getDescription());
             binding.textProgramSessionCount.setText(model.getSessionNumber());
-            binding.textProgramDuration.setText(model.getDuration());
+            binding.textProgramDuration.setText(model.getDuration()+" minutes");
             binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
             switch (accessType){
                 case VIEW:
