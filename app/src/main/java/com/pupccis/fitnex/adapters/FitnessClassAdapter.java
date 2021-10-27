@@ -65,13 +65,13 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
             binding.textTimeStart.setText(model.getTimeStart());
             binding.textTimeEnd.setText(model.getTimeEnd());
             binding.textClassSessionCount.setText(model.getSessionNo());
-            binding.textClassDuration.setText(model.getDuration());
-            switch (accessType){
-                case VIEW:
-                    binding.layoutClassButtonViewer.setVisibility(View.VISIBLE);
-                    binding.layoutClassButtonOwner.setVisibility(View.GONE);
-                    break;
-            }
+            binding.textClassDuration.setText(model.getDuration()+" minutes");
+//            switch (accessType){
+//                case VIEW:
+//                    binding.layoutClassButtonViewer.setVisibility(View.VISIBLE);
+//                    binding.layoutClassButtonOwner.setVisibility(View.GONE);
+//                    break;
+//            }
             binding.setVariable(BR.fitnessClass, model);
 
         }

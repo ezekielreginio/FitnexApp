@@ -75,13 +75,13 @@ public class FitnessClassAdapter extends RecyclerView.Adapter<FitnessClassAdapte
             classTimeEnd = itemView.findViewById(R.id.textTimeEnd);
             classSessionNo = itemView.findViewById(R.id.textClassSessionCount);
             classDescription = itemView.findViewById(R.id.textClassDescription);
-            classDuration = itemView.findViewById(R.id.textClassDuration);
-            classContainer = itemView.findViewById(R.id.layoutClassContainer);
-            layoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
-            fitnessClassUpdate = (Button) itemView.findViewById(R.id.buttonClassUpdate);
-            fitnessClassDelete = (Button) itemView.findViewById(R.id.buttonClassDelete);
-            fitnessClassJoin = itemView.findViewById(R.id.buttonClassJoin);
-            fitnessClassView = itemView.findViewById(R.id.buttonClassView);
+//            classDuration = itemView.findViewById(R.id.textClassDuration);
+//            classContainer = itemView.findViewById(R.id.layoutClassContainer);
+//            layoutClassInfo = itemView.findViewById(R.id.layoutClassInfo);
+//            fitnessClassUpdate = (Button) itemView.findViewById(R.id.buttonClassUpdate);
+//            fitnessClassDelete = (Button) itemView.findViewById(R.id.buttonClassDelete);
+//            fitnessClassJoin = itemView.findViewById(R.id.buttonClassJoin);
+//            fitnessClassView = itemView.findViewById(R.id.buttonClassView);
         }
         void setFitnessClassData(FitnessClass fitnessClass){
             boolean clicked = false;

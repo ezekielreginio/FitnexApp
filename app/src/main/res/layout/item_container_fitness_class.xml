@@ -1,308 +1,405 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="fitnessClass"
             type="com.pupccis.fitnex.model.FitnessClass" />
+
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.FitnessClassViewModel" />
+
+
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutClassContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/layout_bg_program_strength"
-    android:padding="10dp"
-    android:animateLayoutChanges="true"
-    >
 
-    <TextView
-        android:id="@+id/textFitnessClassName"
-        android:layout_width="295dp"
-        android:layout_height="wrap_content"
-        android:text="Class Name"
-        android:textColor="@color/whiteTextColor"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textProgramSeparator"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="||"
-        android:textColor="@color/whiteTextColor"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/textFitnessClassName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textProgramTrainees"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="0 trainees"
-        android:textColor="@color/whiteTextColor"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/textProgramSeparator"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="2dp"
-        android:text=">"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/layoutClassInfo"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical"
-        android:visibility="visible"
-        android:onClick="onClick"
-        app:layout_constraintTop_toBottomOf="@id/textFitnessClassName">
-
+        android:theme="@style/Theme.MaterialComponents"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/whiteTextColor">
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/textFitnessClassTitle"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Category: "
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textFitnessClassCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Sample Category"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textFitnessClassTitle"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/textDescriptionTitle"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Description: "
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textClassDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Sample Description"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textDescriptionTitle"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutProgramContainer"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
+            android:layout_marginBottom="10dp"
+            android:animateLayoutChanges="true"
+            >
 
-            <TextView
-                android:id="@+id/textTime"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Time: "
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/textTimeStart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="00:00aa"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textTime"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+            <!--        <RelativeLayout-->
+            <!--            android:id="@+id/layoutProgramDescription"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:animateLayoutChanges="true"-->
+            <!--            android:orientation="horizontal"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toBottomOf="@id/imageViewDisplay">-->
 
-            <TextView
-                android:id="@+id/textHyphen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/textTimeStart" />
 
-            <TextView
-                android:id="@+id/textTimeEnd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="00:00aa"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintLeft_toRightOf="@id/textHyphen"
-                tools:ignore="MissingConstraints" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/textProgramDescription"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_marginStart="3dp"-->
+            <!--                android:text="Sample Description"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="15dp"-->
+            <!--                bind:ignore="MissingConstraints" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            <ImageView-->
+            <!--                android:id="@+id/programExpand"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                app:srcCompat="@drawable/ic_expand_more" />-->
+            <!--        </RelativeLayout>-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/textSessionTitle"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="No. of Sessions: "
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textClassSessionCount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="0"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textSessionTitle"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/textDurationTitle"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Duration: "
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textClassDuration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="0"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@id/textDurationTitle"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutClassButtonOwner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp">
-
-            <Button
-                android:id="@+id/buttonClassUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="70px"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/button_update"
-                android:text="Update"
-                android:textColor="@color/whiteTextColor"
-                app:layout_constraintStart_toStartOf="parent"
-                android:onClick="@{()-> viewModel.triggerUpdateObserver(fitnessClass)}"/>
-            <Button
-                android:id="@+id/buttonClassDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="70px"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/button_delete"
-                android:text="Delete"
-                android:textColor="@color/whiteTextColor"
+            <ImageView
+                android:id="@+id/imageViewDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{()-> viewModel.triggerDeleteObserver(fitnessClass)}"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_todays_activity_template_img" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:animateLayoutChanges="true"
+                android:background="@color/whiteTextColor">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/programNameContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/whiteTextColor"
+                    app:layout_constraintBottom_toTopOf="@+id/layoutProgramInfo">
+
+                    <TextView
+                        android:id="@+id/textProgramTrainerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jesse Cuasay"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textTimeStart"
+                        app:layout_constraintTop_toBottomOf="@+id/textTimeStart" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="3dp"
+                        android:text="\u2022"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textProgramTrainerName"
+                        app:layout_constraintTop_toTopOf="@+id/textProgramTrainerName" />
+
+                    <TextView
+                        android:id="@+id/textProgramTrainees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="3dp"
+                        android:text="0 trainees"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView15"
+                        app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+                    <ImageView
+                        android:id="@+id/trainerImage"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginStart="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.53"
+                        app:srcCompat="@drawable/ic_circle_imageview" />
+
+                    <TextView
+                        android:id="@+id/textFitnessClassName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Cardio Workout Class"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/trainerImage"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/imageViewExpand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_expand_less" />
+
+                    <TextView
+                        android:id="@+id/textTimeStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/textFitnessClassName"
+                        app:layout_constraintTop_toBottomOf="@+id/textFitnessClassName" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textTimeStart"
+                        app:layout_constraintTop_toTopOf="@+id/textTimeStart" />
+
+                    <TextView
+                        android:id="@+id/textTimeEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00"
+                        android:textColor="#787878"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView18"
+                        app:layout_constraintTop_toTopOf="@+id/textView18" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutProgramInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:background="@color/whiteTextColor"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/firstGuideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.33"/>
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/secondGuideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.66"/>
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#676767"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewDurationTitle" />
+
+                    <TextView
+
+                        android:id="@+id/textFitnessClassCategory"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintEnd_toStartOf="@+id/firstGuideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        bind:ignore="MissingConstraints"
+                        bind:layout_editor_absoluteY="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textColor="#8A8A8A"
+                        android:textSize="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/textFitnessClassCategory"
+                        app:layout_constraintTop_toBottomOf="@+id/textFitnessClassCategory"
+                        bind:ignore="MissingConstraints" />
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toEndOf="@+id/firstGuideline"
+                        app:layout_constraintTop_toTopOf="@+id/textFitnessClassCategory"
+                        app:srcCompat="@drawable/ic_calendar" />
+
+                    <TextView
+                        android:id="@+id/textClassSessionCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintEnd_toStartOf="@+id/secondGuideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toEndOf="@+id/imageView8"
+                        app:layout_constraintTop_toTopOf="@+id/imageView8"
+                        bind:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Session Count"
+                        android:textColor="#8A8A8A"
+                        android:textSize="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/textClassSessionCount"
+                        app:layout_constraintTop_toBottomOf="@+id/textClassSessionCount"
+                        bind:ignore="MissingConstraints" />
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/secondGuideline"
+                        app:layout_constraintTop_toTopOf="@+id/textClassSessionCount"
+                        app:srcCompat="@drawable/ic_duration" />
+
+                    <TextView
+                        android:id="@+id/textClassDuration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0 minutes"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toEndOf="@+id/imageView9"
+                        app:layout_constraintTop_toTopOf="@+id/imageView9"
+                        bind:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/textViewDurationTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Duration"
+                        android:textColor="#8A8A8A"
+                        android:textSize="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/textClassDuration"
+                        app:layout_constraintTop_toBottomOf="@+id/textClassDuration"
+                        bind:ignore="MissingConstraints" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textClassDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="Description"
+                            android:textColor="#434343"
+                            android:textSize="12dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            bind:ignore="MissingConstraints" />
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#676767"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageViewBadgeIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/textProgramName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_badge_bronze" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutClassButtonViewer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/buttonClassView"
-                android:layout_width="wrap_content"
-                android:layout_height="70px"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/button_view"
-                android:text="View"
-                android:textColor="@color/whiteTextColor"
-                app:layout_constraintStart_toStartOf="parent" />
-            <Button
-                android:id="@+id/buttonClassJoin"
-                android:layout_width="wrap_content"
-                android:layout_height="70px"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/button_join"
-                android:text="Join"
-                android:textColor="@color/whiteTextColor"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="3dp">-->
+
+
+    <!--<TextView-->
+    <!--    android:id="@+id/textProgramDescription"-->
+    <!--    android:layout_width="0dp"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_marginStart="20dp"-->
+    <!--    android:text="Sample Description"-->
+    <!--    android:textColor="#000000"-->
+    <!--    android:textSize="15dp"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
+    <!--    bind:ignore="MissingConstraints" />-->
+
+    <!--<TextView-->
+    <!--    android:layout_width="0dp"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_marginStart="3dp"-->
+    <!--    android:text="Description"-->
+    <!--    android:textColor="#8A8A8A"-->
+    <!--    android:textSize="8dp"-->
+    <!--    app:layout_constraintEnd_toEndOf="@+id/textProgramDescription"-->
+    <!--    app:layout_constraintStart_toStartOf="@+id/textProgramDescription"-->
+    <!--    app:layout_constraintTop_toBottomOf="@+id/textProgramDescription"-->
+    <!--    bind:ignore="MissingConstraints" />-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

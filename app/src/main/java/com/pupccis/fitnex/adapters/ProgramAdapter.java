@@ -109,10 +109,13 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     switch (binding.layoutProgramInfo.getVisibility()){
                         case View.GONE:
                             binding.layoutProgramInfo.setVisibility(View.VISIBLE);
+                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
 //                            notifyItemChanged(getAbsoluteAdapterPosition());
                             break;
                         case View.VISIBLE:
                             binding.layoutProgramInfo.setVisibility(View.GONE);
+                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
+                            break;
                     }
 //                    if(binding.layoutProgramInfo.getVisibility() == View.GONE) {
 //                        binding.layoutProgramInfo.setVisibility(View.VISIBLE);

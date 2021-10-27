@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
@@ -8,54 +9,53 @@
     </data>
 
 <FrameLayout
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.trainingdashboard.fragment.ProgramsFragment">
+    android:background="@color/whiteTextColor"
+    bind:context=".activities.trainingdashboard.fragment.ProgramsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nestedViewTrainerStudio"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.trainingdashboard.studio.TrainerStudio"
-        android:background="#FFFFFF"
-
+        bind:context=".activities.trainingdashboard.studio.TrainerStudio"
         >
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:fitsSystemWindows="true"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutTrainerStudioStaticContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="40dp"
-                android:paddingBottom="100dp">
+                android:paddingTop="40dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutTrainerProfileDisplay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:ignore="MissingConstraints">
+                    bind:ignore="MissingConstraints">
+
                     <TextView
                         android:id="@+id/textViewTrainerProfileDisplay"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:background="@drawable/ic_circle_imageview"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     app:layout_constraintStart_toEndOf="@id/constraintLayoutTrainerProfileDisplay"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints">
+                    bind:ignore="MissingConstraints">
 
                     <TextView
                         android:layout_width="200dp"
@@ -63,8 +63,7 @@
                         android:text="John Perez"
                         android:textColor="@color/blueTextColor"
                         android:textSize="50dp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     app:layout_constraintTop_toBottomOf="@id/constraintLayoutTrainerProfileDisplay"
-                    tools:ignore="MissingConstraints"/>
+                    bind:ignore="MissingConstraints" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutVideosUploaded"
@@ -81,34 +80,33 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     app:layout_constraintTop_toBottomOf="@id/constraintLayoutStudioDescription"
-                    tools:ignore="MissingConstraints">
+                    bind:ignore="MissingConstraints">
 
                     <TextView
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="Programs Uploaded"
                         android:textColor="@color/blueTextColor"
-                        android:textSize="26dp"
-                        />
+                        android:textSize="26dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/constraintLayoutVideosUploaded"
-                    tools:ignore="MissingConstraints">
+                    bind:ignore="MissingConstraints">
 
                     <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/programsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        />
+                        android:id="@+id/programsRecyclerView"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
