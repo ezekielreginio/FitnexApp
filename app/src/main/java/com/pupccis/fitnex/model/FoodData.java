@@ -1,12 +1,15 @@
 package com.pupccis.fitnex.model;
 
+import org.json.JSONArray;
+
 import java.io.Serializable;
 
 public class FoodData implements Serializable {
     private String name, datatype, brand;
     private Double calories, protein, fats, carbs;
-
     private int fcdID, servingSize;
+    private JSONArray arrayServingSize;
+
 
     public FoodData() {
     }
@@ -21,6 +24,7 @@ public class FoodData implements Serializable {
         this.protein = builder.protein;
         this.fats = builder.fats;
         this.carbs = builder.carbs;
+        this.arrayServingSize = builder.arrayServingSize;
     }
 
     //Getter Methods
@@ -60,10 +64,15 @@ public class FoodData implements Serializable {
         return carbs;
     }
 
+    public JSONArray getArrayServingSize() {
+        return arrayServingSize;
+    }
+
     public static class Builder{
         private String name, datatype, brand;
         private Double calories, protein, fats, carbs;
         private int fcdID, servingSize;
+        private JSONArray arrayServingSize;
 
         public Builder() {
         }
@@ -102,6 +111,11 @@ public class FoodData implements Serializable {
 
         public Builder calories(Double calories) {
             this.calories = calories;
+            return this;
+        }
+
+        public Builder arrayServingSize(JSONArray arrayServingSize){
+            this.arrayServingSize = arrayServingSize;
             return this;
         }
 

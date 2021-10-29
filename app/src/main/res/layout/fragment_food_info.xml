@@ -116,14 +116,15 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:inputType="number"
+                                android:text="@={viewModel.servingAmount}"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/menu"
+                            android:id="@+id/tilServingSelected"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -133,10 +134,13 @@
                             >
 
                             <AutoCompleteTextView
+                                android:id="@+id/dropdownServingList"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="none"
+                                android:layout_height="match_parent"
                                 android:focusable="false"
+                                android:completionThreshold="0"
+                                android:freezesText="false"
+                                android:textColor="@color/black"
                                 android:cursorVisible="false"
                                 android:focusableInTouchMode="false"
                                 />

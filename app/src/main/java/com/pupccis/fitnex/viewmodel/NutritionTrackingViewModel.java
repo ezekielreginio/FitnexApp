@@ -13,6 +13,13 @@ import com.pupccis.fitnex.repository.NutritionTrackingRepository;
 import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.MacroNutrients;
 import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.NutritionTrackingConstants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +55,8 @@ public class NutritionTrackingViewModel extends BaseObservable {
     private String percentageFats;
     @Bindable
     private HashMap<MacroNutrients, Integer> macroNutrients;
+    @Bindable
+    private String servingAmount = "1";
 
     //Getter Methods
     public String getFoodSearch() {
@@ -92,6 +101,10 @@ public class NutritionTrackingViewModel extends BaseObservable {
 
     public HashMap<MacroNutrients, Integer> getMacroNutrients() {
         return macroNutrients;
+    }
+
+    public String getServingAmount() {
+        return servingAmount;
     }
 
     //Setter Methods
@@ -149,6 +162,13 @@ public class NutritionTrackingViewModel extends BaseObservable {
         notifyPropertyChanged(BR.percentageFats);
     }
 
+    public void setServingAmount(String servingAmount) {
+        Log.d("Serving Amount", servingAmount);
+        this.servingAmount = servingAmount;
+        updateNutritionInfo();
+        notifyPropertyChanged(BR.servingAmount);
+    }
+
     //Mutable Live Data Observers
     public MutableLiveData<List<FoodData>> getFoodResults(RequestQueue queue, String queryFood) {
         return nutritionTrackingRepository.getFoodResults(queue, queryFood);
@@ -187,7 +207,46 @@ public class NutritionTrackingViewModel extends BaseObservable {
 
     }
 
-    public MutableLiveData<Integer> getServingInfo(RequestQueue queue, int fcdID) {
+    public MutableLiveData<JSONArray> getServingInfo(RequestQueue queue, int fcdID) {
         return nutritionTrackingRepository.getServingInfo(queue, fcdID);
+    }
+
+    public List<String> getServingList(){
+        List<String> spinnerList = new ArrayList<>();
+
+        try{
+            Log.d("Array Size", currentFoodData.getArrayServingSize().length()+"");
+            for(int i=0; i<currentFoodData.getArrayServingSize().length(); i++){
+                JSONObject servingInfo = currentFoodData.getArrayServingSize().getJSONObject(i);
+                String portionDescription = servingInfo.getString("portionDescription");
+                if(!portionDescription.equals("Quantity not specified"))
+                    spinnerList.add(portionDescription);
+                else
+                    spinnerList.add("1 gram");
+            }
+        }
+        catch (JSONException e){
+            Log.d("JSONException", e.getMessage());
+        }
+
+        return spinnerList;
+    }
+
+    //Private Methods
+    private void updateNutritionInfo() {
+        if(servingAmount != null){
+            if(!servingAmount.isEmpty()){
+                DecimalFormat df = new DecimalFormat("####0.##");
+                double calories = getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount);
+                double protein = getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount);
+                double carbs = getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount);
+                double fats = getCurrentFoodData().getFats() * Double.parseDouble(servingAmount);
+
+                setCalories(df.format(calories));
+                setCarbs(df.format(carbs)+"g");
+                setProtein(df.format(protein)+"g");
+                setFats(df.format(fats)+"g");
+            }
+        }
     }
 }

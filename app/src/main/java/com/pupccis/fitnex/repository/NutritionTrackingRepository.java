@@ -4,9 +4,11 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.pupccis.fitnex.model.FoodData;
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NutritionTrackingRepository {
@@ -33,32 +36,36 @@ public class NutritionTrackingRepository {
                             JSONArray jsonArray = jsonObject.getJSONArray("foods");
                             for(int i=0; i<jsonArray.length(); i++){
                                 JSONObject foodData = jsonArray.getJSONObject(i);
-                                FoodData.Builder builder = new FoodData.Builder()
-                                        .fcdID(foodData.getInt("fdcId"))
-                                        .name(foodData.getString("description"));
-
                                 JSONArray foodNutrients = foodData.getJSONArray("foodNutrients");
-                                for(int j=0; j<foodNutrients.length(); j++){
-                                    JSONObject foodNutrient = foodNutrients.getJSONObject(j);
-                                    switch (foodNutrient.getInt("nutrientId")){
-                                        case NutritionTrackingConstants.NutrientID.ENERGY:
-                                            builder.calories(foodNutrient.getDouble("value"));
-                                            break;
+                                String datatype = foodData.getString("dataType");
 
-                                        case NutritionTrackingConstants.NutrientID.PROTEIN:
-                                            builder.protein(foodNutrient.getDouble("value"));
-                                            break;
+                                if(datatype.equals("Survey (FNDDS)") || datatype.equals("Branded")){
+                                    FoodData.Builder builder = new FoodData.Builder()
+                                            .fcdID(foodData.getInt("fdcId"))
+                                            .name(foodData.getString("description"));
 
-                                        case NutritionTrackingConstants.NutrientID.CARBS:
-                                            builder.carbs(foodNutrient.getDouble("value"));
-                                            break;
+                                    for(int j=0; j<foodNutrients.length(); j++){
+                                        JSONObject foodNutrient = foodNutrients.getJSONObject(j);
+                                        switch (foodNutrient.getInt("nutrientId")){
+                                            case NutritionTrackingConstants.NutrientID.ENERGY:
+                                                builder.calories(foodNutrient.getDouble("value"));
+                                                break;
 
-                                        case NutritionTrackingConstants.NutrientID.FAT:
-                                            builder.fats(foodNutrient.getDouble("value"));
-                                            break;
+                                            case NutritionTrackingConstants.NutrientID.PROTEIN:
+                                                builder.protein(foodNutrient.getDouble("value"));
+                                                break;
+
+                                            case NutritionTrackingConstants.NutrientID.CARBS:
+                                                builder.carbs(foodNutrient.getDouble("value"));
+                                                break;
+
+                                            case NutritionTrackingConstants.NutrientID.FAT:
+                                                builder.fats(foodNutrient.getDouble("value"));
+                                                break;
+                                        }
                                     }
+                                    foodDataList.add(builder.build());
                                 }
-                                foodDataList.add(builder.build());
                             }
                             result.postValue(foodDataList);
 
@@ -72,6 +79,7 @@ public class NutritionTrackingRepository {
             public void onErrorResponse(VolleyError error) {
             }
         });
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 10, 1f));
         queue.add(stringRequest);
         return result;
     }
@@ -116,8 +124,9 @@ public class NutritionTrackingRepository {
         return liveFoodInfo;
     }
 
-    public MutableLiveData<Integer> getServingInfo(RequestQueue queue, int fcdID) {
+    public MutableLiveData<JSONArray> getServingInfo(RequestQueue queue, int fcdID) {
         MutableLiveData<Integer> servingInfo = new MutableLiveData<>();
+        MutableLiveData<JSONArray> liveDataServingInfo = new MutableLiveData<>();
         String url = "https://api.nal.usda.gov/fdc/v1/food/"+fcdID+"?api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -125,14 +134,32 @@ public class NutritionTrackingRepository {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            FoodData foodDataInfo = null;
+                            JSONArray foodServingArray = null;
+
                             int serving = 0;
-                            Log.d("DataType",jsonObject.getString("dataType"));
                             if(jsonObject.getString("dataType").equals("Branded")){
                                 serving = jsonObject.getInt("servingSize");
+
+                                foodServingArray = new JSONArray();
+                                foodServingArray.put(
+                                        new JSONObject()
+                                                .put("portionDescription", "1 Serving ("+serving+"g)")
+                                                .put("gramWeight", serving)
+                                        )
+                                        .put( new JSONObject()
+                                                .put("portionDescription", "1g")
+                                                .put("gramWeight", 1));
                             }
 
-                            servingInfo.postValue(serving);
+                            if(jsonObject.getString("dataType").equals("Survey (FNDDS)")){
+                                foodServingArray = jsonObject.getJSONArray("foodPortions");
+//                                for(int i=0; i<foodServingArray.length(); i++){
+//                                    JSONObject foodServing = foodServingArray.getJSONObject(i);
+//                                    Log.d("Serving", foodServing.toString());
+//                                }
+                            }
+
+                            liveDataServingInfo.postValue(foodServingArray);
                         }
                         catch (JSONException e){
                             Log.d("JSON Error", e.getMessage());
@@ -143,7 +170,8 @@ public class NutritionTrackingRepository {
             public void onErrorResponse(VolleyError error) {
             }
         });
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, 10, 1f));
         queue.add(stringRequest);
-        return servingInfo;
+        return liveDataServingInfo;
     }
 }

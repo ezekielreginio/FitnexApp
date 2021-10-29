@@ -18,6 +18,8 @@ import com.pupccis.fitnex.databinding.ItemContainerAddFoodBinding;
 import com.pupccis.fitnex.model.FoodData;
 import com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel;
 
+import org.json.JSONArray;
+
 import java.util.List;
 
 public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHolder>{
@@ -82,13 +84,13 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     loadingScreen.setVisibility(View.VISIBLE);
-                    binding.getViewModel().getServingInfo(queue, foodData.getFcdID()).observe(lifecycleOwner, new Observer<Integer>() {
+                    binding.getViewModel().getServingInfo(queue, foodData.getFcdID()).observe(lifecycleOwner, new Observer<JSONArray>() {
                         @Override
-                        public void onChanged(Integer serving) {
-                            Log.d("Serving Size", serving+"");
+                        public void onChanged(JSONArray arrayServingSize) {
+                            Log.d("Serving Size", arrayServingSize.toString());
                             loadingScreen.setVisibility(View.GONE);
-                            FoodData newFoodData = new FoodData.Builder(foodData).servingSize(serving).build();
-                            binding.getViewModel().setCurrentFoodData(foodData);
+                            FoodData newFoodData = new FoodData.Builder(foodData).arrayServingSize(arrayServingSize).build();
+                            binding.getViewModel().setCurrentFoodData(newFoodData);
                             navController.navigate(R.id.action_fragmentAddFood_to_fragmentFoodInfo);
                         }
                     });

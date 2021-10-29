@@ -1,11 +1,14 @@
 package com.pupccis.fitnex.activities.nutritiontracking;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,9 +23,12 @@ import com.pupccis.fitnex.model.FoodData;
 import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.MacroNutrients;
 import com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-public class FragmentFoodInfo extends Fragment implements View.OnClickListener {
+public class FragmentFoodInfo extends Fragment implements View.OnClickListener{
     private static FragmentFoodInfoBinding binding;
 
     public FragmentFoodInfo() {
@@ -38,21 +44,23 @@ public class FragmentFoodInfo extends Fragment implements View.OnClickListener {
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setPresenter(this);
         binding.executePendingBindings();
-
         binding.getViewModel().initializeFoodData();
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, binding.getViewModel().getServingList());
+        binding.dropdownServingList.setAdapter(adapter);
+        binding.dropdownServingList.setDropDownBackgroundResource(R.color.whiteTextColor);
+        binding.dropdownServingList.setText(binding.dropdownServingList.getAdapter().getItem(0).toString(), false);
+        binding.dropdownServingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("Item Selected", binding.dropdownServingList.getAdapter().getItem(i).toString());
+            }
+        });
         return binding.getRoot();
     }
 
-
-    @Override
-    public void onClick(View view) {
-        if(view == binding.buttonAddFavorite){
-
-        }
-    }
-
     //Binding Adapters
+    @SuppressLint("NewApi")
     @BindingAdapter({"macroNutrients"})
     public static void setMacroProgressBars(View view, HashMap<MacroNutrients, Integer> macroNutrients){
         if(macroNutrients != null){
@@ -66,5 +74,12 @@ public class FragmentFoodInfo extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonAddFavorite){
+
+        }
     }
 }
