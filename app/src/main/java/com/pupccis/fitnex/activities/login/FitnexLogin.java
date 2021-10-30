@@ -18,10 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
-import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.trainingdashboard.TempTrainerDashboard;
 import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.databinding.ActivityLoginFitnexBinding;
 import com.pupccis.fitnex.model.User;
@@ -31,7 +28,6 @@ import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import com.pupccis.fitnex.viewmodel.LoginViewModel;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
-import com.pupccis.fitnex.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,9 +96,7 @@ public class FitnexLogin extends AppCompatActivity implements View.OnClickListen
                 });
             }
         }
-        if(view == binding.buttonQuickly){
-            startActivity(new Intent(getApplicationContext(), TempTrainerDashboard.class));
-        }
+
     }
 
     //Binding Adapters

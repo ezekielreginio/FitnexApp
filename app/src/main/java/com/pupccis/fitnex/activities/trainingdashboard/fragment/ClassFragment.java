@@ -29,7 +29,7 @@ import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
-public class ClassFragment extends Fragment{
+public class ClassFragment extends Fragment implements View.OnClickListener{
     //Fragment Variables
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -78,7 +78,6 @@ public class ClassFragment extends Fragment{
         FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
         //Recycler view
         recyclerView = binding.fitnessClassesRecyclerView;
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapter = new FitnessClassAdapter(options);
@@ -132,5 +131,12 @@ public class ClassFragment extends Fragment{
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == binding.imageViewAddFitnessClass){
+            
+        }
     }
 }

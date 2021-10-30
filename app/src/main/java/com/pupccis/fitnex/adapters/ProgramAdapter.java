@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -26,6 +28,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
     }
@@ -34,6 +37,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
         model.setProgramID(this.getSnapshots().getSnapshot(position).getId());
         holder.setProgramData(model);
+        viewBinderHelper.bind(holder.binding.swipeRevealLayout, model.getProgramID());
         boolean isExpanded = model.isExpanded();
     }
 
@@ -103,20 +107,25 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-            binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (binding.layoutProgramInfo.getVisibility()){
-                        case View.GONE:
-                            binding.layoutProgramInfo.setVisibility(View.VISIBLE);
-                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
+            if(binding.swipeRevealLayout.isOpened()){
+                binding.layoutProgramContainer.setOnClickListener(null);
+            }
+            if(binding.swipeRevealLayout.isClosed()){
+                binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        switch (binding.layoutProgramInfo.getVisibility()){
+                            case View.GONE:
+                                binding.layoutProgramInfo.setVisibility(View.VISIBLE);
+                                binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
 //                            notifyItemChanged(getAbsoluteAdapterPosition());
-                            break;
-                        case View.VISIBLE:
-                            binding.layoutProgramInfo.setVisibility(View.GONE);
-                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
-                            break;
-                    }
+                                break;
+                            case View.VISIBLE:
+                                binding.layoutProgramInfo.setVisibility(View.GONE);
+                                binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
+                                break;
+                        }
 //                    if(binding.layoutProgramInfo.getVisibility() == View.GONE) {
 //                        binding.layoutProgramInfo.setVisibility(View.VISIBLE);
 //                        Log.e("change visibility", "Changed");
@@ -130,8 +139,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 //                        notifyItemChanged(getAbsoluteAdapterPosition());
 //                        Log.e("Nog notify", "Notified");
 //                    }
-                }
-            });
+                    }
+                });
+            }
+
             binding.setVariable(BR.program, model);
         }
     }

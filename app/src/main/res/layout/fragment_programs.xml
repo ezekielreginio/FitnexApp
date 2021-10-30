@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.trainingdashboard.fragment.ProgramsFragment" />
     </data>
 
 <FrameLayout
@@ -13,6 +16,7 @@
     android:layout_height="match_parent"
     android:background="@color/whiteTextColor"
     bind:context=".activities.trainingdashboard.fragment.ProgramsFragment">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nestedViewTrainerStudio"
@@ -101,7 +105,6 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/programsRecyclerView"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -116,7 +119,19 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent">
 
+    <ImageView
+        android:id="@+id/imageViewAddProgram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="@{(v)->presenter.onClick(v)}"
+        android:src="@drawable/ic_add_img" />
+</RelativeLayout>
 </FrameLayout>
 </layout>
 

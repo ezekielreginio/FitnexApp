@@ -5,6 +5,7 @@ import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebase
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pupccis.fitnex.activities.trainingdashboard.AddProgram;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
+import com.pupccis.fitnex.activities.trainingdashboard.MySwipeHelper;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
@@ -33,14 +36,17 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.validation.Services.MyButtonClickListener;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProgramsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProgramsFragment extends Fragment {
+public class ProgramsFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -202,6 +208,8 @@ public class ProgramsFragment extends Fragment {
         fragmentProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_programs, container, false);
         fragmentProgramsBinding.setLifecycleOwner(this);
         fragmentProgramsBinding.setViewModel(programViewModel);
+        fragmentProgramsBinding.setPresenter(this);
+        fragmentProgramsBinding.executePendingBindings();
 
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<Program> options = getFirebaseUIProgramOptions();
@@ -216,7 +224,34 @@ public class ProgramsFragment extends Fragment {
         adapter.setProgramViewModel(programViewModel);
         recyclerView.setAdapter(adapter);
 
-
+        //Swipe helper
+//        MySwipeHelper swipeHelper = new MySwipeHelper(getContext(), recyclerView, 200) {
+//            @Override
+//            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MySwipeHelper.MyButton> buffer) {
+//                buffer.add(new MyButton(getContext(),
+//                        "Delete",
+//                        R.drawable.ic_btn_delete,
+//                        10,
+//                        Color.parseColor("#26355E"),
+//                        new MyButtonClickListener(){
+//                            @Override
+//                            public void onClick(int pos) {
+//                                Toast.makeText(getActivity(), "delete", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }));
+//                buffer.add(new MyButton(getContext(),
+//                        "Update",
+//                        R.drawable.ic_edit_btn,
+//                        10,
+//                        Color.parseColor("#26355E"),
+//                        new MyButtonClickListener(){
+//                            @Override
+//                            public void onClick(int pos) {
+//                                Toast.makeText(getActivity(), "update", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }));
+//            }
+//        };
 
         //ViewModel Observers
         fragmentProgramsBinding.getViewModel().routineObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
@@ -266,4 +301,10 @@ public class ProgramsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view == fragmentProgramsBinding.imageViewAddProgram){
+
+        }
+    }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerFitnessClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
@@ -72,9 +73,25 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
 //                    binding.layoutClassButtonOwner.setVisibility(View.GONE);
 //                    break;
 //            }
-            binding.setVariable(BR.fitnessClass, model);
+            binding.layoutFitnessClassContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (binding.layoutfitnessClassInfo.getVisibility()) {
+                        case View.GONE:
+                            binding.layoutfitnessClassInfo.setVisibility(View.VISIBLE);
+                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
+//                            notifyItemChanged(getAbsoluteAdapterPosition());
+                            break;
+                        case View.VISIBLE:
+                            binding.layoutfitnessClassInfo.setVisibility(View.GONE);
+                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
+                            break;
+                    }
+                    binding.setVariable(BR.fitnessClass, model);
 
+                }
+            });
         }
-
     }
+
 }

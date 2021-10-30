@@ -2,17 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+
         android:id="@+id/trainerHome"
-        android:title="@string/trainerDashboardHome"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
-        />
+        android:title="@string/trainerDashboardHome" />
     <item
         android:id="@+id/programsFragment"
+        android:enabled="true"
         android:title="@string/trainerDashboardPrograms"
         android:icon="@drawable/ic_program_icon"
         />
     <item
         android:id="@+id/classFragment"
+        android:enabled="true"
         android:title="@string/trainerDashboardClasses"
         android:icon="@drawable/ic_class_icon"
         />

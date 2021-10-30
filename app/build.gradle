@@ -123,4 +123,7 @@ dependencies {
     //Sticky scrollview
     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
 
+    //Swipeable recycler view items
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+
 }

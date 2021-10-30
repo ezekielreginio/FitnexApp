@@ -42,7 +42,6 @@
 
 
 
-
     <!--    <RelativeLayout-->
     <!--        app:layout_constraintBottom_toBottomOf="@+id/cardViewCalendar"-->
     <!--        android:id="@+id/relativeLayoutTabLayout"-->

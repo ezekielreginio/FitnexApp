@@ -8,7 +8,11 @@
         tools:layout="@layout/fragment_trainer_home"
         android:id="@+id/trainerHome"
         android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.TrainerHome"
-        android:label="TrainerHome" />
+        android:label="TrainerHome" >
+        <action
+            android:id="@+id/action_trainerHome_to_programsFragment"
+            app:destination="@id/programsFragment" />
+    </fragment>
     <fragment
         tools:layout="@layout/fragment_programs"
         android:id="@+id/programsFragment"

@@ -20,9 +20,6 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.trainingdashboard.TempTrainerDashboard"
-            android:exported="true" />
-        <activity
             android:name=".activities.nutritiontracking.NutritionTrackingMain"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -79,13 +79,18 @@
         <entry key="..\:/AndroidStudioProjects/edited_fitnex_login_android/fitnex_login_android/app/src/main/res/layout/activity_video_demo.xml" value="0.33" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/background_scrollview.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/background_thumbnail_btn.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_delete.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_join.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_update.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/button_view.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/card_delete_bg.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/card_edit_bg.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/checkbox_checked.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/checkbox_unchecked.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/circular_progress_bar.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/foreground_thumbnail_tint.xml" value="0.1421875" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_add_diet.xml" value="0.2703125" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_add_img.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_calendar.xml" value="0.2703125" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_cardview_rounded_corner.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/drawable/ic_circle_imageview.xml" value="0.14635416666666667" />
@@ -122,11 +127,12 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_dashboard.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainee_profile.xml" value="0.4" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.2771152754116979" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_patron_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_trainer_studio.xml" value="0.2105978260869565" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_try_material_card.xml" value="0.264" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/activity_video_demo.xml" value="0.15625" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/card_swipe.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_add_food.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_calendar.xml" value="0.15625" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/fragment_calls.xml" value="0.15625" />
@@ -150,8 +156,8 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_add_breakfast.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_add_dinner.xml" value="0.6" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_add_lunch.xml" value="0.20199275362318841" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.5765069551777434" />
-        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.536" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_fitness_class.xml" value="0.3778135048231511" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.2" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_routines.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_trainer.xml" value="0.4" />
         <entry key="..\:/Users/Acer/Documents/GitHub/FitnexApp/app/src/main/res/layout/item_container_search_engine_videos.xml" value="0.20516304347826086" />
