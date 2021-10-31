@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,9 @@ import com.pupccis.fitnex.databinding.FragmentFitnessClassesBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 
 public class ClassFragment extends Fragment implements View.OnClickListener{
     //Fragment Variables
@@ -40,8 +44,8 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     private FitnessClassAdapter adapter;
     private UserPreferences userPreferences;
     private RecyclerView recyclerView;
-
-    private static FragmentFitnessClassesBinding binding;
+    private FitnessClassViewModel fitnessClassViewModel = new FitnessClassViewModel();
+    private static FragmentFitnessClassesBinding fragmentFitnessClassesBinding;
     public ClassFragment() {
         // Required empty public constructor
     }
@@ -73,30 +77,35 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fitness_classes, container, false);
+        fragmentFitnessClassesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_fitness_classes, container, false);
+        fragmentFitnessClassesBinding.setLifecycleOwner(this);
+        fragmentFitnessClassesBinding.setViewModel(fitnessClassViewModel);
+        fragmentFitnessClassesBinding.setPresenter(this);
+        fragmentFitnessClassesBinding.executePendingBindings();
         //Get FirestoreOptions From ViewModel
         FirestoreRecyclerOptions<FitnessClass> options = getFirebaseUIFitnessClassOptions();
         //Recycler view
-        recyclerView = binding.fitnessClassesRecyclerView;
+        recyclerView = fragmentFitnessClassesBinding.fitnessClassesRecyclerView;
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapter = new FitnessClassAdapter(options);
         adapter.setAccesstype(AccessType.OWNER);
+        adapter.setFitnessClassViewModel(fitnessClassViewModel);
         recyclerView.setAdapter(adapter);
 
-        binding.setLifecycleOwner(this);
-        binding.setViewModel(adapter.getViewModel());
 
-        binding.getViewModel().updateObserver().observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+
+        fragmentFitnessClassesBinding.getViewModel().updateObserver().observe(fragmentFitnessClassesBinding.getLifecycleOwner(), new Observer<FitnessClass>() {
             @Override
             public void onChanged(FitnessClass fitnessClass) {
-                Intent intent= new Intent(getContext(), AddFitnessClass.class);
+                Intent intent= new Intent();
                 intent.putExtra("fitnessClass", fitnessClass);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                Log.e("Fitness Intent in fragment", fitnessClass.getClassID());
+                fragmentFitnessClassesBinding.getViewModel().setIntent((FitnessClass) intent.getSerializableExtra("fitnessClass"));
+                Navigation.findNavController(getView()).navigate(R.id.action_classFragment_to_addFitnessClass);
             }
         });
-        binding.getViewModel().deleteObserver().observe(binding.getLifecycleOwner(), new Observer<FitnessClass>() {
+        fragmentFitnessClassesBinding.getViewModel().deleteObserver().observe(fragmentFitnessClassesBinding.getLifecycleOwner(), new Observer<FitnessClass>() {
             @Override
             public void onChanged(FitnessClass fitnessClass) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -104,7 +113,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                binding.getViewModel().deleteFitnessClass(fitnessClass.getClassID());
+                                fragmentFitnessClassesBinding.getViewModel().deleteFitnessClass(fitnessClass.getClassID());
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -117,8 +126,8 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
                         .setNegativeButton("No", dialogClickListener).show();
             }
         });
-
-        return binding.getRoot();
+        View view = fragmentFitnessClassesBinding.getRoot();
+        return view;
     }
 
     @Override
@@ -135,8 +144,11 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view == binding.imageViewAddFitnessClass){
-            
+        if(view == fragmentFitnessClassesBinding.imageViewAddFitnessClass){
+            Navigation.findNavController(getView()).navigate(R.id.action_classFragment_to_addFitnessClass);
         }
+    }
+    public static FitnessClassViewModel getFitnessClassViewModel(){
+        return fragmentFitnessClassesBinding.getViewModel();
     }
 }

@@ -69,18 +69,18 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
         binding.editTextAddFitnessClassCategory.setOnItemSelectedListener(this);
 
         //Fitness Intent Information for Update
-        if(fitness_intent != null){
-            binding.editTextAddClassName.setText(fitness_intent.getClassName());
-            binding.editTextAddFitnessClassCategory.setSelection(fitness_intent.getCategory());
-            binding.editTextAddClassSessionNumber.setText(fitness_intent.getSessionNo());
-            binding.editTextTimeStart.setText(fitness_intent.getTimeStart());
-            binding.editTextTimeEnd.setText(fitness_intent.getTimeEnd());
-            binding.editTextAddFitnessClassDescription.setText(fitness_intent.getDescription());
-            binding.editTextAddClassDuration.setText(fitness_intent.getDuration());
-            //fitnessClassCategory.setSelection(fitness_intent.getCategory());
-            binding.getViewModel().setFitnessClassID(fitness_intent.getClassID());
-            binding.buttonAddClassButton.setText("Update Class");
-        }
+//        if(fitness_intent != null){
+//            binding.editTextAddClassName.setText(fitness_intent.getClassName());
+//            binding.editTextAddFitnessClassCategory.setSelection(fitness_intent.getCategory());
+//            binding.editTextAddClassSessionNumber.setText(fitness_intent.getSessionNo());
+//            binding.editTextTimeStart.setText(fitness_intent.getTimeStart());
+//            binding.editTextTimeEnd.setText(fitness_intent.getTimeEnd());
+//            binding.editTextAddFitnessClassDescription.setText(fitness_intent.getDescription());
+//            binding.editTextAddClassDuration.setText(fitness_intent.getDuration());
+//            //fitnessClassCategory.setSelection(fitness_intent.getCategory());
+//            binding.getViewModel().setFitnessClassID(fitness_intent.getClassID());
+//            binding.buttonAddClassButton.setText("Update Class");
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -160,33 +160,33 @@ public class AddFitnessClass extends AppCompatActivity implements View.OnClickLi
     }
 
     //Binding Adapters
-    @BindingAdapter({"fitnessClassValidationData"})
-    public static void validateFitnessClassData(View view, HashMap<String, Object> validationData){
-        if (validationData != null) {
-            ValidationResult result = (ValidationResult) validationData.get("validationResult");
-            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
-            switch (field) {
-                case NAME:
-                    errorHandler(binding.textInputClassName, result);
-                    break;
-                case DESCRIPTION:
-                    errorHandler(binding.textInputClassDescription, result);
-                    break;
-                case SESSION_NUMBER:
-                    errorHandler(binding.textInputClassSessionNumber, result);
-                    break;
-                case DURATION:
-                    errorHandler(binding.textInputClassDuration, result);
-                    break;
-                case TIME_START:
-                    errorHandler(binding.textInputClassTimeStart, result);
-                    break;
-                case TIME_END:
-                    errorHandler(binding.textInputClassTimeEnd, result);
-                    break;
-            }
-        }
-    }
+//    @BindingAdapter({"fitnessClassValidationData"})
+//    public static void validateFitnessClassData(View view, HashMap<String, Object> validationData){
+//        if (validationData != null) {
+//            ValidationResult result = (ValidationResult) validationData.get("validationResult");
+//            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
+//            switch (field) {
+//                case NAME:
+//                    errorHandler(binding.textInputClassName, result);
+//                    break;
+//                case DESCRIPTION:
+//                    errorHandler(binding.textInputClassDescription, result);
+//                    break;
+//                case SESSION_NUMBER:
+//                    errorHandler(binding.textInputClassSessionNumber, result);
+//                    break;
+//                case DURATION:
+//                    errorHandler(binding.textInputClassDuration, result);
+//                    break;
+//                case TIME_START:
+//                    errorHandler(binding.textInputClassTimeStart, result);
+//                    break;
+//                case TIME_END:
+//                    errorHandler(binding.textInputClassTimeEnd, result);
+//                    break;
+//            }
+//        }
+//    }
 
     //Class Methods
     private void closeForm() {

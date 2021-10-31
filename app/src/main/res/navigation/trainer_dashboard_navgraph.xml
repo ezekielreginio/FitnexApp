@@ -8,19 +8,49 @@
         tools:layout="@layout/fragment_trainer_home"
         android:id="@+id/trainerHome"
         android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.TrainerHome"
-        android:label="TrainerHome" >
-        <action
-            android:id="@+id/action_trainerHome_to_programsFragment"
-            app:destination="@id/programsFragment" />
-    </fragment>
+        android:label="TrainerHome" />
     <fragment
         tools:layout="@layout/fragment_programs"
         android:id="@+id/programsFragment"
         android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.ProgramsFragment"
-        android:label="ProgramsFragment" />
+        android:label="ProgramsFragment" >
+        <action
+            android:id="@+id/action_programsFragment_to_addProgram"
+            app:destination="@id/addProgram"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
+    </fragment>
     <fragment
         tools:layout="@layout/fragment_fitness_classes"
         android:id="@+id/classFragment"
         android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.ClassFragment"
-        android:label="ClassFragment" />
+        android:label="ClassFragment" >
+        <action
+            android:id="@+id/action_classFragment_to_addFitnessClass"
+            app:destination="@id/addFitnessClass"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addProgram"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.AddProgram"
+        android:label="AddProgram"
+        tools:layout="@layout/fragment_add_program">
+        <action
+            android:id="@+id/action_addProgram_to_programsFragment"
+            app:destination="@id/programsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addFitnessClass"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.AddFitnessClass"
+        android:label="fragment_add_fitness_class"
+        tools:layout="@layout/fragment_add_fitness_class" >
+        <action
+            android:id="@+id/action_addFitnessClass_to_classFragment"
+            app:destination="@id/classFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"/>
+    </fragment>
 </navigation>

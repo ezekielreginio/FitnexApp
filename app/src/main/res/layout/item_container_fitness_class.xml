@@ -19,10 +19,11 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.MaterialComponents"
-        app:cardCornerRadius="10dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/whiteTextColor">
+        android:theme="@style/Theme.MaterialComponents"
+        app:cardBackgroundColor="@color/whiteTextColor"
+        app:cardCornerRadius="10dp">
+
         <com.chauthai.swipereveallayout.SwipeRevealLayout
             android:id="@+id/swipeRevealLayout"
             android:layout_width="match_parent"
@@ -31,353 +32,359 @@
             app:mode="normal"
             bind:ignore="MissingClass">
 
-        <!-- Your secondary layout here -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="60dp"
-                android:onClick="@{(v)->viewModel.triggerUpdateObserver(fitnessClass)}"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView11"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/card_edit_bg" />
-            <ImageView
+            <!-- Your secondary layout here -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                app:layout_constraintStart_toStartOf="@+id/imageView10"
-                app:layout_constraintTop_toTopOf="@+id/imageView10"
-                app:layout_constraintEnd_toEndOf="@+id/imageView10"
-                app:srcCompat="@drawable/ic_edit_btn" />
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="60dp"
-                android:onClick="@{(v)->viewModel.triggerDeleteObserver(fitnessClass)}"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView10"
-                app:srcCompat="@drawable/card_delete_bg" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                app:layout_constraintStart_toStartOf="@+id/imageView11"
-                app:layout_constraintTop_toTopOf="@+id/imageView11"
-                app:layout_constraintEnd_toEndOf="@+id/imageView11"
-                app:srcCompat="@drawable/ic_btn_delete" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutFitnessClassContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:animateLayoutChanges="true">
-            <ImageView
-                android:id="@+id/imageViewDisplay"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_todays_activity_template_img" />
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:onClick="@{(v)->viewModel.triggerUpdateObserver(fitnessClass)}"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView11"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/card_edit_bg" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                    app:layout_constraintStart_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="@+id/imageView10"
+                    app:srcCompat="@drawable/ic_edit_btn" />
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:onClick="@{(v)->viewModel.triggerDeleteObserver(fitnessClass)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                    app:srcCompat="@drawable/card_delete_bg" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView11"
+                    app:layout_constraintStart_toStartOf="@+id/imageView11"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11"
+                    app:srcCompat="@drawable/ic_btn_delete" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutFitnessClassContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:animateLayoutChanges="true"
-                android:background="@color/whiteTextColor">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/fitnessClassNameContainer"
+                android:layout_marginBottom="10dp"
+                android:animateLayoutChanges="true">
+
+                <ImageView
+                    android:id="@+id/imageViewDisplay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/whiteTextColor"
-                    app:layout_constraintBottom_toTopOf="@+id/layoutfitnessClassInfo">
-
-                    <TextView
-                        android:id="@+id/textProgramTrainerName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Jesse Cuasay"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/textTimeStart"
-                        app:layout_constraintTop_toBottomOf="@+id/textTimeStart" />
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="3dp"
-                        android:text="\u2022"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/textProgramTrainerName"
-                        app:layout_constraintTop_toTopOf="@+id/textProgramTrainerName" />
-
-                    <TextView
-                        android:id="@+id/textProgramTrainees"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="3dp"
-                        android:text="0 trainees"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/textView15"
-                        app:layout_constraintTop_toTopOf="@+id/textView15" />
-
-                    <ImageView
-                        android:id="@+id/trainerImage"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginStart="5dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.53"
-                        app:srcCompat="@drawable/ic_circle_imageview" />
-
-                    <TextView
-                        android:id="@+id/textFitnessClassName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="Cardio Workout Class"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/trainerImage"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <ImageView
-                        android:id="@+id/imageViewExpand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_expand_less" />
-
-                    <TextView
-                        android:id="@+id/textTimeStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00:00"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/textFitnessClassName"
-                        app:layout_constraintTop_toBottomOf="@+id/textFitnessClassName" />
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/textTimeStart"
-                        app:layout_constraintTop_toTopOf="@+id/textTimeStart" />
-
-                    <TextView
-                        android:id="@+id/textTimeEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00:00"
-                        android:textColor="#787878"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/textView18"
-                        app:layout_constraintTop_toTopOf="@+id/textView18" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layoutfitnessClassInfo"
-                    android:layout_width="0dp"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:background="@color/whiteTextColor"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent">
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/firstGuideline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.33"/>
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/secondGuideline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.66"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_todays_activity_template_img" />
 
-                    <View
-                        android:id="@+id/view3"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#676767"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewDurationTitle" />
-
-                    <TextView
-
-                        android:id="@+id/textFitnessClassCategory"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Category"
-                        android:textColor="@color/black"
-                        android:textSize="15dp"
-                        app:layout_constraintEnd_toStartOf="@+id/firstGuideline"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintHorizontal_weight="2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        bind:ignore="MissingConstraints"
-                        bind:layout_editor_absoluteY="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Category"
-                        android:textColor="#8A8A8A"
-                        android:textSize="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/textFitnessClassCategory"
-                        app:layout_constraintTop_toBottomOf="@+id/textFitnessClassCategory"
-                        bind:ignore="MissingConstraints" />
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintHorizontal_weight="2"
-                        app:layout_constraintStart_toEndOf="@+id/firstGuideline"
-                        app:layout_constraintTop_toTopOf="@+id/textFitnessClassCategory"
-                        app:srcCompat="@drawable/ic_calendar" />
-
-                    <TextView
-                        android:id="@+id/textClassSessionCount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="15dp"
-                        app:layout_constraintEnd_toStartOf="@+id/secondGuideline"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintHorizontal_weight="2"
-                        app:layout_constraintStart_toEndOf="@+id/imageView8"
-                        app:layout_constraintTop_toTopOf="@+id/imageView8"
-                        bind:ignore="MissingConstraints" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Session Count"
-                        android:textColor="#8A8A8A"
-                        android:textSize="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/textClassSessionCount"
-                        app:layout_constraintTop_toBottomOf="@+id/textClassSessionCount"
-                        bind:ignore="MissingConstraints" />
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@+id/secondGuideline"
-                        app:layout_constraintTop_toTopOf="@+id/textClassSessionCount"
-                        app:srcCompat="@drawable/ic_duration" />
-
-                    <TextView
-                        android:id="@+id/textClassDuration"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="0 minutes"
-                        android:textColor="@color/black"
-                        android:textSize="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="2"
-                        app:layout_constraintStart_toEndOf="@+id/imageView9"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9"
-                        bind:ignore="MissingConstraints" />
-
-                    <TextView
-                        android:id="@+id/textViewDurationTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Duration"
-                        android:textColor="#8A8A8A"
-                        android:textSize="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/textClassDuration"
-                        app:layout_constraintTop_toBottomOf="@+id/textClassDuration"
-                        bind:ignore="MissingConstraints" />
-
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:background="@color/whiteTextColor"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fitnessClassNameContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view3">
+                        android:background="@color/whiteTextColor"
+                        app:layout_constraintBottom_toTopOf="@+id/layoutfitnessClassInfo">
 
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/textClassDescription"
+                        <TextView
+                            android:id="@+id/textProgramTrainerName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:text="Description"
-                            android:textColor="#434343"
-                            android:textSize="12dp"
+                            android:text="Jesse Cuasay"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/textTimeStart"
+                            app:layout_constraintTop_toBottomOf="@+id/textTimeStart" />
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="3dp"
+                            android:text="\u2022"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/textProgramTrainerName"
+                            app:layout_constraintTop_toTopOf="@+id/textProgramTrainerName" />
+
+                        <TextView
+                            android:id="@+id/textProgramTrainees"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="3dp"
+                            android:text="0 trainees"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/textView15"
+                            app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+                        <ImageView
+                            android:id="@+id/trainerImage"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginStart="5dp"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            bind:ignore="MissingConstraints" />
+                            app:layout_constraintVertical_bias="0.53"
+                            app:srcCompat="@drawable/ic_circle_imageview" />
+
+                        <TextView
+                            android:id="@+id/textFitnessClassName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Cardio Workout Class"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/trainerImage"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <ImageView
+                            android:id="@+id/imageViewExpand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_expand_less" />
+
+                        <TextView
+                            android:id="@+id/textTimeStart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/textFitnessClassName"
+                            app:layout_constraintTop_toBottomOf="@+id/textFitnessClassName" />
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/textTimeStart"
+                            app:layout_constraintTop_toTopOf="@+id/textTimeStart" />
+
+                        <TextView
+                            android:id="@+id/textTimeEnd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00"
+                            android:textColor="#787878"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/textView18"
+                            app:layout_constraintTop_toTopOf="@+id/textView18" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutfitnessClassInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:background="@color/whiteTextColor"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/firstGuideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.33" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/secondGuideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.66" />
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#676767"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewDurationTitle" />
+
+                        <TextView
+
+                            android:id="@+id/textFitnessClassCategory"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            app:layout_constraintEnd_toStartOf="@+id/firstGuideline"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintHorizontal_weight="2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            bind:ignore="MissingConstraints"
+                            bind:layout_editor_absoluteY="5dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:textColor="#8A8A8A"
+                            android:textSize="8dp"
+                            app:layout_constraintStart_toStartOf="@+id/textFitnessClassCategory"
+                            app:layout_constraintTop_toBottomOf="@+id/textFitnessClassCategory"
+                            bind:ignore="MissingConstraints" />
+
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintHorizontal_weight="2"
+                            app:layout_constraintStart_toEndOf="@+id/firstGuideline"
+                            app:layout_constraintTop_toTopOf="@+id/textFitnessClassCategory"
+                            app:srcCompat="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:id="@+id/textClassSessionCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            app:layout_constraintEnd_toStartOf="@+id/secondGuideline"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_weight="2"
+                            app:layout_constraintStart_toEndOf="@+id/imageView8"
+                            app:layout_constraintTop_toTopOf="@+id/imageView8"
+                            bind:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Session Count"
+                            android:textColor="#8A8A8A"
+                            android:textSize="8dp"
+                            app:layout_constraintStart_toStartOf="@+id/textClassSessionCount"
+                            app:layout_constraintTop_toBottomOf="@+id/textClassSessionCount"
+                            bind:ignore="MissingConstraints" />
+
+                        <ImageView
+                            android:id="@+id/imageView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@+id/secondGuideline"
+                            app:layout_constraintTop_toTopOf="@+id/textClassSessionCount"
+                            app:srcCompat="@drawable/ic_duration" />
+
+                        <TextView
+                            android:id="@+id/textClassDuration"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="0 minutes"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="2"
+                            app:layout_constraintStart_toEndOf="@+id/imageView9"
+                            app:layout_constraintTop_toTopOf="@+id/imageView9"
+                            bind:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/textViewDurationTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Duration"
+                            android:textColor="#8A8A8A"
+                            android:textSize="8dp"
+                            app:layout_constraintStart_toStartOf="@+id/textClassDuration"
+                            app:layout_constraintTop_toBottomOf="@+id/textClassDuration"
+                            bind:ignore="MissingConstraints" />
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/textClassDescription"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="3"
+                                android:text="Description"
+                                android:textColor="#434343"
+                                android:textSize="12dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                bind:ignore="MissingConstraints" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewBadgeIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_badge_bronze" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/imageViewBadgeIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_badge_bronze" />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
         </com.chauthai.swipereveallayout.SwipeRevealLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

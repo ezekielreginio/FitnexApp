@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -37,7 +38,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
         model.setProgramID(this.getSnapshots().getSnapshot(position).getId());
         holder.setProgramData(model);
-        viewBinderHelper.bind(holder.binding.swipeRevealLayout, model.getProgramID());
+        viewBinderHelper.bind(holder.binding.swipeRevealLayoutProgramCard, model.getProgramID());
         boolean isExpanded = model.isExpanded();
     }
 
@@ -107,14 +108,12 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-            if(binding.swipeRevealLayout.isOpened()){
-                binding.layoutProgramContainer.setOnClickListener(null);
-            }
-            if(binding.swipeRevealLayout.isClosed()){
+
+
                 binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        binding.swipeRevealLayoutProgramCard.close(true);
                         switch (binding.layoutProgramInfo.getVisibility()){
                             case View.GONE:
                                 binding.layoutProgramInfo.setVisibility(View.VISIBLE);
@@ -141,7 +140,22 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 //                    }
                     }
                 });
-            }
+                binding.swipeRevealLayoutProgramCard.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
+                    @Override
+                    public void onClosed(SwipeRevealLayout view) {
+                        binding.imageViewPullIndicator.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onOpened(SwipeRevealLayout view) {
+                        binding.imageViewPullIndicator.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onSlide(SwipeRevealLayout view, float slideOffset) {
+
+                    }
+                });
 
             binding.setVariable(BR.program, model);
         }

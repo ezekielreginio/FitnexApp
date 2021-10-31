@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.viewmodel;
 
+import android.os.Bundle;
 import android.util.Log;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 
 public class ProgramViewModel extends BaseObservable {
     private ProgramsRepository programsRepository= ProgramsRepository.getInstance();
+    private Program program_intent = new Program();
     //Mutable Live Data
     private MutableLiveData<Program> updateProgramLivedata = new MutableLiveData<>();
     private MutableLiveData<Program> deleteProgramLivedata = new MutableLiveData<>();
@@ -61,6 +63,8 @@ public class ProgramViewModel extends BaseObservable {
         return programValidationData;
     }
     public String getProgramID() { return programID; }
+
+
 
     //Bindable Attributes Setters
     public void setAddProgramName(String addProgramName) {
@@ -108,6 +112,17 @@ public class ProgramViewModel extends BaseObservable {
     public void setProgramValidationData(HashMap<String, Object> programValidationData) {
         this.programValidationData = programValidationData;
         notifyPropertyChanged(BR.programValidationData);
+    }
+
+    //Intent manager
+    public Program getIntent(){
+        return program_intent;
+    }
+    public void setIntent(Program program){
+        this.program_intent = program;
+    }
+    public void clearIntent(){
+        this.program_intent = null;
     }
 
 

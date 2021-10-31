@@ -40,6 +40,7 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.activities.login.FitnexRegister;
 import com.pupccis.fitnex.activities.videoconferencing.VideoActivityDemo;
 import com.pupccis.fitnex.databinding.ActivityTrainerDashboardBinding;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
@@ -241,5 +242,10 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
 
 
         }
+    }
+    public static void getIntentFromFragment(){
+        Intent intent = new Intent();
+        Program programIntent = (Program)intent.getSerializableExtra("program");
+
     }
 }

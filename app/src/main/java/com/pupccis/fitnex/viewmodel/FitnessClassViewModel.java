@@ -26,6 +26,7 @@ public class FitnessClassViewModel extends BaseObservable {
     private MutableLiveData<FitnessClass> deleteFitnessClassLiveData = new MutableLiveData<>();
     private FitnessClassesRepository fitnessClassesRepository = new FitnessClassesRepository();
 
+    private FitnessClass fitness_intent = new FitnessClass();
 
     //Data Observer
     private DataObserver dataObserver = new DataObserver();
@@ -124,6 +125,18 @@ public class FitnessClassViewModel extends BaseObservable {
         notifyPropertyChanged(BR.fitnessClassValidationData);
     }
 
+    public FitnessClass getIntent(){
+        return fitness_intent;
+    }
+
+    public void setIntent(FitnessClass fitness_intent) {
+        this.fitness_intent = fitness_intent;
+        Log.e("Set intent", fitness_intent.toString());
+    }
+    public void clearIntent(){
+        this.fitness_intent = null;
+    }
+
     public void onTextChangeFitnessClass(String input, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field){
         Log.d("Ontextchange trigger", "triggered");
         ProgramFitnessClassRoutineValidationService programFitnessClassValidationService= new ProgramFitnessClassRoutineValidationService(input, field);
@@ -165,7 +178,6 @@ public class FitnessClassViewModel extends BaseObservable {
     }
 
     public void triggerUpdateObserver(FitnessClass fitnessClass) {
-        Log.d("Trigger ID",fitnessClass.getClassID());
         setFitnessClassID(fitnessClass.getClassID());
         updateFitnessClassLiveData.postValue(fitnessClass);
     }

@@ -16,71 +16,68 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="10dp"
+
+    <!-- Your main layout here -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewProgram"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cardBackgroundColor="@color/whiteTextColor"
+        app:cardCornerRadius="10dp">
 
-
-        <!-- Your main layout here -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/programCard"
+        <com.chauthai.swipereveallayout.SwipeRevealLayout
+            android:id="@+id/swipeRevealLayoutProgramCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:theme="@style/Theme.MaterialComponents"
-            app:cardBackgroundColor="@color/whiteTextColor"
-            app:cardCornerRadius="10dp">
+            android:layout_height="match_parent"
+            app:dragEdge="left"
+            app:mode="normal"
+            bind:ignore="MissingClass">
 
-            <com.chauthai.swipereveallayout.SwipeRevealLayout
-                android:id="@+id/swipeRevealLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:dragEdge="left"
-                app:mode="normal"
-                bind:ignore="MissingClass">
+            <!-- Your secondary layout here -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
-                <!-- Your secondary layout here -->
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:onClick="@{(v)->viewModel.triggerUpdateObserver(program)}"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView11"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/card_edit_bg" />
+
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                    app:layout_constraintStart_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="@+id/imageView10"
+                    app:srcCompat="@drawable/ic_edit_btn" />
 
-                        <ImageView
-                            android:id="@+id/imageView10"
-                            android:layout_width="60dp"
-                            android:onClick="@{(v)->viewModel.triggerUpdateObserver(program)}"
-                            android:layout_height="100dp"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView11"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/card_edit_bg" />
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                            app:layout_constraintStart_toStartOf="@+id/imageView10"
-                            app:layout_constraintTop_toTopOf="@+id/imageView10"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView10"
-                            app:srcCompat="@drawable/ic_edit_btn" />
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="60dp"
+                    android:layout_height="100dp"
+                    android:onClick="@{(v)->viewModel.triggerDeleteObserver(program)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                    app:srcCompat="@drawable/card_delete_bg" />
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="60dp"
-                        android:onClick="@{(v)->viewModel.triggerDeleteObserver(program)}"
-                        android:layout_height="100dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView10"
-                        app:srcCompat="@drawable/card_delete_bg" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                        app:layout_constraintStart_toStartOf="@+id/imageView11"
-                        app:layout_constraintTop_toTopOf="@+id/imageView11"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView11"
-                        app:srcCompat="@drawable/ic_btn_delete" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView11"
+                    app:layout_constraintStart_toStartOf="@+id/imageView11"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11"
+                    app:srcCompat="@drawable/ic_btn_delete" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -227,6 +224,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true"
+                        android:visibility="gone"
                         android:background="@color/whiteTextColor"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
@@ -425,23 +423,27 @@
 
                 <ImageView
                     android:id="@+id/imageViewBadgeIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
                     android:visibility="gone"
-
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_badge_bronze" />
 
+                <ImageView
+                    android:id="@+id/imageViewPullIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pull_indicator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.chauthai.swipereveallayout.SwipeRevealLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </com.chauthai.swipereveallayout.SwipeRevealLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
     <!--<androidx.constraintlayout.widget.ConstraintLayout-->

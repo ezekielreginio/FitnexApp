@@ -80,14 +80,14 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        if(program_intent!=null){
-            binding.editTextAddProgramName.setText(program_intent.getName());
-            binding.editTextAddProgramDescription.setText(program_intent.getDescription());
-            binding.editTextAddProgramSessionNumber.setText(program_intent.getSessionNumber());
-            binding.editTextAddProgramDuration.setText(program_intent.getDuration());
-            binding.editTextAddProgramCategory.setSelection(program_intent.getCategory());
-            binding.getViewModel().setProgramID(program_intent.getProgramID());
-        }
+//        if(program_intent!=null){
+//            binding.editTextAddProgramName.setText(program_intent.getName());
+//            binding.editTextAddProgramDescription.setText(program_intent.getDescription());
+//            binding.editTextAddProgramSessionNumber.setText(program_intent.getSessionNumber());
+//            binding.editTextAddProgramDuration.setText(program_intent.getDuration());
+//            binding.editTextAddProgramCategory.setSelection(program_intent.getCategory());
+//            binding.getViewModel().setProgramID(program_intent.getProgramID());
+//        }
     }
 
 
@@ -96,26 +96,26 @@ public class AddProgram extends AppCompatActivity implements View.OnClickListene
         overridePendingTransition(R.anim.slide_in_top,R.anim.stay);
     }
 
-    @BindingAdapter({"programValidationData"})
-    public static void validateProgramData(View view, HashMap<String, Object> validationData) {
-        if (validationData != null) {
-            ValidationResult result = (ValidationResult) validationData.get("validationResult");
-            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
-            switch (field) {
-                case NAME:
-                    errorHandler(binding.textInputProgramName, result);
-                    break;
-                case DESCRIPTION:
-                    errorHandler(binding.textInputProgramDescription, result);
-                    break;
-                case SESSION_NUMBER:
-                    errorHandler(binding.textInputProgramSessionNumber, result);
-                    break;
-                case DURATION:
-                    errorHandler(binding.textInputProgramDuration, result);
-            }
-        }
-    }
+//    @BindingAdapter({"programValidationData"})
+//    public static void validateProgramData(View view, HashMap<String, Object> validationData) {
+//        if (validationData != null) {
+//            ValidationResult result = (ValidationResult) validationData.get("validationResult");
+//            com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields field = (com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields) validationData.get("field");
+//            switch (field) {
+//                case NAME:
+//                    errorHandler(binding.textInputProgramName, result);
+//                    break;
+//                case DESCRIPTION:
+//                    errorHandler(binding.textInputProgramDescription, result);
+//                    break;
+//                case SESSION_NUMBER:
+//                    errorHandler(binding.textInputProgramSessionNumber, result);
+//                    break;
+//                case DURATION:
+//                    errorHandler(binding.textInputProgramDuration, result);
+//            }
+//        }
+//    }
 
     @Override
     public void onClick(View view) {

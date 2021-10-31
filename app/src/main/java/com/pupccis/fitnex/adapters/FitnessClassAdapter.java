@@ -47,6 +47,9 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
     }
 
     public FitnessClassViewModel getViewModel(){return fitnessClassViewModel;}
+    public void setFitnessClassViewModel(FitnessClassViewModel fitnessClassViewModel){
+        this.fitnessClassViewModel = fitnessClassViewModel;
+    }
 
     public void setAccesstype(AccessType accessType) {
         this.accessType = accessType;
@@ -67,6 +70,7 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
             binding.textTimeEnd.setText(model.getTimeEnd());
             binding.textClassSessionCount.setText(model.getSessionNo());
             binding.textClassDuration.setText(model.getDuration()+" minutes");
+            binding.setVariable(BR.fitnessClass, model);
 //            switch (accessType){
 //                case VIEW:
 //                    binding.layoutClassButtonViewer.setVisibility(View.VISIBLE);
@@ -87,10 +91,11 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
                             binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
                             break;
                     }
-                    binding.setVariable(BR.fitnessClass, model);
+
 
                 }
             });
+
         }
     }
 

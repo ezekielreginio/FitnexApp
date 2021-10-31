@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.activities.trainingdashboard.fragment;
 
+import static com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard.getIntentFromFragment;
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIProgramOptions;
 
 import android.app.AlertDialog;
@@ -12,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,15 +28,18 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.pupccis.fitnex.activities.trainingdashboard.AddProgram;
+import com.pupccis.fitnex.activities.patron.PatronInitialActivity;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.activities.trainingdashboard.MySwipeHelper;
+import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.api.enums.AccessType;
+import com.pupccis.fitnex.databinding.FragmentAddProgramBinding;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
 import com.pupccis.fitnex.handlers.view.WrapContentLinearLayoutManager;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
+import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.validation.Services.MyButtonClickListener;
@@ -58,7 +64,7 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
     private String mParam2;
 
     private UserPreferences userPreferences;
-
+    private boolean patronSet;
     private static FragmentProgramsBinding fragmentProgramsBinding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
     private ProgramAdapter adapter;
@@ -85,9 +91,7 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         userPreferences = new UserPreferences(getActivity().getApplicationContext());
-
-
-
+        patronSet = userPreferences.getBoolean(PatronConstants.KEY_PATRON_SET);
 //        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 //
 //        query.addValueEventListener(new ValueEventListener() {
@@ -265,11 +269,11 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
         fragmentProgramsBinding.getViewModel().updateObserver().observe(fragmentProgramsBinding.getLifecycleOwner(), new Observer<Program>() {
             @Override
             public void onChanged(Program program) {
-
-                Intent intent= new Intent(getContext(), AddProgram.class);
+                Intent intent= new Intent();
                 intent.putExtra("program", program);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_bottom,R.anim.stay);
+                Log.e("Program intent from program fragment", program.getProgramID());
+                fragmentProgramsBinding.getViewModel().setIntent((Program) intent.getSerializableExtra("program"));
+                Navigation.findNavController(getView()).navigate(R.id.action_programsFragment_to_addProgram);
             }
         });
 
@@ -304,7 +308,18 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == fragmentProgramsBinding.imageViewAddProgram){
-
+            if(patronSet){
+                fragmentProgramsBinding.getViewModel().clearIntent();
+                Navigation.findNavController(view).navigate(R.id.action_programsFragment_to_addProgram);
+            }
+            else
+                fragmentProgramsBinding.constraintLayoutPatronNotSetModal.setVisibility(View.VISIBLE);
         }
+        if(view == fragmentProgramsBinding.buttonSetPatronData){
+            startActivity(new Intent(getContext(), PatronInitialActivity.class));
+        }
+    }
+    public static ProgramViewModel getProgramViewModel(){
+        return fragmentProgramsBinding.getViewModel();
     }
 }
