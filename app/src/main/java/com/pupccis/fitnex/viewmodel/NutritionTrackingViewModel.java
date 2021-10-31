@@ -31,6 +31,8 @@ public class NutritionTrackingViewModel extends BaseObservable {
     private MutableLiveData<FoodData> liveFoodData = new MutableLiveData<>();
 
     private FoodData currentFoodData;
+    private int currentServing = 0;
+    private int servingGram = 0;
 
     //Bindable Attributes
     //EditText
@@ -218,7 +220,12 @@ public class NutritionTrackingViewModel extends BaseObservable {
             Log.d("Array Size", currentFoodData.getArrayServingSize().length()+"");
             for(int i=0; i<currentFoodData.getArrayServingSize().length(); i++){
                 JSONObject servingInfo = currentFoodData.getArrayServingSize().getJSONObject(i);
+                Log.d("serving info", servingInfo.toString());
                 String portionDescription = servingInfo.getString("portionDescription");
+
+                if(i==0)
+                    this.servingGram = servingInfo.getInt("gramWeight");
+
                 if(!portionDescription.equals("Quantity not specified"))
                     spinnerList.add(portionDescription);
                 else
@@ -237,12 +244,25 @@ public class NutritionTrackingViewModel extends BaseObservable {
         if(servingAmount != null){
             if(!servingAmount.isEmpty()){
                 DecimalFormat df = new DecimalFormat("####0.##");
-                double calories = getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount);
-                double protein = getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount);
-                double carbs = getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount);
-                double fats = getCurrentFoodData().getFats() * Double.parseDouble(servingAmount);
+                Double inputServing = Double.parseDouble(servingAmount);
+                double calories = 0.0;
+                double protein = 0.0;
+                double carbs = 0.0;
+                double fats = 0.0;
+                if(currentServing != currentFoodData.getArrayServingSize().length()-1){
+                    calories = getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount);
+                    protein = getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount);
+                    carbs = getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount);
+                    fats = getCurrentFoodData().getFats() * Double.parseDouble(servingAmount);
+                }
+                else{
+                    calories = (getCurrentFoodData().getCalories() * inputServing) / servingGram;
+                    protein = (getCurrentFoodData().getProtein() * inputServing) / servingGram;
+                    carbs = (getCurrentFoodData().getCarbs() * inputServing) / servingGram;
+                    fats = (getCurrentFoodData().getFats() * inputServing) / servingGram;
+                }
 
-                setCalories(df.format(calories));
+                setCalories((int)calories+"");
                 setCarbs(df.format(carbs)+"g");
                 setProtein(df.format(protein)+"g");
                 setFats(df.format(fats)+"g");

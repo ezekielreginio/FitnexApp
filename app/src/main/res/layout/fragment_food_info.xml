@@ -19,11 +19,13 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grayBackgroundColor">
+                android:background="@color/grayBackgroundColor"
+                android:paddingBottom="100dp">
                 <LinearLayout
                     android:id="@+id/constraintLayoutSearchFood"
                     android:layout_width="match_parent"
@@ -262,7 +264,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginVertical="20dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -572,5 +575,23 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom|center"
+            android:layout_marginBottom="20dp">
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                android:id="@+id/buttonRegisterButton"
+                style="@style/loginButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:onClick="@{(v)->presenter.onClick(v)}"
+                android:text="Track"
+                android:width="350dp"
+                app:initialCornerAngle="27dp"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp"/>
+        </RelativeLayout>
     </FrameLayout>
 </layout>
