@@ -213,7 +213,6 @@ public class AddProgram extends Fragment implements View.OnClickListener{
             }
         }
         else if(view == fragmentAddProgramBinding.imageViewAddProgramBackButton)
-            Log.e("Naclick", "click");
             Navigation.findNavController(view).navigate(R.id.action_addProgram_to_programsFragment);
     }
 

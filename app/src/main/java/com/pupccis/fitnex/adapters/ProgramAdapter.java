@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -26,7 +24,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
-    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
@@ -36,7 +33,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
     protected void onBindViewHolder(@NonNull ProgramHolder holder, int position, @NonNull Program model) {
         model.setProgramID(this.getSnapshots().getSnapshot(position).getId());
         holder.setProgramData(model);
-        viewBinderHelper.bind(holder.binding.swipeRevealLayoutProgramCard, model.getProgramID());
         boolean isExpanded = model.isExpanded();
     }
 
@@ -93,9 +89,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-            if (!model.getPrivilege().equals(Privilege.FREE.toString()))
-                binding.imageViewBadgeIcon.setVisibility(View.VISIBLE);
-
             switch (Privilege.valueOf(model.getPrivilege())) {
                 case BRONZE:
                     binding.imageViewBadgeIcon.setImageResource(R.drawable.ic_badge_bronze);
@@ -108,7 +101,31 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-            swipeableCardOnClickHide(binding.layoutProgramContainer, binding.layoutProgramInfo, binding.swipeRevealLayoutProgramCard, binding.imageViewProgramExpand);
+            binding.imageView10.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(binding.swipeRevealLayoutProgramCard.isOpened())
+                        binding.getViewModel().triggerUpdateObserver(model);
+                }
+            });
+
+            if (!model.getPrivilege().equals(Privilege.FREE.toString()))
+                binding.imageViewBadgeIcon.setVisibility(View.VISIBLE);
+
+            if(accessType == AccessType.VIEW){
+                binding.swipeRevealLayoutProgramCard.setLockDrag(true);
+                binding.imageViewProgramPullIndicator.setVisibility(View.GONE);
+            }
+
+            binding.imageView11.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(binding.swipeRevealLayoutProgramCard.isOpened())
+                        binding.getViewModel().triggerDeleteObserver(model);
+                }
+            });
+
+            swipeableCardOnClickHide(binding.programNameContainer, binding.layoutProgramInfo, binding.swipeRevealLayoutProgramCard, binding.imageViewProgramExpand);
             hideIndicator(binding.swipeRevealLayoutProgramCard, binding.imageViewProgramPullIndicator);
             binding.setVariable(BR.program, model);
         }

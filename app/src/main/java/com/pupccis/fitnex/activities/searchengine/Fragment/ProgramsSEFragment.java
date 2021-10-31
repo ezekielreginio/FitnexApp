@@ -73,7 +73,7 @@ public class ProgramsSEFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        binding.getViewModel().checkContainerClicked().observe(binding.getLifecycleOwner(), new Observer<Program>() {
+        binding.getViewModel().routineObserver().observe(binding.getLifecycleOwner(), new Observer<Program>() {
             @Override
             public void onChanged(Program program) {
                 if(program != null){
