@@ -28,7 +28,7 @@ public class FragmentNutritionTracking extends Fragment implements View.OnClickL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_nutrition_tracking, container, false);
-        binding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setPresenter(this);
 //        binding.executePendingBindings();
 
@@ -39,7 +39,11 @@ public class FragmentNutritionTracking extends Fragment implements View.OnClickL
     public void onClick(View view) {
         if(view == binding.imageViewAddBreakfast){
             Navigation.findNavController(view).navigate(R.id.action_fragmentNutritionTracker_to_fragmentAddFood);
-            Log.d("Breakfast", "Clicked");
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }
