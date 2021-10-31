@@ -207,7 +207,7 @@
 
 
                         <ImageView
-                            android:id="@+id/imageViewExpand"
+                            android:id="@+id/imageViewProgramExpand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
@@ -433,7 +433,7 @@
                     app:srcCompat="@drawable/ic_badge_bronze" />
 
                 <ImageView
-                    android:id="@+id/imageViewPullIndicator"
+                    android:id="@+id/imageViewProgramPullIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/pull_indicator"

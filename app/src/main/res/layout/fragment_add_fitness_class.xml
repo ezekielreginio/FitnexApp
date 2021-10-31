@@ -148,7 +148,7 @@
                                     style="@style/AddProgramText"
                                     android:hint="Start Time"
                                     android:maxLines="1"
-                                    android:onClick="onClick"
+                                    android:onClick="@{(v)->presenter.onClick(v)}"
                                     android:text="@={viewModel.addFitnessClassTimeStart}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,7 +163,7 @@
                                     style="@style/AddProgramText"
                                     android:hint="End Time"
                                     android:maxLines="1"
-                                    android:onClick="onClick"
+                                    android:onClick="@{(v)->presenter.onClick(v)}"
                                     android:text="@={viewModel.addFitnessClassTimeEnd}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,7 +203,7 @@
                                 style="@style/loginButton"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="@dimen/loginViewsMargin"
-                                android:onClick="onClick"
+                                android:onClick="@{(v)->presenter.onClick(v)}"
                                 android:text="Add Class"
                                 app:initialCornerAngle="27dp"
                                 app:spinning_bar_color="#FFF"
@@ -217,6 +217,7 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent">

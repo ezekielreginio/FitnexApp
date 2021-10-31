@@ -145,6 +145,7 @@ public class ClassFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if(view == fragmentFitnessClassesBinding.imageViewAddFitnessClass){
+            fragmentFitnessClassesBinding.getViewModel().clearIntent();
             Navigation.findNavController(getView()).navigate(R.id.action_classFragment_to_addFitnessClass);
         }
     }

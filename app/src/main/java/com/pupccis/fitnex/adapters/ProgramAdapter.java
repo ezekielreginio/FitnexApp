@@ -1,17 +1,16 @@
 package com.pupccis.fitnex.adapters;
 
-import android.util.Log;
+import static com.pupccis.fitnex.handlers.view.CardHandler.hideIndicator;
+import static com.pupccis.fitnex.handlers.view.CardHandler.swipeableCardOnClickHide;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -23,13 +22,12 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
-import timber.log.Timber;
-
 public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
     }
@@ -52,7 +50,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         return new ProgramHolder(binding);
     }
 
-    public ProgramViewModel getViewModel(){
+    public ProgramViewModel getViewModel() {
         return programViewModel;
     }
 
@@ -64,22 +62,24 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         this.accessType = accessType;
     }
 
-    class ProgramHolder extends RecyclerView.ViewHolder{
+    class ProgramHolder extends RecyclerView.ViewHolder {
         private ItemContainerProgramBinding binding;
+
         public ProgramHolder(@NonNull ItemContainerProgramBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
         }
-        void setProgramData(Program model){
+
+        void setProgramData(Program model) {
             binding.textProgramName.setText(model.getName());
             binding.textProgramDescription.setText(model.getDescription());
             binding.textProgramSessionCount.setText(model.getSessionNumber());
-            binding.textProgramDuration.setText(model.getDuration()+" minutes");
-            binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory()-1]);
-            switch (accessType){
+            binding.textProgramDuration.setText(model.getDuration() + " minutes");
+            binding.textProgramCategory.setText(GlobalConstants.KEY_CATEGORY_ARRAY[model.getCategory() - 1]);
+            switch (accessType) {
                 case VIEW:
-                   // binding.layoutProgramButtonOwner.setVisibility(View.GONE);
+                    // binding.layoutProgramButtonOwner.setVisibility(View.GONE);
                     binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -93,10 +93,10 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-            if(!model.getPrivilege().equals(Privilege.FREE.toString()))
+            if (!model.getPrivilege().equals(Privilege.FREE.toString()))
                 binding.imageViewBadgeIcon.setVisibility(View.VISIBLE);
 
-            switch(Privilege.valueOf(model.getPrivilege())){
+            switch (Privilege.valueOf(model.getPrivilege())) {
                 case BRONZE:
                     binding.imageViewBadgeIcon.setImageResource(R.drawable.ic_badge_bronze);
                     break;
@@ -108,55 +108,8 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
                     break;
             }
 
-
-
-                binding.layoutProgramContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        binding.swipeRevealLayoutProgramCard.close(true);
-                        switch (binding.layoutProgramInfo.getVisibility()){
-                            case View.GONE:
-                                binding.layoutProgramInfo.setVisibility(View.VISIBLE);
-                                binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
-//                            notifyItemChanged(getAbsoluteAdapterPosition());
-                                break;
-                            case View.VISIBLE:
-                                binding.layoutProgramInfo.setVisibility(View.GONE);
-                                binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
-                                break;
-                        }
-//                    if(binding.layoutProgramInfo.getVisibility() == View.GONE) {
-//                        binding.layoutProgramInfo.setVisibility(View.VISIBLE);
-//                        Log.e("change visibility", "Changed");
-//                        notifyItemChanged(getAbsoluteAdapterPosition());
-//                        Log.e("Nog notify", "Notified");
-//
-//                    }
-//                    else if(binding.layoutProgramInfo.getVisibility() == View.VISIBLE){
-//                        binding.layoutProgramInfo.setVisibility(View.GONE);
-//                        Log.e("change visibility", "Changed");
-//                        notifyItemChanged(getAbsoluteAdapterPosition());
-//                        Log.e("Nog notify", "Notified");
-//                    }
-                    }
-                });
-                binding.swipeRevealLayoutProgramCard.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
-                    @Override
-                    public void onClosed(SwipeRevealLayout view) {
-                        binding.imageViewPullIndicator.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onOpened(SwipeRevealLayout view) {
-                        binding.imageViewPullIndicator.setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void onSlide(SwipeRevealLayout view, float slideOffset) {
-
-                    }
-                });
-
+            swipeableCardOnClickHide(binding.layoutProgramContainer, binding.layoutProgramInfo, binding.swipeRevealLayoutProgramCard, binding.imageViewProgramExpand);
+            hideIndicator(binding.swipeRevealLayoutProgramCard, binding.imageViewProgramPullIndicator);
             binding.setVariable(BR.program, model);
         }
     }

@@ -25,7 +25,7 @@
         app:cardCornerRadius="10dp">
 
         <com.chauthai.swipereveallayout.SwipeRevealLayout
-            android:id="@+id/swipeRevealLayout"
+            android:id="@+id/swipeRevealLayoutFitnessClassCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:dragEdge="left"
@@ -171,7 +171,7 @@
 
 
                         <ImageView
-                            android:id="@+id/imageViewExpand"
+                            android:id="@+id/imageViewFitnessClassExpand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
@@ -374,15 +374,20 @@
 
                 <ImageView
                     android:id="@+id/imageViewBadgeIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
                     android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_badge_bronze" />
-
+                <ImageView
+                    android:id="@+id/imageViewFitnessClassPullIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pull_indicator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.chauthai.swipereveallayout.SwipeRevealLayout>

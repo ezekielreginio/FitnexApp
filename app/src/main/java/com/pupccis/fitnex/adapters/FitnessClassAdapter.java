@@ -1,5 +1,8 @@
 package com.pupccis.fitnex.adapters;
 
+import static com.pupccis.fitnex.handlers.view.CardHandler.hideIndicator;
+import static com.pupccis.fitnex.handlers.view.CardHandler.swipeableCardOnClickHide;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.databinding.ActivityAddClassBinding;
 import com.pupccis.fitnex.databinding.ItemContainerFitnessClassBinding;
-import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.model.FitnessClass;
-import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.viewmodel.FitnessClassViewModel;
 import com.pupccis.fitnex.api.enums.AccessType;
@@ -77,25 +77,8 @@ public class FitnessClassAdapter extends FirestoreRecyclerAdapter<FitnessClass, 
 //                    binding.layoutClassButtonOwner.setVisibility(View.GONE);
 //                    break;
 //            }
-            binding.layoutFitnessClassContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (binding.layoutfitnessClassInfo.getVisibility()) {
-                        case View.GONE:
-                            binding.layoutfitnessClassInfo.setVisibility(View.VISIBLE);
-                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_more);
-//                            notifyItemChanged(getAbsoluteAdapterPosition());
-                            break;
-                        case View.VISIBLE:
-                            binding.layoutfitnessClassInfo.setVisibility(View.GONE);
-                            binding.imageViewExpand.setImageResource(R.drawable.ic_expand_less);
-                            break;
-                    }
-
-
-                }
-            });
-
+            swipeableCardOnClickHide(binding.layoutFitnessClassContainer, binding.layoutfitnessClassInfo, binding.swipeRevealLayoutFitnessClassCard, binding.imageViewFitnessClassExpand);
+            hideIndicator(binding.swipeRevealLayoutFitnessClassCard, binding.imageViewFitnessClassPullIndicator);
         }
     }
 
