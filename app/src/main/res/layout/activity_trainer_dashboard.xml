@@ -7,7 +7,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    bind:context=".activities.trainingdashboard.TrainerDashboard">
+    bind:context=".activities.trainingdashboard.TrainerDashboard"
+    >
+
+    <ImageView
+        android:id="@+id/imageViewProfileMenu"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="18dp"
+        android:adjustViewBounds="false"
+        android:src="@drawable/ic_settings"
+        android:translationZ="1dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <fragment
         android:id="@+id/navHostFragmentTrainerDashboard"
         android:name="androidx.navigation.fragment.NavHostFragment"

@@ -1,7 +1,10 @@
 package com.pupccis.fitnex.repository;
 
+import static com.pupccis.fitnex.api.DateFormatter.getCurrentDate;
+
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -11,7 +14,13 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.pupccis.fitnex.activities.nutritiontracking.enums.Meals;
 import com.pupccis.fitnex.model.FoodData;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.NutritionTrackingConstants;
 
 import org.json.JSONArray;
@@ -23,6 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NutritionTrackingRepository {
+    //Static Attributes
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     public MutableLiveData<List<FoodData>> getFoodResults(RequestQueue queue, String queryFood){
         MutableLiveData<List<FoodData>> result = new MutableLiveData<>();
         List<FoodData> foodDataList = new ArrayList<>();
@@ -102,7 +114,7 @@ public class NutritionTrackingRepository {
                                         .name(jsonObject.getString("description"))
                                         .fcdID(jsonObject.getInt("fdcId"))
                                         .calories(foodData.getCalories())
-                                        .servingSize(jsonObject.getInt("servingSize"))
+                                        .servingAmount(jsonObject.getInt("servingSize"))
                                         .protein(nutrients.getJSONObject("protein").getDouble("value"))
                                         .fats(nutrients.getJSONObject("fat").getDouble("value"))
                                         .carbs(nutrients.getJSONObject("carbohydrates").getDouble("value"))
@@ -173,5 +185,24 @@ public class NutritionTrackingRepository {
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, 10, 1f));
         queue.add(stringRequest);
         return liveDataServingInfo;
+    }
+
+    public MutableLiveData<Boolean> trackFood(FoodData foodData) {
+        MutableLiveData<Boolean> mutableLiveDataInsertSuccess = new MutableLiveData<>();
+
+        db.collection(UserConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection(NutritionTrackingConstants.KEY_COLLECTION_NUTRITION_TRACKING)
+                .document(getCurrentDate())
+                .collection(foodData.getMealType())
+                .document(foodData.getFcdID()+"")
+                .set(foodData.trackFoodMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                mutableLiveDataInsertSuccess.postValue(true);
+            }
+        });
+
+        return mutableLiveDataInsertSuccess;
     }
 }

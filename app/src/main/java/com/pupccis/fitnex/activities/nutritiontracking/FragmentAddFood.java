@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class FragmentAddFood extends Fragment {
+public class FragmentAddFood extends Fragment implements View.OnClickListener{
     private static FragmentAddFoodBinding binding;
     private static RequestQueue queue;
 
@@ -81,6 +81,7 @@ public class FragmentAddFood extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_food, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setViewModel(((NutritionTrackingMain)getActivity()).getNutritionTrackingViewModel());
+        binding.setPresenter(this);
         binding.executePendingBindings();
         binding.recyclerViewFoodQuery.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         queue = Volley.newRequestQueue(getActivity());
@@ -116,5 +117,12 @@ public class FragmentAddFood extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == binding.buttonAddFoodBack){
+            Navigation.findNavController(view).navigate(R.id.action_fragmentAddFood_to_fragmentNutritionTracker);
+        }
     }
 }

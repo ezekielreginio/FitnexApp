@@ -24,6 +24,11 @@
         <action
             android:id="@+id/action_fragmentAddFood_to_fragmentFoodInfo"
             app:destination="@id/fragmentFoodInfo" />
+        <action
+            android:id="@+id/action_fragmentAddFood_to_fragmentNutritionTracker"
+            app:destination="@id/fragmentNutritionTracker"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/fragmentFoodInfo"
@@ -32,6 +37,8 @@
         tools:layout="@layout/fragment_food_info" >
         <action
             android:id="@+id/action_fragmentFoodInfo_to_fragmentAddFood"
-            app:destination="@id/fragmentAddFood" />
+            app:destination="@id/fragmentAddFood"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
     </fragment>
 </navigation>

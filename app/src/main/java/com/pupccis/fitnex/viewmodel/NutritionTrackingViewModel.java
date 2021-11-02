@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.activities.nutritiontracking.enums.Meals;
 import com.pupccis.fitnex.model.FoodData;
 import com.pupccis.fitnex.repository.NutritionTrackingRepository;
 import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.MacroNutrients;
@@ -31,6 +32,8 @@ public class NutritionTrackingViewModel extends BaseObservable {
     private MutableLiveData<FoodData> liveFoodData = new MutableLiveData<>();
 
     private FoodData currentFoodData;
+    private FoodData addFoodData;
+    private Meals currentMeal;
     private int currentServing = 0;
     private int servingGram = 0;
 
@@ -59,6 +62,8 @@ public class NutritionTrackingViewModel extends BaseObservable {
     private HashMap<MacroNutrients, Integer> macroNutrients;
     @Bindable
     private String servingAmount = "1";
+    @Bindable
+    private String stringCurrentMeal;
 
     //Getter Methods
     public String getFoodSearch() {
@@ -108,6 +113,8 @@ public class NutritionTrackingViewModel extends BaseObservable {
     public String getServingAmount() {
         return servingAmount;
     }
+
+    public String getStringCurrentMeal() { return stringCurrentMeal; }
 
     //Setter Methods
     public void setCurrentFoodData(FoodData currentFoodData) {
@@ -169,6 +176,11 @@ public class NutritionTrackingViewModel extends BaseObservable {
         this.servingAmount = servingAmount;
         updateNutritionInfo();
         notifyPropertyChanged(BR.servingAmount);
+    }
+
+    public void setStringCurrentMeal(String stringCurrentMeal) {
+        this.stringCurrentMeal = stringCurrentMeal;
+        notifyPropertyChanged(BR.stringCurrentMeal);
     }
 
     //Mutable Live Data Observers
@@ -250,23 +262,51 @@ public class NutritionTrackingViewModel extends BaseObservable {
                 double carbs = 0.0;
                 double fats = 0.0;
                 if(currentServing != currentFoodData.getArrayServingSize().length()-1){
-                    calories = getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount);
-                    protein = getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount);
-                    carbs = getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount);
-                    fats = getCurrentFoodData().getFats() * Double.parseDouble(servingAmount);
+                    addFoodData = new FoodData.Builder()
+                            .calories(getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount))
+                            .protein(getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount))
+                            .carbs(getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount))
+                            .fats(getCurrentFoodData().getFats() * Double.parseDouble(servingAmount))
+                            .build();
+//                    calories = getCurrentFoodData().getCalories() * Double.parseDouble(servingAmount);
+//                    protein = getCurrentFoodData().getProtein() * Double.parseDouble(servingAmount);
+//                    carbs = getCurrentFoodData().getCarbs() * Double.parseDouble(servingAmount);
+//                    fats = getCurrentFoodData().getFats() * Double.parseDouble(servingAmount);
                 }
                 else{
-                    calories = (getCurrentFoodData().getCalories() * inputServing) / servingGram;
-                    protein = (getCurrentFoodData().getProtein() * inputServing) / servingGram;
-                    carbs = (getCurrentFoodData().getCarbs() * inputServing) / servingGram;
-                    fats = (getCurrentFoodData().getFats() * inputServing) / servingGram;
+                    addFoodData = new FoodData.Builder()
+                            .calories((getCurrentFoodData().getCalories() * inputServing) / servingGram)
+                            .protein((getCurrentFoodData().getProtein() * inputServing) / servingGram)
+                            .carbs((getCurrentFoodData().getCarbs() * inputServing) / servingGram)
+                            .fats((getCurrentFoodData().getFats() * inputServing) / servingGram)
+                            .build();
+//                    calories = (getCurrentFoodData().getCalories() * inputServing) / servingGram;
+//                    protein = (getCurrentFoodData().getProtein() * inputServing) / servingGram;
+//                    carbs = (getCurrentFoodData().getCarbs() * inputServing) / servingGram;
+//                    fats = (getCurrentFoodData().getFats() * inputServing) / servingGram;
                 }
 
-                setCalories((int)calories+"");
-                setCarbs(df.format(carbs)+"g");
-                setProtein(df.format(protein)+"g");
-                setFats(df.format(fats)+"g");
+                setCalories(addFoodData.getCalories()+"");
+                setCarbs(addFoodData.getCarbs()+"g");
+                setProtein(addFoodData.getProtein()+"g");
+                setFats(addFoodData.getFats()+"g");
             }
         }
+    }
+
+    public void setCurrentMeal(Meals currentMeal) {
+        this.currentMeal = currentMeal;
+        setStringCurrentMeal(currentMeal.toString());
+    }
+
+    public MutableLiveData<Boolean> trackFood() {
+        FoodData foodData = new FoodData.Builder(addFoodData)
+                .fcdID(currentFoodData.getFcdID())
+                .servingAmount(Integer.parseInt(servingAmount))
+                .servingInfo(currentServing)
+                .mealType(currentMeal.toString())
+                .name(currentFoodData.getName())
+                .build();
+        return nutritionTrackingRepository.trackFood(foodData);
     }
 }

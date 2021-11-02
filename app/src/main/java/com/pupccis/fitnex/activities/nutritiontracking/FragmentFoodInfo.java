@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.progressindicator.BaseProgressIndicator;
 import com.pupccis.fitnex.R;
@@ -78,8 +80,17 @@ public class FragmentFoodInfo extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view == binding.buttonAddFavorite){
-
+        if(view == binding.buttonTracKFood){
+            binding.getViewModel().trackFood().observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    if(aBoolean!= null){
+                        if(aBoolean){
+                            Navigation.findNavController(view).navigate(R.id.action_fragmentFoodInfo_to_fragmentAddFood);
+                        }
+                    }
+                }
+            });
         }
     }
 }

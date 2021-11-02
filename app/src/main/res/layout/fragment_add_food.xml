@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.pupccis.fitnex.viewmodel.NutritionTrackingViewModel" />
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.nutritiontracking.FragmentAddFood" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"
@@ -66,13 +69,13 @@
                         app:srcCompat="@drawable/ic_arrow_back_white"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="40dp"
-                        android:onClick="onClick"/>
+                        android:onClick="@{(v)->presenter.onClick(v)}"/>
 
                     <TextView
                         android:id="@+id/textViewAddFoodTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="BREAKFAST"
+                        android:text="@{viewModel.stringCurrentMeal}"
                         android:textColor="@color/whiteTextColor"
                         android:textSize="20sp"
                         android:textStyle="bold"

@@ -12,4 +12,14 @@ public class BulletListUtil {
 
         return bulletList;
     }
+
+    public static String makeCommaList(List<String> stringList){
+        String commaList = "";
+
+        for(int i=0; i<commaList.length(); i++){
+
+        }
+
+        return commaList;
+    }
 }

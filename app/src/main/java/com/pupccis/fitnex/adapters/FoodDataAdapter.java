@@ -87,9 +87,9 @@ public class FoodDataAdapter extends RecyclerView.Adapter<FoodDataAdapter.ViewHo
                     binding.getViewModel().getServingInfo(queue, foodData.getFcdID()).observe(lifecycleOwner, new Observer<JSONArray>() {
                         @Override
                         public void onChanged(JSONArray arrayServingSize) {
-                            Log.d("Serving Size", arrayServingSize.toString());
                             loadingScreen.setVisibility(View.GONE);
                             FoodData newFoodData = new FoodData.Builder(foodData).arrayServingSize(arrayServingSize).build();
+                            Log.d("FDC ID", newFoodData.getFcdID()+"");
                             binding.getViewModel().setCurrentFoodData(newFoodData);
                             navController.navigate(R.id.action_fragmentAddFood_to_fragmentFoodInfo);
                         }

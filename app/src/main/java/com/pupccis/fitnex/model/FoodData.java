@@ -1,13 +1,16 @@
 package com.pupccis.fitnex.model;
 
+import com.pupccis.fitnex.utilities.Constants.nutritionTrackingConstants.NutritionTrackingConstants;
+
 import org.json.JSONArray;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class FoodData implements Serializable {
-    private String name, datatype, brand;
+    private String name, datatype, brand, mealType;
     private Double calories, protein, fats, carbs;
-    private int fcdID, servingSize;
+    private int fcdID, servingAmount, servingInfo;
     private JSONArray arrayServingSize;
 
 
@@ -20,11 +23,13 @@ public class FoodData implements Serializable {
         this.datatype = builder.datatype;
         this.brand = builder.brand;
         this.calories = builder.calories;
-        this.servingSize = builder.servingSize;
+        this.servingAmount = builder.servingAmount;
         this.protein = builder.protein;
         this.fats = builder.fats;
         this.carbs = builder.carbs;
         this.arrayServingSize = builder.arrayServingSize;
+        this.servingInfo = builder.servingInfo;
+        this.mealType = builder.mealType;
     }
 
     //Getter Methods
@@ -48,8 +53,8 @@ public class FoodData implements Serializable {
         return calories;
     }
 
-    public int getServingSize() {
-        return servingSize;
+    public int getServingAmount() {
+        return servingAmount;
     }
 
     public Double getProtein() {
@@ -68,10 +73,30 @@ public class FoodData implements Serializable {
         return arrayServingSize;
     }
 
+    public int getServingInfo() {
+        return servingInfo;
+    }
+
+    public String getMealType() {
+        return mealType;
+    }
+
+    public HashMap<String, Object> trackFoodMap() {
+        HashMap<String, Object> trackFoodMap = new HashMap<>();
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_FOOD_NAME, name);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_CALORIES, calories);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_SERVING_AMOUNT, servingAmount);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_SERVING_INFO, servingInfo);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_CARBS, carbs);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_PROTEIN, protein);
+        trackFoodMap.put(NutritionTrackingConstants.KEY_NUTRITION_FATS, fats);
+        return trackFoodMap;
+    }
+
     public static class Builder{
-        private String name, datatype, brand;
+        private String name, datatype, brand, mealType;
         private Double calories, protein, fats, carbs;
-        private int fcdID, servingSize;
+        private int fcdID, servingAmount, servingInfo;
         private JSONArray arrayServingSize;
 
         public Builder() {
@@ -83,7 +108,7 @@ public class FoodData implements Serializable {
             this.datatype = foodData.getDatatype();
             this.brand = foodData.getBrand();
             this.calories = foodData.getCalories();
-            this.servingSize = foodData.getServingSize();
+            this.servingAmount = foodData.getServingAmount();
             this.protein = foodData.getProtein();
             this.fats = foodData.getFats();
             this.carbs = foodData.getCarbs();
@@ -119,8 +144,13 @@ public class FoodData implements Serializable {
             return this;
         }
 
-        public Builder servingSize(int servingSize) {
-            this.servingSize = servingSize;
+        public Builder servingAmount(int servingAmount) {
+            this.servingAmount = servingAmount;
+            return this;
+        }
+
+        public Builder servingInfo(int servingInfo) {
+            this.servingInfo = servingInfo;
             return this;
         }
 
@@ -134,6 +164,10 @@ public class FoodData implements Serializable {
         }
         public Builder carbs(Double carbs) {
             this.carbs = carbs;
+            return this;
+        }
+        public Builder mealType(String mealType) {
+            this.mealType = mealType;
             return this;
         }
         public FoodData build(){

@@ -580,18 +580,19 @@
             android:layout_height="fill_parent"
             android:gravity="bottom|center"
             android:layout_marginBottom="20dp">
+
             <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:id="@+id/buttonRegisterButton"
+                android:id="@+id/buttonTracKFood"
                 style="@style/loginButton"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
+                android:width="350dp"
                 android:onClick="@{(v)->presenter.onClick(v)}"
                 android:text="Track"
-                android:width="350dp"
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="#FFF"
                 app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="4dp"/>
+                app:spinning_bar_width="4dp" />
         </RelativeLayout>
     </FrameLayout>
 </layout>

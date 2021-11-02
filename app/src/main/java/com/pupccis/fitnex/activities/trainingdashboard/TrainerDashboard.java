@@ -26,11 +26,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.FirebaseDatabase;
+import com.pupccis.fitnex.activities.login.FitnexLogin;
 import com.pupccis.fitnex.activities.patron.PatronInitialActivity;
 import com.pupccis.fitnex.activities.patron.TrainerPatronPage;
 import com.pupccis.fitnex.activities.trainingdashboard.fragment.ProgramsFragment;
@@ -44,6 +50,7 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
+import com.pupccis.fitnex.utilities.VideoConferencingConstants;
 import com.pupccis.fitnex.viewmodel.PatronViewModel;
 
 public class TrainerDashboard extends AppCompatActivity implements View.OnClickListener{
@@ -83,94 +90,34 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         navController = Navigation.findNavController(this, R.id.navHostFragmentTrainerDashboard);
         NavigationUI.setupWithNavController(binding.bottomNavigationTrainerDashboard, navController);
 
+        binding.imageViewProfileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                popupMenu.inflate(R.menu.profile_menu);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(TrainerDashboard.this, "Signing Out", Toast.LENGTH_SHORT).show();
+                        FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT).child(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID)).child(VideoConferencingConstants.KEY_FCM_TOKEN).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(TrainerDashboard.this, "Signing Out...", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), FitnexLogin.class));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(TrainerDashboard.this, "Failed to Sign out. Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
-//        createMenuItems();
-//        if() {
-//            binding.addButton.setVisibility(View.VISIBLE);
-//            Log.e("IAFHF", "KJBFF");
-//        }
-//        if(NavigationUI.onNavDestinationSelected(homeItem, navController)){
-//            binding.addButton.setVisibility(View.GONE);
-//        }
-
-
-//
-//        if (NavigationUI.onNavDestinationSelected(programsFragment, navController)){
-//            binding.addButton.setVisibility(View.VISIBLE);
-//        }
-//        tabLayout = findViewById(R.id.tabLayoutTrainerDashboard);
-//        viewPager2 = findViewById(R.id.viewPager2TrainerDashboard);
-//        textViewUserName = findViewById(R.id.textViewUserName);
-//
-//        addButton = (LinearLayout) findViewById(R.id.linearLayoutAddProgramButton);
-//        trainerStudioButton = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerStudioButton);
-//        constraintLayoutPatronNotSetModal = findViewById(R.id.constraintLayoutPatronNotSetModal);
-//        cardViewViewPatronPage = findViewById(R.id.cardViewViewPatronPage);
-//        buttonSetPatronData = findViewById(R.id.buttonSetPatronData);
-
-        //textViewUserName.setText(userPreferences.getString(UserConstants.KEY_USER_NAME));
-
-//        addButton.setOnClickListener(this);
-//        trainerStudioButton.setOnClickListener(this);
-//        cardViewViewPatronPage.setOnClickListener(this);
-//        buttonSetPatronData.setOnClickListener(this);
-
-//        programPanel = (ConstraintLayout) findViewById(R.id.constraintLayoutTrainerDashboardNavbar);
-
-//        FragmentManager fm = getSupportFragmentManager();
-//        trainerDashboardFragmentAdapter = new TrainerDashboardFragmentAdapter(fm, getLifecycle());
-//        viewPager2.setAdapter(trainerDashboardFragmentAdapter);
-//        intent = new Intent(TrainerDashboard.this, AddProgram.class);
-//        tabLayout.addTab(tabLayout.newTab().setText("Program"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Classes"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
-//
-//        int page_intent = (int) getIntent().getIntExtra("page", -1);
-//        if(page_intent != -1){
-//            Log.d("Intent",page_intent+"");
-//            intent = new Intent(TrainerDashboard.this, AddFitnessClass.class);
-//            viewPager2.setCurrentItem(page_intent);
-//            TabLayout.Tab tab = tabLayout.getTabAt(page_intent);
-//            tab.select();
-//        }
-//
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager2.setCurrentItem(tab.getPosition());
-//                int pos = tab.getPosition();
-//                if(pos==0){
-//                    intent = new Intent(TrainerDashboard.this, AddProgram.class);
-//                }
-//                else if(pos==1){
-//                    intent = new Intent(TrainerDashboard.this, AddFitnessClass.class);
-//                }
-//                else if(pos==2){
-//                    intent = new Intent(TrainerDashboard.this, FitnexRegister.class);
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
-//        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                tabLayout.selectTab(tabLayout.getTabAt(position));
-//            }
-//        });
-
-//        cardViewCalls = (CardView) findViewById(R.id.cardViewCalls);
-//        cardViewCalls.setOnClickListener(this);
-
+                        });
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
     public Fragment getForegroundFragment(){
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.navHostFragmentTrainerDashboard);
