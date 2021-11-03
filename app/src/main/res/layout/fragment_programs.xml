@@ -166,19 +166,7 @@
                             app:layout_constraintTop_toBottomOf="@id/textViewProgramUsername"
                             android:textStyle="bold" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="fill_parent">
-
-                            <ImageView
-                                android:id="@+id/imageViewAddProgram"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentBottom="true"
-                                android:onClick="@{(v)->presenter.onClick(v)}"
-                                android:src="@drawable/ic_add_img" />
-                        </RelativeLayout>
+                        
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -230,6 +218,20 @@
             </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:id="@+id/imageViewAddProgram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{(v)->presenter.onClick(v)}"
+                android:src="@drawable/ic_add_img" />
+        </RelativeLayout>
 
     </FrameLayout>
 </layout>

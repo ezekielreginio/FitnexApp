@@ -1,10 +1,12 @@
 package com.pupccis.fitnex.repository;
 
 import static com.pupccis.fitnex.api.DateFormatter.getCurrentDate;
+import static com.pupccis.fitnex.validation.NullValidation.nonNullDouble;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -15,9 +17,16 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
+import com.pupccis.fitnex.activities.nutritiontracking.enums.MacroNutrients;
 import com.pupccis.fitnex.activities.nutritiontracking.enums.Meals;
 import com.pupccis.fitnex.model.FoodData;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
@@ -96,46 +105,6 @@ public class NutritionTrackingRepository {
         return result;
     }
 
-    public MutableLiveData<FoodData> getFoodInfo(RequestQueue queue, FoodData foodData) {
-        MutableLiveData<FoodData> liveFoodInfo = new MutableLiveData<>();
-        int fcdID = foodData.getFcdID();
-        String url = "https://api.nal.usda.gov/fdc/v1/food/"+fcdID+"?api_key=JOrlLA8RuHz2iQtAuveGa8jcxcqVipqpHvFzT5LX";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            FoodData foodDataInfo = null;
-
-                            if(jsonObject.getString("dataType").equals("Branded")){
-                                JSONObject nutrients = jsonObject.getJSONObject("labelNutrients");
-                                foodDataInfo = new FoodData.Builder()
-                                        .name(jsonObject.getString("description"))
-                                        .fcdID(jsonObject.getInt("fdcId"))
-                                        .calories(foodData.getCalories())
-                                        .servingAmount(jsonObject.getInt("servingSize"))
-                                        .protein(nutrients.getJSONObject("protein").getDouble("value"))
-                                        .fats(nutrients.getJSONObject("fat").getDouble("value"))
-                                        .carbs(nutrients.getJSONObject("carbohydrates").getDouble("value"))
-                                        .build();
-                            }
-
-                            liveFoodInfo.postValue(foodDataInfo);
-                        }
-                        catch (JSONException e){
-                            Log.d("JSON Error", e.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        queue.add(stringRequest);
-        return liveFoodInfo;
-    }
-
     public MutableLiveData<JSONArray> getServingInfo(RequestQueue queue, int fcdID) {
         MutableLiveData<Integer> servingInfo = new MutableLiveData<>();
         MutableLiveData<JSONArray> liveDataServingInfo = new MutableLiveData<>();
@@ -189,6 +158,45 @@ public class NutritionTrackingRepository {
 
     public MutableLiveData<Boolean> trackFood(FoodData foodData) {
         MutableLiveData<Boolean> mutableLiveDataInsertSuccess = new MutableLiveData<>();
+
+        DocumentReference currentFoodIntake = db.collection(UserConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection(NutritionTrackingConstants.KEY_COLLECTION_NUTRITION_TRACKING)
+                .document(getCurrentDate());
+
+        currentFoodIntake.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Double totalCalories = (Double) task.getResult().get(NutritionTrackingConstants.KEY_NUTRITION_TOTAL_CALORIES);
+                Double totalCarbs =(Double) task.getResult().get(NutritionTrackingConstants.KEY_NUTRITION_TOTAL_CARBS);
+                Double totalProtein =(Double) task.getResult().get(NutritionTrackingConstants.KEY_NUTRITION_TOTAL_PROTEIN);
+                Double totalFats =(Double) task.getResult().get(NutritionTrackingConstants.KEY_NUTRITION_TOTAL_FATS);
+
+                Double mealTotalCalories = (Double) task.getResult().get(NutritionTrackingConstants.mealData(Meals.valueOf(foodData.getMealType()), MacroNutrients.CALORIES));
+                Double mealTotalCarbs = (Double) task.getResult().get(NutritionTrackingConstants.mealData(Meals.valueOf(foodData.getMealType()), MacroNutrients.CARBS));
+                Double mealTotalProtein = (Double) task.getResult().get(NutritionTrackingConstants.mealData(Meals.valueOf(foodData.getMealType()), MacroNutrients.PROTEIN));
+                Double mealTotalFats = (Double) task.getResult().get(NutritionTrackingConstants.mealData(Meals.valueOf(foodData.getMealType()), MacroNutrients.FATS));
+
+                FoodData totalFoodData = new FoodData.Builder()
+                        .mealType(foodData.getMealType())
+                        .totalCalories(nonNullDouble(totalCalories) + foodData.getCalories())
+                        .totalCarbs(nonNullDouble(totalCarbs) + foodData.getCarbs())
+                        .totalFat(nonNullDouble(totalFats) + foodData.getFats())
+                        .totalProtein(nonNullDouble(totalProtein) + foodData.getProtein())
+                        .build();
+
+                FoodData totalMealFoodData = new FoodData.Builder()
+                        .totalCalories(nonNullDouble(mealTotalCalories) + foodData.getCalories())
+                        .totalCarbs(nonNullDouble(mealTotalCarbs) + foodData.getCarbs())
+                        .totalFat(nonNullDouble(mealTotalFats) + foodData.getFats())
+                        .totalProtein(nonNullDouble(mealTotalProtein) + foodData.getProtein())
+                        .build();
+
+                currentFoodIntake.set(totalFoodData.totalDataMap(totalMealFoodData), SetOptions.merge());
+            }
+        });
+
+
 
         db.collection(UserConstants.KEY_COLLECTION_USERS)
                 .document(FirebaseAuth.getInstance().getUid())

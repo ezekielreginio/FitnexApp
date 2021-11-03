@@ -189,9 +189,7 @@ public class NutritionTrackingViewModel extends BaseObservable {
     }
 
 
-    public MutableLiveData<FoodData> getFoodInfo(RequestQueue queue, FoodData foodData) {
-        return nutritionTrackingRepository.getFoodInfo(queue, foodData);
-    }
+
 
     //Public Methods
     public HashMap<MacroNutrients, Integer> calculateFoodInfo() {
@@ -300,6 +298,7 @@ public class NutritionTrackingViewModel extends BaseObservable {
     }
 
     public MutableLiveData<Boolean> trackFood() {
+        Log.d("Current Meal", currentMeal.toString());
         FoodData foodData = new FoodData.Builder(addFoodData)
                 .fcdID(currentFoodData.getFcdID())
                 .servingAmount(Integer.parseInt(servingAmount))
