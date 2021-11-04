@@ -11,6 +11,8 @@
     <string name="trainerDashboardDiet">Diet</string>
     <string name="trainerDashboardStudio">Studio</string>
 
+    <string name="traineeSearch">Search</string>
+
     <string-array name="category">
         <item>Select a Category</item>
         <item>Cardio</item>
