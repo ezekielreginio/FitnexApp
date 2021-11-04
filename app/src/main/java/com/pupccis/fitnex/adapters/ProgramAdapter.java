@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.pupccis.fitnex.activities.main.trainee.TraineeDashboard;
+import com.pupccis.fitnex.activities.main.trainee.fragment.TraineeProgramsFragment;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -18,12 +21,15 @@ import com.pupccis.fitnex.api.enums.Privilege;
 import com.pupccis.fitnex.databinding.ItemContainerProgramBinding;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
+import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
 
 public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAdapter.ProgramHolder> {
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
+    private UserPreferences userPreferences = new UserPreferences(new TraineeDashboard().getTraineeDashboardContext());
 
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
@@ -68,6 +74,9 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         }
 
         void setProgramData(Program model) {
+            if(userPreferences.getString(UserConstants.KEY_USER_TYPE) == "trainee"){
+                binding.swipeRevealLayoutProgramCard.setLockDrag(true);
+            }
             binding.textProgramName.setText(model.getName());
             binding.textProgramDescription.setText(model.getDescription());
             binding.textProgramSessionCount.setText(model.getSessionNumber());

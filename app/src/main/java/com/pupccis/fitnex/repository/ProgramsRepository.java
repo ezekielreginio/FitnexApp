@@ -167,6 +167,10 @@ public class ProgramsRepository {
         Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getUid());
         return query;
     }
+    public Query readTraineeProgramsQuery(){
+        Query query = db.collection(UserConstants.KEY_COLLECTION_USERS).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(UserConstants.KEY_COLLECTION_SAVED_PROGRAMS);
+        return query;
+    }
     public Query searchProgramsQuery(String input){
         Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderBy("name").startAt(input).endAt(input+"\uf8ff");
         return query;

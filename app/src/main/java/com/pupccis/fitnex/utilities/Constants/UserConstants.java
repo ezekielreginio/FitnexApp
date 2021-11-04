@@ -14,5 +14,6 @@ public class UserConstants {
     public static final String KEY_COLLECTION_USER_LIKED_VIDEOS = "liked_videos";
     public static final String KEY_COLLECTION_USER_DISLIKED_VIDEOS = "disliked_videos";
     public static final String KEY_COLLECTION_SUBSCRIPTIONS = "subscriptions";
+    public static final String KEY_COLLECTION_SAVED_PROGRAMS = "saved_programs";
 
 }

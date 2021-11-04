@@ -37,6 +37,11 @@ public class ViewModelHandler {
                 .setQuery(ProgramsRepository.getInstance().readProgramsQuery(), Program.class)
                 .build();
     }
+    public static FirestoreRecyclerOptions<Program> getFirebaseUITraineeProgramOptions(){
+        return new FirestoreRecyclerOptions.Builder<Program>()
+                .setQuery(ProgramsRepository.getInstance().readTraineeProgramsQuery(), Program.class)
+                .build();
+    }
 
     public static FirestoreRecyclerOptions<Program> getFirebaseUISearchProgramOptions(String input){
         return new FirestoreRecyclerOptions.Builder<Program>()

@@ -26,7 +26,7 @@
             android:id="@+id/navHostFragmentTrainerDashboard"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/trainer_dashboard_navgraph"
+            app:navGraph="@navigation/trainee_dashboard_navgraph"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayoutTrainerDashboardNavbar"

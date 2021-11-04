@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trainee_dashboard_navgraph"
+    app:startDestination="@id/traineeProgramsFragment">
+
+    <fragment
+        tools:layout="@layout/fragment_trainee_programs"
+        android:id="@+id/traineeProgramsFragment"
+        android:name="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeProgramsFragment"
+        android:label="TraineeProgramsFragment" />
+</navigation>
