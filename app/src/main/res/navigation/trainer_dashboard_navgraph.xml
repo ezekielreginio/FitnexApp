@@ -53,4 +53,8 @@
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/addRecipe"
+        android:name="com.pupccis.fitnex.activities.trainingdashboard.fragment.AddRecipe"
+        android:label="AddRecipe" />
 </navigation>

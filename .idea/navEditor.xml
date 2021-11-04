@@ -270,6 +270,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="addRecipe">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-401" />
+                            <option name="y" value="-523" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="classFragment">
                     <value>
                       <LayoutPositions>

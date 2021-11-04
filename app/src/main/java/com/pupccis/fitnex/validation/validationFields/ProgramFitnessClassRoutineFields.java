@@ -10,5 +10,6 @@ public enum ProgramFitnessClassRoutineFields {NAME,
     SETS,
     WEIGHT,
     CATEGORY,
-    HEIGHT
+    HEIGHT,
+    PREP_TIME
 }

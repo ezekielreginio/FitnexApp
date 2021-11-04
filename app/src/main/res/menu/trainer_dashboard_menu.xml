@@ -21,6 +21,7 @@
         />
 
     <item
+        android:id="@+id/addRecipe"
         android:title="@string/trainerDashboardDiet"
         android:icon="@drawable/ic_nutrition_tracker"
         />

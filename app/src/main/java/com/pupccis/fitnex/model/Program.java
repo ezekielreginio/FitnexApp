@@ -23,7 +23,7 @@ public class Program implements Serializable, ExpandableWidget {
 
     private static Program instance;
 
-    public Program(){
+    public Program() {
 
     }
 
@@ -40,8 +40,8 @@ public class Program implements Serializable, ExpandableWidget {
         this.programID = builder.programID;
     }
 
-    public Map<String, Object> toMap(){
-        HashMap<String,Object> result = new HashMap<>();
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
         result.put("name", name);
         result.put("description", description);
         result.put("category", category);
@@ -68,7 +68,9 @@ public class Program implements Serializable, ExpandableWidget {
         return category;
     }
 
-    public String getPrivilege() { return privilege; }
+    public String getPrivilege() {
+        return privilege;
+    }
 
     public String getSessionNumber() {
         return sessionNumber;
@@ -132,7 +134,7 @@ public class Program implements Serializable, ExpandableWidget {
         return false;
     }
 
-    public static class Builder{
+    public static class Builder {
         private final String name;
         private final String description;
         private final int category;
@@ -144,7 +146,7 @@ public class Program implements Serializable, ExpandableWidget {
         private String trainees;
         private String programID;
 
-        public Builder(String name, String description, int category, String privilege, String sessionNumber, String duration){
+        public Builder(String name, String description, int category, String privilege, String sessionNumber, String duration) {
             this.name = name;
             this.description = description;
             this.category = category;
@@ -154,7 +156,7 @@ public class Program implements Serializable, ExpandableWidget {
             this.trainees = "0";
         }
 
-        public Builder (Program program){
+        public Builder(Program program) {
             this.name = program.getName();
             this.description = program.getDescription();
             this.category = program.getCategory();
@@ -175,12 +177,12 @@ public class Program implements Serializable, ExpandableWidget {
             return this;
         }
 
-        public Builder setTrainerID(String trainerID){
+        public Builder setTrainerID(String trainerID) {
             this.trainerID = trainerID;
             return this;
         }
 
-        public Program build(){
+        public Program build() {
             Program program = new Program(this);
             return program;
         }
