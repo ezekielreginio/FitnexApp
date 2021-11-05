@@ -3,11 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/trainee_dashboard_navgraph"
-    app:startDestination="@id/traineeProgramsFragment">
+    app:startDestination="@id/traineeHome">
 
     <fragment
-        tools:layout="@layout/fragment_trainee_programs"
         android:id="@+id/traineeProgramsFragment"
         android:name="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeProgramsFragment"
-        android:label="TraineeProgramsFragment" />
+        android:label="TraineeProgramsFragment"
+        tools:layout="@layout/fragment_trainee_programs">
+        <action
+            android:id="@+id/action_traineeProgramsFragment_to_traineeAddProgram"
+            app:destination="@id/traineeAddProgram"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/traineeHome"
+        android:name="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeHome"
+        android:label="TraineeHome"
+        tools:layout="@layout/fragment_trainee_home" />
+    <fragment
+        android:id="@+id/traineeSearchEngine"
+        android:name="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeSearchEngine"
+        android:label="TraineeSearchEngine"
+        tools:layout="@layout/fragment_trainee_search_engine" />
+    <fragment
+        tools:layout="@layout/fragment_trainee_add_program"
+        android:id="@+id/traineeAddProgram"
+        android:name="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeAddProgram"
+        android:label="TraineeAddProgram">
+        <action
+            android:id="@+id/action_traineeAddProgram_to_traineeProgramsFragment"
+            app:destination="@id/traineeProgramsFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
+    </fragment>
 </navigation>

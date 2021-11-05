@@ -1,6 +1,5 @@
 package com.pupccis.fitnex.activities.main.trainee.fragment;
 
-import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUIProgramOptions;
 import static com.pupccis.fitnex.handlers.viewmodel.ViewModelHandler.getFirebaseUITraineeProgramOptions;
 
 import android.content.Context;
@@ -8,10 +7,10 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class TraineeProgramsFragment extends Fragment implements View.OnClickLis
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static FragmentTraineeProgramsBinding fragmentTraineeProgramsBinding;
+    private static FragmentTraineeProgramsBinding binding;
     private ProgramViewModel programViewModel = new ProgramViewModel();
     private ProgramAdapter adapter;
     private RecyclerView recyclerView;
@@ -69,15 +68,15 @@ public class TraineeProgramsFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         traineeProgramsFragmentContext = container.getContext();
-        fragmentTraineeProgramsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trainee_programs, container, false);
-        fragmentTraineeProgramsBinding.setLifecycleOwner(this);
-        fragmentTraineeProgramsBinding.setViewModel(programViewModel);
-        fragmentTraineeProgramsBinding.setPresenter(this);
-        fragmentTraineeProgramsBinding.executePendingBindings();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_trainee_programs, container, false);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(programViewModel);
+        binding.setPresenter(this);
+        binding.executePendingBindings();
 
         FirestoreRecyclerOptions<Program> options = getFirebaseUITraineeProgramOptions();
 
-        recyclerView = fragmentTraineeProgramsBinding.traineeProgramsRecyclerView;
+        recyclerView = binding.traineeProgramsRecyclerView;
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapter = new ProgramAdapter(options);
@@ -85,13 +84,15 @@ public class TraineeProgramsFragment extends Fragment implements View.OnClickLis
         adapter.setProgramViewModel(programViewModel);
         recyclerView.setAdapter(adapter);
         // Inflate the layout for this fragment
-        return fragmentTraineeProgramsBinding.getRoot();
+        return binding.getRoot();
     }
 
 
     @Override
     public void onClick(View view) {
-
+    if(view == binding.imageViewAddTraineeProgram){
+        Navigation.findNavController(view).navigate(R.id.action_traineeProgramsFragment_to_traineeAddProgram);
+    }
 
     }
     @Override

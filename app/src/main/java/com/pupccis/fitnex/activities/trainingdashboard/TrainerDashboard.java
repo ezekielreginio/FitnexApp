@@ -72,7 +72,6 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
     private MenuItem programItem;
     private MenuItem classItem;
     private MenuItem homeItem;
-    private NavController navController;
     private MenuInflater menuInflater;
     private PatronViewModel patronViewModel = new PatronViewModel();
 
@@ -87,7 +86,7 @@ public class TrainerDashboard extends AppCompatActivity implements View.OnClickL
         patronSet = userPreferences.getBoolean(PatronConstants.KEY_PATRON_SET);
 
         View navHostFragment = binding.getRoot().findViewById(R.id.navHostFragmentTrainerDashboard);
-        navController = Navigation.findNavController(this, R.id.navHostFragmentTrainerDashboard);
+        NavController navController = Navigation.findNavController(this, R.id.navHostFragmentTrainerDashboard);
         NavigationUI.setupWithNavController(binding.bottomNavigationTrainerDashboard, navController);
 
         binding.imageViewProfileMenu.setOnClickListener(new View.OnClickListener() {

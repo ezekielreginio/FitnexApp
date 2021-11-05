@@ -2,20 +2,19 @@ package com.pupccis.fitnex.activities.main.trainee;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
-import com.pupccis.fitnex.activities.healthassessment.HealthAssessment;
-import com.pupccis.fitnex.activities.nutritiontracking.NutritionTrackingMain;
-import com.pupccis.fitnex.activities.searchengine.SearchEngine;
 import com.pupccis.fitnex.R;
-import com.pupccis.fitnex.activities.trainingdashboard.TrainerDashboard;
-import com.pupccis.fitnex.utilities.Constants.UserConstants;
+import com.pupccis.fitnex.databinding.ActivityTraineeDashboardBinding;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 
 public class TraineeDashboard extends AppCompatActivity {
@@ -24,13 +23,19 @@ public class TraineeDashboard extends AppCompatActivity {
     private UserPreferences userPreferences;
     private Button button;
     private Context traineeDashboardContext = null;
+    private static ActivityTraineeDashboardBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainee_home);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trainee_dashboard);
+        binding.setLifecycleOwner(this);
+        binding.executePendingBindings();
         traineeDashboardContext = getApplicationContext();
         userPreferences = new UserPreferences(getApplicationContext());
 
+        View navHostFragment = binding.getRoot().findViewById(R.id.navHostFragmentTraineeDashboard);
+        NavController navController = Navigation.findNavController(this, R.id.navHostFragmentTraineeDashboard);
+        NavigationUI.setupWithNavController(binding.bottomNavigationTraineeDashboard, navController);
 
 //        buttonSearch.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -64,8 +69,5 @@ public class TraineeDashboard extends AppCompatActivity {
 //            }
 //        });
     }
-    public Context getTraineeDashboardContext(){
 
-        return traineeDashboardContext;
-    }
 }

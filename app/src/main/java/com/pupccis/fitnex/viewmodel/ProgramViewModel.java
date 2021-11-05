@@ -2,6 +2,8 @@ package com.pupccis.fitnex.viewmodel;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
@@ -69,11 +71,11 @@ public class ProgramViewModel extends BaseObservable {
     //Bindable Attributes Setters
     public void setAddProgramName(String addProgramName) {
         this.addProgramName = addProgramName;
-        onTextChangeProgram(addProgramName, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.NAME);
+        //onTextChangeProgram(addProgramName, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.NAME);
     }
     public void setAddProgramDescription(String addProgramDescription) {
         this.addProgramDescription = addProgramDescription;
-        onTextChangeProgram(addProgramDescription, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DESCRIPTION);
+        //onTextChangeProgram(addProgramDescription, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DESCRIPTION);
     }
     public void setAddProgramCategory(int addProgramCategory) {
         this.addProgramCategory = addProgramCategory;
@@ -102,7 +104,7 @@ public class ProgramViewModel extends BaseObservable {
     }
     public void setAddProgramDuration(String addProgramDuration) {
         this.addProgramDuration = addProgramDuration;
-        onTextChangeProgram(addProgramDuration, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DURATION);
+        //onTextChangeProgram(addProgramDuration, com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields.DURATION);
     }
 
     public void setProgramID(String programID) {
@@ -140,6 +142,11 @@ public class ProgramViewModel extends BaseObservable {
     public MutableLiveData<Program> insertProgram(){
         Program program = programInstance();
         return programsRepository.insertProgram(program);
+    }
+
+    public void insertTraineeProgram(View view){
+        Program program = traineeProgramInstance();
+        programsRepository.insertTraineeProgram(program, view);
     }
 
 
@@ -203,6 +210,15 @@ public class ProgramViewModel extends BaseObservable {
                 .setTrainerID(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setProgramID(getProgramID())
                 .build();
+        return program;
+    }
+    public Program traineeProgramInstance(){
+        Program program = new Program.Builder(getAddProgramName()
+        ,getAddProgramDescription()
+        ,1
+        ,Privilege.FREE.toString()
+        ,"0"
+        ,getAddProgramDuration()).setProgramID(getProgramID()).build();
         return program;
     }
 }

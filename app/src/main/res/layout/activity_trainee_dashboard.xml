@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <fragment
-            android:id="@+id/navHostFragmentTrainerDashboard"
+            android:id="@+id/navHostFragmentTraineeDashboard"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
             app:navGraph="@navigation/trainee_dashboard_navgraph"
@@ -41,7 +41,7 @@
             android:transitionName="addProgramTransition"
             app:layout_constraintBottom_toBottomOf="parent">
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationTrainerDashboard"
+                android:id="@+id/bottomNavigationTraineeDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/ic_trainer_menubar"

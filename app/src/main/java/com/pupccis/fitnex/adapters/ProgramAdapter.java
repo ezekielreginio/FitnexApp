@@ -29,7 +29,6 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
-    private UserPreferences userPreferences = new UserPreferences(new TraineeDashboard().getTraineeDashboardContext());
 
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
@@ -74,9 +73,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
         }
 
         void setProgramData(Program model) {
-            if(userPreferences.getString(UserConstants.KEY_USER_TYPE) == "trainee"){
-                binding.swipeRevealLayoutProgramCard.setLockDrag(true);
-            }
+
             binding.textProgramName.setText(model.getName());
             binding.textProgramDescription.setText(model.getDescription());
             binding.textProgramSessionCount.setText(model.getSessionNumber());

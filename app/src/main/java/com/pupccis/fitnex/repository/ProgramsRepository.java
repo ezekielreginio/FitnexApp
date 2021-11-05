@@ -1,9 +1,11 @@
 package com.pupccis.fitnex.repository;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -12,6 +14,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
@@ -162,7 +165,17 @@ public class ProgramsRepository {
         });
         return programLiveData;
     }
-
+    public void insertTraineeProgram(Program program, View view){
+        db.collection(UserConstants.KEY_COLLECTION_USERS).document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection(UserConstants.KEY_COLLECTION_SAVED_PROGRAMS)
+                .document()
+                .set(program.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Navigation.findNavController(view).navigate(R.id.action_traineeAddProgram_to_traineeProgramsFragment);
+            }
+        });
+    }
     public Query readProgramsQuery(){
         Query query = db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).whereEqualTo(ProgramConstants.KEY_PROGRAM_TRAINER_ID, FirebaseAuth.getInstance().getUid());
         return query;

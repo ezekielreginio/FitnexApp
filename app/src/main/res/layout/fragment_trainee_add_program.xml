@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.main.trainee.fragment.TraineeAddProgram" />
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.ProgramViewModel" />
+        <variable
+            name="fragmentFields"
+            type="com.pupccis.fitnex.validation.validationFields.ProgramFitnessClassRoutineFields" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/activityAddProgram"
+            android:background="@color/themeColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="100"
+            bind:context=".activities.trainingdashboard.fragment.AddProgram"
+            bind:programValidationData="@{viewModel.programValidationData}">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutProgramProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:translationZ="1dp"
+                android:visibility="gone"
+                >
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    layout="@layout/include_loading_layout"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAddProgramContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/linearLayoutTrainerDashboardNavbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:orientation="vertical"
+                    android:transitionName="addProgramTransition"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:layout_editor_absoluteY="671dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginRight="30dp"
+
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputProgramName"
+                                style="@style/AddProgram"
+                                android:layout_marginTop="20dp"
+                                android:textColorHint="#C5B2B2">
+
+                                <EditText
+                                    android:id="@+id/editTextAddProgramName"
+                                    style="@style/AddProgramText"
+                                    android:hint="Program Name"
+                                    android:maxLines="1"
+                                    android:text="@={viewModel.addProgramName}"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputProgramDescription"
+                                style="@style/AddProgram"
+                                android:layout_marginTop="10dp"
+                                android:textColorHint="#C5B2B2">
+
+                                <EditText
+                                    android:id="@+id/editTextAddProgramDescription"
+                                    style="@style/AddProgramText"
+                                    android:hint="Program Description"
+                                    android:maxLines="3"
+                                    android:text="@={viewModel.addProgramDescription}"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputProgramCategory"
+                                style="@style/parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                >
+
+                                <TextView
+                                    style="@style/modifiedEditText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="6"
+                                    android:text="Category"
+                                    android:textAlignment="center"
+                                    android:textColor="#26355E"
+                                    android:textSize="12sp" />
+
+                                <Spinner
+                                    android:id="@+id/editTextAddProgramCategory"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="42dp"
+                                    android:textColorHint="#C5B2B2"
+                                    android:background="#FFFFFF"
+                                    android:hint="-Select A Category-"
+                                    android:visibility="visible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.502"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.498"
+                                    />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputProgramDuration"
+                                style="@style/AddProgram"
+                                android:layout_marginTop="10dp"
+                                android:textColorHint="#C5B2B2">
+
+                                <EditText
+                                    android:id="@+id/editTextAddProgramDuration"
+                                    style="@style/AddProgramText"
+                                    android:hint=" Duration(Minutes) "
+                                    android:inputType="time"
+                                    android:maxLines="3"
+                                    android:text="@={viewModel.addProgramDuration}"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                                android:id="@+id/buttonAddTraineeProgramButton"
+                                style="@style/loginButton"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                android:onClick="@{(v)->presenter.onClick(v)}"
+                                android:text="Add Program"
+                                app:initialCornerAngle="27dp"
+                                app:spinning_bar_color="#FFF"
+                                app:spinning_bar_padding="6dp"
+                                app:spinning_bar_width="4dp" />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </FrameLayout>
+            </LinearLayout>
+
+
+
+            <!--    <LinearLayout-->
+            <!--        android:id="@+id/linearLayoutAddProgramButton"-->
+            <!--        app:layout_constraintRight_toRightOf=""-->
+            <!--        android:layout_width="75dp"-->
+            <!--        android:layout_height="75dp"-->
+            <!--        android:background="@drawable/ic_circle_add_button"-->
+            <!--        android:orientation="vertical"-->
+            <!--        android:transitionName="addProgramTransition"-->
+            <!--        android:translationZ="1dp"-->
+            <!--        >-->
+            <!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@+id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+            <!--        &lt;!&ndash;        app:layout_constraintLeft_toLeftOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+            <!--        &lt;!&ndash;        app:layout_constraintRight_toRightOf="@id/linearLayoutForTabLayoutTrainerDashboard"&ndash;&gt;-->
+            <!--        &lt;!&ndash;        app:layout_constraintBottom_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+            <!--        &lt;!&ndash;        app:layout_constraintTop_toTopOf="@id/linearLayoutTrainerDashboardNavbar"&ndash;&gt;-->
+
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/AddProgramButton"-->
+            <!--            android:layout_width="75dp"-->
+            <!--            android:layout_height="75dp"-->
+            <!--            android:layout_gravity="center"-->
+            <!--            app:srcCompat="@drawable/ic__add_icon" />-->
+
+            <!--    </LinearLayout>-->
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:id="@+id/imageViewAddTraineeProgramBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:adjustViewBounds="false"
+                android:onClick="@{(v)->presenter.onClick(v)}"
+                android:src="@drawable/ic_back_img" />
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

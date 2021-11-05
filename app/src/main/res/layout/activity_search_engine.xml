@@ -10,13 +10,12 @@
         android:id="@+id/linearLayoutAddProgramContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/themeColor">
         <FrameLayout
             android:id="@+id/linearLayoutTrainerDashboardNavbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/ic_slideup_bg"
             android:clipChildren="false"
             android:orientation="vertical"
             android:transitionName="addProgramTransition"
@@ -125,9 +124,10 @@
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutSearchBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutTab"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -160,22 +160,24 @@
                         app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayoutTab"
                     android:layout_width="match_parent"
-                    android:layout_height="654dp"
+                    android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSearchBox">
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayoutSearchEngine"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/viewPager2SearchEngine"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:tabGravity="center"
                         app:tabIndicator="@drawable/search_engine_tab_selected_bg"
                         app:tabIndicatorAnimationMode="elastic"
@@ -188,10 +190,12 @@
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/viewPager2SearchEngine"
                         android:layout_width="match_parent"
-                        android:layout_height="550dp">
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tabLayoutSearchEngine">
 
                     </androidx.viewpager2.widget.ViewPager2>
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--                <androidx.viewpager2.widget.ViewPager2-->
                 <!--                    android:id="@+id/viewPager2SearchEngine"-->
