@@ -26,7 +26,6 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
     private String mMessage;
     private ProgressDialog mProgressDialog;
 
-
     //Constructor
     public JavaMailAPI(Context mContext, String mEmail, String mSubject, String mMessage) {
         this.mContext = mContext;

@@ -69,9 +69,11 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
         }
         void setPostVideoData(PostVideo model){
             binding.textViewStudioVideoTitle.setText(model.getVideoTitle());
+
             Glide.with(binding.imageViewVideoThumbnail.getContext())
                     .load(model.getThumbnailURL())
                     .into(binding.imageViewVideoThumbnail);
+
             binding.setVariable(BR.thumbnailPostVideoInstance, model);
             switch (accessType){
                 case VIEW:

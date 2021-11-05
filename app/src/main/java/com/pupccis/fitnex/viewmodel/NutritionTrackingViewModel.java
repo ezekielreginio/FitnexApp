@@ -1,9 +1,12 @@
 package com.pupccis.fitnex.viewmodel;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
@@ -28,14 +31,24 @@ public class NutritionTrackingViewModel extends BaseObservable {
     //Repository Instance
     private NutritionTrackingRepository nutritionTrackingRepository = new NutritionTrackingRepository();
 
+    private DecimalFormat df = new DecimalFormat("####0.#");
+
     //Mutable Live Data Attributes
     private MutableLiveData<FoodData> liveFoodData = new MutableLiveData<>();
+    private MediatorLiveData<HashMap<String, Object>> mldNutritionData = new MediatorLiveData<>();
 
     private FoodData currentFoodData;
     private FoodData addFoodData;
     private Meals currentMeal;
     private int currentServing = 0;
     private int servingGram = 0;
+
+    //Nutrition Tracking Attributes
+    private int goalCalories = 2600;
+    private int eatenCalories = 0;
+    private double goalProtein = (((double) goalCalories) * 0.2) / 4;
+    private double goalCarbs = (((double) goalCalories) * 0.6) / 4;
+    private double goalFats = (((double) goalCalories) * 0.2) / 9;
 
     //Bindable Attributes
     //EditText
@@ -64,6 +77,26 @@ public class NutritionTrackingViewModel extends BaseObservable {
     private String servingAmount = "1";
     @Bindable
     private String stringCurrentMeal;
+
+    //Nutrition Tracking Attributes
+    @Bindable
+    private String stringEatenCalories = eatenCalories+"";
+    @Bindable
+    private String stringGoalCalories = "2600";
+    @Bindable
+    private String stringGoalProtein = goalProtein +"";
+    @Bindable
+    private String stringGoalCarbs = goalCarbs +"";
+    @Bindable
+    private String stringGoalFats = goalFats +"";
+    @Bindable
+    private String stringBreakfastDescription = "Recommended: 400-420 kcal";
+    @Bindable
+    private String stringLunchDescription = "Recommended: 400-420 kcal";
+    @Bindable
+    private String stringDinnerDescription = "Recommended: 400-420 kcal";
+    @Bindable
+    private String stringSnacksDescription = "Recommended: 400-420 kcal";
 
     //Getter Methods
     public String getFoodSearch() {
@@ -115,6 +148,24 @@ public class NutritionTrackingViewModel extends BaseObservable {
     }
 
     public String getStringCurrentMeal() { return stringCurrentMeal; }
+
+    public String getStringEatenCalories() { return stringEatenCalories; }
+
+    public String getStringGoalCalories() { return stringGoalCalories; }
+
+    public String getStringGoalProtein() { return stringGoalProtein; }
+
+    public String getStringGoalCarbs() { return stringGoalCarbs; }
+
+    public String getStringGoalFats() { return stringGoalFats; }
+
+    public String getStringBreakfastDescription() { return stringBreakfastDescription; }
+
+    public String getStringLunchDescription() { return stringLunchDescription; }
+
+    public String getStringDinnerDescription() { return stringDinnerDescription; }
+
+    public String getStringSnacksDescription() { return stringSnacksDescription; }
 
     //Setter Methods
     public void setCurrentFoodData(FoodData currentFoodData) {
@@ -183,13 +234,105 @@ public class NutritionTrackingViewModel extends BaseObservable {
         notifyPropertyChanged(BR.stringCurrentMeal);
     }
 
+    public void setStringEatenCalories(String stringEatenCalories) {
+        this.stringEatenCalories = stringEatenCalories;
+        notifyPropertyChanged(BR.stringEatenCalories);
+    }
+
+    public void setStringGoalCalories(String stringGoalCalories) {
+        this.stringGoalCalories = stringGoalCalories;
+        notifyPropertyChanged(BR.stringGoalCalories);
+    }
+
+    public void setStringGoalProtein(String stringGoalProtein) {
+        this.stringGoalProtein = stringGoalProtein;
+        notifyPropertyChanged(BR.stringGoalProtein);
+    }
+
+    public void setStringGoalCarbs(String stringGoalCarbs) {
+        this.stringGoalCarbs = stringGoalCarbs;
+        notifyPropertyChanged(BR.stringGoalCarbs);
+    }
+
+    public void setStringGoalFats(String stringGoalFats) {
+        this.stringGoalFats = stringGoalFats;
+        notifyPropertyChanged(BR.stringGoalFats);
+    }
+
+    public void setStringBreakfastDescription(String stringBreakfastDescription) {
+        this.stringBreakfastDescription = stringBreakfastDescription;
+        notifyPropertyChanged(BR.stringBreakfastDescription);
+    }
+
+    public void setStringLunchDescription(String stringLunchDescription) {
+        this.stringLunchDescription = stringLunchDescription;
+        notifyPropertyChanged(BR.stringLunchDescription);
+    }
+
+    public void setStringDinnerDescription(String stringDinnerDescription) {
+        this.stringDinnerDescription = stringDinnerDescription;
+        notifyPropertyChanged(BR.stringDinnerDescription);
+    }
+
+    public void setStringSnacksDescription(String stringSnacksDescription) {
+        this.stringSnacksDescription = stringSnacksDescription;
+        notifyPropertyChanged(BR.stringSnacksDescription);
+    }
+
     //Mutable Live Data Observers
     public MutableLiveData<List<FoodData>> getFoodResults(RequestQueue queue, String queryFood) {
         return nutritionTrackingRepository.getFoodResults(queue, queryFood);
     }
 
+    public MutableLiveData<HashMap<String, Object>> getMealData(Meals meal){
+        return nutritionTrackingRepository.getMealData(meal);
+    }
 
+    //
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public MediatorLiveData<HashMap<String, Object>> mediatorLiveData(){
+        mldNutritionData.addSource(nutritionTrackingRepository.getMealData(Meals.BREAKFAST), nutritionData ->{
+            if(nutritionData != null){
+                updateNutritionData(nutritionData);
+                if(!((List) nutritionData.get("foodList")).isEmpty())
+                    setStringBreakfastDescription(String.join(",", (List) nutritionData.get("foodList")));
+            }
+        });
 
+        mldNutritionData.addSource(nutritionTrackingRepository.getMealData(Meals.LUNCH), nutritionData ->{
+            if(nutritionData != null){
+                updateNutritionData(nutritionData);
+                if(!((List) nutritionData.get("foodList")).isEmpty())
+                    setStringLunchDescription(String.join(",", (List) nutritionData.get("foodList")));
+            }
+        });
+
+        mldNutritionData.addSource(nutritionTrackingRepository.getMealData(Meals.DINNER), nutritionData ->{
+            if(nutritionData != null){
+                updateNutritionData(nutritionData);
+                if(!((List) nutritionData.get("foodList")).isEmpty())
+                    setStringDinnerDescription(String.join(",", (List) nutritionData.get("foodList")));
+            }
+        });
+
+        return mldNutritionData;
+    }
+
+    //Private Methods
+    private void updateNutritionData(HashMap<String, Object> nutritionData){
+        Log.d("Update Nutrition", "Executed");
+        eatenCalories = eatenCalories + (int) nutritionData.get(NutritionTrackingConstants.KEY_NUTRITION_CALORIES);
+        goalCalories = goalCalories - eatenCalories;
+        goalCarbs = goalCarbs - (double) nutritionData.get(NutritionTrackingConstants.KEY_NUTRITION_CARBS);
+        goalProtein = goalProtein - (double) nutritionData.get(NutritionTrackingConstants.KEY_NUTRITION_PROTEIN);
+        goalFats = goalFats - (double) nutritionData.get(NutritionTrackingConstants.KEY_NUTRITION_FATS);
+
+        setStringEatenCalories(eatenCalories+"");
+        setStringGoalCalories(goalCalories+"");
+        setStringGoalCarbs(df.format(goalCarbs));
+        setStringGoalProtein(df.format(goalProtein));
+        setStringGoalFats(df.format(goalFats));
+    }
 
     //Public Methods
     public HashMap<MacroNutrients, Integer> calculateFoodInfo() {
@@ -307,5 +450,9 @@ public class NutritionTrackingViewModel extends BaseObservable {
                 .name(currentFoodData.getName())
                 .build();
         return nutritionTrackingRepository.trackFood(foodData);
+    }
+
+    public void setNutritionTrackingData(HashMap<String, Object> nutritionTrackingData){
+
     }
 }

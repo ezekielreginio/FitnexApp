@@ -22,8 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Transaction;
 import com.pupccis.fitnex.activities.nutritiontracking.enums.MacroNutrients;
@@ -36,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -212,5 +215,43 @@ public class NutritionTrackingRepository {
         });
 
         return mutableLiveDataInsertSuccess;
+    }
+
+    public MutableLiveData<HashMap<String, Object>> getMealData(Meals meal) {
+        MutableLiveData<HashMap<String, Object>> liveMealData = new MutableLiveData<>();
+        HashMap<String, Object> mealData = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("####0.##");
+
+        db.collection(UserConstants.KEY_COLLECTION_USERS)
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection(NutritionTrackingConstants.KEY_COLLECTION_NUTRITION_TRACKING)
+                .document(getCurrentDate())
+                .collection(meal.toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                List<String> foodList = new ArrayList<>();
+                int calories = 0;
+                double carbs = 0.0;
+                double protein = 0.0;
+                double fats = 0.0;
+                for(DocumentSnapshot snapshot : value.getDocuments()){
+                    foodList.add(snapshot.getString(NutritionTrackingConstants.KEY_NUTRITION_FOOD_NAME));
+                    calories = calories + (int)(double)snapshot.get(NutritionTrackingConstants.KEY_NUTRITION_CALORIES);
+                    carbs = carbs + (double)snapshot.get(NutritionTrackingConstants.KEY_NUTRITION_CARBS);
+                    protein = protein + (double)snapshot.get(NutritionTrackingConstants.KEY_NUTRITION_PROTEIN);
+                    fats = fats + (double)snapshot.get(NutritionTrackingConstants.KEY_NUTRITION_FATS);
+                }
+
+                mealData.put("foodList", foodList);
+                Log.d("Calories", calories+"");
+                mealData.put(NutritionTrackingConstants.KEY_NUTRITION_CALORIES, calories);
+                mealData.put(NutritionTrackingConstants.KEY_NUTRITION_PROTEIN, protein);
+                mealData.put(NutritionTrackingConstants.KEY_NUTRITION_CARBS, carbs);
+                mealData.put(NutritionTrackingConstants.KEY_NUTRITION_FATS, fats);
+                liveMealData.postValue(mealData);
+            }
+        });
+
+        return liveMealData;
     }
 }
