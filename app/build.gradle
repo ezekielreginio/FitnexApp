@@ -126,4 +126,9 @@ dependencies {
     //Swipeable recycler view items
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
+    //GIF Drawable
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
+    //Flexbox Layout
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }

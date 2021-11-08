@@ -94,11 +94,24 @@
                         <EditText
                             android:id="@+id/editTextAddProgramDescription"
                             style="@style/AddProgramText"
-                            android:hint="Program Description"
+                            android:hint="Program Description/s"
                             android:maxLines="3"
                             android:text="@={viewModel.addProgramDescription}"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputTargetClients"
+                        style="@style/AddProgram"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="#C5B2B2">
+
+                        <EditText
+                            android:id="@+id/editTextAddProgramTargetClients"
+                            style="@style/AddProgramText"
+                            android:hint="Target Clients"
+                            android:maxLines="3"
+                            android:text="@={viewModel.addProgramDescription}"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputProgramCategory"

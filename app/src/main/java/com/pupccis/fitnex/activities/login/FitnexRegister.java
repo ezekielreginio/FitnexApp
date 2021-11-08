@@ -49,7 +49,7 @@ public class FitnexRegister extends AppCompatActivity implements View.OnClickLis
     }
 
     public void onLoginClick (View view){
-        startActivity(new Intent(this, FitnexLogin.class ));
+        startActivity(new Intent(this, FitnexTrainerApplication.class ));
         overridePendingTransition(R.anim.from_left, android.R.anim.slide_out_right);
     }
 

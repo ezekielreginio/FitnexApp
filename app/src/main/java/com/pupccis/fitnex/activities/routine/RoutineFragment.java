@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.adapters.RoutineTrackerAdapter;
 import com.pupccis.fitnex.databinding.FragmentRoutineBinding;
@@ -64,7 +65,8 @@ public class RoutineFragment extends Fragment implements View.OnClickListener {
             routineDataList.add(routineData);
         }
         routine.setUserID(((RoutineTracker) getActivity()).getUserID());
-
+        Glide.with(getContext())
+                .load(routine.getRoutineGuideUrl()).into(binding.imageViewRoutineGuideGIF);
 
 
         binding.recyclerViewRoutinePage.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

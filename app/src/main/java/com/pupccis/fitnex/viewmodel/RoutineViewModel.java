@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.viewmodel;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.databinding.BaseObservable;
@@ -61,6 +62,8 @@ public class RoutineViewModel extends BaseObservable {
     private RoutinesRepository routinesRepository = new RoutinesRepository();
     private String programID = null;
     private HashMap<String, HashMap<Integer, RoutineData>> routineDataList = new HashMap<>();
+    private Uri routineGuideUri;
+    private String routineGuideFileType;
 
     public String getAddRoutineName() {
         return addRoutineName;
@@ -92,6 +95,9 @@ public class RoutineViewModel extends BaseObservable {
 
     public String getRoutineReps() { return routineReps; }
     public String getRoutineWeight() { return routineWeight; }
+
+    public Uri getRoutineGuideUri() { return routineGuideUri; }
+    public String getRoutineGuideFileType() { return routineGuideFileType; }
 
     public String getCurrentRoutineID() { return currentRoutineID; }
     public int getCurrentRoutinePosition() { return currentRoutinePosition; }
@@ -135,6 +141,14 @@ public class RoutineViewModel extends BaseObservable {
         this.routineReps = routineReps;
     }
     public void setRoutineWeight(String routineWeight) { this.routineWeight = routineWeight; }
+
+    public void setRoutineGuideUri(Uri routineGuideUri) {
+        this.routineGuideUri = routineGuideUri;
+    }
+
+    public void setRoutineGuideFileType(String routineGuideFileType) {
+        this.routineGuideFileType = routineGuideFileType;
+    }
 
     public RoutineData setRoutineDataList(Routine routine, int routinePosition, String programID) {
         HashMap<Integer, RoutineData> routineDataMap = new HashMap<>();
@@ -194,6 +208,7 @@ public class RoutineViewModel extends BaseObservable {
                 .duration(Integer.parseInt(getAddRoutineDuration()))
                 .programID(getProgramID())
                 .routineID(getRoutineID())
+                .routineGuide(routineGuideUri)
                 .build();
         return routine;
     }

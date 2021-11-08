@@ -1,10 +1,13 @@
 package com.pupccis.fitnex.model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class RoutineData implements Serializable {
     private int position, reps;
-    private String routineSetID, userID;
+    private String routineSetID, userID, routineGuideFileType;
+    private Uri routineGuide;
     private boolean isCompleted;
     private double weight;
 
@@ -19,6 +22,8 @@ public class RoutineData implements Serializable {
         this.isCompleted = builder.isCompleted;
         this.weight = builder.weight;
         this.userID = builder.userID;
+        this.routineGuide = builder.routineGuide;
+        this.routineGuideFileType = builder.routineGuideFileType;
     }
 
     public int getPosition() {
@@ -57,9 +62,14 @@ public class RoutineData implements Serializable {
         isCompleted = completed;
     }
 
+    public String getRoutineGuideFileType() { return routineGuideFileType; }
+
+    public Uri getRoutineGuide() { return routineGuide; }
+
     public static class Builder{
         private int position, reps;
-        private String routineID, userID;
+        private String routineID, userID, routineGuideFileType;
+        private Uri routineGuide;
         private boolean isCompleted;
         private double weight;
 
@@ -93,6 +103,16 @@ public class RoutineData implements Serializable {
 
         public Builder weight(double weight) {
             this.weight = weight;
+            return this;
+        }
+
+        public Builder routineGuide(Uri routineGuide) {
+            this.routineGuide = routineGuide;
+            return this;
+        }
+
+        public Builder routineGuideFileType(String routineGuideFileType) {
+            this.routineGuideFileType = routineGuideFileType;
             return this;
         }
 

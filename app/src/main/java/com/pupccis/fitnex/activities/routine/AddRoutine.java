@@ -4,12 +4,16 @@ import static com.pupccis.fitnex.handlers.view.ViewHandler.errorHandler;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.rotateAnimation;
 import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +26,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.pupccis.fitnex.validation.ValidationResult;
 import com.pupccis.fitnex.databinding.ActivityAddRoutineBinding;
 import com.pupccis.fitnex.model.Program;
@@ -43,6 +54,8 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
     private RoutineViewModel routineViewModel;
     private Routine routine_intent;
     private RoutinePage routinePage;
+
+    private Uri routineGuideUri;
 
     private static ActivityAddRoutineBinding binding;
 
@@ -136,7 +149,7 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
                    routineMutableLiveData.observe(binding.getLifecycleOwner(), new Observer<Routine>() {
                        @Override
                        public void onChanged(Routine routine) {
-                           Toast.makeText(AddRoutine.this, "Routine Successfully Registered", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(AddRoutine.this, "Routine Successfully Added", Toast.LENGTH_SHORT).show();
                            binding.constraintLayoutRoutineProgressBar.setVisibility(View.GONE);
                            routineMutableLiveData.removeObserver(this::onChanged);
                            finish();
@@ -148,6 +161,29 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
 
        }
 
+       else if(view == binding.btnAddRoutineGuide){
+           Dexter.withContext(getApplicationContext())
+                   .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                   .withListener(new PermissionListener() {
+                       @Override
+                       public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                           Intent intent = new Intent();
+                           intent.setType("image/*");
+                           intent.setAction(Intent.ACTION_GET_CONTENT);
+                           startActivityForResult(intent, 102);
+                       }
+
+                       @Override
+                       public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                       }
+
+                       @Override
+                       public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                           permissionToken.continuePermissionRequest();
+                       }
+                   }).check();
+       }
 
     }
 
@@ -161,6 +197,23 @@ public class AddRoutine extends AppCompatActivity implements View.OnClickListene
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 102 && resultCode==RESULT_OK){
+            binding.constraintLayoutContainerRoutineGuide.setVisibility(View.GONE);
+
+            binding.getViewModel().setRoutineGuideUri(data.getData());
+            binding.getViewModel().setRoutineGuideFileType(getContentResolver().getType(data.getData()));
+            Glide.with(getApplicationContext())
+                    .load(binding.getViewModel().getRoutineGuideUri()).into(binding.imageViewRoutineGuide);
+            binding.imageViewRoutineGuide.setVisibility(View.VISIBLE);
+//            binding.imageViewRoutineGuide.setImageURI(routineGuideUri);
+        }
+    }
+
     @BindingAdapter({"routineValidationData"})
     public static void validateProgramData(View view, HashMap<String, Object> validationData) {
         if (validationData != null) {

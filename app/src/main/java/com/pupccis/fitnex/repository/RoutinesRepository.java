@@ -1,11 +1,14 @@
 package com.pupccis.fitnex.repository;
 
+import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,9 +19,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.RoutineData;
+import com.pupccis.fitnex.utilities.Constants.PostVideoConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Constants.RoutineConstants;
 
@@ -38,26 +45,35 @@ public class RoutinesRepository {
     }
     public MutableLiveData<Routine> insertRoutine(Routine routine) {
         MutableLiveData<Routine> routineLiveData = new MutableLiveData<>();
-        db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
-                .document(routine.getProgramID())
-                .collection(RoutineConstants.KEY_COLLECTION_ROUTINES)
-                .get().addOnCompleteListener(task -> {
-                    int childCount = task.getResult().size();
+        StorageReference routineGuideUploader = FirebaseStorage.getInstance().getReference().child("routine_guides/"+System.currentTimeMillis()+"."+getExtension(routine.getRoutineGuideFileType()));
+        routineGuideUploader.putFile(routine.getRoutineGuide()).addOnSuccessListener(taskSnapshot -> {
+            routineGuideUploader.getDownloadUrl().addOnSuccessListener(uri -> {
+                routineGuideUploader.getDownloadUrl().addOnSuccessListener(routineGuideUrl -> {
+                    routine.setRoutineGuideUrl(routineGuideUrl.toString());
                     db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                             .document(routine.getProgramID())
                             .collection(RoutineConstants.KEY_COLLECTION_ROUTINES)
-                            .document(childCount+1+"").set(routine.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful())
-                                routineLiveData.postValue(routine);
-                            else
-                                routineLiveData.postValue(null);
+                            .get().addOnCompleteListener(task -> {
+                                int childCount = task.getResult().size();
+                                db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
+                                        .document(routine.getProgramID())
+                                        .collection(RoutineConstants.KEY_COLLECTION_ROUTINES)
+                                        .document(childCount+1+"").set(routine.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                            routineLiveData.postValue(routine);
+                                        else
+                                            routineLiveData.postValue(null);
 
-                        }
-                    });
-                }
-        );
+                                    }
+                                });
+                            }
+                    );
+                });
+            });
+        });
+
       return routineLiveData;
         //db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS).document(routine.getProgramID()).collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document().set(routine.toMap());
     }
@@ -86,10 +102,22 @@ public class RoutinesRepository {
         });
         return routineMutableLiveData;
     }
+
     public void deleteRoutine(String routineID, String programID){
         db.collection(ProgramConstants.KEY_COLLECTION_PROGRAMS)
                 .document(programID)
                 .collection(RoutineConstants.KEY_COLLECTION_ROUTINES).document(routineID).delete();
+    }
+
+    private String getExtension(String filetype){
+        if(filetype == null){
+            Log.e("Missing Data", "Filetype is not found in the instance");
+            return null;
+        }
+        else{
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            return  mimeTypeMap.getExtensionFromMimeType(filetype);
+        }
     }
 
     public MutableLiveData<List<Routine>> getRoutineData(String programID) {
@@ -108,6 +136,7 @@ public class RoutinesRepository {
                             .weight(Double.parseDouble(snapshot.get(RoutineConstants.KEY_ROUTINE_WEIGHT).toString()))
                             .duration(Integer.parseInt(snapshot.get(RoutineConstants.KEY_ROUTINE_DURATION).toString()))
                             .routineID(snapshot.getId())
+                            .routineGuideUrl(snapshot.get(RoutineConstants.KEY_ROUTINE_GUIDE_URL).toString())
                             .programID(programID)
                             .build();
                     routineData.add(routine);

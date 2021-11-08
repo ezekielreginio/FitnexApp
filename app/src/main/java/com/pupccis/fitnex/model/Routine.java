@@ -1,5 +1,7 @@
 package com.pupccis.fitnex.model;
 
+import android.net.Uri;
+
 import com.pupccis.fitnex.api.globals.Observer;
 import com.pupccis.fitnex.utilities.Constants.RoutineConstants;
 
@@ -12,7 +14,8 @@ public class Routine implements Serializable, Observer {
     private String name;
     private String routineID;
     private String programID;
-    private String userID;
+    private String userID, routineGuideFileType, routineGuideUrl;
+    private Uri routineGuide;
     private int category;
     private int sets;
     private int reps;
@@ -34,6 +37,9 @@ public class Routine implements Serializable, Observer {
         this.weight = builder.weight;
         this.programID = builder.programID;
         this.routineID = builder.routineID;
+        this.routineGuide = builder.routineGuide;
+        this.routineGuideFileType = builder.routineGuideFileType;
+        this.routineGuideUrl = builder.routineGuideUrl;
     }
 
 
@@ -46,6 +52,7 @@ public class Routine implements Serializable, Observer {
         result.put("reps", reps);
         result.put("duration", duration);
         result.put("weight", weight);
+        result.put(RoutineConstants.KEY_ROUTINE_GUIDE_URL, routineGuideUrl);
 
         return result;
     }
@@ -105,6 +112,12 @@ public class Routine implements Serializable, Observer {
         return userID;
     }
 
+    public String getRoutineGuideFileType() { return routineGuideFileType; }
+
+    public Uri getRoutineGuide() { return routineGuide; }
+
+    public String getRoutineGuideUrl() { return routineGuideUrl; }
+
     public boolean isCompleted() {
         return isCompleted;
     }
@@ -121,6 +134,8 @@ public class Routine implements Serializable, Observer {
         this.userID = userID;
     }
 
+    public void setRoutineGuideUrl(String routineGuideUrl) { this.routineGuideUrl = routineGuideUrl; }
+
     public static class Builder{
         private final String name;
         private int category;
@@ -129,7 +144,8 @@ public class Routine implements Serializable, Observer {
         private int duration;
         private double weight;
         private String routineID;
-        private String programID;
+        private String programID, routineGuideFileType, routineGuideUrl;
+        private Uri routineGuide;
 
         public Builder(String name){
             this.name = name;
@@ -164,7 +180,18 @@ public class Routine implements Serializable, Observer {
             this.programID = programID;
             return this;
         }
-
+        public Builder routineGuide(Uri routineGuide){
+            this.routineGuide = routineGuide;
+            return this;
+        }
+        public Builder routineGuideFileType(String routineGuideFileType){
+            this.routineGuideFileType = routineGuideFileType;
+            return this;
+        }
+        public Builder routineGuideUrl(String routineGuideUrl){
+            this.routineGuideUrl = routineGuideUrl;
+            return this;
+        }
 
         public Routine build(){
             Routine routine = new Routine(this);

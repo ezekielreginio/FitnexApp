@@ -7,6 +7,7 @@ import static com.pupccis.fitnex.handlers.view.ViewHandler.uiErrorHandler;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -14,14 +15,27 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.common.collect.Lists;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.databinding.FragmentAddProgramBinding;
 import com.pupccis.fitnex.databinding.FragmentProgramsBinding;
@@ -31,46 +45,19 @@ import com.pupccis.fitnex.validation.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddProgram#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddProgram extends Fragment implements View.OnClickListener{
     private Program program_intent;
-    private static FragmentProgramsBinding fragmentProgramsBinding;
     private static FragmentAddProgramBinding fragmentAddProgramBinding;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public AddProgram() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static AddProgram newInstance(String param1, String param2) {
-        AddProgram fragment = new AddProgram();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -102,6 +89,67 @@ public class AddProgram extends Fragment implements View.OnClickListener{
 
         setDropdown(fragmentAddProgramBinding.editTextAddProgramCategory, getContext(), GlobalConstants.spinner_category);
         setDropdown(fragmentAddProgramBinding.spinnerAddProgramPatronLevel, getContext(), GlobalConstants.spinner_patron);
+
+        String [] targetClients = new String[]{"Select a Target Client", "Asthmatic", "Diabetic", "Hypertensive"};
+        setDropdown(fragmentAddProgramBinding.editTextAddProgramTargetClients, getContext(), targetClients);
+        fragmentAddProgramBinding.editTextAddProgramTargetClients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                fragmentAddProgramBinding.editTextAddProgramTargetClients.setSelection(0);
+                if(i == 0)
+                    return;
+                Chip chip = new Chip(fragmentAddProgramBinding.editTextAddProgramTargetClients.getContext());
+                chip.setText(targetClients[i]);
+                chip.setChipBackgroundColorResource(R.color.colorAccent);
+                chip.setCloseIconVisible(true);
+                chip.setTextColor(getResources().getColor(R.color.whiteTextColor));
+                chip.setTextAppearance(R.style.ChipTextAppearance);
+                chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        fragmentAddProgramBinding.chipGroupClients.removeView(view);
+                    }
+                });
+                fragmentAddProgramBinding.chipGroupClients.addView(chip);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+//        fragmentAddProgramBinding.editTextAddProgramTargetClients.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (charSequence.length() == spannedLength - chipLength)
+//                {
+//                    spannedLength = charSequence.length();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if(editable.length() - spannedLength == chipLength) {
+//                    ChipDrawable chip = ChipDrawable.createFromResource(fragmentAddProgramBinding.editTextAddProgramTargetClients.getContext(), R.xml.chip_comorbidities);
+//                    chip.setText(editable.subSequence(spannedLength,editable.length()));
+//                    chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+//                    ImageSpan span = new ImageSpan(chip);
+//                    editable.setSpan(chip, spannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    spannedLength = editable.length();
+//
+//                }
+//            }
+//        });
+
         fragmentAddProgramBinding.editTextAddProgramCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
