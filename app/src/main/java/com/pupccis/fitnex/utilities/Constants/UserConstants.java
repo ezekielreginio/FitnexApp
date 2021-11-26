@@ -4,11 +4,18 @@ public class UserConstants {
     public static final String KEY_USER_NAME = "name";
     public static final String KEY_USER_AGE = "age";
     public static final String KEY_USER_EMAIL = "email";
+    public static final String KEY_USER_BIRTHDATE = "birthdate";
     public static final String KEY_USER_TYPE = "userType";
+    public static final String KEY_USER_PROFILE = "userType";
     public static final String KEY_TRAINER = "trainer";
     public static final String KEY_TRAINEE = "trainee";
+    public static final String KEY_PHONE_NUMBER = "phone_number";
     public static final String KEY_FCM_TOKEN = "fcm_token";
     public static final String KEY_USER_ID= "userID";
+
+    public static final String KEY_USER_APPLICATION_STATUS = "application_status";
+    public static final String KEY_USER_PROFILE_PICTURE = "profile_picture";
+    public static final String KEY_USER_RESUME = "resume";
 
     public static final String KEY_COLLECTION_USERS= "users";
     public static final String KEY_COLLECTION_USER_LIKED_VIDEOS = "liked_videos";

@@ -1,5 +1,8 @@
 package com.pupccis.fitnex.repository;
 
+import static com.pupccis.fitnex.handlers.repository.ExtensionHandler.getExtension;
+
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -22,8 +25,12 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.HealthAssessment;
+import com.pupccis.fitnex.model.TrainerApplicant;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.utilities.Constants.GlobalConstants;
 import com.pupccis.fitnex.utilities.Constants.HealthAssessmentConstants;
@@ -33,7 +40,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 
 public class UserRepository {
     private static UserRepository instance;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
     public static UserRepository getInstance(){
         if(instance == null){
@@ -67,6 +74,24 @@ public class UserRepository {
                 });
 
         return userLiveData;
+    }
+
+    public static MutableLiveData<Boolean> applyTrainer(TrainerApplicant trainerApplicant) {
+        MutableLiveData<Boolean> trainerApplied = new MutableLiveData<>();
+        StorageReference profilePictureUploader = FirebaseStorage.getInstance().getReference().child("trainersProfilePicture/"+System.currentTimeMillis()+"."+getExtension(trainerApplicant.getFiletypeProfilePicture()));
+
+        profilePictureUploader.putFile(trainerApplicant.getProfilePicture()).addOnSuccessListener(taskSnapshot -> {
+            profilePictureUploader.getDownloadUrl().addOnSuccessListener(profilePictureUrl -> {
+                StorageReference resumeUploader = FirebaseStorage.getInstance().getReference().child("trainerApplicantsResume/"+System.currentTimeMillis()+"."+getExtension(trainerApplicant.getFiletypeResume()));
+                resumeUploader.putFile(trainerApplicant.getResume()).addOnSuccessListener(taskSnapshot1 -> {
+                    resumeUploader.getDownloadUrl().addOnSuccessListener(resumeURL -> {
+                        db.collection("applicants").document().set(trainerApplicant.toMap(profilePictureUrl.toString(), resumeURL.toString()));
+                        trainerApplied.postValue(true);
+                    });
+                });
+            });
+        });
+        return trainerApplied;
     }
 
     public MutableLiveData<HealthAssessment> insertHealthData(HealthAssessment healthAssessment){
@@ -104,13 +129,19 @@ public class UserRepository {
                                 public void onComplete(@NonNull Task<String> task) {
                                     String token = task.getResult();
                                     sendFCMTokenToDatabase(task.getResult());
+                                    String profile_picture = null;
+                                    if(documentSnapshot.get(UserConstants.KEY_USER_PROFILE_PICTURE) != null){
+                                        profile_picture = documentSnapshot.get(UserConstants.KEY_USER_PROFILE_PICTURE).toString();
+                                    }
+
                                     User user = new User.Builder(
                                             documentSnapshot.get(UserConstants.KEY_USER_NAME).toString(),
                                             documentSnapshot.get(UserConstants.KEY_USER_EMAIL).toString()
                                     )
                                             .setUserID(documentSnapshot.getId())
                                             .setUserType(documentSnapshot.get(UserConstants.KEY_USER_TYPE).toString())
-                                            .setAge(Integer.parseInt(documentSnapshot.get(UserConstants.KEY_USER_AGE).toString()))
+//                                            .setAge(Integer.parseInt(documentSnapshot.get(UserConstants.KEY_USER_AGE).toString()))
+                                            .setUserProfile(profile_picture)
                                             .setToken(token)
                                             .build();
                                     userLoggedIn.postValue(user);

@@ -4,18 +4,15 @@ public class MailBody {
 
     private static String email = "fitnex.application@gmail.com";
     private static String password = "fitnexpassword";
-    private static String subject = "Welcome to Fitnex";
-    private static String body = "Welcome to Fitnex!" +
-            "I'm Redd, one of the Developers of Fitnex Online Platfore and I'd Like to personally thank you for signing up to our service\n"+
+    private static String subject = "Fitnex Application Received! - First Step to Fitness Greatness";
+    private static String body = "" +
+            "Greetings Fitnex Trainer Applicant!\n\n"+
+            "First of all, we would like to express our humble gratitude for your kind consideration in applying to Fitnex as a Fitness Trainer/Specialist."+
+            "\n\nI'm Redd, one of the Developers of Fitnex Online Platform and I'd Like to personally thank you for signing up to our online fitness platform. "+
             "We have established Fitnex to promote the health, wellness, and fitness of each individual in our platform " +
-            "I'd like to hear everything about you for us to assess your portfolio whether you are qualified to be a Fitnex Trainer\n"+
-            "Kindly Send the Following Information as a response to this email:" +
-            "Name:\n"+
-            "Age:\n"+
-            "Occupation:\n"+
-            "Supporting Documents and Certifications\n"+
-            "We are excited for you to become one of our finest Fitnex trainers!\n"+
-            "Sincerely, Redd";
+            "\n\nRest assured that our System Administrators are processing your application and you will be hearing from us very soon. Kindly wait for our email response for the result of your application assessment."+
+            "\n\nWe are looking forward to welcome you in Fitnex and work with you as soon as possible"+
+            "\n\nSincerely, Redd";
 
     public MailBody(){
 

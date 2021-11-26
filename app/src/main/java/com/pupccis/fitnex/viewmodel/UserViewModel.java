@@ -1,5 +1,6 @@
 package com.pupccis.fitnex.viewmodel;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -9,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.pupccis.fitnex.BR;
+import com.pupccis.fitnex.model.TrainerApplicant;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.repository.UserRepository;
 import com.pupccis.fitnex.validation.Services.UserValidationService;
@@ -18,7 +20,13 @@ import com.pupccis.fitnex.validation.validationFields.RegistrationFields;
 import java.util.HashMap;
 
 public class UserViewModel extends BaseObservable{
+    //Private Attributes
+    private Uri applicantResume = null;
+    private Uri applicantProfilePicture = null;
+    private String applicantResumeFileType = null;
+    private String applicantProfilePictureFileType = null;
 
+    //Bindable Attributes
     @Bindable
     private String registerEmail = null;
     @Bindable
@@ -29,6 +37,16 @@ public class UserViewModel extends BaseObservable{
     private String registerPassword = null;
     @Bindable
     private HashMap<String, Object> validationData = null;
+
+    //Fitness Trainer Application Form
+    @Bindable
+    private String applicantName = null;
+    @Bindable
+    private String applicantBirthDate = null;
+    @Bindable
+    private String applicantEmail = null;
+    @Bindable
+    private String applicantPhoneNumber = null;
 
     //Getter Methods
     public String getRegisterEmail() {
@@ -49,6 +67,38 @@ public class UserViewModel extends BaseObservable{
 
     public HashMap<String, Object> getValidationData() {
         return validationData;
+    }
+
+    public String getApplicantName() {
+        return applicantName;
+    }
+
+    public String getApplicantBirthDate() {
+        return applicantBirthDate;
+    }
+
+    public String getApplicantEmail() {
+        return applicantEmail;
+    }
+
+    public String getApplicantPhoneNumber() {
+        return applicantPhoneNumber;
+    }
+
+    public Uri getApplicantResume() {
+        return applicantResume;
+    }
+
+    public String getApplicantResumeFileType() {
+        return applicantResumeFileType;
+    }
+
+    public Uri getApplicantProfilePicture() {
+        return applicantProfilePicture;
+    }
+
+    public String getApplicantProfilePictureFileType() {
+        return applicantProfilePictureFileType;
     }
 
     public void setValidationData(HashMap<String, Object> validationData) {
@@ -82,6 +132,43 @@ public class UserViewModel extends BaseObservable{
         onTextChange(registerEmail, RegistrationFields.EMAIL);
     }
 
+
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
+        notifyPropertyChanged(BR.applicantName);
+    }
+
+    public void setApplicantBirthDate(String applicantBirthDate) {
+        this.applicantBirthDate = applicantBirthDate;
+        notifyPropertyChanged(BR.applicantBirthDate);
+    }
+
+    public void setApplicantEmail(String applicantEmail) {
+        this.applicantEmail = applicantEmail;
+        notifyPropertyChanged(BR.applicantEmail);
+    }
+
+    public void setApplicantPhoneNumber(String applicantPhoneNumber) {
+        this.applicantPhoneNumber = applicantPhoneNumber;
+        notifyPropertyChanged(BR.applicantPhoneNumber);
+    }
+
+    public void setApplicantResume(Uri applicantResume) {
+        this.applicantResume = applicantResume;
+    }
+
+    public void setApplicantResumeFileType(String applicantResumeFileType) {
+        this.applicantResumeFileType = applicantResumeFileType;
+    }
+
+    public void setApplicantProfilePicture(Uri applicantProfilePicture) {
+        this.applicantProfilePicture = applicantProfilePicture;
+    }
+
+    public void setApplicantProfilePictureFileType(String applicantProfilePictureFileType) {
+        this.applicantProfilePictureFileType = applicantProfilePictureFileType;
+    }
+
     //ViewModel Methods
     public void onTextChange(String input, RegistrationFields field){
         UserValidationService userValidationService= new UserValidationService(input, field);
@@ -104,6 +191,19 @@ public class UserViewModel extends BaseObservable{
                 .setPassword(getRegisterPassword())
                 .build();
         return UserRepository.registerUser(user);
+    }
+
+    public MutableLiveData<Boolean> applyTrainer(){
+        TrainerApplicant trainerApplicant = new TrainerApplicant.Builder(getApplicantEmail(),
+                getApplicantName(),
+                getApplicantBirthDate(),
+                getApplicantPhoneNumber(),
+                getApplicantProfilePicture(),
+                getApplicantResume(),
+                getApplicantProfilePictureFileType(),
+                getApplicantResumeFileType())
+                .build();
+        return UserRepository.applyTrainer(trainerApplicant);
     }
 
     public MutableLiveData<Boolean> checkHealthData() {

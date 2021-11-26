@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +42,7 @@ import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.utilities.Constants.PatronConstants;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
+import com.pupccis.fitnex.utilities.Constants.UserConstants;
 import com.pupccis.fitnex.utilities.Preferences.UserPreferences;
 import com.pupccis.fitnex.validation.Services.MyButtonClickListener;
 import com.pupccis.fitnex.viewmodel.ProgramViewModel;
@@ -90,8 +92,8 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        userPreferences = new UserPreferences(getActivity().getApplicationContext());
-        patronSet = userPreferences.getBoolean(PatronConstants.KEY_PATRON_SET);
+
+
 //        Query query = FirebaseDatabase.getInstance().getReference(ProgramConstants.KEY_COLLECTION_PROGRAMS).orderByChild(ProgramConstants.KEY_PROGRAM_TRAINER_ID).equalTo(userPreferences.getString(VideoConferencingConstants.KEY_USER_ID));
 //
 //        query.addValueEventListener(new ValueEventListener() {
@@ -227,6 +229,11 @@ public class ProgramsFragment extends Fragment implements View.OnClickListener {
         adapter.setAccessType(AccessType.OWNER);
         adapter.setProgramViewModel(programViewModel);
         recyclerView.setAdapter(adapter);
+
+        userPreferences = new UserPreferences(getActivity().getApplicationContext());
+        patronSet = userPreferences.getBoolean(PatronConstants.KEY_PATRON_SET);
+        Glide.with(getContext())
+                .load(userPreferences.getString(UserConstants.KEY_USER_PROFILE_PICTURE)).into(fragmentProgramsBinding.imageViewProfilePicture);
 
         //Swipe helper
 //        MySwipeHelper swipeHelper = new MySwipeHelper(getContext(), recyclerView, 200) {

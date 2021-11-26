@@ -22,6 +22,7 @@ public class UserPreferences {
         this.putString(VideoConferencingConstants.KEY_AGE, user.getAge()+"");
         this.putString(VideoConferencingConstants.KEY_USER_ID, user.getUserID());
         this.putString(UserConstants.KEY_FCM_TOKEN, user.getToken());
+        this.putString(UserConstants.KEY_USER_PROFILE_PICTURE, user.getUserProfile());
         this.putString("usertype", user.getUserType());
     }
 

@@ -131,13 +131,22 @@
                         android:layout_marginTop="15dp"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/textViewTrainerProfileDisplay"
+                            android:theme="@style/Theme.App"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
-                            android:background="@drawable/ic_circle_imageview"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:cardCornerRadius="100dp">
+
+                            <ImageView
+                                android:id="@+id/imageViewProfilePicture"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:background="@drawable/ic_circle_imageview"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </com.google.android.material.card.MaterialCardView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -166,7 +175,7 @@
                             app:layout_constraintTop_toBottomOf="@id/textViewProgramUsername"
                             android:textStyle="bold" />
 
-                        
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -210,6 +219,8 @@
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toTopOf="parent" />
 
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -218,10 +229,10 @@
             </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:translationZ="30dp">
 
             <ImageView
                 android:id="@+id/imageViewAddProgram"
@@ -232,7 +243,6 @@
                 android:onClick="@{(v)->presenter.onClick(v)}"
                 android:src="@drawable/ic_add_img" />
         </RelativeLayout>
-
     </FrameLayout>
 </layout>
 

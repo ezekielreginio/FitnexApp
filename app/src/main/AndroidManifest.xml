@@ -20,6 +20,9 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.main.trainee.TopupCoins"
+            android:exported="false" />
+        <activity
             android:name=".activities.nutritiontracking.NutritionTrackingMain"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />

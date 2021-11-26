@@ -12,7 +12,7 @@ public class User implements Serializable {
 
     private String name, email, password, userType;
     private int age;
-    private String userID, token;
+    private String userID, token, userProfile;
 
     public User() {
     }
@@ -31,6 +31,7 @@ public class User implements Serializable {
         this.userID = builder.userID;
         this.userType = builder.userType;
         this.token = builder.token;
+        this.userProfile = builder.userProfile;
     }
 
     public String getName() {
@@ -61,6 +62,10 @@ public class User implements Serializable {
         return userType;
     }
 
+    public String getUserProfile() {
+        return userProfile;
+    }
+
     public HashMap<String, Object> toMap(){
         HashMap<String, Object> map = new HashMap<>();
         map.put(UserConstants.KEY_USER_NAME, name);
@@ -74,7 +79,7 @@ public class User implements Serializable {
     public static class Builder{
         private final String name, email;
         private int age;
-        private String userID, password, token, userType;
+        private String userID, password, token, userType, userProfile;
         public Builder(String name, String email){
             this.name = name;
             this.email = email;
@@ -112,6 +117,11 @@ public class User implements Serializable {
 
         public Builder setToken(String token) {
             this.token = token;
+            return this;
+        }
+
+        public Builder setUserProfile(String userProfile) {
+            this.userProfile = userProfile;
             return this;
         }
 
