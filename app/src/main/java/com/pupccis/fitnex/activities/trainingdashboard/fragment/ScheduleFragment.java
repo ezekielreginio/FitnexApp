@@ -2,13 +2,21 @@ package com.pupccis.fitnex.activities.trainingdashboard.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
 import com.pupccis.fitnex.R;
+
+import org.naishadhparmar.zcustomcalendar.CustomCalendar;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +33,8 @@ public class ScheduleFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private CalendarView calendarView;
+    private CustomCalendar customCalendar;
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -54,6 +63,10 @@ public class ScheduleFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            simpleDateFormat.format(date);
+
         }
     }
 
@@ -61,6 +74,10 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        calendarView = getView().findViewById(R.id.calendarView);
+        //calendarView.setDate();
+        customCalendar = getView().findViewById(R.id.customCalendar);
+
         return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 }

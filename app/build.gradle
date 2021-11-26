@@ -126,4 +126,7 @@ dependencies {
     //Swipeable recycler view items
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
+    //Custom Calendar
+    implementation 'org.naishadhparmar.zcustomcalendar:zcustomcalendar:1.0.1'
+
 }

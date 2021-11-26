@@ -3,6 +3,7 @@ package com.pupccis.fitnex.adapters;
 import static com.pupccis.fitnex.handlers.view.CardHandler.hideIndicator;
 import static com.pupccis.fitnex.handlers.view.CardHandler.swipeableCardOnClickHide;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
 
     private ProgramViewModel programViewModel;
     private AccessType accessType;
+    private UserPreferences userPreferences;
 
     public ProgramAdapter(@NonNull FirestoreRecyclerOptions<Program> options) {
         super(options);
@@ -110,18 +112,23 @@ public class ProgramAdapter extends FirestoreRecyclerAdapter<Program, ProgramAda
             binding.imageView10.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(binding.swipeRevealLayoutProgramCard.isOpened())
+                    if(binding.swipeRevealLayoutProgramCard.isOpened()){
+                        Log.e("Naclick mo", "iughfhwfhskf");
                         binding.getViewModel().triggerUpdateObserver(model);
+                    }
+                    else if(binding.swipeRevealLayoutProgramCard.isClosed()){
+                        Log.e("Naclick mo", "iughfhwfhskf");
+                    }
                 }
             });
 
             if (!model.getPrivilege().equals(Privilege.FREE.toString()))
                 binding.imageViewBadgeIcon.setVisibility(View.VISIBLE);
 
-            if(accessType == AccessType.VIEW){
-                binding.swipeRevealLayoutProgramCard.setLockDrag(true);
-                binding.imageViewProgramPullIndicator.setVisibility(View.GONE);
-            }
+//            if(model.getTrainerID()!=null){
+//                binding.swipeRevealLayoutProgramCard.setLockDrag(true);
+//                binding.imageViewProgramPullIndicator.setVisibility(View.GONE);
+//            }
 
             binding.imageView11.setOnClickListener(new View.OnClickListener() {
                 @Override
