@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -130,6 +131,8 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         binding.getViewModel().setResting(programID, userID, false);
         if(binding.buttonSkipRest.getText().equals("finish workout")){
             binding.getViewModel().deleteRealtimeRoutine(programID, userID);
+            Intent intent = new Intent(getApplicationContext(), RateProgram.class);
+            startActivity(intent);
             finish();
         }
 
