@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -206,5 +209,14 @@ public class UserRepository {
             }
         });
         return healthLiveData;
+    }
+
+    public MutableLiveData<String> getUserCoins() {
+        MutableLiveData<String> mutableLiveDataCoins = new MutableLiveData<>();
+        db.collection(UserConstants.KEY_COLLECTION_USERS).document(FirebaseAuth.getInstance().getUid()).addSnapshotListener((snapshot, error) -> {
+           // Log.e("Coins", snapshot.get(UserConstants.KEY_USER_COINS).toString());
+            mutableLiveDataCoins.postValue(snapshot.get(UserConstants.KEY_USER_COINS).toString());
+        });
+        return mutableLiveDataCoins;
     }
 }

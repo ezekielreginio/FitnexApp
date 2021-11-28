@@ -10,8 +10,8 @@ import java.util.Map;
 public class TopUpRequest implements Serializable {
     private String traineeName;
     private String traineeID;
-    private String status;
     private String referenceNumber;
+    private int status;
     private int amount;
     private long date;
 
@@ -44,7 +44,7 @@ public class TopUpRequest implements Serializable {
         return traineeID;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -63,12 +63,12 @@ public class TopUpRequest implements Serializable {
     public static class Builder{
         private String traineeName;
         private String traineeID;
-        private String status;
         private String referenceNumber;
+        private int status;
         private int amount;
         private long date;
 
-        public Builder(String traineeName, String traineeID, String status, String referenceNumber, int amount, long date) {
+        public Builder(String traineeName, String traineeID, int status, String referenceNumber, int amount, long date) {
             this.traineeName = traineeName;
             this.traineeID = traineeID;
             this.status = status;

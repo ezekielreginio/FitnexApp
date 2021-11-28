@@ -40,7 +40,7 @@ public class TopUpViewModel extends BaseObservable {
     }
     public TopUpRequest topUpInstance(String traineeName){
         long date = Calendar.getInstance().getTimeInMillis();
-        TopUpRequest topUpRequest = new TopUpRequest.Builder(traineeName, topUpRepository.getTraineeID(), "pending", getTopUpReferenceNumber(), Integer.parseInt(getTopUpAmount()), date).build();
+        TopUpRequest topUpRequest = new TopUpRequest.Builder(traineeName, topUpRepository.getTraineeID(), 0, getTopUpReferenceNumber(), Integer.parseInt(getTopUpAmount()), date).build();
         return topUpRequest;
     }
 
