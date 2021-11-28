@@ -348,6 +348,7 @@ public class RoutinePage extends AppCompatActivity implements View.OnClickListen
         binding.getViewModel().startRoutine(userName, program_intent.getProgramID(), userPreferences.getString(UserConstants.KEY_FCM_TOKEN), FirebaseAuth.getInstance().getCurrentUser().getEmail());
         Intent intent = new Intent(RoutinePage.this, RoutineTracker.class);
         intent.putExtra(ProgramConstants.KEY_PROGRAM_ID, program_intent.getProgramID());
+        intent.putExtra("program", program_intent);
         startActivity(intent);
         overridePendingTransition(R.anim.from_right,R.anim.stay);
     }

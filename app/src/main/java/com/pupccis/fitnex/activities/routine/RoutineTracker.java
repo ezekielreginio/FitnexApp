@@ -17,6 +17,7 @@ import com.pupccis.fitnex.R;
 import com.pupccis.fitnex.api.adapter.fragmentAdapters.RoutineFragmentAdapter;
 import com.pupccis.fitnex.databinding.ActivityRoutineTrackerBinding;
 import com.pupccis.fitnex.handlers.view.TimerViewHandler;
+import com.pupccis.fitnex.model.Program;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.utilities.Constants.ProgramConstants;
 import com.pupccis.fitnex.utilities.Constants.UserConstants;
@@ -32,6 +33,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
     private TimerViewHandler timerViewHandler;
     private RoutineViewModel routineViewModel = new RoutineViewModel();
     private String programID, userID;
+    private Program programData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
 
         //Extra Intents
         programID = getIntent().getStringExtra(ProgramConstants.KEY_PROGRAM_ID);
+        programData = (Program) getIntent().getSerializableExtra("program");
         userID = getIntent().getStringExtra(UserConstants.KEY_USER_ID);
 
         if(userID == null)
@@ -132,6 +135,7 @@ public class RoutineTracker extends AppCompatActivity implements View.OnClickLis
         if(binding.buttonSkipRest.getText().equals("finish workout")){
             binding.getViewModel().deleteRealtimeRoutine(programID, userID);
             Intent intent = new Intent(getApplicationContext(), RateProgram.class);
+            intent.putExtra("programData", programData);
             startActivity(intent);
             finish();
         }

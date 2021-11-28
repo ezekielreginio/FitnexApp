@@ -153,10 +153,4 @@ public class ProgramsSEFragment extends Fragment {
         });
         return binding.getRoot();
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
 }
