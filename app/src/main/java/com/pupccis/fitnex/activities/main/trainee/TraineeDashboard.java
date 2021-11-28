@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -21,6 +22,7 @@ public class TraineeDashboard extends AppCompatActivity {
     private ConstraintLayout buttonSearch, constraintLayoutDashboard, constraintLayoutTraineeStudioNutritionTracker;
     private TextView textViewUserNameHeader;
     private UserPreferences userPreferences;
+    private ImageView topupbtn;
     private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +32,18 @@ public class TraineeDashboard extends AppCompatActivity {
         userPreferences = new UserPreferences(getApplicationContext());
 
         buttonSearch = findViewById(R.id.layoutTraineeSearch);
+        topupbtn = findViewById(R.id.imageViewTraineeCoin);
         constraintLayoutDashboard = findViewById(R.id.constraintLayoutDashboard);
         constraintLayoutTraineeStudioNutritionTracker = findViewById(R.id.constraintLayoutTraineeStudioNutritionTracker);
         textViewUserNameHeader = findViewById(R.id.textViewUserNameHeader);
         textViewUserNameHeader.setText("Welcome, \n"+userPreferences.getString(UserConstants.KEY_USER_NAME));
 
+        topupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TraineeDashboard.this, TopupCoins.class));
+            }
+        });
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

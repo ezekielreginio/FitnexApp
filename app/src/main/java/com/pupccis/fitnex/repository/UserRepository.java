@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -40,6 +41,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 
 public class UserRepository {
     private static UserRepository instance;
+    private String traineeName;
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
     public static UserRepository getInstance(){
@@ -52,7 +54,6 @@ public class UserRepository {
     public static MutableLiveData<User> registerUser(User user){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         MutableLiveData<User> userLiveData = new MutableLiveData<>();
-
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,7 +73,6 @@ public class UserRepository {
                         }
                     }
                 });
-
         return userLiveData;
     }
 
@@ -182,6 +182,7 @@ public class UserRepository {
 
         return query;
     }
+
 
     private void sendFCMTokenToDatabase(String token){
         Log.d("Message Token fcm:", token);
