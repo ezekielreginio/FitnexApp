@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.pupccis.fitnex.viewmodel.TraineeDashboardViewModel" />
+        <variable
+            name="presenter"
+            type="com.pupccis.fitnex.activities.main.trainee.TraineeDashboard" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -20,13 +28,13 @@
                 android:id="@+id/textViewUserCoins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.00"
+                android:text="@{viewModel.userTraineeCoins}"
                 android:textColor="@color/themeColor"
                 android:textSize="20dp"
                 />
 
             <ImageView
-                android:id="@+id/imageViewTraineeCoim"
+                android:id="@+id/imageViewTraineeCoin"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_coin"

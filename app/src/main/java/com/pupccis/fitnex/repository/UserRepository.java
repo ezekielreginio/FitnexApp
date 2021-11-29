@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +20,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -40,6 +44,7 @@ import com.pupccis.fitnex.validation.ValidationResult;
 
 public class UserRepository {
     private static UserRepository instance;
+    private String traineeName;
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(VideoConferencingConstants.Collections.KEY_PARENT);
     public static UserRepository getInstance(){
@@ -52,7 +57,6 @@ public class UserRepository {
     public static MutableLiveData<User> registerUser(User user){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         MutableLiveData<User> userLiveData = new MutableLiveData<>();
-
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,7 +76,6 @@ public class UserRepository {
                         }
                     }
                 });
-
         return userLiveData;
     }
 
@@ -183,6 +186,7 @@ public class UserRepository {
         return query;
     }
 
+
     private void sendFCMTokenToDatabase(String token){
         Log.d("Message Token fcm:", token);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -205,5 +209,14 @@ public class UserRepository {
             }
         });
         return healthLiveData;
+    }
+
+    public MutableLiveData<String> getUserCoins() {
+        MutableLiveData<String> mutableLiveDataCoins = new MutableLiveData<>();
+        db.collection(UserConstants.KEY_COLLECTION_USERS).document(FirebaseAuth.getInstance().getUid()).addSnapshotListener((snapshot, error) -> {
+           // Log.e("Coins", snapshot.get(UserConstants.KEY_USER_COINS).toString());
+            mutableLiveDataCoins.postValue(snapshot.get(UserConstants.KEY_USER_COINS).toString());
+        });
+        return mutableLiveDataCoins;
     }
 }

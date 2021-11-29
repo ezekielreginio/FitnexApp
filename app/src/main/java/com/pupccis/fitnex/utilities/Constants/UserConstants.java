@@ -12,6 +12,7 @@ public class UserConstants {
     public static final String KEY_PHONE_NUMBER = "phone_number";
     public static final String KEY_FCM_TOKEN = "fcm_token";
     public static final String KEY_USER_ID= "userID";
+    public static final String KEY_USER_COINS = "coins";
 
     public static final String KEY_USER_APPLICATION_STATUS = "application_status";
     public static final String KEY_USER_PROFILE_PICTURE = "profile_picture";
