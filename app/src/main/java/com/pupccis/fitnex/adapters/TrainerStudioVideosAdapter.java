@@ -67,6 +67,7 @@ public class TrainerStudioVideosAdapter extends FirestoreRecyclerAdapter<PostVid
         public PostVideoHolder(@NonNull View itemView) {
             super(itemView);
         }
+
         void setPostVideoData(PostVideo model){
             binding.textViewStudioVideoTitle.setText(model.getVideoTitle());
 

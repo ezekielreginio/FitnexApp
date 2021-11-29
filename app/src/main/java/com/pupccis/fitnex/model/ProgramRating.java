@@ -6,15 +6,20 @@ import static com.pupccis.fitnex.utilities.Constants.ProgramRatingConstants.KEY_
 import static com.pupccis.fitnex.utilities.Constants.ProgramRatingConstants.KEY_RATING_USERNAME;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProgramRating implements Serializable {
-    private String ratingDescription, userName, programID, rateProgramImageFileType, ratingPhotoURL;
+    private String ratingDescription, userName, programID, rateProgramImageFileType, photoURL;
     private Uri rateProgramImage;
     private float rating;
+
+    public ProgramRating() {
+        Log.e("Constructor", "called");
+    }
 
     public ProgramRating(String ratingDescription, String userName, String programID, Uri rateProgramImage, float rating, String rateProgramImageFileType) {
         this.ratingDescription = ratingDescription;
@@ -73,19 +78,21 @@ public class ProgramRating implements Serializable {
         this.rateProgramImageFileType = rateProgramImageFileType;
     }
 
-    public String getRatingPhotoURL() {
-        return ratingPhotoURL;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
-    public void setRatingPhotoURL(String ratingPhotoURL) {
-        this.ratingPhotoURL = ratingPhotoURL;
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
+
+
 
     public Map<String, Object> map() {
         HashMap<String, Object> result = new HashMap<>();
         result.put(KEY_RATING_DESCRIPTION, ratingDescription);
         result.put(KEY_RATING_USERNAME, userName);
-        result.put(KEY_RATING_PHOTO_URL, ratingPhotoURL);
+        result.put(KEY_RATING_PHOTO_URL, photoURL);
         result.put(KEY_RATING, rating);
         return result;
     }

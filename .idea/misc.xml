@@ -166,6 +166,7 @@
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainee_home.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_dashboard.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_patron_page.xml" value="0.33" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_trainer_studio.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_demo.xml" value="0.31476449275362317" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_video_player.xml" value="0.33" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/activity_view_program.xml" value="0.33" />
@@ -180,7 +181,9 @@
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_nutrition_monitoring.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_nutrition_tracker.xml" value="0.25679347826086957" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_nutrition_tracking.xml" value="0.25" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_privacy_terms.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_programs.xml" value="0.22" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_programs_se.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_routine.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_schedule.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/fragment_step1.xml" value="0.21510416666666668" />
@@ -191,6 +194,7 @@
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_add_food.xml" value="0.5" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_comment.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_program.xml" value="0.5568181818181818" />
+        <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_rating.xml" value="0.67" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_studio_video.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/item_container_user.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/Zeke/AndroidStudioProjects/FitnexApp/app/src/main/res/layout/routine_timer_container.xml" value="0.20520833333333333" />

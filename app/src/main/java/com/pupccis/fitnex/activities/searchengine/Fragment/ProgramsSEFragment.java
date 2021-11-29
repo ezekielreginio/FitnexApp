@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.pupccis.fitnex.activities.patron.TrainerPatronPage;
 import com.pupccis.fitnex.activities.routine.RoutinePage;
 import com.pupccis.fitnex.activities.searchengine.SearchEngine;
+import com.pupccis.fitnex.activities.searchengine.ViewProgram;
 import com.pupccis.fitnex.adapters.ProgramAdapter;
 import com.pupccis.fitnex.api.enums.AccessType;
 import com.pupccis.fitnex.api.enums.Privilege;
@@ -79,37 +80,53 @@ public class ProgramsSEFragment extends Fragment {
                 if(program != null){
                     ((SearchEngine)getActivity()).showProgressBar();
                     Privilege privilege = Privilege.valueOf(program.getPrivilege());
-                    if(privilege == Privilege.FREE){
-                        Intent intent = new Intent(getActivity(), RoutinePage.class);
-                        intent.putExtra("program", program);
-                        startActivity(intent);
-                        ((SearchEngine)getActivity()).hideProgressBar();
-                    }
-                    else{
-                        new PatronViewModel().checkPatronStatus(program.getTrainerID()).observe(binding.getLifecycleOwner(), new Observer<Privilege>() {
-                            @Override
-                            public void onChanged(Privilege privilege) {
-                                if(privilege != null){
-                                    ((SearchEngine)getActivity()).hideProgressBar();
-                                    if(privilege == Privilege.NONE){
-                                        ((SearchEngine)getActivity()).showSubscriptionModal(program);
-                                    }
-                                    else{
-                                        HashMap<Privilege, Integer> privilegeMap = getPrivilegeHashMap();
-                                        int currentSubscription = privilegeMap.get(privilege);
-                                        int programPrivilege = privilegeMap.get(Privilege.valueOf(program.getPrivilege()));
-                                        if(currentSubscription >= programPrivilege){
-                                            Intent intent = new Intent(getActivity(), RoutinePage.class);
-                                            intent.putExtra("program", program);
-                                            startActivity(intent);
-                                        }
-                                        else
-                                            ((SearchEngine)getActivity()).showInvalidSubscriptionModal(program);
-                                    }
-                                }
-                            }
-                        });
-                    }
+
+                    binding.getViewModel().checkProgramSaved(program.getProgramID()).observe(binding.getLifecycleOwner(), new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean aBoolean) {
+                            ((SearchEngine)getActivity()).hideProgressBar();
+                            Intent intent;
+                            if(aBoolean)
+                                intent = new Intent(getActivity(), RoutinePage.class);
+                            else
+                                intent = new Intent(getActivity(), ViewProgram.class);
+
+                            intent.putExtra("program", program);
+                            startActivity(intent);
+                        }
+                    });
+
+//                    if(privilege == Privilege.FREE){
+//                        Intent intent = new Intent(getActivity(), RoutinePage.class);
+//                        intent.putExtra("program", program);
+//                        startActivity(intent);
+      //                  ((SearchEngine)getActivity()).hideProgressBar();
+//                    }
+//                    else{
+//                        new PatronViewModel().checkPatronStatus(program.getTrainerID()).observe(binding.getLifecycleOwner(), new Observer<Privilege>() {
+//                            @Override
+//                            public void onChanged(Privilege privilege) {
+//                                if(privilege != null){
+//                                    ((SearchEngine)getActivity()).hideProgressBar();
+//                                    if(privilege == Privilege.NONE){
+//                                        ((SearchEngine)getActivity()).showSubscriptionModal(program);
+//                                    }
+//                                    else{
+//                                        HashMap<Privilege, Integer> privilegeMap = getPrivilegeHashMap();
+//                                        int currentSubscription = privilegeMap.get(privilege);
+//                                        int programPrivilege = privilegeMap.get(Privilege.valueOf(program.getPrivilege()));
+//                                        if(currentSubscription >= programPrivilege){
+//                                            Intent intent = new Intent(getActivity(), RoutinePage.class);
+//                                            intent.putExtra("program", program);
+//                                            startActivity(intent);
+//                                        }
+//                                        else
+//                                            ((SearchEngine)getActivity()).showInvalidSubscriptionModal(program);
+//                                    }
+//                                }
+//                            }
+//                        });
+//                    }
 
                     //Toast.makeText(getContext(), "Container Clicked", Toast.LENGTH_SHORT).show();
                 }

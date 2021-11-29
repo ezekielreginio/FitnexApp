@@ -5,12 +5,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.pupccis.fitnex.model.FitnessClass;
 import com.pupccis.fitnex.model.PostVideo;
 import com.pupccis.fitnex.model.Program;
+import com.pupccis.fitnex.model.ProgramRating;
 import com.pupccis.fitnex.model.RealtimeRoutine;
 import com.pupccis.fitnex.model.Routine;
 import com.pupccis.fitnex.model.User;
 import com.pupccis.fitnex.model.VideoComment;
 import com.pupccis.fitnex.repository.FitnessClassesRepository;
 import com.pupccis.fitnex.repository.PostedVideosRepository;
+import com.pupccis.fitnex.repository.ProgramRatingRepository;
 import com.pupccis.fitnex.repository.ProgramsRepository;
 import com.pupccis.fitnex.repository.RoutinesRepository;
 import com.pupccis.fitnex.repository.UserRepository;
@@ -90,6 +92,12 @@ public class ViewModelHandler {
     public static FirebaseRecyclerOptions<RealtimeRoutine> getFirebaseUIRealtimeRoutineOptions(String programID){
         return new FirebaseRecyclerOptions.Builder<RealtimeRoutine>()
                 .setQuery(RoutinesRepository.getInstance().getRealtimeRoutinesQuery(programID),RealtimeRoutine.class)
+                .build();
+    }
+
+    public static FirestoreRecyclerOptions<ProgramRating> getFirebaseUIProgramRatingOptions(String programID){
+        return new FirestoreRecyclerOptions.Builder<ProgramRating>()
+                .setQuery(new ProgramRatingRepository().getRatings(programID),ProgramRating.class)
                 .build();
     }
 }
